@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2020
-** Unix and C Lab Seminar
+** libmy
 ** File description:
 ** Displays N if the parameter is negative and P if not
 */

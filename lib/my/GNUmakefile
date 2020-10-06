@@ -19,18 +19,25 @@ override CFLAGS += -I../../include/
 all: libmy.a
 
 # The functions we need to build for the day
-SOURCE_FILES := my_putchar my_isneg my_put_nbr my_putnbr_base my_putnbr_base_width my_swap my_putstr my_strlen my_getnbr my_sort_int_array my_compute_power_rec my_compute_square_root my_is_prime my_find_prime_sup my_strcpy my_strncpy my_revstr my_strstr my_strcmp my_strncmp my_strupcase my_strlowcase my_strcapitalize my_str_isalpha my_str_isnum my_str_islower my_str_isupper my_str_isprintable my_showstr my_showmem my_strcat my_strncat
+SOURCE_FILES := my_putchar my_isneg my_put_nbr my_putnbr_base my_putnbr_base_width my_swap my_putstr my_strlen my_getnbr my_getnbr_part2 my_sort_int_array my_compute_power_rec my_compute_square_root my_is_prime my_find_prime_sup my_strcpy my_strncpy my_revstr my_strstr my_strcmp my_strncmp my_strupcase my_strlowcase my_strcapitalize my_str_isalpha my_str_isnum my_str_islower my_str_isupper my_str_isprintable my_showstr my_showmem my_strcat my_strncat my_isprint my_isupper my_isdigit my_isalpha my_isalnum my_toupper my_tolower my_strchr
 
 OBJECT_FILES := $(addprefix obj/, $(addsuffix .o, $(SOURCE_FILES)))
 
 # r is for inserting with replacement
 # c is for creating the archive without a warning when it doesn't exist
 # s is for writing an index into the archive
-# v is for verbosity (probably remove this at some point)
 libmy.a: $(OBJECT_FILES)
-	$(AR) rvcs $@ $^
+	$(AR) rcs $@ $^
 
 obj/%.o: src/%.c
+	@mkdir --parents obj
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+obj/my_strcat.o: ../../my_strcat.c
+	@mkdir --parents obj
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+obj/my_strncat.o: ../../my_strncat.c
 	@mkdir --parents obj
 	$(CC) -c $< -o $@ $(CFLAGS)
 

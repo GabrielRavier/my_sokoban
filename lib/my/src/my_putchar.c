@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2020
-** Unix and C Lab Seminar - Day 07
+** libmy
 ** File description:
 ** Writes c to stdout
 */

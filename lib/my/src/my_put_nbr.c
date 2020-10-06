@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2020
-** Unix and C Lab Seminar
+** libmy
 ** File description:
 ** Displays the int given as a parameter (works with all values including
 ** INT_MIN)

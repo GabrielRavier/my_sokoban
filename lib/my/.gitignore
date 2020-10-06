@@ -1,0 +1,10 @@
+##
+## EPITECH PROJECT, 2020
+## Unix and C Lab Seminar - Day 07
+## File description:
+## .gitignore for libmy
+##
+
+# Ignore files produced during compilation
+obj/
+libmy.a

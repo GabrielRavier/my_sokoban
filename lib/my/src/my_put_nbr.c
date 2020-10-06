@@ -1,0 +1,14 @@
+/*
+** EPITECH PROJECT, 2020
+** Unix and C Lab Seminar
+** File description:
+** Displays the int given as a parameter (works with all values including
+** INT_MIN)
+*/
+
+#include "my.h"
+
+int my_put_nbr(int number)
+{
+    return my_putnbr_base(number, "0123456789");
+}

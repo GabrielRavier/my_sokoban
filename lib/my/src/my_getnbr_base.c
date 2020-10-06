@@ -1,12 +1,11 @@
 /*
 ** EPITECH PROJECT, 2020
-** Unix and C Lab Seminar - Day 06
+** libmy
 ** File description:
 ** Converts and returns a number in a given base
 */
 
-#include "day_task_functions.h"
-#include "getnbr_part2.h"
+#include "my.h"
 #include <stdbool.h>
 #include <limits.h>
 
@@ -32,7 +31,7 @@ static void find_number(
 // will overflow below INT_MIN
 // is_about_to_overflow
 static bool is_about_to_overflow(
-    int current_result, unsigned char current_digit, unsigned int base)
+    int current_result, unsigned char current_digit, int base)
 {
     int int_min_without_last_digit = INT_MIN / base;
     int int_min_last_digit = -(INT_MIN % base);
@@ -68,8 +67,8 @@ static int do_parse(
     unsigned char current_digit;
 
     while (true) {
-        if (!find_digit_from_base(number_ptr++, base, &current_digit))
-            return 0;
+        if (!my_find_digit_from_base(number_ptr++, base, &current_digit))
+            break;
 
         if (is_about_to_overflow(result, current_digit, base_width))
             return 0;

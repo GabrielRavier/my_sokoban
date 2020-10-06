@@ -5,7 +5,7 @@
 ** Safely multiplies a number without overflow
 */
 
-#include "checked_multiply.h"
+#include "my.h"
 #include <stdbool.h>
 #include <limits.h>
 

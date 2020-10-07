@@ -11,7 +11,7 @@
 
 // "digits" is defined as being anything from base
 // the base is the length of the base string
-
+//
 // Sets *number_ptr_ptr to the location of the number (points to terminator if
 // no number was found). This is very greedy and will try to find *any* number
 // in the passed string, so unless there are no digits before the string is

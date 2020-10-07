@@ -9,6 +9,9 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <unistd.h>
+
+static const int WORK_BUFFER_SIZE = 1000;
 
 // Converts an unsigned number into a string at buffer_end, going backwards
 static char *core_number_converter(
@@ -21,8 +24,6 @@ static char *core_number_converter(
 
     return buffer_end;
 }
-
-static const int WORK_BUFFER_SIZE = 1000;
 
 // We convert the number into a string at a work buffer (we prepend a '-' for
 // negative numbers). We can then print the padding (since we can determine the
@@ -45,7 +46,6 @@ int my_putnbr_base_width(int number, const char *base, int width)
 
     if (is_negative && number != INT_MIN)
         number = -number;
-
     converted_number_ptr =
         core_number_converter(number, buffer_end, base, my_strlen(base));
 
@@ -56,8 +56,7 @@ int my_putnbr_base_width(int number, const char *base, int width)
     while ((width--) > 0)
         my_putchar('0');
 
-    while (converted_number_ptr != buffer_end)
-        my_putchar(*converted_number_ptr++);
-
+    write(
+        STDOUT_FILENO, converted_number_ptr, buffer_end - converted_number_ptr);
     return 0;
 }

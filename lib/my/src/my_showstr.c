@@ -15,9 +15,8 @@ int my_showstr(const char *str)
             my_putchar(str[i]);
         else {
             my_putchar('\\');
-            if (str[i] < 0x10)
-                my_putchar('0');
-            my_putnbr_base(str[i], "0123456789abcdef");
+            my_putchar("0123456789abcdef"[((unsigned char)str[i] / 16) % 16]);
+            my_putchar("0123456789abcdef"[(unsigned char)str[i] % 16]);
         }
 
     return (0);

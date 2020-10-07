@@ -7,11 +7,18 @@
 
 #include "my.h"
 
+// This must *not* pad out to the end of the line (as the instructions imply and
+// the example shows), if the size ends before the end of the current hex dump's
+// line, we must stop too. We do this by either printing 16 or the remaining
+// amount of bytes, whichever is smaller
 static void do_print_printable_16_bytes(
     const char *current_16_bytes, int remaining_size)
 {
-    for (int i = 0; i < 16; ++i)
-        if ((i < remaining_size) && my_isprint(current_16_bytes[i]))
+    if (remaining_size > 16)
+        remaining_size = 16;
+
+    for (int i = 0; i < remaining_size; ++i)
+        if (my_isprint(current_16_bytes[i]))
             my_putchar(current_16_bytes[i]);
         else
             my_putchar('.');

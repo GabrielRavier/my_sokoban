@@ -12,7 +12,7 @@
 // the first character of needle in haystack
 // Note: we use strncmp so that we don't need to match the null terminator of
 // needle when searching for it in haystack
-char *my_strstr(char *haystack, const char *needle)
+char *my_strstr(const char *haystack, const char *needle)
 {
     char needle_first_character = *needle++;
     char haystack_current_character;
@@ -32,5 +32,5 @@ char *my_strstr(char *haystack, const char *needle)
         --haystack;
     }
 
-    return (haystack);
+    return (char *)(haystack);
 }

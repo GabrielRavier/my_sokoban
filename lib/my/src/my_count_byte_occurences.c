@@ -8,8 +8,8 @@
 #include "my.h"
 #include <stddef.h>
 
-size_t my_count_byte_occurences(
-    const char *first, const char *last, char character)
+size_t my_count_byte_occurences(const char *first, const char *last,
+    char character)
 {
     size_t result = 0;
 

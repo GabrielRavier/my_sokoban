@@ -21,8 +21,8 @@ int my_compute_power_rec(int nb, int p)
         result = my_compute_power_rec(nb, p / 2);
         if (!my_checked_multiply(result, result, &result))
             return 0;
-    } else if (!my_checked_multiply(
-        nb, my_compute_power_rec(nb, p - 1), &result))
+    } else if (!my_checked_multiply(nb, my_compute_power_rec(nb, p - 1),
+            &result))
         return 0;
 
     return result;

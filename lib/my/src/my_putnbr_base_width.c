@@ -10,8 +10,7 @@
 
 int my_putnbr_base_width(int number, const char *base, size_t width)
 {
-    char *converted_number =
-        my_nbr_to_string_base_width(number, base, width);
+    char *converted_number = my_nbr_to_string_base_width(number, base, width);
     my_putstr(converted_number);
     free(converted_number);
 

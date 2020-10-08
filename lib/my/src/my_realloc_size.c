@@ -8,8 +8,8 @@
 #include "my.h"
 #include <stdlib.h>
 
-static void *handle_other_cases(
-    void *ptr, size_t new_length, size_t original_length)
+static void *handle_other_cases(void *ptr, size_t new_length,
+    size_t original_length)
 {
     if (new_length <= original_length)
         return ptr;

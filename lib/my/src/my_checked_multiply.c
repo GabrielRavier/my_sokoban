@@ -33,11 +33,11 @@ static bool check_overflow_multiply_same_signs(int lhs, int rhs)
     return false;
 }
 
-static bool check_overflow_opposite_signs_multiply(
-    int positive_operand, int negative_operand)
+static bool check_overflow_opposite_signs_multiply(int positive_operand,
+    int negative_operand)
 {
-    return (
-        positive_operand && negative_operand < (INT_MIN / positive_operand));
+    return (positive_operand &&
+        negative_operand < (INT_MIN / positive_operand));
 }
 
 // If lhs * rhs would overflow, returns false. Otherwise, sets *result to lhs *
@@ -47,8 +47,8 @@ bool my_checked_multiply(int lhs, int rhs, int *result)
     if (same_signs(lhs, rhs)) {
         if (check_overflow_multiply_same_signs(lhs, rhs))
             return false;
-    } else if (check_overflow_opposite_signs_multiply(
-        lhs < 0 ? rhs : lhs, lhs < 0 ? lhs : rhs))
+    } else if (check_overflow_opposite_signs_multiply(lhs < 0 ? rhs : lhs,
+            lhs < 0 ? lhs : rhs))
         return false;
     *result = lhs * rhs;
     return true;

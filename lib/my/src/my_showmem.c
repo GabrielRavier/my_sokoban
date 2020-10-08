@@ -11,8 +11,8 @@
 // the example shows), if the size ends before the end of the current hex dump's
 // line, we must stop too. We do this by either printing 16 or the remaining
 // amount of bytes, whichever is smaller
-static void do_print_printable_16_bytes(
-    const char *current_16_bytes, int remaining_size)
+static void do_print_printable_16_bytes(const char *current_16_bytes,
+    int remaining_size)
 {
     if (remaining_size > 16)
         remaining_size = 16;
@@ -24,8 +24,8 @@ static void do_print_printable_16_bytes(
             my_putchar('.');
 }
 
-static void do_16_bytes(
-    const char *current_16_bytes, int byte_hex_address, int remaining_size)
+static void do_16_bytes(const char *current_16_bytes, int byte_hex_address,
+    int remaining_size)
 {
     my_putnbr_base_width(byte_hex_address, "0123456789abcdef", 8);
     my_putchar(':');

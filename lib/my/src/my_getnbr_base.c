@@ -17,8 +17,8 @@
 // in the passed string, so unless there are no digits before the string is
 // terminated, this will find it We set *is_negative_ptr depending whether '-'
 // was found an even or odd amount of times before the number
-static void find_number(
-    const char **number_ptr_ptr, bool *is_negative_ptr, const char *base)
+static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr,
+    const char *base)
 {
     const char *number_ptr = *number_ptr_ptr;
     const char *first_digit = number_ptr + my_strcspn(number_ptr, base);
@@ -30,8 +30,8 @@ static void find_number(
 // current_result must be a negative number, we check whether adding the digit
 // will overflow below INT_MIN
 // is_about_to_overflow
-static bool is_about_to_overflow(
-    int current_result, unsigned char current_digit, int base)
+static bool is_about_to_overflow(int current_result,
+    unsigned char current_digit, int base)
 {
     int int_min_without_last_digit = INT_MIN / base;
     int int_min_last_digit = -(INT_MIN % base);
@@ -60,8 +60,8 @@ static int handle_positive_negative_for_do_parse(int result, bool is_negative)
 // This assumes the base is 10 (which it is as of the writing of this comment),
 // but may have to be adapted if re-used in a more generic function in the
 // future
-static int do_parse(
-    const char *number_ptr, bool is_negative, const char *base, int base_width)
+static int do_parse(const char *number_ptr, bool is_negative, const char *base,
+    int base_width)
 {
     int result = 0;
     unsigned char current_digit;

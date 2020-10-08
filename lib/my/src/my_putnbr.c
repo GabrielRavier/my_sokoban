@@ -8,7 +8,7 @@
 
 #include "my.h"
 
-int my_put_nbr(int number)
+int my_putnbr(int number)
 {
     return my_putnbr_base(number, "0123456789");
 }

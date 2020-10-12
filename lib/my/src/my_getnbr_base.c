@@ -17,11 +17,10 @@
 // in the passed string, so unless there are no digits before the string is
 // terminated, this will find it We set *is_negative_ptr depending whether '-'
 // was found an even or odd amount of times before the number
-static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr,
-    const char *base)
+static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
 {
     const char *number_ptr = *number_ptr_ptr;
-    const char *first_digit = number_ptr + my_strcspn(number_ptr, base);
+    const char *first_digit = number_ptr + my_strspn(number_ptr, " -+");
     *is_negative_ptr =
         ((my_count_byte_occurences(number_ptr, first_digit, '-') % 2));
     *number_ptr_ptr = first_digit;
@@ -83,6 +82,6 @@ static int do_parse(const char *number_ptr, bool is_negative, const char *base,
 int my_getnbr_base(const char *number_ptr, const char *base)
 {
     bool is_negative;
-    find_number(&number_ptr, &is_negative, base);
+    find_number(&number_ptr, &is_negative);
     return do_parse(number_ptr, is_negative, base, my_strlen(base));
 }

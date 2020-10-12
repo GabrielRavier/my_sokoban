@@ -68,8 +68,8 @@ size_t my_strcspn(const char *str, const char *reject);
 size_t my_strnlen(const char *string, size_t length);
 char *my_strdup(const char *string);
 char *my_strndup(const char *string, size_t length);
-size_t my_count_byte_occurences(
-    const char *first, const char *last, char character);
+size_t my_count_byte_occurences(const char *first, const char *last,
+    char character);
 void my_qsort(void *base, size_t num_elements, size_t element_size,
     int (*comparison_function)(const void *, const void *));
 void my_qsort_r(void *base, size_t num_elements, size_t element_size,

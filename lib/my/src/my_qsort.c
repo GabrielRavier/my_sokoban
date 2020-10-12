@@ -8,8 +8,8 @@
 
 #include "my.h"
 
-static int qsort_r_helper_for_qsort(
-    const void *elem1, const void *elem2, void *comparison_function_ptr)
+static int qsort_r_helper_for_qsort(const void *elem1, const void *elem2,
+    void *comparison_function_ptr)
 {
     return (*((int (**)(const void *, const void *))comparison_function_ptr))(
         elem1, elem2);

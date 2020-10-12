@@ -12,7 +12,7 @@
 
 size_t my_strspn(const char *str, const char *accept)
 {
-    size_t result = 0;  //n
+    size_t result = 0;
     const char *accept_iterator;
     char current_character;
 
@@ -21,7 +21,8 @@ size_t my_strspn(const char *str, const char *accept)
         if (current_character == '\0')
             break;
 
-        for (accept_iterator = accept; *accept_iterator != '\0'; ++accept_iterator)
+        for (accept_iterator = accept; *accept_iterator != '\0';
+            ++accept_iterator)
             if (current_character == *accept_iterator)
                 break;
 

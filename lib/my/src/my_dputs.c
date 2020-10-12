@@ -8,7 +8,10 @@
 #include "my.h"
 #include <unistd.h>
 
-void my_dputs(int fd, const char *string)
+void my_dputs(const char *string, int fd)
 {
+    if (*string == '\0')
+        return;
+
     write(fd, string, my_strlen(string));
 }

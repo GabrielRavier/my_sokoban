@@ -10,7 +10,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-void my_putchar(char c);
+void my_putchar(int character);
+void my_dputc(int character, int fd);
 int my_isneg(int number);
 int my_putnbr(int number);
 int my_putnbr_base(int number, const char *base);
@@ -20,7 +21,7 @@ char *my_nbr_to_string_base(int number, const char *base);
 char *my_nbr_to_string_base_width(int number, const char *base, size_t width);
 void my_swap(int *a, int *b);
 void my_putstr(const char *string);
-void my_dputs(int fd, const char *string);
+void my_dputs(const char *string, int fd);
 int my_puts(const char *string);
 size_t my_strlen(const char *string);
 int my_getnbr(const char *string);

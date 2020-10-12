@@ -10,5 +10,5 @@
 
 void my_putstr(char const *str)
 {
-    my_dputs(STDOUT_FILENO, str);
+    my_dputs(str, STDOUT_FILENO);
 }

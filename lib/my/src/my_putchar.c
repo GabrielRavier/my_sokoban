@@ -8,7 +8,7 @@
 #include "my.h"
 #include <unistd.h>
 
-void my_putchar(char character)
+void my_putchar(int character)
 {
-    write(STDOUT_FILENO, &character, sizeof(character));
+    my_dputc(character, STDOUT_FILENO);
 }

@@ -23,10 +23,13 @@ SOURCE_FILES := my_putchar my_isneg my_putnbr my_putnbr_base my_putnbr_base_widt
 
 OBJECT_FILES := $(addprefix obj/, $(addsuffix .o, $(SOURCE_FILES)))
 
+../libmy.a: libmy.a
+	cp $< $@
+
 # r is for inserting with replacement
 # c is for creating the archive without a warning when it doesn't exist
 # s is for writing an index into the archive
-../libmy.a: $(OBJECT_FILES)
+libmy.a: $(OBJECT_FILES)
 	$(AR) rcs $@ $^
 
 ../../include/my.h: include/my.h

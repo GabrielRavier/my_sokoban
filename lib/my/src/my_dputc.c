@@ -13,4 +13,3 @@ void my_dputc(int character, int fd)
     char character_as_char = character;
     write(fd, &character_as_char, sizeof(character_as_char));
 }
-

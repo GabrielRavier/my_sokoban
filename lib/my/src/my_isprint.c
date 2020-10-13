@@ -7,8 +7,11 @@
 
 #include "my.h"
 
+static const int PRINTABLE_RANGE_START = 0x20;
+static const int PRINTABLE_RANDE_END = 0x7E;
+
 // Assumes ASCII, i.e. this is the range of printable characters in ASCII
 int my_isprint(int c)
 {
-    return ((c >= 0x20) && (c <= 0x7E));
+    return ((c >= PRINTABLE_RANGE_START) && (c <= PRINTABLE_RANDE_END));
 }

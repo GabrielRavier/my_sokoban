@@ -7,12 +7,12 @@
 
 #include "my.h"
 
-int my_strncmp(const char *s1, const char *s2, int n)
+int my_strncmp(const char *s1, const char *s2, size_t n)
 {
     int i = 0;
 
     do {
-        if (n <= 0)
+        if (n == 0)
             return (0);
 
         if (s1[i] != s2[i])

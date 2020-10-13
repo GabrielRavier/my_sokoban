@@ -41,7 +41,7 @@ char *my_strchr(const char *str, int character);
 char *my_revstr(char *string);
 char *my_strstr(const char *haystack, const char *needle);
 int my_strcmp(const char *string1, const char *string2);
-int my_strncmp(const char *string1, const char *string2, int n);
+int my_strncmp(const char *string1, const char *string2, size_t n);
 char *my_strupcase(char *string);
 char *my_strlowcase(char *string);
 char *my_strcapitalize(char *string);

@@ -12,8 +12,8 @@
 static const int WORK_BUFFER_SIZE = 1000;
 
 // Converts an unsigned number into a string at buffer_end, going backwards
-static char *core_number_converter(unsigned number, char *buffer_end,
-    const char *base, size_t base_len)
+static char *core_number_converter(
+    unsigned number, char *buffer_end, const char *base, size_t base_len)
 {
     do {
         *--buffer_end = base[number % base_len];
@@ -25,8 +25,8 @@ static char *core_number_converter(unsigned number, char *buffer_end,
 
 // Handles concatenating the converted number and whatever amount of 0s we need
 // to append to get the specified width
-static char *finish_conversion(const char *converted_number_ptr,
-    const char *buffer_end, size_t width)
+static char *finish_conversion(
+    const char *converted_number_ptr, const char *buffer_end, size_t width)
 {
     char *result;
     size_t converted_number_size = (buffer_end - converted_number_ptr);
@@ -63,8 +63,8 @@ char *my_nbr_to_string_base_width(int number, const char *base, size_t width)
     if (is_negative && number != INT_MIN)
         number = -number;
 
-    converted_number_ptr =
-        core_number_converter(number, buffer_end, base, my_strlen(base));
+    converted_number_ptr = core_number_converter(
+        (unsigned)number, buffer_end, base, my_strlen(base));
 
     if (is_negative)
         *--converted_number_ptr = '-';

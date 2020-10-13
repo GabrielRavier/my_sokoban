@@ -16,7 +16,7 @@ char *my_strstr(const char *haystack, const char *needle)
 {
     char needle_first_character = *needle++;
     char haystack_current_character;
-    int needle_length;
+    size_t needle_length;
 
     if (needle_first_character != '\0') {
         needle_length = my_strlen(needle);

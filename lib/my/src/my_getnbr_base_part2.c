@@ -22,6 +22,6 @@ bool my_find_digit_from_base(const char *digit_character_ptr, const char *base,
     if (!strchr_result)
         return false;
 
-    *digit_ptr = strchr_result - base;
+    *digit_ptr = (unsigned char)(strchr_result - base);
     return true;
 }

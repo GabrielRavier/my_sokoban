@@ -30,10 +30,10 @@ static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
 // will overflow below INT_MIN
 // is_about_to_overflow
 static bool is_about_to_overflow(int current_result,
-    unsigned char current_digit, int base)
+    unsigned char current_digit, size_t base)
 {
-    int int_min_without_last_digit = INT_MIN / base;
-    int int_min_last_digit = -(INT_MIN % base);
+    int int_min_without_last_digit = INT_MIN / (int)base;
+    int int_min_last_digit = -(INT_MIN % (int)base);
     return (current_result < int_min_without_last_digit ||
         (current_result == int_min_without_last_digit &&
             current_digit > int_min_last_digit));
@@ -60,7 +60,7 @@ static int handle_positive_negative_for_do_parse(int result, bool is_negative)
 // but may have to be adapted if re-used in a more generic function in the
 // future
 static int do_parse(const char *number_ptr, bool is_negative, const char *base,
-    int base_width)
+    size_t base_width)
 {
     int result = 0;
     unsigned char current_digit;

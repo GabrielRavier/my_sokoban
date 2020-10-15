@@ -12,17 +12,19 @@ void my_bigint_add_unsigned(
     struct my_bigint *result, const struct my_bigint *operand2)
 {
     size_t required_digits =
-        MY_MAX(my_strlen(result->number), my_strlen(operand2->number)) + 1;
+        MY_MAX(result->num_digits, operand2->num_digits) + 1;
     bool carry = false;
     unsigned char total;
     my_bigint_at_least_digits(result, required_digits);
 
-    for (size_t i = 0; (i < my_strlen(operand2->number)) || (carry); ++i) {
-        if (i == my_strlen(result->number))
-            result->number[i + 1] = '\0';
+    for (size_t i = 0; (i < operand2->num_digits) || carry; ++i) {
+        if (i == result->num_digits) {
+            result->number[i] = 0;
+            ++result->num_digits;
+        }
 
         total = result->number[i] +
-            (i < my_strlen(operand2->number) ? operand2->number[i] : 0) + carry;
+            (i < operand2->num_digits ? operand2->number[i] : 0) + carry;
         result->number[i] = total % 10;
         carry = (total >= 10);
     }

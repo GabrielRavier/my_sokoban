@@ -30,7 +30,6 @@ void my_bigint_sub_unsigned(
     smaller_greater_num[0] = which_bigger ? *operand2 : *result;
     smaller_greater_num[1] = which_bigger ? *result : *operand2;
     result->num_digits = 1;
-
     for (size_t i = 0; i < smaller_greater_num[1].num_digits; ++i) {
         digit = get_digit(smaller_greater_num, i, carry);
         if (digit < 0) {

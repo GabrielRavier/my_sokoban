@@ -9,5 +9,4 @@
 
 void my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2)
 {
-    __builtin_trap();
 }

@@ -25,7 +25,11 @@ bool my_bigint_set_str(struct my_bigint *num, const char *str)
     while (*str == '0')
         ++str;
 
-    num->number = my_strdup(str);
-    my_revstr(num->number);
-    return true; 
+    num->number = (unsigned char *)my_strdup(str);
+    num->num_digits = my_strlen(str);
+    my_revstr((char *)str);
+    for (size_t i = 0; i < num->num_digits; ++i)
+        num->number[i] -= '0';
+
+    return true;
 }

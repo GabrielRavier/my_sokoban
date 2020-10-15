@@ -10,12 +10,10 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-// This is a basic implementation, but I ain't too much of an expert so I
-// wouldn't really be confident in doing a complicated usual-style
-// implementation
 struct my_bigint {
     bool is_negative;
-    char *number;
+    size_t num_digits;
+    unsigned char *number;
 };
 
 bool my_bigint_set_str(struct my_bigint *num, const char *str);

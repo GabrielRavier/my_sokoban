@@ -6,10 +6,12 @@
 */
 
 #include "my.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int my_puts(const char *string)
 {
-    my_putstr(string);
-    my_putchar('\n');
+    if ((my_dputs(string, STDOUT_FILENO) == EOF) || my_putchar('\n') == EOF)
+        return EOF;
     return 0;
 }

@@ -28,7 +28,7 @@ static char *core_number_converter(unsigned number, char *buffer_end,
 static void finish_conversion(const char *converted_number_ptr,
     const char *buffer_end, size_t width)
 {
-    size_t converted_number_size = (buffer_end - converted_number_ptr);
+    size_t converted_number_size = (size_t)(buffer_end - converted_number_ptr);
     if (converted_number_size > width)
         width = converted_number_size;
 

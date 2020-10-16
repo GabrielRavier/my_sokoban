@@ -9,7 +9,7 @@
 #include "my_bigint.h"
 #include "my.h"
 
-static unsigned char get_digit(struct my_bigint smaller_greater_num[2],
+static signed char get_digit(struct my_bigint smaller_greater_num[2],
     size_t i, bool carry)
 {
     if (i < smaller_greater_num[0].num_digits)
@@ -38,7 +38,7 @@ void my_bigint_sub_unsigned(struct my_bigint *result,
             digit += 10;
         } else
             carry = false;
-        result->number[i] = digit;
+        result->number[i] = (unsigned char)digit;
         if (digit != 0)
             result->num_digits = i + 1;
     }

@@ -11,9 +11,9 @@
 #include <stdbool.h>
 
 struct my_bigint {
-    bool is_negative;
     size_t num_digits;
     unsigned char *number;
+    bool is_negative;
 };
 
 bool my_bigint_set_str(struct my_bigint *num, const char *str);

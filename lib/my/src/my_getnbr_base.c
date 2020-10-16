@@ -72,7 +72,7 @@ static int do_parse(const char *number_ptr, bool is_negative, const char *base,
         if (is_about_to_overflow(result, current_digit, base_width))
             return 0;
 
-        result *= base_width;
+        result *= (int)base_width;
         result -= current_digit;
     }
 

@@ -14,7 +14,7 @@ void my_bigint_at_least_digits(struct my_bigint *num, size_t required_digits)
     unsigned char *old_number = num->number;
 
     if (num->num_digits < required_digits) {
-        num->number = malloc(required_digits);
+        num->number = (unsigned char *)malloc(required_digits);
         my_memcpy(num->number, old_number, num->num_digits);
 
         free(old_number);

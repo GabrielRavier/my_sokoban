@@ -33,7 +33,7 @@ static char *finish_conversion(const char *converted_number_ptr,
     if (converted_number_size > width)
         width = converted_number_size;
 
-    result = malloc(width + 1);
+    result = (char *)malloc(width + 1);
     my_memset(result, '0', width - converted_number_size);
     my_memcpy(result, converted_number_ptr, converted_number_size);
     result[width] = '\0';

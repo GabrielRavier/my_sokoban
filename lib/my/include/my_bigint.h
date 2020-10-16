@@ -20,7 +20,6 @@ bool my_bigint_set_str(struct my_bigint *num, const char *str);
 void my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2);
 void my_bigint_add_unsigned(struct my_bigint *result,
     const struct my_bigint *operand2);
-void my_bigint_sub(struct my_bigint *result, const struct my_bigint *operand2);
 void my_bigint_sub_unsigned(struct my_bigint *result,
     const struct my_bigint *operand2);
 int my_bigint_compare_unsigned(const struct my_bigint *operand1,

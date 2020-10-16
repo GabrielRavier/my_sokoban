@@ -35,7 +35,7 @@ SOURCE_FILES += my_isprint my_isupper my_islower my_isdigit my_isalpha my_isalnu
 SOURCE_FILES += my_fabsf
 
 # Stuff related to my_bigint
-SOURCE_FILES += bigint/set_str bigint/add bigint/add_unsigned bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/dprint bigint/free bigint/at_least_digits
+SOURCE_FILES += bigint/set_str bigint/add bigint/add_unsigned bigint/compare_unsigned bigint/sub_unsigned bigint/dprint bigint/free bigint/at_least_digits
 
 # Other stuff
 SOURCE_FILES += my_putnbr my_putnbr_base my_putnbr_base_width my_nbr_to_string my_nbr_to_string_base my_nbr_to_string_base_width my_swap my_sort_int_array my_compute_power_rec my_compute_square_root my_is_prime my_find_prime_sup my_revstr my_strupcase my_strlowcase my_strcapitalize my_str_isalpha my_str_isnum my_str_islower my_str_isupper my_str_isprintable my_showstr my_showmem my_count_byte_occurences my_checked_multiply my_str_to_word_array my_show_word_array

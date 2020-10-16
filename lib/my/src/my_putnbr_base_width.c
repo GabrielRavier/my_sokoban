@@ -6,6 +6,7 @@
 */
 
 #include "my.h"
+#include <stdio.h>
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -14,8 +15,8 @@
 static const int WORK_BUFFER_SIZE = 1000;
 
 // Converts an unsigned number into a string at buffer_end, going backwards
-static char *core_number_converter(unsigned number, char *buffer_end,
-    const char *base, size_t base_len)
+static char *core_number_converter(
+    unsigned number, char *buffer_end, const char *base, size_t base_len)
 {
     do {
         *--buffer_end = base[number % base_len];
@@ -25,17 +26,22 @@ static char *core_number_converter(unsigned number, char *buffer_end,
     return buffer_end;
 }
 
-static void finish_conversion(const char *converted_number_ptr,
-    const char *buffer_end, size_t width)
+static bool finish_conversion(
+    const char *converted_number_ptr, const char *buffer_end, size_t width)
 {
     size_t converted_number_size = (size_t)(buffer_end - converted_number_ptr);
     if (converted_number_size > width)
         width = converted_number_size;
 
     while ((width--) > converted_number_size)
-        my_putchar('0');
+        if (my_putchar('0') == EOF)
+            return false;
 
-    write(STDOUT_FILENO, converted_number_ptr, converted_number_size);
+    if ((size_t)write(STDOUT_FILENO, converted_number_ptr,
+            converted_number_size) != converted_number_size)
+        return false;
+
+    return true;
 }
 
 // We convert the number into a string at a work buffer (we prepend a '-' for
@@ -50,7 +56,7 @@ static void finish_conversion(const char *converted_number_ptr,
 // non-representability of `-INT_MIN`))
 // We don't do the negation when we're asked to print INT_MIN because that'd be
 // UB, and with wrapping overflow it just ends up being INT_MIN again
-int my_putnbr_base_width(int number, const char *base, size_t width)
+bool my_putnbr_base_width(int number, const char *base, size_t width)
 {
     char buffer[WORK_BUFFER_SIZE];
     char *buffer_end = (buffer + WORK_BUFFER_SIZE);
@@ -65,7 +71,5 @@ int my_putnbr_base_width(int number, const char *base, size_t width)
     if (is_negative)
         *--converted_number_ptr = '-';
 
-    finish_conversion(converted_number_ptr, buffer_end, width);
-
-    return 0;
+    return finish_conversion(converted_number_ptr, buffer_end, width);
 }

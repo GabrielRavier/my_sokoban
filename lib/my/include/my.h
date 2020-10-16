@@ -13,9 +13,9 @@
 
 int my_putchar(int character) MY_ATTR_WARN_UNUSED_RESULT;
 int my_dputc(int character, int fd) MY_ATTR_WARN_UNUSED_RESULT;
-int my_putnbr(int number) MY_ATTR_WARN_UNUSED_RESULT;
-int my_putnbr_base(int number, const char *base) MY_ATTR_WARN_UNUSED_RESULT;
-int my_putnbr_base_width(int number, const char *base, size_t width) MY_ATTR_WARN_UNUSED_RESULT;
+bool my_putnbr(int number) MY_ATTR_WARN_UNUSED_RESULT;
+bool my_putnbr_base(int number, const char *base) MY_ATTR_WARN_UNUSED_RESULT;
+bool my_putnbr_base_width(int number, const char *base, size_t width) MY_ATTR_WARN_UNUSED_RESULT;
 char *my_nbr_to_string(int number) MY_ATTR_WARN_UNUSED_RESULT;
 char *my_nbr_to_string_base(int number, const char *base) MY_ATTR_WARN_UNUSED_RESULT;
 char *my_nbr_to_string_base_width(int number, const char *base, size_t width) MY_ATTR_WARN_UNUSED_RESULT;

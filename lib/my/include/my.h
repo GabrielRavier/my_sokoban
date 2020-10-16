@@ -53,14 +53,14 @@ int my_showstr(const char *string);
 int my_showmem(const char *string, int size);
 char *my_strcat(char *destination, const char *source);
 char *my_strncat(char *destination, const char *source, int n);
-int my_isprint(int character) MY_ATTR_WARN_UNUSED_RESULT;
-int my_isupper(int character) MY_ATTR_WARN_UNUSED_RESULT;
-int my_isalnum(int character) MY_ATTR_WARN_UNUSED_RESULT;
-int my_isdigit(int character) MY_ATTR_WARN_UNUSED_RESULT;
-int my_isalpha(int character) MY_ATTR_WARN_UNUSED_RESULT;
-int my_islower(int character) MY_ATTR_WARN_UNUSED_RESULT;
-int my_tolower(int character) MY_ATTR_WARN_UNUSED_RESULT;
-int my_toupper(int character) MY_ATTR_WARN_UNUSED_RESULT;
+int my_isprint(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_isupper(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_isalnum(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_isdigit(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_isalpha(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_islower(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_tolower(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_toupper(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 bool my_checked_multiply(int lhs, int rhs, int *result) MY_ATTR_WARN_UNUSED_RESULT;
 size_t my_strspn(const char *str, const char *accept) MY_ATTR_WARN_UNUSED_RESULT;
 size_t my_strcspn(const char *str, const char *reject) MY_ATTR_WARN_UNUSED_RESULT;
@@ -80,7 +80,7 @@ void *my_memset(void *ptr, int character, size_t length);
 void *my_realloc_size(void *ptr, size_t new_length, size_t original_length) MY_ATTR_WARN_UNUSED_RESULT;
 int my_show_word_array(char *const *table);
 char **my_str_to_word_array(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
-float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT;
+float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 
 // ONLY USE THIS MACRO WITH ARRAYS, NEVER WITH POINTERS
 #define MY_COUNTOF(array) ((sizeof(array)) / (sizeof(array[0])))

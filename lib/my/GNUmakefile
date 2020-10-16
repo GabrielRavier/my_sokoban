@@ -20,7 +20,7 @@ all: ../libmy.a ../../include/my.h ../../include/my_bigint.h
 
 # The sources for libmy
 # Stuff related to stdio.h
-SOURCE_FILES := my_putchar my_dputc my_putstr my_dputs my_puts
+SOURCE_FILES := my_putchar my_dputc my_dputs my_puts
 
 # Stuff related to string.h
 SOURCE_FILES += my_strlen my_strcpy my_strncpy my_strstr my_strcmp my_strncmp my_strcat my_strncat my_strchr my_strspn my_strcspn my_strnlen my_strdup my_strndup my_memcpy my_memchr my_memset

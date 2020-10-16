@@ -20,7 +20,6 @@ char *my_nbr_to_string(int number) MY_ATTR_WARN_UNUSED_RESULT;
 char *my_nbr_to_string_base(int number, const char *base) MY_ATTR_WARN_UNUSED_RESULT;
 char *my_nbr_to_string_base_width(int number, const char *base, size_t width) MY_ATTR_WARN_UNUSED_RESULT;
 void my_swap(int *a, int *b);
-void my_putstr(const char *string);
 int my_dputs(const char *string, int fd) MY_ATTR_WARN_UNUSED_RESULT;
 int my_puts(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
 size_t my_strlen(const char *string) MY_ATTR_WARN_UNUSED_RESULT;

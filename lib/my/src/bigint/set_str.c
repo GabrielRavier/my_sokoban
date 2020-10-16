@@ -15,8 +15,7 @@ bool my_bigint_set_str(struct my_bigint *num, const char *str)
     if (*str == '-') {
         num->is_negative = true;
         ++str;
-    }
-    else
+    } else
         num->is_negative = false;
 
     if (!my_str_isnum(str))

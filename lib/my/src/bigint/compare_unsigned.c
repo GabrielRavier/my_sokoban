@@ -7,7 +7,8 @@
 
 #include "my_bigint.h"
 
-int my_bigint_compare_unsigned(const struct my_bigint *operand1, const struct my_bigint *operand2)
+int my_bigint_compare_unsigned(
+    const struct my_bigint *operand1, const struct my_bigint *operand2)
 {
     if (operand1->num_digits > operand2->num_digits)
         return 1;

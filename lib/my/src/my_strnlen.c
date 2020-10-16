@@ -9,7 +9,8 @@
 
 size_t my_strnlen(const char *string, size_t max_length)
 {
-    const char *memchr_result = my_memchr(string, '\0', max_length);
+    const char *memchr_result =
+        (const char *)my_memchr(string, '\0', max_length);
 
     if (memchr_result == NULL)
         return (max_length);

@@ -15,7 +15,7 @@ int my_dputs(const char *string, int fd)
     if (string_len == 0)
         return 0;
 
-    if (write(fd, string, string_len) != string_len)
+    if ((size_t)write(fd, string, string_len) != string_len)
         return EOF;
 
     return 0;

@@ -17,5 +17,5 @@ char *my_strdup(const char *string)
         return NULL;
 
     my_memcpy(duplicate_string, string, string_length);
-    return duplicate_string;
+    return (char *)duplicate_string;
 }

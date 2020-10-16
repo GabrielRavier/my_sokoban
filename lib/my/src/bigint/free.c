@@ -6,8 +6,9 @@
 */
 
 #include "my_bigint.h"
+#include <stdlib.h>
 
 void my_bigint_free(const struct my_bigint *num)
 {
-    __builtin_trap();
+    free(num->number);
 }

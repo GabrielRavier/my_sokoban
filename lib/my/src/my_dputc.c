@@ -7,9 +7,13 @@
 
 #include "my.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int my_dputc(int character, int fd)
 {
     unsigned char character_as_char = (unsigned char)character;
-    write(fd, &character_as_char, sizeof(character_as_char));
+    if (write(fd, &character_as_char, sizeof(character_as_char)) != sizeof(character_as_char))
+        return EOF;
+
+    return (int)character_as_char;
 }

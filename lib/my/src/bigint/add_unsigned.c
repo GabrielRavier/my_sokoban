@@ -8,8 +8,8 @@
 #include "my_bigint_internal.h"
 #include "my.h"
 
-void my_bigint_add_unsigned(
-    struct my_bigint *result, const struct my_bigint *operand2)
+void my_bigint_add_unsigned(struct my_bigint *result,
+    const struct my_bigint *operand2)
 {
     size_t required_digits =
         MY_MAX(result->num_digits, operand2->num_digits) + 1;

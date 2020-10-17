@@ -49,8 +49,6 @@ int my_str_isnum(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
 int my_str_islower(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
 int my_str_isupper(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
 int my_str_isprintable(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
-int my_showstr(const char *string);
-int my_showmem(const char *string, int size);
 char *my_strcat(char *destination, const char *source);
 char *my_strncat(char *destination, const char *source, int n);
 int my_isprint(int character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
@@ -78,7 +76,7 @@ void *my_memcpy(void *destination, const void *source, size_t size);
 void *my_memchr(const void *ptr, int character, size_t length) MY_ATTR_WARN_UNUSED_RESULT;
 void *my_memset(void *ptr, int character, size_t length);
 void *my_realloc_size(void *ptr, size_t new_length, size_t original_length) MY_ATTR_WARN_UNUSED_RESULT;
-int my_show_word_array(char *const *table);
+bool my_show_word_array(char *const *table) MY_ATTR_WARN_UNUSED_RESULT;
 char **my_str_to_word_array(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
 float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 

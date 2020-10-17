@@ -42,8 +42,8 @@ char **my_str_to_word_array(const char *string)
 
     while (1) {
         word_length = get_word_length(string);
-        result = my_realloc_size(result, (result_size + 1) * sizeof(char *),
-            result_size * sizeof(char *));
+        result = (char **)my_realloc_size(result,
+            (result_size + 1) * sizeof(char *), result_size * sizeof(char *));
         ++result_size;
 
         if (word_length == 0) {

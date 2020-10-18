@@ -5,7 +5,7 @@
 ** Writes the strings and a trailing newline to stdout
 */
 
-#include "my.h"
+#include "my/stdio.h"
 #include <stdio.h>
 #include <unistd.h>
 

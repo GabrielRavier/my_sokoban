@@ -5,7 +5,7 @@
 ** Swaps the content of two integers to which pointers are passed as parameters
 */
 
-#include "my.h"
+#include "my/misc.h"
 
 void my_swap(int *a, int *b)
 {

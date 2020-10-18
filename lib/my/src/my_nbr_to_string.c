@@ -5,7 +5,7 @@
 ** Converts a number to a string
 */
 
-#include "my.h"
+#include "my/misc.h"
 
 char *my_nbr_to_string(int number)
 {

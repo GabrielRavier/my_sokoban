@@ -5,7 +5,8 @@
 ** Check if the passed string only contains uppercase characters
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/ctype.h"
 
 int my_str_isupper(const char *str)
 {

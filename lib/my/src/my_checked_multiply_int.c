@@ -2,10 +2,10 @@
 ** EPITECH PROJECT, 2020
 ** Unix and C Lab Seminar - Day 05
 ** File description:
-** Safely multiplies a number without overflow
+** Safely multiplies a signed number without overflow
 */
 
-#include "my.h"
+#include "my/checked_multiply.h"
 #include <stdbool.h>
 #include <limits.h>
 
@@ -42,7 +42,7 @@ static bool check_overflow_opposite_signs_multiply(int positive_operand,
 
 // If lhs * rhs would overflow, returns false. Otherwise, sets *result to lhs *
 // rhs and returns true.
-bool my_checked_multiply(int lhs, int rhs, int *result)
+bool my_checked_multiply_int(int lhs, int rhs, int *result)
 {
     if (same_signs(lhs, rhs)) {
         if (check_overflow_multiply_same_signs(lhs, rhs))

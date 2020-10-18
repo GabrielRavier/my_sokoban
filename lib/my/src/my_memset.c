@@ -5,7 +5,7 @@
 ** Fill memory with a byte
 */
 
-#include "my.h"
+#include "my/string.h"
 
 void *my_memset(void *destination, int character, size_t length)
 {

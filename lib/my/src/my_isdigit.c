@@ -5,7 +5,7 @@
 ** Check for a digit (0 through 9)
 */
 
-#include "my.h"
+#include "my/ctype.h"
 
 int my_isdigit(int c)
 {

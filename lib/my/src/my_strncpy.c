@@ -8,14 +8,14 @@
 ** additional null bytes to dst to ensure a total of n bytes are written
 */
 
-#include "my.h"
+#include "my/string.h"
 
-char *my_strncpy(char *dest, const char *src, int n)
+char *my_strncpy(char *dest, const char *src, size_t n)
 {
     char *result = dest;
     char current_character;
 
-    for (int i = 0; i < n; ++i) {
+    for (size_t i = 0; i < n; ++i) {
         current_character = *src++;
         *dest++ = current_character;
 

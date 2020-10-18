@@ -5,7 +5,7 @@
 ** Duplicates a string
 */
 
-#include "my.h"
+#include "my/string.h"
 #include <stdlib.h>
 #include <stddef.h>
 

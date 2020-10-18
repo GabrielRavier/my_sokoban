@@ -5,7 +5,8 @@
 ** Displays the contents of an array of words
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/stdio.h"
 #include <stddef.h>
 #include <stdio.h>
 

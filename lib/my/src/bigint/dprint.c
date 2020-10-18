@@ -5,8 +5,8 @@
 ** Prints a bigint on the given fd
 */
 
-#include "my_bigint.h"
-#include "my.h"
+#include "my/bigint.h"
+#include "my/stdio.h"
 #include <unistd.h>
 #include <stdio.h>
 

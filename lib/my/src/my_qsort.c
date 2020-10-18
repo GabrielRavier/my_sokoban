@@ -6,7 +6,7 @@
 ** comparison_function
 */
 
-#include "my.h"
+#include "my/stdlib.h"
 
 static int qsort_r_helper_for_qsort(const void *elem1, const void *elem2,
     void *comparison_function_ptr)

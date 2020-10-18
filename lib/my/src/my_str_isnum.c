@@ -5,7 +5,8 @@
 ** Check if the passed string only contains digits
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/ctype.h"
 
 int my_str_isnum(const char *str)
 {

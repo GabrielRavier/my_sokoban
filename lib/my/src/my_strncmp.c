@@ -5,7 +5,7 @@
 ** Compares two strings, except it only compares at most n bytes
 */
 
-#include "my.h"
+#include "my/string.h"
 
 int my_strncmp(const char *s1, const char *s2, size_t n)
 {

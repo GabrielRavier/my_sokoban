@@ -5,10 +5,10 @@
 ** Appends src to dest, using at most n bytes from src
 */
 
-#include "my.h"
+#include "my/string.h"
 #include <stdbool.h>
 
-char *my_strncat(char *destination, const char *source, int n)
+char *my_strncat(char *destination, const char *source, size_t n)
 {
     char *result = destination;
     char current_character;
@@ -22,7 +22,7 @@ char *my_strncat(char *destination, const char *source, int n)
         if (current_character == '\0')
             break;
 
-        if (--n < 0) {
+        if (n-- == 0) {
             *--destination = '\0';
             break;
         }

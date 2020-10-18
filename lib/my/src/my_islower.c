@@ -5,7 +5,7 @@
 ** Checks for a lowercase character
 */
 
-#include "my.h"
+#include "my/ctype.h"
 
 int my_islower(int c)
 {

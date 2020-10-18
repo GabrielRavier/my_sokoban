@@ -5,7 +5,10 @@
 ** Splits a string into words
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/ctype.h"
+#include "my/string.h"
+#include "my/stdlib.h"
 #include <stdlib.h>
 
 static size_t get_word_length(const char *string)

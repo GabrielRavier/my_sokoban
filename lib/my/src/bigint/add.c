@@ -5,7 +5,7 @@
 ** Adds together two bigints
 */
 
-#include "my_bigint.h"
+#include "my/bigint.h"
 
 void my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2)
 {

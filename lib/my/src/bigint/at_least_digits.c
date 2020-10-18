@@ -5,8 +5,8 @@
 ** Makes sure the string is big enough to contain the required amount of digits
 */
 
-#include "my_bigint_internal.h"
-#include "my.h"
+#include "my/internal/bigint.h"
+#include "my/string.h"
 #include <stdlib.h>
 
 void my_bigint_at_least_digits(struct my_bigint *num, size_t required_digits)

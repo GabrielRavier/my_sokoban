@@ -5,7 +5,7 @@
 ** Copes size bytes from source to destination
 */
 
-#include "my.h"
+#include "my/string.h"
 #include <stddef.h>
 
 void *my_memcpy(void *destination, const void *source, size_t size)

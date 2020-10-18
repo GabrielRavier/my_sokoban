@@ -5,8 +5,8 @@
 ** Adds two unsigned bigints
 */
 
-#include "my_bigint_internal.h"
-#include "my.h"
+#include "my/internal/bigint.h"
+#include "my/macros.h"
 
 void my_bigint_add_unsigned(struct my_bigint *result,
     const struct my_bigint *operand2)

@@ -5,7 +5,9 @@
 ** Converts and returns a number in a given base
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/internal/getnbr_part2.h"
+#include "my/string.h"
 #include <stdbool.h>
 #include <limits.h>
 

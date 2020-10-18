@@ -5,7 +5,7 @@
 ** Checks for a printable character
 */
 
-#include "my.h"
+#include "my/ctype.h"
 
 static const int PRINTABLE_RANGE_START = 0x20;
 static const int PRINTABLE_RANDE_END = 0x7E;

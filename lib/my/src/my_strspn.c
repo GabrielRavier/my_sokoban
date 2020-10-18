@@ -6,7 +6,7 @@
 ** bytes from accept
 */
 
-#include "my.h"
+#include "my/string.h"
 #include <stddef.h>
 #include <stdbool.h>
 

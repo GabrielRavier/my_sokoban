@@ -5,7 +5,7 @@
 ** Find the first occurence of needle in haystack
 */
 
-#include "my.h"
+#include "my/string.h"
 #include <stddef.h>
 
 // Does strstr, with some basic optimizations such as starting with a search for

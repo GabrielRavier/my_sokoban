@@ -5,7 +5,7 @@
 ** Displays a number in a given base
 */
 
-#include "my.h"
+#include "my/misc.h"
 
 bool my_putnbr_base(int number, const char *base)
 {

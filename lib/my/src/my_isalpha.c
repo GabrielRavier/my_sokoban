@@ -5,7 +5,7 @@
 ** Check for an alphabetic character
 */
 
-#include "my.h"
+#include "my/ctype.h"
 
 int my_isalpha(int c)
 {

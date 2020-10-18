@@ -5,7 +5,8 @@
 ** Recursively calculates nb to the power of p
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/checked_multiply.h"
 
 int my_compute_power_rec(int nb, int p)
 {
@@ -19,9 +20,9 @@ int my_compute_power_rec(int nb, int p)
 
     if (p % 2 == 0) {
         result = my_compute_power_rec(nb, p / 2);
-        if (!my_checked_multiply(result, result, &result))
+        if (!my_checked_multiply_int(result, result, &result))
             return 0;
-    } else if (!my_checked_multiply(nb, my_compute_power_rec(nb, p - 1),
+    } else if (!my_checked_multiply_int(nb, my_compute_power_rec(nb, p - 1),
             &result))
         return 0;
 

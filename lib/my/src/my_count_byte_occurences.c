@@ -5,7 +5,7 @@
 ** Counts the amount of times a byte appears between two pointers
 */
 
-#include "my.h"
+#include "my/misc.h"
 #include <stddef.h>
 
 size_t my_count_byte_occurences(const char *first, const char *last,

@@ -5,7 +5,8 @@
 ** Converts a number to a string, with base and width
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/string.h"
 #include <stdlib.h>
 #include <limits.h>
 

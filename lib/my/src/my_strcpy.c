@@ -5,7 +5,7 @@
 ** Copies the string pointed to by src to the buffer pointed to by dest
 */
 
-#include "my.h"
+#include "my/string.h"
 
 char *my_strcpy(char *dest, const char *src)
 {

@@ -5,7 +5,7 @@
 ** Prints a character on the specified file descriptor
 */
 
-#include "my.h"
+#include "my/stdio.h"
 #include <unistd.h>
 #include <stdio.h>
 

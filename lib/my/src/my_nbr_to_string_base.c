@@ -5,7 +5,7 @@
 ** Converts a number to a string in a given base
 */
 
-#include "my.h"
+#include "my/misc.h"
 
 char *my_nbr_to_string_base(int number, const char *base)
 {

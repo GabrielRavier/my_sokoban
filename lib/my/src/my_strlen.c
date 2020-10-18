@@ -5,7 +5,7 @@
 ** Calculates the length of a string (excluding the terminating null byte)
 */
 
-#include "my.h"
+#include "my/string.h"
 
 size_t my_strlen(char const *str)
 {

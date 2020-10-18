@@ -5,7 +5,7 @@
 ** Duplicates a string, but only at most length bytes
 */
 
-#include "my.h"
+#include "my/string.h"
 #include <stdlib.h>
 
 char *my_strndup(const char *string, size_t length)

@@ -5,7 +5,7 @@
 ** Absolute value of float
 */
 
-#include "my.h"
+#include "my/math.h"
 
 float my_fabsf(float x)
 {

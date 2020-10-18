@@ -5,7 +5,7 @@
 ** Writes c to stdout
 */
 
-#include "my.h"
+#include "my/stdio.h"
 #include <unistd.h>
 
 int my_putchar(int character)

@@ -6,7 +6,7 @@
 ** INT_MIN)
 */
 
-#include "my.h"
+#include "my/misc.h"
 
 bool my_putnbr(int number)
 {

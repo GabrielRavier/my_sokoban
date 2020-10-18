@@ -5,7 +5,7 @@
 ** Internal bigint functions
 */
 
-#include "my_bigint.h"
+#include "my/bigint.h"
 
 // Makes sure that num has at least the required amount of digits in it
 // (reallocates if needed)

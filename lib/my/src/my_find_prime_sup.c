@@ -5,7 +5,7 @@
 ** Finds the smallest prime number that is >= to nb
 */
 
-#include "my.h"
+#include "my/misc.h"
 #include <limits.h>
 
 int my_find_prime_sup(int nb)

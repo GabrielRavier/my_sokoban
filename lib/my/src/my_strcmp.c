@@ -5,7 +5,7 @@
 ** Compare two strings
 */
 
-#include "my.h"
+#include "my/string.h"
 
 int my_strcmp(const char *s1, const char *s2)
 {

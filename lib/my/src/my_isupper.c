@@ -5,7 +5,7 @@
 ** Check for an uppercase letter
 */
 
-#include "my.h"
+#include "my/ctype.h"
 
 int my_isupper(int c)
 {

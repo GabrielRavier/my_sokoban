@@ -5,7 +5,8 @@
 ** Checks if the passed string only contains alphabetical characters
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/ctype.h"
 
 int my_str_isalpha(const char *str)
 {

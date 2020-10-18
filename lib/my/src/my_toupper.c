@@ -5,7 +5,7 @@
 ** If lowercase, returns uppercase equivalent
 */
 
-#include "my.h"
+#include "my/ctype.h"
 
 int my_toupper(int c)
 {

@@ -5,8 +5,9 @@
 ** Sets an initialized bigint from a string
 */
 
-#include "my_bigint.h"
-#include "my.h"
+#include "my/bigint.h"
+#include "my/misc.h"
+#include "my/string.h"
 #include <stdlib.h>
 
 // Maybe add stuff like skipping whitespace in the future ? idk

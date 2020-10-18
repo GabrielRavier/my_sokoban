@@ -5,9 +5,7 @@
 ** Converts a string to an integer
 */
 
-#include "my.h"
-#include <stdbool.h>
-#include <limits.h>
+#include "my/misc.h"
 
 int my_getnbr(char const *number_ptr)
 {

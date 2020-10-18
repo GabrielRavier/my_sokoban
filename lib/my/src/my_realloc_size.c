@@ -5,7 +5,8 @@
 ** Changes the size of the memory block pointed to by ptr to size bytes
 */
 
-#include "my.h"
+#include "my/stdlib.h"
+#include "my/string.h"
 #include <stdlib.h>
 
 static void *handle_other_cases(void *ptr, size_t new_length,

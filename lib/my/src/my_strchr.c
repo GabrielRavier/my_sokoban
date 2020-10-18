@@ -5,7 +5,7 @@
 ** Return a pointer to the find occurence of the character in the passed string
 */
 
-#include "my.h"
+#include "my/string.h"
 #include <stddef.h>
 
 char *my_strchr(const char *str, int character)

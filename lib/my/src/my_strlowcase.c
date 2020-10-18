@@ -5,7 +5,8 @@
 ** Puts every letter of a string into lowercase
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/ctype.h"
 
 char *my_strlowcase(char *str)
 {

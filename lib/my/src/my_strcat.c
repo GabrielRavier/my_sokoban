@@ -5,7 +5,7 @@
 ** Appends src to dest
 */
 
-#include "my.h"
+#include "my/string.h"
 
 char *my_strcat(char *destination, const char *source)
 {

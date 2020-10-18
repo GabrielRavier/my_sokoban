@@ -5,9 +5,8 @@
 ** Does an unsigned subtraction of two bigints
 */
 
-#include "my_bigint_internal.h"
-#include "my_bigint.h"
-#include "my.h"
+#include "my/internal/bigint.h"
+#include "my/macros.h"
 
 static signed char get_digit(struct my_bigint smaller_greater_num[2],
     size_t i, bool carry)

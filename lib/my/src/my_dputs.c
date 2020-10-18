@@ -5,7 +5,8 @@
 ** Writes the string s to fd (without its null terminator)
 */
 
-#include "my.h"
+#include "my/stdio.h"
+#include "my/string.h"
 #include <unistd.h>
 #include <stdio.h>
 

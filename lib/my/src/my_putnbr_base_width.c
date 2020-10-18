@@ -5,12 +5,12 @@
 ** Displays a number in a given base and width
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/stdio.h"
+#include "my/string.h"
 #include <stdio.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <stddef.h>
 #include <unistd.h>
+#include <limits.h>
 
 static const int WORK_BUFFER_SIZE = 1000;
 

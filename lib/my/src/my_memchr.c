@@ -5,7 +5,7 @@
 ** Scans memory for a character
 */
 
-#include "my.h"
+#include "my/string.h"
 
 void *my_memchr(const void *ptr, int character, size_t length)
 {

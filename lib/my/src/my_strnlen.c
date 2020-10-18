@@ -5,7 +5,7 @@
 ** Determines the length of a fixed-size string
 */
 
-#include "my.h"
+#include "my/string.h"
 
 size_t my_strnlen(const char *string, size_t max_length)
 {

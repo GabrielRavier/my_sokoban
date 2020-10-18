@@ -5,7 +5,8 @@
 ** Check if the passed string only contains printable characters
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/ctype.h"
 
 int my_str_isprintable(const char *str)
 {

@@ -5,7 +5,8 @@
 ** Capitalizes the first letter of each word
 */
 
-#include "my.h"
+#include "my/misc.h"
+#include "my/ctype.h"
 #include <stdbool.h>
 
 char *my_strcapitalize(char *str)

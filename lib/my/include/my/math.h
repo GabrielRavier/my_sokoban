@@ -7,4 +7,6 @@
 
 #pragma once
 
-#error "idk if I will make this include everything else later, but for now, no"
+#include "my/config.h"
+
+float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;

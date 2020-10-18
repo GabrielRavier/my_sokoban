@@ -5,7 +5,7 @@
 ** Compares two bigints without the sign
 */
 
-#include "my_bigint.h"
+#include "my/bigint.h"
 
 int my_bigint_compare_unsigned(const struct my_bigint *operand1,
     const struct my_bigint *operand2)

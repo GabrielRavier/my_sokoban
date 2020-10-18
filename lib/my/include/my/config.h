@@ -18,3 +18,5 @@
 #define MY_ATTR_NOTHROW MY_ATTRIBUTE((nothrow))
 #define MY_ATTR_NONNULL(parameters) MY_ATTRIBUTE((nonnull parameters))
 #define MY_ATTR_ALLOC_SIZE(parameters) MY_ATTRIBUTE((alloc_size parameters))
+#define MY_ATTR_PURE MY_ATTRIBUTE((pure))
+#define MY_ATTR_MALLOC MY_ATTRIBUTE((malloc))

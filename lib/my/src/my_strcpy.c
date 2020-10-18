@@ -7,14 +7,14 @@
 
 #include "my/string.h"
 
-char *my_strcpy(char *dest, const char *src)
+char *my_strcpy(char *destination, const char *source)
 {
-    char *result = dest;
+    char *result = destination;
     char tmp;
 
     do {
-        tmp = *src++;
-        *dest++ = tmp;
+        tmp = *source++;
+        *destination++ = tmp;
     } while (tmp);
 
     return (result);

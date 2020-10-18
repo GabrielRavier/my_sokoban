@@ -10,18 +10,18 @@
 
 #include "my/string.h"
 
-char *my_strncpy(char *dest, const char *src, size_t n)
+char *my_strncpy(char *destination, const char *source, size_t n)
 {
-    char *result = dest;
+    char *result = destination;
     char current_character;
 
     for (size_t i = 0; i < n; ++i) {
-        current_character = *src++;
-        *dest++ = current_character;
+        current_character = *source++;
+        *destination++ = current_character;
 
         if (current_character == '\0') {
             while (++i < n)
-                *dest++ = '\0';
+                *destination++ = '\0';
 
             return (result);
         }

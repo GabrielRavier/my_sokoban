@@ -8,12 +8,12 @@
 #include "my/misc.h"
 #include <limits.h>
 
-int my_find_prime_sup(int nb)
+int my_find_prime_sup(int number)
 {
-    if (nb < 0)
-        nb = 0;
+    if (number < 0)
+        number = 0;
 
-    for (int i = nb; i < INT_MAX; ++i)
+    for (int i = number; i < INT_MAX; ++i)
         if (my_is_prime(i))
             return i;
 

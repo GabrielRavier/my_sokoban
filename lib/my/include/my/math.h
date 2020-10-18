@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares functions from libmy
+** Declares math-related functions from libmy
 */
 
 #pragma once

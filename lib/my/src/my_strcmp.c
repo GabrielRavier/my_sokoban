@@ -7,14 +7,14 @@
 
 #include "my/string.h"
 
-int my_strcmp(const char *s1, const char *s2)
+int my_strcmp(const char *string1, const char *string2)
 {
     int i = 0;
 
     do {
-        if (s1[i] != s2[i])
-            return (s1[i] - s2[i]);
-    } while (s1[i++]);
+        if (string1[i] != string2[i])
+            return (string1[i] - string2[i]);
+    } while (string1[i++]);
 
     return (0);
 }

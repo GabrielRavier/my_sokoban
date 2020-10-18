@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares functions from libmy
+** Declares miscellaneous functions from libmy
 */
 
 #pragma once
@@ -21,8 +21,8 @@ char *my_nbr_to_string_base(int number,
 char *my_nbr_to_string_base_width(int number, const char *base,
     size_t width) MY_ATTR_WARN_UNUSED_RESULT;
 void my_swap(int *a, int *b);
-int my_getnbr(const char *string) MY_ATTR_WARN_UNUSED_RESULT;
-int my_getnbr_base(const char *string,
+int my_getnbr(const char *number_ptr) MY_ATTR_WARN_UNUSED_RESULT;
+int my_getnbr_base(const char *number_ptr,
     const char *base) MY_ATTR_WARN_UNUSED_RESULT;
 int my_compute_power_rec(int number, int power) MY_ATTR_WARN_UNUSED_RESULT;
 int my_compute_square_root(int number) MY_ATTR_WARN_UNUSED_RESULT;

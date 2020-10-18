@@ -7,7 +7,7 @@
 
 #include "my/string.h"
 
-int my_strncmp(const char *s1, const char *s2, size_t n)
+int my_strncmp(const char *string1, const char *string2, size_t n)
 {
     int i = 0;
 
@@ -15,11 +15,11 @@ int my_strncmp(const char *s1, const char *s2, size_t n)
         if (n == 0)
             return (0);
 
-        if (s1[i] != s2[i])
-            return (s1[i] - s2[i]);
+        if (string1[i] != string2[i])
+            return (string1[i] - string2[i]);
 
         --n;
-    } while (s1[i++]);
+    } while (string1[i++]);
 
     return (0);
 }

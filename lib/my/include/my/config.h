@@ -15,3 +15,4 @@
 
 #define MY_ATTR_WARN_UNUSED_RESULT MY_ATTRIBUTE((warn_unused_result))
 #define MY_ATTR_CONST MY_ATTRIBUTE((const))
+#define MY_ATTR_NOTHROW MY_ATTRIBUTE((nothrow))

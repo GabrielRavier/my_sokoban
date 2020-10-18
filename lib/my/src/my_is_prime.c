@@ -19,7 +19,7 @@ static unsigned internal_get_square_root_floor(unsigned nb)
     if (nb < 2)
         return nb;
 
-    small_candidate = internal_get_square_root_floor(nb >> 2) << 1;
+    small_candidate = internal_get_square_root_floor(nb >> 2u) << 1u;
     large_candidate = small_candidate + 1;
 
     if (!my_checked_multiply_unsigned(large_candidate, large_candidate,

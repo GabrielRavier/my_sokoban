@@ -48,8 +48,8 @@ static int handle_positive_negative_for_do_parse(int result, bool is_negative)
     if (!is_negative) {
         if (result == INT_MIN)
             return 0;
-        else
-            result = -result;
+
+        result = -result;
     }
 
     return result;

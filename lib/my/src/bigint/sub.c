@@ -5,8 +5,8 @@
 ** Subtracts two bigints
 */
 
-#include "my_bigint_internal.h"
-#include "my_bigint.h"
+#include "my/internal/bigint.h"
+#include "my/bigint.h"
 
 // TODO later
 void my_bigint_sub(struct my_bigint *result, const struct my_bigint *operand2)

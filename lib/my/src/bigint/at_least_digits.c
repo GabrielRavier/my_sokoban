@@ -7,6 +7,7 @@
 
 #include "my/internal/bigint.h"
 #include "my/string.h"
+#include "my/assert.h"
 #include <stdlib.h>
 
 void my_bigint_at_least_digits(struct my_bigint *num, size_t required_digits)
@@ -15,6 +16,7 @@ void my_bigint_at_least_digits(struct my_bigint *num, size_t required_digits)
 
     if (num->num_digits < required_digits) {
         num->number = (unsigned char *)malloc(required_digits);
+        MY_ASSERT(num->number != NULL);
         my_memcpy(num->number, old_number, num->num_digits);
 
         free(old_number);

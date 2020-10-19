@@ -22,20 +22,23 @@ HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 all: ../libmy.a $(HEADER_FILES)
 
 # The sources for libmy
-# Stuff related to stdio.h
-SOURCE_FILES := my_putchar my_dputc my_dputs my_puts
-
-# Stuff related to string.h
-SOURCE_FILES += my_strlen my_strcpy my_strncpy my_strstr my_strcmp my_strncmp my_strcat my_strncat my_strchr my_strspn my_strcspn my_strnlen my_strdup my_strndup my_memcpy my_memchr my_memset
-
-# Stuff related to stdlib.h (TODO (maybe): my_getnbr should probably be converted into strtol)
-SOURCE_FILES += my_qsort my_qsort_r my_realloc_size
+# Stuff related to assert.h
+SOURCE_FILES := my_assert_fail
 
 # Stuff related to ctype.h
 SOURCE_FILES += my_isprint my_isupper my_islower my_isdigit my_isalpha my_isalnum my_toupper my_tolower
 
 # Stuff related to math.h
 SOURCE_FILES += my_fabsf
+
+# Stuff related to stdio.h
+SOURCE_FILES += my_putchar my_dputc my_dputs my_puts
+
+# Stuff related to stdlib.h (TODO (maybe): my_getnbr should probably be converted into strtol)
+SOURCE_FILES += my_qsort my_qsort_r my_realloc_size
+
+# Stuff related to string.h
+SOURCE_FILES += my_strlen my_strcpy my_strncpy my_strstr my_strcmp my_strncmp my_strcat my_strncat my_strchr my_strspn my_strcspn my_strnlen my_strdup my_strndup my_memcpy my_memchr my_memset
 
 # Stuff related to my_bigint
 SOURCE_FILES += bigint/set_str bigint/add bigint/add_unsigned bigint/compare_unsigned bigint/sub_unsigned bigint/dprint bigint/free bigint/at_least_digits

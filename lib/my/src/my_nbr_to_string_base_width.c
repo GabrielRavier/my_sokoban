@@ -6,6 +6,7 @@
 */
 
 #include "my/misc.h"
+#include "my/assert.h"
 #include "my/string.h"
 #include <stdlib.h>
 #include <limits.h>
@@ -35,6 +36,7 @@ static char *finish_conversion(const char *converted_number_ptr,
         width = converted_number_size;
 
     result = (char *)malloc(width + 1);
+    MY_ASSERT(result != NULL);
     my_memset(result, '0', width - converted_number_size);
     my_memcpy(result, converted_number_ptr, converted_number_size);
     result[width] = '\0';

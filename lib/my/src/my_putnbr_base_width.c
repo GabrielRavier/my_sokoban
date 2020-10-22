@@ -22,7 +22,7 @@ static char *core_number_converter(unsigned number, char *buffer_end,
         *--buffer_end = base[number % base_len];
         number /= base_len;
     } while (number != 0);
-    return buffer_end;
+    return (buffer_end);
 }
 
 static bool finish_conversion(const char *converted_number_ptr,
@@ -66,5 +66,5 @@ bool my_putnbr_base_width(int number, const char *base, size_t width)
         (unsigned)number, buffer_end, base, my_strlen(base));
     if (is_negative)
         *--converted_number_ptr = '-';
-    return finish_conversion(converted_number_ptr, buffer_end, width);
+    return (finish_conversion(converted_number_ptr, buffer_end, width));
 }

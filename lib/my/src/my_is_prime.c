@@ -17,15 +17,13 @@ static unsigned internal_get_square_root_floor(unsigned nb)
     unsigned multiply_result;
 
     if (nb < 2)
-        return nb;
-
+        return (nb);
     small_candidate = internal_get_square_root_floor(nb >> 2u) << 1u;
     large_candidate = small_candidate + 1;
-
     if (!my_checked_multiply_unsigned(large_candidate, large_candidate,
             &multiply_result) || (multiply_result > nb))
-        return small_candidate;
-    return large_candidate;
+        return (small_candidate);
+    return (large_candidate);
 }
 
 // We use the floor of the square root plus 1 to be sure, so we either test up
@@ -36,17 +34,13 @@ bool my_is_prime(unsigned nb)
     unsigned square_root_floor = internal_get_square_root_floor(nb) + 1;
 
     if (nb <= 1)
-        return false;
-
+        return (false);
     if (nb == 2)
-        return true;
-
+        return (true);
     if ((nb % 2) == 0)
-        return false;
-
+        return (false);
     for (unsigned i = 3; i < square_root_floor; i += 2)
         if ((nb % i) == 0)
-            return false;
-
-    return true;
+            return (false);
+    return (true);
 }

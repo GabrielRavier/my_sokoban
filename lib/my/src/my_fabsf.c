@@ -9,5 +9,5 @@
 
 float my_fabsf(float x)
 {
-    return (x < 0) ? -x : x;
+    return ((x < 0) ? -x : x);
 }

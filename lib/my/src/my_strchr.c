@@ -12,8 +12,7 @@ char *my_strchr(const char *str, int character)
 {
     do {
         if (*str == character)
-            return (char *)str;
+            return ((char *)str);
     } while ((*str++) != '\0');
-
-    return NULL;
+    return (NULL);
 }

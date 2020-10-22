@@ -25,7 +25,7 @@ static char *find_smallest_element(char *first, char *last, size_t element_size,
 {
     char *smallest;
     if (first == last)
-        return last;
+        return (last);
 
     smallest = first;
     first += element_size;
@@ -35,7 +35,7 @@ static char *find_smallest_element(char *first, char *last, size_t element_size,
             smallest = first;
     }
 
-    return smallest;
+    return (smallest);
 }
 
 void my_qsort_r(void *base, size_t num_elements, size_t element_size,

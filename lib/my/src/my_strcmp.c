@@ -15,6 +15,5 @@ int my_strcmp(const char *string1, const char *string2)
         if (string1[i] != string2[i])
             return (string1[i] - string2[i]);
     } while (string1[i++]);
-
     return (0);
 }

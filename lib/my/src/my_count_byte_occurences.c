@@ -18,6 +18,5 @@ size_t my_count_byte_occurences(const char *first, const char *last,
             ++result;
         ++first;
     }
-
-    return result;
+    return (result);
 }

@@ -22,7 +22,6 @@ void my_bigint_add_unsigned(struct my_bigint *result,
             result->number[i] = 0;
             ++result->num_digits;
         }
-
         total = result->number[i] +
             (i < operand2->num_digits ? operand2->number[i] : 0) + carry;
         result->number[i] = total % 10;

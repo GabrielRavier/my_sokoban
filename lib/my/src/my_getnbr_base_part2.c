@@ -16,13 +16,12 @@ bool my_find_digit_from_base(const char *digit_character_ptr, const char *base,
 {
     char character = *digit_character_ptr;
     const char *strchr_result;
-    if (character == '\0')
-        return false;
 
+    if (character == '\0')
+        return (false);
     strchr_result = my_strchr(base, character);
     if (!strchr_result)
-        return false;
-
+        return (false);
     *digit_ptr = (unsigned char)(strchr_result - base);
-    return true;
+    return (true);
 }

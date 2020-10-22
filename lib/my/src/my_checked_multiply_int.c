@@ -22,15 +22,14 @@ static bool check_overflow_multiply_same_signs(int lhs, int rhs)
 {
     if (lhs >= 0) {
         if (lhs && (INT_MAX / lhs) < rhs)
-            return true;
+            return (true);
     } else {
         if (lhs == INT_MIN || rhs == INT_MIN)
-            return true;
+            return (true);
         if ((INT_MAX / -lhs) < -rhs)
-            return true;
+            return (true);
     }
-
-    return false;
+    return (false);
 }
 
 static bool check_overflow_opposite_signs_multiply(int positive_operand,
@@ -46,10 +45,10 @@ bool my_checked_multiply_int(int lhs, int rhs, int *result)
 {
     if (same_signs(lhs, rhs)) {
         if (check_overflow_multiply_same_signs(lhs, rhs))
-            return false;
+            return (false);
     } else if (check_overflow_opposite_signs_multiply(lhs < 0 ? rhs : lhs,
             lhs < 0 ? lhs : rhs))
-        return false;
+        return (false);
     *result = lhs * rhs;
-    return true;
+    return (true);
 }

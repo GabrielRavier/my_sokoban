@@ -21,8 +21,7 @@ static char *core_number_converter(unsigned number, char *buffer_end,
         *--buffer_end = base[number % base_len];
         number /= base_len;
     } while (number != 0);
-
-    return buffer_end;
+    return (buffer_end);
 }
 
 // Handles concatenating the converted number and whatever amount of 0s we need
@@ -32,16 +31,15 @@ static char *finish_conversion(const char *converted_number_ptr,
 {
     char *result;
     size_t converted_number_size = (size_t)(buffer_end - converted_number_ptr);
+
     if (converted_number_size > width)
         width = converted_number_size;
-
     result = (char *)malloc(width + 1);
     MY_ASSERT(result != NULL);
     my_memset(result, '0', width - converted_number_size);
     my_memcpy(result, converted_number_ptr, converted_number_size);
     result[width] = '\0';
-
-    return result;
+    return (result);
 }
 
 // We convert the number into a string at a work buffer (we prepend a '-' for
@@ -65,12 +63,9 @@ char *my_nbr_to_string_base_width(int number, const char *base, size_t width)
 
     if (is_negative && number != INT_MIN)
         number = -number;
-
     converted_number_ptr = core_number_converter(
         (unsigned)number, buffer_end, base, my_strlen(base));
-
     if (is_negative)
         *--converted_number_ptr = '-';
-
-    return finish_conversion(converted_number_ptr, buffer_end, width);
+    return (finish_conversion(converted_number_ptr, buffer_end, width));
 }

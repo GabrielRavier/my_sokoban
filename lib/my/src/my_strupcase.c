@@ -16,6 +16,5 @@ char *my_strupcase(char *str)
         *str = my_toupper(*str);
         ++str;
     }
-
     return (result);
 }

@@ -34,6 +34,5 @@ void my_assert_fail(const char *expression, const char *file_name,
         my_dputs(expression, STDERR_FILENO) == EOF ||
         my_dputs("' failed.\n", STDERR_FILENO) == EOF)
         error_in_assert();
-
     __builtin_trap();
 }

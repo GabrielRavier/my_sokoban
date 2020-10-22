@@ -20,6 +20,5 @@ char *my_strcapitalize(char *str)
         } else
             is_in_word = false;
     }
-
     return (str);
 }

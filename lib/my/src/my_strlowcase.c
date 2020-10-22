@@ -16,6 +16,5 @@ char *my_strlowcase(char *str)
         *str = my_tolower(*str);
         ++str;
     }
-
     return (result);
 }

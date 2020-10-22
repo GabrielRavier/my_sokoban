@@ -20,8 +20,7 @@ size_t my_strcspn(const char *str, const char *reject)
     while (true) {
         current_str_character = *str++;
         if (current_str_character == '\0')
-            return result;
-
+            return (result);
         reject_iterator = reject;
         do {
             current_reject_character = *reject_iterator++;
@@ -29,7 +28,7 @@ size_t my_strcspn(const char *str, const char *reject)
                 break;
         } while (current_reject_character != current_str_character);
         if (current_reject_character != '\0')
-            return result;
+            return (result);
         ++result;
     }
 }

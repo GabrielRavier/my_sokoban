@@ -13,5 +13,5 @@
 
 bool my_checked_multiply_unsigned(unsigned lhs, unsigned rhs, unsigned *result)
 {
-    return __builtin_mul_overflow(lhs, rhs, result) == false;
+    return (__builtin_mul_overflow(lhs, rhs, result) == false);
 }

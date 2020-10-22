@@ -18,18 +18,14 @@ bool my_bigint_set_str(struct my_bigint *num, const char *str)
         ++str;
     } else
         num->is_negative = false;
-
     if (!my_str_isnum(str))
-        return false;
-
+        return (false);
     while (*str == '0' && *(str + 1) != '\0')
         ++str;
-
     num->number = (unsigned char *)my_strdup(str);
     num->num_digits = my_strlen(str);
     my_revstr((char *)num->number);
     for (size_t i = 0; i < num->num_digits; ++i)
         num->number[i] -= '0';
-
-    return true;
+    return (true);
 }

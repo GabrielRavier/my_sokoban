@@ -16,6 +16,5 @@ char *my_strcpy(char *destination, const char *source)
         tmp = *source++;
         *destination++ = tmp;
     } while (tmp);
-
     return (result);
 }

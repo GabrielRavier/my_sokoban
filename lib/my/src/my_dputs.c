@@ -13,11 +13,10 @@
 int my_dputs(const char *string, int fd)
 {
     size_t string_len = my_strlen(string);
+
     if (string_len == 0)
-        return 0;
-
+        return (0);
     if ((size_t)write(fd, string, string_len) != string_len)
-        return EOF;
-
-    return 0;
+        return (EOF);
+    return (0);
 }

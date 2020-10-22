@@ -47,7 +47,7 @@ SOURCE_FILES += bigint/set_str bigint/add bigint/add_unsigned bigint/compare_uns
 SOURCE_FILES += my_checked_multiply_int my_checked_multiply_unsigned
 
 # Miscellaneous stuff
-SOURCE_FILES += my_putnbr my_putnbr_base my_putnbr_base_width my_getnbr my_getnbr_base my_getnbr_base_part2 my_nbr_to_string my_nbr_to_string_base my_nbr_to_string_base_width my_swap my_compute_power_rec my_compute_square_root my_is_prime my_find_prime_sup my_revstr my_strupcase my_strlowcase my_strcapitalize my_str_isalpha my_str_isnum my_str_islower my_str_isupper my_str_isprintable my_count_byte_occurences my_str_to_word_array my_show_word_array
+SOURCE_FILES += my_putnbr my_putnbr_base my_putnbr_base_width my_getnbr my_getnbr_base my_getnbr_base_part2 my_nbr_to_string my_nbr_to_string_base my_nbr_to_string_base_width my_compute_power_rec my_compute_square_root my_is_prime my_find_prime_sup my_revstr my_strupcase my_strlowcase my_strcapitalize my_str_isalpha my_str_isnum my_str_islower my_str_isupper my_str_isprintable my_count_byte_occurences my_str_to_word_array my_show_word_array
 
 OBJECT_FILES := $(addprefix obj/, $(addsuffix .o, $(SOURCE_FILES)))
 

@@ -14,6 +14,5 @@ size_t my_strnlen(const char *string, size_t max_length)
 
     if (memchr_result == NULL)
         return (max_length);
-
     return (size_t)(memchr_result - string);
 }

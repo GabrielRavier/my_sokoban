@@ -9,5 +9,5 @@
 
 int my_getnbr(char const *number_ptr)
 {
-    return my_getnbr_base(number_ptr, "0123456789");
+    return (my_getnbr_base(number_ptr, "0123456789"));
 }

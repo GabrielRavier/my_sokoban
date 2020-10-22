@@ -13,9 +13,9 @@ char *my_strdup(const char *string)
 {
     size_t string_length = my_strlen(string) + 1;
     void *duplicate_string = malloc(string_length);
-    if (!duplicate_string)
-        return NULL;
 
+    if (!duplicate_string)
+        return (NULL);
     my_memcpy(duplicate_string, string, string_length);
-    return (char *)duplicate_string;
+    return ((char *)duplicate_string);
 }

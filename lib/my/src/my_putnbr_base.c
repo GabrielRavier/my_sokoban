@@ -9,5 +9,5 @@
 
 bool my_putnbr_base(int number, const char *base)
 {
-    return my_putnbr_base_width(number, base, 0);
+    return (my_putnbr_base_width(number, base, 0));
 }

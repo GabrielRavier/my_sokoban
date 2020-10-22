@@ -8,11 +8,10 @@
 #include "my/misc.h"
 #include "my/ctype.h"
 
-int my_str_isnum(const char *str)
+bool my_str_isnum(const char *str)
 {
     for (int i = 0; str[i] != '\0'; ++i)
         if (!my_isdigit(str[i]))
-            return (0);
-
-    return (1);
+            return (false);
+    return (true);
 }

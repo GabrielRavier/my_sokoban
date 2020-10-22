@@ -14,7 +14,6 @@ bool my_show_word_array(char *const *table)
 {
     for (size_t i = 0; table[i] != NULL; ++i)
         if (my_puts(table[i]) == EOF)
-            return false;
-
-    return true;
+            return (false);
+    return (true);
 }

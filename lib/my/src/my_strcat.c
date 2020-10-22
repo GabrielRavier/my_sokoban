@@ -10,5 +10,5 @@
 char *my_strcat(char *destination, const char *source)
 {
     my_strcpy(destination + my_strlen(destination), source);
-    return destination;
+    return (destination);
 }

@@ -9,5 +9,5 @@
 
 char *my_nbr_to_string_base(int number, const char *base)
 {
-    return my_nbr_to_string_base_width(number, base, 0);
+    return (my_nbr_to_string_base_width(number, base, 0));
 }

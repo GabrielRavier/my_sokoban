@@ -30,18 +30,19 @@ static bool finish_conversion(const char *converted_number_ptr,
     const char *buffer_end, size_t width)
 {
     size_t converted_number_size = (size_t)(buffer_end - converted_number_ptr);
+
     if (converted_number_size > width)
         width = converted_number_size;
 
     while ((width--) > converted_number_size)
         if (my_putchar('0') == EOF)
-            return false;
+            return (false);
 
     if ((size_t)write(STDOUT_FILENO, converted_number_ptr,
             converted_number_size) != converted_number_size)
-        return false;
+        return (false);
 
-    return true;
+    return (true);
 }
 
 // We convert the number into a string at a work buffer (we prepend a '-' for

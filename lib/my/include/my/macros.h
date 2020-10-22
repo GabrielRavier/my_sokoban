@@ -11,3 +11,4 @@
 #define MY_COUNTOF(array) ((sizeof(array)) / (sizeof((array)[0])))
 
 #define MY_MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MY_MIN(a, b) ((a) > (b) ? (b) : (a))

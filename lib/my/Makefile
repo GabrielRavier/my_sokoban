@@ -26,7 +26,7 @@ all: ../libmy.a $(HEADER_FILES)
 SOURCE_FILES := my_assert_fail
 
 # Stuff related to ctype.h
-SOURCE_FILES += my_isprint my_isupper my_islower my_isdigit my_isalpha my_isalnum my_toupper my_tolower
+SOURCE_FILES += my_isprint my_isupper my_islower my_isdigit my_isalpha my_isalnum my_isspace my_toupper my_tolower
 
 # Stuff related to math.h
 SOURCE_FILES += my_fabsf

@@ -20,6 +20,8 @@ int my_isdigit(int character)
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST MY_ATTR_NOTHROW;
 int my_isalpha(int character)
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST MY_ATTR_NOTHROW;
+int my_isspace(int character)
+    MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST MY_ATTR_NOTHROW;
 int my_islower(int character)
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST MY_ATTR_NOTHROW;
 int my_tolower(int character)

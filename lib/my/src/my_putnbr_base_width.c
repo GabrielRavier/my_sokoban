@@ -22,7 +22,6 @@ static char *core_number_converter(unsigned number, char *buffer_end,
         *--buffer_end = base[number % base_len];
         number /= base_len;
     } while (number != 0);
-
     return buffer_end;
 }
 
@@ -33,15 +32,12 @@ static bool finish_conversion(const char *converted_number_ptr,
 
     if (converted_number_size > width)
         width = converted_number_size;
-
     while ((width--) > converted_number_size)
         if (my_putchar('0') == EOF)
             return (false);
-
     if ((size_t)write(STDOUT_FILENO, converted_number_ptr,
             converted_number_size) != converted_number_size)
         return (false);
-
     return (true);
 }
 
@@ -68,9 +64,7 @@ bool my_putnbr_base_width(int number, const char *base, size_t width)
         number = -number;
     converted_number_ptr = core_number_converter(
         (unsigned)number, buffer_end, base, my_strlen(base));
-
     if (is_negative)
         *--converted_number_ptr = '-';
-
     return finish_conversion(converted_number_ptr, buffer_end, width);
 }

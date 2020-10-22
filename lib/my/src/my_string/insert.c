@@ -23,5 +23,7 @@ struct my_string *my_string_insert(
     my_memmove(self->string + position + length, self->string + position,
         self->length - position);
     my_memcpy(self->string + position, string, length);
+    self->length += length;
+    self->string[self->length] = '\0';
     return self;
 }

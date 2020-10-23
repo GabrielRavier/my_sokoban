@@ -7,6 +7,7 @@
 
 #include "my/internal/my_string.h"
 #include "my/stdlib.h"
+#include "my/assert.h"
 
 // We allocate some extra bytes to reduce the amount of calls to realloc when
 // frequently increasing the size of self
@@ -21,6 +22,7 @@ struct my_string *my_string_guarantee_can_expand(
             self->length + length + 1 + EXTRA_ALLOCATED_SPACE;
         self->string = my_realloc_size(
             self->string, self->allocated_size, current_allocated_size);
+        MY_ASSERT(self->string != NULL);
     }
 
     return self;

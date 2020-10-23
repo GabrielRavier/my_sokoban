@@ -8,6 +8,7 @@
 #pragma once
 
 #include "my/config.h"
+#include <stdbool.h>
 
 void my_assert_fail(const char *expression, const char *file_name,
     int line_number, const char *function_name) MY_ATTR_NORETURN;

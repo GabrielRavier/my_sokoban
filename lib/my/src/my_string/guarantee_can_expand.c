@@ -13,8 +13,8 @@
 // frequently increasing the size of self
 static const size_t EXTRA_ALLOCATED_SPACE = 16;
 
-struct my_string *my_string_guarantee_can_expand(
-    struct my_string *self, size_t length)
+struct my_string *my_string_guarantee_can_expand(struct my_string *self,
+    size_t length)
 {
     size_t current_allocated_size = self->allocated_size;
     if (self->length + length >= current_allocated_size) {

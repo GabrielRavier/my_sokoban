@@ -11,10 +11,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-bool my_putnbr(int number) MY_ATTR_WARN_UNUSED_RESULT;
-bool my_putnbr_base(int number, const char *base) MY_ATTR_WARN_UNUSED_RESULT;
-bool my_putnbr_base_width(int number, const char *base,
-    size_t width) MY_ATTR_WARN_UNUSED_RESULT;
+bool my_putnbr(int number);
+bool my_putnbr_base(int number, const char *base);
+bool my_putnbr_base_width(int number, const char *base, size_t width);
 char *my_nbr_to_string(int number) MY_ATTR_WARN_UNUSED_RESULT;
 char *my_nbr_to_string_base(int number,
     const char *base) MY_ATTR_WARN_UNUSED_RESULT;

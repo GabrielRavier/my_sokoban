@@ -12,5 +12,5 @@
 
 // Guarantees that at least self->length + length + 1 bytes are allocated in
 // self
-struct my_string *my_string_guarantee_can_expand(
-    struct my_string *self, size_t length);
+struct my_string *my_string_guarantee_can_expand(struct my_string *self,
+    size_t length);

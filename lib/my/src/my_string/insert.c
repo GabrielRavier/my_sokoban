@@ -13,8 +13,8 @@
 // the end of the string to make space for the inserted string (if we're
 // inserting at the end, this will end up doing nothing), then copies the
 // inserted string to where we want it to be
-struct my_string *my_string_insert(
-    struct my_string *self, const char *string, size_t length, size_t position)
+struct my_string *my_string_insert(struct my_string *self, const char *string,
+    size_t length, size_t position)
 {
     if (self == NULL || string == NULL || length == 0 ||
         (position > self->length))

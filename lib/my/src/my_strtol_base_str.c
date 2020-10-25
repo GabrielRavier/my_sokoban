@@ -7,6 +7,7 @@
 
 #include "my/stdlib.h"
 #include "my/misc.h"
+#include "my/ctype.h"
 #include "my/internal/strtol_base_str_part2.h"
 #include "my/string.h"
 #include <stdbool.h>
@@ -90,7 +91,13 @@ static long do_parse(const char *number_ptr, bool is_negative, const char *base,
 long my_strtol_base_str(const char *num_ptr, char **end_num_ptr, const char *base)
 {
     bool is_negative;
+    const char *orig_ptr = num_ptr;
 
     find_number(&num_ptr, &is_negative);
+    if (!my_isdigit(*num_ptr)) {
+        if (end_num_ptr)
+            *end_num_ptr = (char *)num_ptr;
+        return 0;
+    }
     return (do_parse(num_ptr, is_negative, base, end_num_ptr));
 }

@@ -5,7 +5,7 @@
 ** Does part 2 of getnbr
 */
 
-#include "my/internal/getnbr_part2.h"
+#include "my/internal/strtol_base_str_part2.h"
 #include "my/string.h"
 
 // Checks whether there is a valid digit at *digit_ptr and gets it into

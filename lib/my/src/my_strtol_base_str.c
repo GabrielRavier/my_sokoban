@@ -93,7 +93,7 @@ long my_strtol_base_str(const char *num_ptr, char **end_num_ptr, const char *bas
     const char *orig_ptr = num_ptr;
 
     find_number(&num_ptr, &is_negative);
-    if (!my_isdigit(*num_ptr)) {
+    if (*num_ptr == '\0' || (my_strchr(base, *num_ptr) == NULL)) {
         if (end_num_ptr)
             *end_num_ptr = (char *)orig_ptr;
         return 0;

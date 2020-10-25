@@ -24,7 +24,7 @@
 static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
 {
     const char *number_ptr = *number_ptr_ptr;
-    const char *first_digit = number_ptr + my_strspn(number_ptr, " -+");
+    const char *first_digit = number_ptr + my_strspn(number_ptr, "\t\v\f\n\r -+");
 
     *is_negative_ptr =
         ((my_count_byte_occurences(number_ptr, first_digit, '-') % 2));

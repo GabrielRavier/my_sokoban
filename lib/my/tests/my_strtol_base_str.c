@@ -75,4 +75,7 @@ Test(my_strtol_base_str, simple_tests)
     test_strtol_base10("0000", 0, 4);
     test_strtol_base10("+0", 0, 2);
     test_strtol_base10("-0", 0, 2);
+    test_strtol_base10("*", 0, 0);
+    test_strtol_base10("5 *", 5, 1);
+    test_strtol_base10("+ 5 *", 0, 0);
 }

@@ -97,7 +97,7 @@ long my_strtol_base_str(const char *num_ptr, char **end_num_ptr, const char *bas
     if (*num_ptr == '\0' || (my_strchr(base, *num_ptr) == NULL)) {
         if (end_num_ptr)
             *end_num_ptr = (char *)orig_ptr;
-        return 0;
+        return (0);
     }
     return (do_parse(num_ptr, is_negative, base, end_num_ptr));
 }

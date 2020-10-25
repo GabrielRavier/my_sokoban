@@ -74,12 +74,12 @@ static long do_parse(const char *number_ptr, bool is_negative, const char *base,
     while (true) {
         if (!my_find_digit_from_base(number_ptr++, base, &current_digit)) {
             if (end_num_ptr)
-                *end_num_ptr = (char *)number_ptr;
+                *end_num_ptr = (char *)(number_ptr - 1);
             break;
         }
         if (is_about_to_overflow(result, current_digit, base_width)) {
             if (end_num_ptr)
-                *end_num_ptr = (char *)number_ptr;
+                *end_num_ptr = (char *)(number_ptr - 1);
             return (is_negative ? LONG_MIN : LONG_MAX);
         }
         result *= (long)base_width;
@@ -96,7 +96,7 @@ long my_strtol_base_str(const char *num_ptr, char **end_num_ptr, const char *bas
     find_number(&num_ptr, &is_negative);
     if (!my_isdigit(*num_ptr)) {
         if (end_num_ptr)
-            *end_num_ptr = (char *)num_ptr;
+            *end_num_ptr = (char *)orig_ptr;
         return 0;
     }
     return (do_parse(num_ptr, is_negative, base, end_num_ptr));

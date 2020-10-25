@@ -13,7 +13,7 @@ static signed char get_digit(struct my_bigint smaller_greater_num[2],
 {
     if (i < smaller_greater_num[0].num_digits)
         return (smaller_greater_num[1].number[i] -
-                smaller_greater_num[0].number[i] - carry);
+            smaller_greater_num[0].number[i] - carry);
     return (smaller_greater_num[1].number[i] - carry);
 }
 

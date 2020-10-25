@@ -21,4 +21,5 @@ void *my_realloc_size(void *ptr, size_t new_length, size_t original_length)
 // This allows an arbitrary amount of signs before the number, and handles them
 // appropriately, so this doesn't behave exactly identically to strtol. It also
 // does not set errno
-long my_strtol_base_str(const char *num_ptr, char **end_num_ptr, const char *base);
+long my_strtol_base_str(const char *num_ptr, char **end_num_ptr,
+    const char *base);

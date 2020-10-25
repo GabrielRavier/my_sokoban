@@ -88,7 +88,8 @@ static long do_parse(const char *number_ptr, bool is_negative, const char *base,
     return (handle_positive_negative_for_do_parse(result, is_negative));
 }
 
-long my_strtol_base_str(const char *num_ptr, char **end_num_ptr, const char *base)
+long my_strtol_base_str(const char *num_ptr, char **end_num_ptr,
+    const char *base)
 {
     bool is_negative;
     const char *orig_ptr = num_ptr;

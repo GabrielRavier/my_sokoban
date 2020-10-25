@@ -30,9 +30,8 @@ static int try_find_square_root(int number)
         return (number);
     small_candidate = try_find_square_root(number >> 2) << 1;
     large_candidate = small_candidate + 1;
-    if (!my_checked_multiply_int(
-            large_candidate, large_candidate, &multiply_result) ||
-        (multiply_result > number))
+    if (!my_checked_multiply_int(large_candidate, large_candidate,
+            &multiply_result) || (multiply_result > number))
         return (small_candidate);
     return (large_candidate);
 }

@@ -84,5 +84,5 @@ clean:
 	rm --recursive --force obj
 
 # Remove all object, binary and other produced files
-fclean:
+fclean: clean
 	rm --recursive --force ../libmy.a $(HEADER_FILES)

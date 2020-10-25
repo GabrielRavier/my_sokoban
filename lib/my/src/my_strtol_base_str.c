@@ -32,13 +32,12 @@ static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
 }
 
 // current_result must be a negative number, we check whether adding the digit
-// will overflow below INT_MIN
-// is_about_to_overflow
+// will overflow below LONG_MIN
 static bool is_about_to_overflow(long current_result,
     unsigned char current_digit, size_t base)
 {
-    long long_min_without_last_digit = LONG_MIN / (int)base;
-    long long_min_last_digit = -(LONG_MIN % (int)base);
+    long long_min_without_last_digit = LONG_MIN / (long)base;
+    long long_min_last_digit = -(LONG_MIN % (long)base);
 
     return (current_result < long_min_without_last_digit ||
         (current_result == long_min_without_last_digit &&
@@ -51,7 +50,7 @@ static long handle_positive_negative_for_do_parse(long result, bool is_negative)
 {
     if (!is_negative) {
         if (result == LONG_MIN)
-            return (0);
+            return LONG_MAX;
         result = -result;
     }
     return (result);
@@ -73,12 +72,12 @@ static long do_parse(const char *number_ptr, bool is_negative, const char *base,
 
     while (true) {
         if (!my_find_digit_from_base(number_ptr++, base, &current_digit)) {
-            if (end_num_ptr)
+            if (end_num_ptr != NULL)
                 *end_num_ptr = (char *)(number_ptr - 1);
             break;
         }
         if (is_about_to_overflow(result, current_digit, base_width)) {
-            if (end_num_ptr)
+            if (end_num_ptr != NULL)
                 *end_num_ptr = (char *)(number_ptr - 1);
             return (is_negative ? LONG_MIN : LONG_MAX);
         }

@@ -11,6 +11,7 @@ void my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2)
 {
     bool is_result_negative;
     int compare_result;
+
     if (result->is_negative == operand2->is_negative)
         my_bigint_add_unsigned(result, operand2);
     else {

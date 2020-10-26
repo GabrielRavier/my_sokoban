@@ -15,8 +15,8 @@ void my_bigint_add_unsigned(struct my_bigint *result,
         MY_MAX(result->num_digits, operand2->num_digits) + 1;
     bool carry = false;
     unsigned char total;
-    my_bigint_at_least_digits(result, required_digits);
 
+    my_bigint_at_least_digits(result, required_digits);
     for (size_t i = 0; (i < operand2->num_digits) || carry; ++i) {
         if (i == result->num_digits) {
             result->number[i] = 0;

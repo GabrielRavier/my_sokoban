@@ -40,13 +40,21 @@ static void test_strtol_base8(const char *string, long expected_result,
 
 Test(my_strtol_base_str, simple_tests)
 {
-    char buffer[16];
+    char buffer[32];
     for (long i = 0; i <= 100; ++i) {
         sprintf(buffer, "%ld", i);
         test_strtol_base10(buffer, i, my_strlen(buffer));
         sprintf(buffer, "%lx", i);
         test_strtol_base16(buffer, i, my_strlen(buffer));
         sprintf(buffer, "%lo", i);
+        test_strtol_base8(buffer, i, my_strlen(buffer));
+    }
+    for (long i = 0; i >= -100; --i) {
+        sprintf(buffer, "%ld", i);
+        test_strtol_base10(buffer, i, my_strlen(buffer));
+        sprintf(buffer, "-%lx", -i);
+        test_strtol_base16(buffer, i, my_strlen(buffer));
+        sprintf(buffer, "-%lo", -i);
         test_strtol_base8(buffer, i, my_strlen(buffer));
     }
     for (long i = LONG_MAX; i >= (LONG_MAX - 100); --i) {

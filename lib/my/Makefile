@@ -52,10 +52,10 @@ SOURCE_FILES += my_string/new_from_string my_string/new my_string/guarantee_can_
 # Miscellaneous stuff
 SOURCE_FILES += my_putnbr my_putnbr_base my_putnbr_base_width my_nbr_to_string my_nbr_to_string_base my_nbr_to_string_base_width my_compute_power_rec my_compute_square_root my_is_prime my_find_prime_sup my_revstr my_strupcase my_strlowcase my_strcapitalize my_str_isalpha my_str_isnum my_str_islower my_str_isupper my_str_isprintable my_count_byte_occurences my_str_to_word_array my_show_word_array
 
-TESTS_SOURCE_FILES := my_strtol_base_str
+TESTS_SOURCE_FILES := test_my_strtol_base_str
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
-TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))
+TESTS_OBJECT_FILES := $(addprefix obj/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))
 
 # r is for inserting with replacement
 # c is for creating the archive without a warning when it doesn't exist
@@ -73,6 +73,9 @@ tests_binary: ../libmy.a $(TESTS_OBJECT_FILES)
 obj/%.o: %.c
 	@mkdir --parents obj/src/bigint
 	@mkdir --parents obj/src/my_string
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+obj/%.o: ../../tests/libmy/%.c
 	@mkdir --parents obj/tests
 	$(CC) -c $< -o $@ $(CFLAGS)
 
@@ -85,4 +88,4 @@ clean:
 
 # Remove all object, binary and other produced files
 fclean: clean
-	rm --recursive --force ../libmy.a $(HEADER_FILES)
+	rm --recursive --force ../libmy.a tests_binary $(HEADER_FILES)

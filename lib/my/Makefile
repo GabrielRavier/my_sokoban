@@ -41,7 +41,7 @@ SOURCE_FILES += my_qsort my_qsort_r my_realloc_size my_strtol_base_str my_strtol
 SOURCE_FILES += my_strlen my_strcpy my_strncpy my_strstr my_strcmp my_strncmp my_strcat my_strncat my_strchr my_strspn my_strcspn my_strnlen my_strdup my_strndup my_memcpy my_memmove my_memchr my_memset
 
 # Stuff related to my_bigint
-SOURCE_FILES += bigint/set_str bigint/add bigint/add_unsigned bigint/compare_unsigned bigint/sub_unsigned bigint/dprint bigint/free bigint/at_least_digits
+SOURCE_FILES += bigint/init_str bigint/add bigint/add_unsigned bigint/compare bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/dprint bigint/free bigint/at_least_digits
 
 # Stuff related to my_checked_multiply
 SOURCE_FILES += my_checked_multiply_int my_checked_multiply_unsigned

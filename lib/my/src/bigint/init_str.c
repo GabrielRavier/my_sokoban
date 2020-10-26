@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 // Maybe add stuff like skipping whitespace in the future ? idk
-bool my_bigint_set_str(struct my_bigint *num, const char *str)
+bool my_bigint_init_str(struct my_bigint *num, const char *str)
 {
     if (*str == '-') {
         num->is_negative = true;

@@ -17,7 +17,7 @@ static signed char get_digit(const struct my_bigint *smaller_greater_num[2],
     return (smaller_greater_num[1]->number->string[i] - carry);
 }
 
-void my_bigint_sub_unsigned(struct my_bigint *result,
+struct my_bigint *my_bigint_sub_unsigned(struct my_bigint *result,
     const struct my_bigint *operand2)
 {
     bool which_bigger = my_bigint_compare_unsigned(result, operand2) > 0;
@@ -37,4 +37,5 @@ void my_bigint_sub_unsigned(struct my_bigint *result,
             carry = false;
         result->number->string[i] = (unsigned char)digit;
     }
+    return result;
 }

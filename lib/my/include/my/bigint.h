@@ -28,32 +28,56 @@ struct my_bigint *my_bigint_new_from_int(int x)
     MY_ATTR_WARN_UNUSED_RESULT;
 
 // Copies source into destination
-void my_bigint_assign(struct my_bigint *destination,
+struct my_bigint *my_bigint_assign(struct my_bigint *destination,
     const struct my_bigint *source);
 
 // result += operand2
-void my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2);
+struct my_bigint *my_bigint_add(struct my_bigint *result,
+    const struct my_bigint *operand2);
 
 // Same as above, but does not handle signs
-void my_bigint_add_unsigned(struct my_bigint *result,
+struct my_bigint *my_bigint_add_unsigned(struct my_bigint *result,
     const struct my_bigint *operand2);
 
 // result -= operand2
-void my_bigint_sub(struct my_bigint *result,
+struct my_bigint *my_bigint_sub(struct my_bigint *result,
     const struct my_bigint *operand2);
 
+// Same as above, except operand2 is an int
+struct my_bigint *my_bigint_sub_int(struct my_bigint *result,
+    int operand2);
+
 // Same as above, but does not handle signs
-void my_bigint_sub_unsigned(struct my_bigint *result,
+struct my_bigint *my_bigint_sub_unsigned(struct my_bigint *result,
+    const struct my_bigint *operand2);
+
+// Same as above, except operand2 is an int
+struct my_bigint *my_bigint_mul(struct my_bigint *result,
     const struct my_bigint *operand2);
 
 // result *= operand2
-void my_bigint_mul(struct my_bigint *result,
+struct my_bigint *my_bigint_mul_int(struct my_bigint *result,
+    int operand2);
+
+// result /= operand2
+struct my_bigint *my_bigint_div(struct my_bigint *result,
     const struct my_bigint *operand2);
+
+// result %= operand2
+struct my_bigint *my_bigint_mod(struct my_bigint *result,
+    const struct my_bigint *operand2);
+
+// self = -self
+struct my_bigint *my_bigint_neg(struct my_bigint *self);
 
 // Returns either -1 (operand1 < operand2), 0 (operand1 == operand2)
 // or 1 (operand1 > operand2)
 int my_bigint_compare(const struct my_bigint *operand1,
     const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT;
+
+// Same as above, except operand2 is an int
+int my_bigint_compare_int(const struct my_bigint *operand1,
+    int operand2) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Same as above, but does not handle signs
 int my_bigint_compare_unsigned(const struct my_bigint *operand1,

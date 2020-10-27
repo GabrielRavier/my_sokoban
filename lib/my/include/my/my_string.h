@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "my/config.h"
 #include <stddef.h>
 
 // This contains a null-terminated string (for easy usage with C APIs), but can
@@ -18,10 +19,11 @@ struct my_string {
 };
 
 // Creates a new, empty, my_string
-struct my_string *my_string_new(void);
+struct my_string *my_string_new(void) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Creates a new my_string from the first size bytes of string
-struct my_string *my_string_new_from_string(const char *string, size_t length);
+struct my_string *my_string_new_from_string(const char *string, size_t length)
+    MY_ATTR_WARN_UNUSED_RESULT;
 
 // Copies source into self
 struct my_string *my_string_assign(struct my_string *self,

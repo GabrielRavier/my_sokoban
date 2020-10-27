@@ -15,7 +15,7 @@ struct my_bigint *my_bigint_new_from_int(int x)
     result->is_negative = (x < 0);
     if (result->is_negative)
         x = -x;
-    my_string_new_from_string(&((char){x % 10}), 1);
+    result->number = my_string_new_from_string(&((char){x % 10}), 1);
     x /= 10;
     while (x != 0) {
         my_string_append_char(result->number, x % 10);

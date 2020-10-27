@@ -7,7 +7,7 @@
 
 #include "my/bigint.h"
 
-void my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2)
+struct my_bigint *my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2)
 {
     bool is_result_negative;
     int compare_result;
@@ -24,4 +24,5 @@ void my_bigint_add(struct my_bigint *result, const struct my_bigint *operand2)
         my_bigint_sub_unsigned(result, operand2);
         result->is_negative = is_result_negative;
     }
+    return result;
 }

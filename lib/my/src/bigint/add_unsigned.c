@@ -8,7 +8,7 @@
 #include "my/internal/bigint.h"
 #include "my/macros.h"
 
-void my_bigint_add_unsigned(
+struct my_bigint *my_bigint_add_unsigned(
     struct my_bigint *result, const struct my_bigint *operand2)
 {
     bool carry = false;
@@ -25,4 +25,5 @@ void my_bigint_add_unsigned(
         result->number->string[i] = total % 10;
         carry = (total >= 10);
     }
+    return result;
 }

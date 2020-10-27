@@ -68,9 +68,9 @@ Test(my_strtol_base_str, simple_tests)
     for (long i = LONG_MIN; i <= (LONG_MIN + 100); ++i) {
         sprintf(buffer, "%ld", i);
         test_strtol_base10(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "-%lx", -i);
+        sprintf(buffer, "-%lx", -(unsigned long)i);
         test_strtol_base16(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "-%lo", -i);
+        sprintf(buffer, "-%lo", -(unsigned long)i);
         test_strtol_base8(buffer, i, my_strlen(buffer));
     }
     test_strtol_base10(" +12afdopwqk", 12, 4);

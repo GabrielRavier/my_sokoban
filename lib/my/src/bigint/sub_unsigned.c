@@ -17,17 +17,12 @@ static signed char get_digit(const struct my_bigint *smaller_greater_num[2],
     return (smaller_greater_num[1]->number->string[i] - carry);
 }
 
-struct my_bigint *my_bigint_sub_unsigned(struct my_bigint *result,
-    const struct my_bigint *operand2)
+static size_t do_sub_loop(struct my_bigint *result, const struct my_bigint *smaller_greater_num[2])
 {
-    bool which_bigger = my_bigint_compare_unsigned(result, operand2) > 0;
-    const struct my_bigint *smaller_greater_num[2];
-    bool carry = false;
+    size_t end_size = 1;
     signed char digit;
+    bool carry = false;
 
-    smaller_greater_num[0] = which_bigger ? operand2 : result;
-    smaller_greater_num[1] = which_bigger ? result : operand2;
-    my_string_resize(result->number, smaller_greater_num[1]->number->length);
     for (size_t i = 0; i < smaller_greater_num[1]->number->length; ++i) {
         digit = get_digit(smaller_greater_num, i, carry);
         if (digit < 0) {
@@ -36,6 +31,21 @@ struct my_bigint *my_bigint_sub_unsigned(struct my_bigint *result,
         } else
             carry = false;
         result->number->string[i] = (unsigned char)digit;
+        if (digit != 0)
+            end_size = (i + 1);
     }
+    return end_size;
+}
+
+struct my_bigint *my_bigint_sub_unsigned(struct my_bigint *result,
+    const struct my_bigint *operand2)
+{
+    bool which_bigger = my_bigint_compare_unsigned(result, operand2) > 0;
+    const struct my_bigint *smaller_greater_num[2];
+
+    smaller_greater_num[0] = which_bigger ? operand2 : result;
+    smaller_greater_num[1] = which_bigger ? result : operand2;
+    my_string_resize(result->number, smaller_greater_num[1]->number->length + 1);
+    my_string_resize(result->number, do_sub_loop(result, smaller_greater_num));
     return result;
 }

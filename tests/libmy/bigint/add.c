@@ -7,6 +7,7 @@
 
 #include "my/bigint.h"
 #include <criterion/criterion.h>
+#include <limits.h>
 
 static void do_test(int a, int b, int result)
 {
@@ -18,22 +19,7 @@ static void do_test(int a, int b, int result)
 
 Test(my_bigint_add, very_simple_tests)
 {
-    do_test(0, 0, 0);
-    do_test(0, 5, 5);
-    do_test(5, 0, 5);
-    do_test(5, 5, 10);
-    do_test(5, 6, 11);
-    do_test(6, 5, 11);
-    do_test(0, 6, 6);
-    do_test(6, 0, 6);
-    do_test(-5, 0, -5);
-    do_test(-5, 5, 0);
-    do_test(-5, 6, 1);
-    do_test(-6, 5, -1);
-    do_test(-6, 0, -6);
-    do_test(0, -5, -5);
-    do_test(5, -5, 0);
-    do_test(5, -6, -1);
-    do_test(6, -5, 1);
-    do_test(0, -6, -6);
+    for (int i = -100; i < 100; ++i)
+        for (int j = -100; j < 100; ++j)
+            do_test(i, j, i + j);
 }

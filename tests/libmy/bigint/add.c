@@ -26,4 +26,14 @@ Test(my_bigint_add, very_simple_tests)
     do_test(6, 5, 11);
     do_test(0, 6, 6);
     do_test(6, 0, 6);
+    do_test(-5, 0, -5);
+    do_test(-5, 5, 0);
+    do_test(-5, 6, 1);
+    do_test(-6, 5, -1);
+    do_test(-6, 0, -6);
+    do_test(0, -5, -5);
+    do_test(5, -5, 0);
+    do_test(5, -6, -1);
+    do_test(6, -5, 1);
+    do_test(0, -6, -6);
 }

@@ -16,6 +16,7 @@ struct my_bigint *my_bigint_new_from_str(const char *str)
 {
     struct my_bigint *result = malloc(sizeof(struct my_bigint));
 
+    MY_ASSERT(result != NULL);
     if (*str == '-') {
         result->is_negative = true;
         ++str;

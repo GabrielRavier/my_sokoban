@@ -16,7 +16,14 @@ static void do_test(int a, int b, int result)
     cr_assert_eq(my_bigint_compare(my_bigint_add(bigint_a, bigint_b), bigint_result), 0);
 }
 
-Test(my_bigint_add, simple_test)
+Test(my_bigint_add, very_simple_tests)
 {
     do_test(0, 0, 0);
+    do_test(0, 5, 5);
+    do_test(5, 0, 5);
+    do_test(5, 5, 10);
+    do_test(5, 6, 11);
+    do_test(6, 5, 11);
+    do_test(0, 6, 6);
+    do_test(6, 0, 6);
 }

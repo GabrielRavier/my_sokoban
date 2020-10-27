@@ -10,6 +10,6 @@
 
 void my_bigint_free(struct my_bigint *num)
 {
-    free(num->number);
+    my_string_free(num->number);
     free(num);
 }

@@ -23,6 +23,10 @@ struct my_string *my_string_new(void);
 // Creates a new my_string from the first size bytes of string
 struct my_string *my_string_new_from_string(const char *string, size_t length);
 
+// Copies source into self
+struct my_string *my_string_assign(struct my_string *self,
+    const struct my_string *source);
+
 // Inserts length bytes from string to self at pos. A precondition is that
 // string is not a substring of self (i.e. directly located within self->string)
 struct my_string *my_string_insert(struct my_string *self, const char *string,
@@ -49,6 +53,12 @@ static inline struct my_string *my_string_append_char(struct my_string *self,
 // Removes count characters starting at index
 struct my_string *my_string_erase(struct my_string *self, size_t index,
     size_t count);
+
+// Resizes the string to contain count characters. If the current size is less
+// than count, the string becomes bigger, but has undefined contents after the
+// current size. If the current size is greater than count, the string is
+// reduced to its first count elements
+struct my_string *my_string_resize(struct my_string *self, size_t count);
 
 // Destructs the passed string and the associated data. If you instead want to
 // free the my_string but gain ownership of self->string, just do free(self)

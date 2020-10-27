@@ -25,11 +25,9 @@ struct my_bigint *my_bigint_new_from_str(const char *str)
         return (false);
     while (*str == '0' && *(str + 1) != '\0')
         ++str;
-    result->number = (unsigned char *)my_strdup(str);
-    MY_ASSERT(result->number != NULL);
-    result->num_digits = my_strlen(str);
-    my_revstr((char *)result->number);
-    for (size_t i = 0; i < result->num_digits; ++i)
-        result->number[i] -= '0';
+    result->number = my_string_new_from_string(str, my_strlen(str));
+    my_revstr(result->number->string);
+    for (size_t i = 0; i < result->number->length; ++i)
+        result->number->string[i] -= '0';
     return result;
 }

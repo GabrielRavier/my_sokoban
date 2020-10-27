@@ -41,13 +41,13 @@ SOURCE_FILES += my_qsort my_qsort_r my_realloc_size my_strtol_base_str my_strtol
 SOURCE_FILES += my_strlen my_strcpy my_strncpy my_strstr my_strcmp my_strncmp my_strcat my_strncat my_strchr my_strspn my_strcspn my_strnlen my_strdup my_strndup my_memcpy my_memmove my_memchr my_memset
 
 # Stuff related to my_bigint
-SOURCE_FILES += bigint/new_from_str bigint/add bigint/add_unsigned bigint/compare bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/dprint bigint/free bigint/at_least_digits
+SOURCE_FILES += bigint/new_from_str bigint/new_from_int bigint/assign bigint/add bigint/add_unsigned bigint/compare bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/mul bigint/dprint bigint/free
 
 # Stuff related to my_checked_multiply
 SOURCE_FILES += my_checked_multiply_int my_checked_multiply_unsigned
 
 # Stuff related to my_string
-SOURCE_FILES += my_string/new_from_string my_string/new my_string/guarantee_can_expand my_string/append my_string/insert my_string/erase my_string/free
+SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/insert my_string/erase my_string/resize my_string/free
 
 # Miscellaneous stuff
 SOURCE_FILES += my_putnbr my_putnbr_base my_putnbr_base_width my_nbr_to_string my_nbr_to_string_base my_nbr_to_string_base_width my_compute_power_rec my_compute_square_root my_is_prime my_find_prime_sup my_revstr my_strupcase my_strlowcase my_strcapitalize my_str_isalpha my_str_isnum my_str_islower my_str_isupper my_str_isprintable my_count_byte_occurences my_str_to_word_array my_show_word_array

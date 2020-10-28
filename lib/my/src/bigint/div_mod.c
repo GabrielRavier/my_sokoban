@@ -23,11 +23,11 @@ static void my_bigint_div_mod_unsigned(const struct my_bigint *num,
         k = my_bigint_new_from_int(1);
         my_bigint_assign(x, divisor)->is_negative = false;
         while (true) {
-            my_bigint_add(my_bigint_assign(t, x), t);
+            my_bigint_add_unsigned(my_bigint_assign(t, x), t);
             if (my_bigint_compare_unsigned(t, remainder) >= 0)
                 break;
             my_bigint_assign(x, t);
-            my_bigint_add(k, k);
+            my_bigint_add_unsigned(k, k);
         }
         my_bigint_add_unsigned(quotient, k);
         my_bigint_sub_unsigned(remainder, x);

@@ -35,7 +35,7 @@ static size_t do_sub_loop(
         if (digit != 0)
             end_size = (i + 1);
     }
-    return end_size;
+    return (end_size);
 }
 
 struct my_bigint *my_bigint_sub_unsigned(
@@ -53,5 +53,5 @@ struct my_bigint *my_bigint_sub_unsigned(
         temporary_result->number, do_sub_loop(temporary_result, smaller_greater_num));
     my_bigint_assign(result, temporary_result);
     my_bigint_free(temporary_result);
-    return result;
+    return (result);
 }

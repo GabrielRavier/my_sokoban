@@ -17,5 +17,5 @@ struct my_bigint *my_bigint_mod(struct my_bigint *result, const struct my_bigint
     my_bigint_assign(result, tmp);
     my_bigint_free(tmp);
     my_bigint_free(unused);
-    return result;
+    return (result);
 }

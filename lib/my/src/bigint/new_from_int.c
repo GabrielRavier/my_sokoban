@@ -23,5 +23,5 @@ struct my_bigint *my_bigint_new_from_int(int x)
         my_string_append_char(result->number, x % 10);
         x /= 10;
     }
-    return result;
+    return (result);
 }

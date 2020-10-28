@@ -25,5 +25,5 @@ struct my_bigint *my_bigint_add_unsigned(
         result->number->string[i] = total % 10;
         carry = (total >= 10);
     }
-    return result;
+    return (result);
 }

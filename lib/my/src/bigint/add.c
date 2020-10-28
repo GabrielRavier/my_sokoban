@@ -25,5 +25,5 @@ struct my_bigint *my_bigint_add(struct my_bigint *result,
         my_bigint_sub_unsigned(result, operand2);
         result->is_negative = is_result_negative;
     }
-    return result;
+    return (result);
 }

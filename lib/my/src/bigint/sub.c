@@ -17,7 +17,7 @@ struct my_bigint *my_bigint_sub(
     else
         my_bigint_sub_unsigned(result, operand2);
     result->is_negative = is_result_negative;
-    return result;
+    return (result);
 }
 
 struct my_bigint *my_bigint_sub_int(struct my_bigint *result, int operand2)
@@ -26,5 +26,5 @@ struct my_bigint *my_bigint_sub_int(struct my_bigint *result, int operand2)
 
     my_bigint_sub(result, tmp);
     my_bigint_free(tmp);
-    return result;
+    return (result);
 }

@@ -69,7 +69,7 @@ struct my_bigint *my_bigint_mul(
     my_bigint_assign(result, temporary_result);
     my_bigint_free(temporary_result);
     my_bigint_free(step_add);
-    return result;
+    return (result);
 }
 
 struct my_bigint *my_bigint_mul_int(struct my_bigint *result, int operand2)

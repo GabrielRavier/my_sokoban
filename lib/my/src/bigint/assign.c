@@ -12,5 +12,5 @@ struct my_bigint *my_bigint_assign(struct my_bigint *destination, const struct m
 {
     my_string_assign(destination->number, source->number);
     destination->is_negative = source->is_negative;
-    return destination;
+    return (destination);
 }

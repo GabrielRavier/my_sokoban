@@ -16,5 +16,5 @@ struct my_bigint *my_bigint_neg(struct my_bigint *self)
 {
     self->is_negative = !is_zero(self) &&
         !self->is_negative;
-    return self;
+    return (self);
 }

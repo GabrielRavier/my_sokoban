@@ -8,7 +8,7 @@
 #include "my/bigint.h"
 #include "my/string.h"
 
-struct my_string *my_bigint_to_string_base(const struct my_bigint *num,
+struct my_string *my_bigint_to_string_base(struct my_bigint *num,
     const char *base)
 {
     struct my_string *result = my_string_new();

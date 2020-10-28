@@ -96,8 +96,8 @@ int my_bigint_compare_int(const struct my_bigint *operand1,
 int my_bigint_compare_unsigned(const struct my_bigint *operand1,
     const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT;
 
-// Converts a bigint to a string of arbitrary base
-struct my_string *my_bigint_to_string_base(const struct my_bigint *num,
+// Converts a bigint to a string of arbitrary base. Trashes the value in num
+struct my_string *my_bigint_to_string_base(struct my_bigint *num,
     const char *base) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Converts a bigint to an int

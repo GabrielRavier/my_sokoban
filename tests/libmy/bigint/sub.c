@@ -22,7 +22,6 @@ static void do_test(int a, int b, int result)
 
 Test(my_bigint_sub, very_simple_tests)
 {
-    do_test(-9, -100, 91);
     for (int i = -100; i < 100; ++i)
         for (int j = -100; j < 100; ++j)
             do_test(i, j, i - j);

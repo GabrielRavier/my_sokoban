@@ -64,7 +64,7 @@ static long handle_positive_negative_for_do_parse(long result, bool is_negative)
 // This assumes the base is 10 (which it is as of the writing of this comment),
 // but may have to be adapted if re-used in a more generic function in the
 // future
-static long do_parse(const char *number_ptr, bool is_negative, const char *base,
+static long do_parse(const char *num_ptr, bool is_negative, const char *base,
     char **end_num_ptr)
 {
     long result = 0;
@@ -72,14 +72,14 @@ static long do_parse(const char *number_ptr, bool is_negative, const char *base,
     size_t base_width = my_strlen(base);
 
     while (true) {
-        if (!my_find_digit_from_base(number_ptr++, base, &current_digit)) {
+        if (!my_find_digit_from_base(num_ptr++, base, &current_digit)) {
             if (end_num_ptr != NULL)
-                *end_num_ptr = (char *)(number_ptr - 1);
+                *end_num_ptr = (char *)(num_ptr - 1);
             break;
         }
         if (is_about_to_overflow(result, current_digit, base_width)) {
             if (end_num_ptr != NULL)
-                *end_num_ptr = (char *)(number_ptr - 1);
+                *end_num_ptr = (char *)(num_ptr - 1);
             return (is_negative ? LONG_MIN : LONG_MAX);
         }
         result *= (long)base_width;
@@ -96,7 +96,7 @@ long my_strtol_base_str(const char *num_ptr, char **end_num_ptr,
 
     find_number(&num_ptr, &is_negative);
     if (*num_ptr == '\0' || (my_strchr(base, *num_ptr) == NULL)) {
-        if (end_num_ptr)
+        if (end_num_ptr != NULL)
             *end_num_ptr = (char *)orig_ptr;
         return (0);
     }

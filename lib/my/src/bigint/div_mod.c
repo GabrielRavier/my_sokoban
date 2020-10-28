@@ -17,11 +17,11 @@ static void my_bigint_div_mod_unsigned(const struct my_bigint *num,
     struct my_bigint *x = my_bigint_new_from_int(0);
     struct my_bigint *t = my_bigint_new_from_int(0);
 
-    my_bigint_assign(remainder, num);
+    my_bigint_assign(remainder, num)->is_negative = false;
     while (my_bigint_compare_unsigned(remainder, divisor) >= 0) {
         my_bigint_free(k);
         k = my_bigint_new_from_int(1);
-        my_bigint_assign(x, divisor);
+        my_bigint_assign(x, divisor)->is_negative = false;
         while (true) {
             my_bigint_mul_int(my_bigint_assign(t, x), 2);
             if (my_bigint_compare_unsigned(t, remainder) >= 0)

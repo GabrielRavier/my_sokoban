@@ -19,10 +19,6 @@ struct my_bigint {
     bool is_negative;
 };
 
-// Creates a new bigint, based on the contents of str
-struct my_bigint *my_bigint_new_from_str(const char *str)
-    MY_ATTR_WARN_UNUSED_RESULT;
-
 // Creates a new bigint, based on the contents of the passed integer
 struct my_bigint *my_bigint_new_from_int(int x)
     MY_ATTR_WARN_UNUSED_RESULT;
@@ -82,10 +78,6 @@ int my_bigint_compare_int(const struct my_bigint *operand1,
 // Same as above, but does not handle signs
 int my_bigint_compare_unsigned(const struct my_bigint *operand1,
     const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT;
-
-// Prints num to the given fd
-bool my_bigint_dprint(int fd,
-    const struct my_bigint *num) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Destructs the passed bigint and the associated data.
 void my_bigint_free(struct my_bigint *num);

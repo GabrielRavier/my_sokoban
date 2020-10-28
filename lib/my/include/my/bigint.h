@@ -56,11 +56,11 @@ struct my_bigint *my_bigint_sub_int(struct my_bigint *result,
 struct my_bigint *my_bigint_sub_unsigned(struct my_bigint *result,
     const struct my_bigint *operand2);
 
-// Same as above, except operand2 is an int
+// result *= operand2
 struct my_bigint *my_bigint_mul(struct my_bigint *result,
     const struct my_bigint *operand2);
 
-// result *= operand2
+// Same as above, except operand2 is an int
 struct my_bigint *my_bigint_mul_int(struct my_bigint *result,
     int operand2);
 
@@ -68,9 +68,17 @@ struct my_bigint *my_bigint_mul_int(struct my_bigint *result,
 struct my_bigint *my_bigint_div(struct my_bigint *result,
     const struct my_bigint *operand2);
 
+// Same as above, except operand2 is an int
+struct my_bigint *my_bigint_div_int(struct my_bigint *result,
+    int operand2);
+
 // result %= operand2
 struct my_bigint *my_bigint_mod(struct my_bigint *result,
     const struct my_bigint *operand2);
+
+// Same as above, except operand2 is an int
+struct my_bigint *my_bigint_mod_int(struct my_bigint *result,
+    int operand2);
 
 // self = -self
 struct my_bigint *my_bigint_neg(struct my_bigint *self);
@@ -87,6 +95,13 @@ int my_bigint_compare_int(const struct my_bigint *operand1,
 // Same as above, but does not handle signs
 int my_bigint_compare_unsigned(const struct my_bigint *operand1,
     const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT;
+
+// Converts a bigint to a string of arbitrary base
+struct my_string *my_bigint_to_string_base(const struct my_bigint *num,
+    const char *base) MY_ATTR_WARN_UNUSED_RESULT;
+
+// Converts a bigint to an int
+int my_bigint_to_int(const struct my_bigint *num) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Destructs the passed bigint and the associated data.
 void my_bigint_free(struct my_bigint *num);

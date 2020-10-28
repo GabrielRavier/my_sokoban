@@ -19,3 +19,12 @@ struct my_bigint *my_bigint_mod(struct my_bigint *result, const struct my_bigint
     my_bigint_free(unused);
     return (result);
 }
+
+struct my_bigint *my_bigint_mod_int(struct my_bigint *result, int operand2)
+{
+    struct my_bigint *tmp = my_bigint_new_from_int(operand2);
+
+    my_bigint_mod(result, tmp);
+    my_bigint_free(tmp);
+    return (result);
+}

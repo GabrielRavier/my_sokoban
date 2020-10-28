@@ -15,9 +15,13 @@ struct my_bigint_mul_internal_loop_bigint_args {
 
 static void remove_trailing_zeros(struct my_bigint *num)
 {
-    while ((num->number->length != 1) &&
-        (num->number->string[num->number->length - 1] == '\0'))
-        my_string_erase(num->number, num->number->length - 1, 1);
+    size_t i;
+
+    for (i = num->number->length; i != 1; --i) {
+        if (num->number->string[i - 1] != '\0')
+            break;
+    }
+    my_string_resize(num->number, i);
 }
 
 static void my_bigint_mul_internal_loop(

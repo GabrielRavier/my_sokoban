@@ -27,3 +27,12 @@ struct my_bigint *my_bigint_add(struct my_bigint *result,
     }
     return (result);
 }
+
+struct my_bigint *my_bigint_add_int(struct my_bigint *result, int operand2)
+{
+    struct my_bigint *tmp = my_bigint_new_from_int(operand2);
+
+    my_bigint_add(result, tmp);
+    my_bigint_free(tmp);
+    return (result);
+}

@@ -20,8 +20,13 @@ struct my_bigint {
 };
 
 // Creates a new bigint, based on the contents of the passed integer
-struct my_bigint *my_bigint_new_from_int(int x)
-    MY_ATTR_WARN_UNUSED_RESULT;
+struct my_bigint *my_bigint_new_from_int(int x) MY_ATTR_WARN_UNUSED_RESULT;
+
+// Creates a new bigint, based on the contents of the passed string, which must
+// be in the passed base. This differs from the standard strtol in that there
+// may not be space or signs before the number, and it does not set errno
+struct my_bigint *my_bigint_strtol_base_str(const char *num_ptr,
+    char **end_num_ptr, const char *base) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Copies source into destination
 struct my_bigint *my_bigint_assign(struct my_bigint *destination,
@@ -30,6 +35,10 @@ struct my_bigint *my_bigint_assign(struct my_bigint *destination,
 // result += operand2
 struct my_bigint *my_bigint_add(struct my_bigint *result,
     const struct my_bigint *operand2);
+
+// Same as above, except operand2 is an int
+struct my_bigint *my_bigint_add_int(struct my_bigint *result,
+    int operand2);
 
 // Same as above, but does not handle signs
 struct my_bigint *my_bigint_add_unsigned(struct my_bigint *result,

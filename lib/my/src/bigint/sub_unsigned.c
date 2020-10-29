@@ -49,8 +49,8 @@ struct my_bigint *my_bigint_sub_unsigned(
     smaller_greater_num[1] = which_bigger ? result : operand2;
     my_string_resize(
         temporary_result->number, smaller_greater_num[1]->number->length + 1);
-    my_string_resize(
-        temporary_result->number, do_sub_loop(temporary_result, smaller_greater_num));
+    my_string_resize(temporary_result->number,
+        do_sub_loop(temporary_result, smaller_greater_num));
     my_bigint_assign(result, temporary_result);
     my_bigint_free(temporary_result);
     return (result);

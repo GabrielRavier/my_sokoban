@@ -14,7 +14,8 @@ static void do_test(int a, int b)
     struct my_bigint *bigint_a = my_bigint_new_from_int(a);
     struct my_bigint *bigint_b = my_bigint_new_from_int(b);
     struct my_bigint *bigint_result = my_bigint_new_from_int(a - b);
-    cr_assert_eq(my_bigint_compare(my_bigint_sub(bigint_a, bigint_b), bigint_result), 0);
+    cr_assert_eq(
+        my_bigint_compare(my_bigint_sub(bigint_a, bigint_b), bigint_result), 0);
     my_bigint_free(bigint_a);
     my_bigint_free(bigint_b);
     my_bigint_free(bigint_result);

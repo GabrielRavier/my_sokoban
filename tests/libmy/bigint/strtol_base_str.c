@@ -16,7 +16,8 @@ static void test_strtol(const char *string, const char *base,
     long expected_result, ssize_t length)
 {
     char *end_pointer;
-    struct my_bigint *converted_number = my_bigint_strtol_base_str(string, &end_pointer, base);
+    struct my_bigint *converted_number =
+        my_bigint_strtol_base_str(string, &end_pointer, base);
     cr_assert_eq(my_bigint_compare_int(converted_number, expected_result), 0);
     cr_assert_eq(end_pointer - string, length);
 }

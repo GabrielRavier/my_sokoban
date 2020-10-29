@@ -37,8 +37,7 @@ struct my_bigint *my_bigint_add(struct my_bigint *result,
     const struct my_bigint *operand2);
 
 // Same as above, except operand2 is an int
-struct my_bigint *my_bigint_add_int(struct my_bigint *result,
-    int operand2);
+struct my_bigint *my_bigint_add_int(struct my_bigint *result, int operand2);
 
 // Same as above, but does not handle signs
 struct my_bigint *my_bigint_add_unsigned(struct my_bigint *result,
@@ -49,8 +48,7 @@ struct my_bigint *my_bigint_sub(struct my_bigint *result,
     const struct my_bigint *operand2);
 
 // Same as above, except operand2 is an int
-struct my_bigint *my_bigint_sub_int(struct my_bigint *result,
-    int operand2);
+struct my_bigint *my_bigint_sub_int(struct my_bigint *result, int operand2);
 
 // Same as above, but does not handle signs
 struct my_bigint *my_bigint_sub_unsigned(struct my_bigint *result,
@@ -61,24 +59,21 @@ struct my_bigint *my_bigint_mul(struct my_bigint *result,
     const struct my_bigint *operand2);
 
 // Same as above, except operand2 is an int
-struct my_bigint *my_bigint_mul_int(struct my_bigint *result,
-    int operand2);
+struct my_bigint *my_bigint_mul_int(struct my_bigint *result, int operand2);
 
 // result /= operand2
 struct my_bigint *my_bigint_div(struct my_bigint *result,
     const struct my_bigint *operand2);
 
 // Same as above, except operand2 is an int
-struct my_bigint *my_bigint_div_int(struct my_bigint *result,
-    int operand2);
+struct my_bigint *my_bigint_div_int(struct my_bigint *result, int operand2);
 
 // result %= operand2
 struct my_bigint *my_bigint_mod(struct my_bigint *result,
     const struct my_bigint *operand2);
 
 // Same as above, except operand2 is an int
-struct my_bigint *my_bigint_mod_int(struct my_bigint *result,
-    int operand2);
+struct my_bigint *my_bigint_mod_int(struct my_bigint *result, int operand2);
 
 // self = -self
 struct my_bigint *my_bigint_neg(struct my_bigint *self);

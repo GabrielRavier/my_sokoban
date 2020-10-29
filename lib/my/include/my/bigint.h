@@ -81,7 +81,7 @@ struct my_bigint *my_bigint_neg(struct my_bigint *self);
 // Returns either -1 (operand1 < operand2), 0 (operand1 == operand2)
 // or 1 (operand1 > operand2)
 int my_bigint_compare(const struct my_bigint *operand1,
-    const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT;
+    const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
 
 // Same as above, except operand2 is an int
 int my_bigint_compare_int(const struct my_bigint *operand1,
@@ -89,14 +89,15 @@ int my_bigint_compare_int(const struct my_bigint *operand1,
 
 // Same as above, but does not handle signs
 int my_bigint_compare_unsigned(const struct my_bigint *operand1,
-    const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT;
+    const struct my_bigint *operand2) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
 
 // Converts a bigint to a string of arbitrary base. Trashes the value in num
 struct my_string *my_bigint_to_string_base(struct my_bigint *num,
     const char *base) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Converts a bigint to an int
-int my_bigint_to_int(const struct my_bigint *num) MY_ATTR_WARN_UNUSED_RESULT;
+int my_bigint_to_int(const struct my_bigint *num) MY_ATTR_WARN_UNUSED_RESULT
+    MY_ATTR_PURE;
 
 // Destructs the passed bigint and the associated data.
 void my_bigint_free(struct my_bigint *num);

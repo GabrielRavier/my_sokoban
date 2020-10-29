@@ -11,7 +11,7 @@
 #include <stddef.h>
 
 size_t my_strlen(const char *string) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT
-    MY_ATTR_NONNULL((1));
+    MY_ATTR_NONNULL((1)) MY_ATTR_PURE;
 size_t my_strnlen(const char *string, size_t length) MY_ATTR_NOTHROW
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE MY_ATTR_NONNULL((1));
 char *my_strcpy(char *destination, const char *source) MY_ATTR_NOTHROW

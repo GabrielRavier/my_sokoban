@@ -13,7 +13,7 @@ struct my_string *my_bigint_to_string_base(struct my_bigint *num,
 {
     struct my_string *result = my_string_new();
     struct my_bigint *tmp_mod_result = my_bigint_new_from_int(0);
-    int base_len = my_strlen(base);
+    int base_len = (int)my_strlen(base);
 
     if (num->is_negative) {
         my_string_append_char(result, '-');

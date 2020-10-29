@@ -14,7 +14,7 @@ struct my_bigint *my_bigint_strtol_base_str(const char *num_ptr,
 {
     struct my_bigint *result = my_bigint_new_from_int(0);
     unsigned char current_digit;
-    int base_width = my_strlen(base);
+    int base_width = (int)my_strlen(base);
 
     while (true) {
         if (!my_find_digit_from_base(num_ptr++, base, &current_digit)) {

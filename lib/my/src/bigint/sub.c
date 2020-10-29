@@ -7,8 +7,8 @@
 
 #include "my/bigint.h"
 
-struct my_bigint *my_bigint_sub(
-    struct my_bigint *result, const struct my_bigint *operand2)
+struct my_bigint *my_bigint_sub(struct my_bigint *result,
+    const struct my_bigint *operand2)
 {
     bool is_result_negative = my_bigint_compare(result, operand2) < 0;
 

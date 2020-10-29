@@ -8,8 +8,8 @@
 #include "my/internal/bigint.h"
 #include "my/macros.h"
 
-struct my_bigint *my_bigint_add_unsigned(
-    struct my_bigint *result, const struct my_bigint *operand2)
+struct my_bigint *my_bigint_add_unsigned(struct my_bigint *result,
+    const struct my_bigint *operand2)
 {
     bool carry = false;
     unsigned char total;

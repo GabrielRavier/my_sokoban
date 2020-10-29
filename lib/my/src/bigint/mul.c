@@ -52,8 +52,8 @@ static void set_result_sign(struct my_bigint *result,
         (my_bigint_compare_int(operand2, 0) != 0);
 }
 
-struct my_bigint *my_bigint_mul(
-    struct my_bigint *result, const struct my_bigint *operand2)
+struct my_bigint *my_bigint_mul(struct my_bigint *result,
+    const struct my_bigint *operand2)
 {
     struct my_bigint *temporary_result = my_bigint_new_from_int(0);
     struct my_bigint *step_add = my_bigint_new_from_int(0);

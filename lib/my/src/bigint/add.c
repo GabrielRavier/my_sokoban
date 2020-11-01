@@ -20,8 +20,8 @@ struct my_bigint *my_bigint_add(struct my_bigint *result,
         if (compare_result == 0)
             is_result_negative = false;
         else
-            is_result_negative = compare_result >= 0 ?
-                result->is_negative : operand2->is_negative;
+            is_result_negative = compare_result >= 0 ? result->is_negative :
+                operand2->is_negative;
         my_bigint_sub_unsigned(result, operand2);
         result->is_negative = is_result_negative;
     }

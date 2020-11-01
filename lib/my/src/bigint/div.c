@@ -29,12 +29,10 @@ struct my_bigint *my_bigint_div_int(struct my_bigint *result, int operand2)
         my_string_erase(result->number, 0, 1);
         if (result->number->length == 0)
             my_string_append_char(result->number, 0);
-    }
-    else {
+    } else {
         tmp = my_bigint_new_from_int(operand2);
         my_bigint_div(result, tmp);
         my_bigint_free(tmp);
     }
     return (result);
 }
-    

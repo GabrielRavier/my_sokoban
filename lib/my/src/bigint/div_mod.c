@@ -9,8 +9,8 @@
 #include "my/assert.h"
 #include <stdbool.h>
 
-static void free_those_three_bigints(struct my_bigint *b1,
-    struct my_bigint *b2, struct my_bigint *b3)
+static void free_those_three_bigints(struct my_bigint *b1, struct my_bigint *b2,
+    struct my_bigint *b3)
 {
     my_bigint_free(b1);
     my_bigint_free(b2);

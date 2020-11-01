@@ -9,6 +9,14 @@
 #include "my/assert.h"
 #include <stdbool.h>
 
+static void free_those_three_bigints(struct my_bigint *b1,
+    struct my_bigint *b2, struct my_bigint *b3)
+{
+    my_bigint_free(b1);
+    my_bigint_free(b2);
+    my_bigint_free(b3);
+}
+
 static void my_bigint_div_mod_unsigned(const struct my_bigint *num,
     const struct my_bigint *divisor, struct my_bigint *quotient,
     struct my_bigint *remainder)
@@ -32,6 +40,7 @@ static void my_bigint_div_mod_unsigned(const struct my_bigint *num,
         my_bigint_add_unsigned(quotient, k);
         my_bigint_sub_unsigned(remainder, x);
     }
+    free_those_three_bigints(t, x, k);
 }
 
 void my_bigint_div_mod(const struct my_bigint *num,

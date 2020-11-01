@@ -10,6 +10,8 @@
 
 void my_bigint_free(struct my_bigint *num)
 {
+    if (num == NULL)
+        return;
     my_string_free(num->number);
     free(num);
 }

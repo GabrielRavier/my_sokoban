@@ -24,48 +24,78 @@ static void do_test(int a, int b)
     my_bigint_free(bigint_result);
 }
 
-Test(my_bigint_mod, very_simple_tests)
+Test(my_bigint_mod, part1)
 {
     for (int i = -100; i < 100; ++i)
         for (int j = -100; j < 100; ++j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part2)
+{
     for (int i = -10000000; i < (-10000000 + 100); ++i)
         for (int j = -100; j < 100; ++j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part3)
+{
     for (int i = -100; i < 100; ++i)
         for (int j = -10000000; j < (-10000000 + 100); ++j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part4)
+{
     for (int i = -10000000; i < (-10000000 + 100); ++i)
         for (int j = -10000000; j < (-10000000 + 100); ++j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part5)
+{
     for (int i = 10000000; i > (10000000 - 100); --i)
         for (int j = -100; j < 100; ++j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part6)
+{
     for (int i = 10000000; i > (10000000 - 100); --i)
         for (int j = -10000000; j < (-10000000 + 100); ++j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part7)
+{
     for (int i = -100; i < 100; ++i)
         for (int j = 10000000; j > (10000000 - 100); --j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part8)
+{
     for (int i = -10000000; i < (-10000000 + 100); ++i)
         for (int j = 10000000; j > (10000000 - 100); --j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part9)
+{
     for (int i = -100; i < 100; ++i)
         for (int j = 10000000; j > (10000000 - 100); --j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part10)
+{
     for (int i = -10000000; i < (-10000000 + 100); ++i)
         for (int j = 10000000; j > (10000000 - 100); --j)
             do_test(i, j);
+}
 
+Test(my_bigint_mod, part11)
+{
     for (int i = 10000000; i > (10000000 - 100); --i)
         for (int j = 10000000; j > (10000000 - 100); --j)
             do_test(i, j);

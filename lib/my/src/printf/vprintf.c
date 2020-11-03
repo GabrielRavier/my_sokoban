@@ -10,5 +10,5 @@
 
 int my_vprintf(const char *format, va_list arguments)
 {
-    return my_dprintf(STDOUT_FILENO, format, arguments);
+    return my_vdprintf(STDOUT_FILENO, format, arguments);
 }

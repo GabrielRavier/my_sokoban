@@ -32,7 +32,7 @@ SOURCE_FILES += isprint isupper islower isdigit isalpha isalnum isspace toupper 
 SOURCE_FILES += fabsf
 
 # Stuff related to stdio.h
-SOURCE_FILES += putchar dputc dputs puts
+SOURCE_FILES += putchar dputc dputs puts printf/printf printf/vprintf printf/dprintf printf/vdprintf printf/asprintf printf/vasprintf
 
 # Stuff related to stdlib.h
 SOURCE_FILES += qsort qsort_r realloc_size strtol_base_str strtol_base_str_part2
@@ -52,7 +52,7 @@ SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_stri
 # Miscellaneous stuff
 SOURCE_FILES += putnbr putnbr_base putnbr_base_width nbr_to_string nbr_to_string_base nbr_to_string_base_width compute_power_rec compute_square_root is_prime find_prime_sup revstr strupcase strlowcase strcapitalize str_isalpha str_isnum str_islower str_isupper str_isprintable count_byte_occurences str_to_word_array show_word_array
 
-TESTS_SOURCE_FILES := strtol_base_str bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base
+TESTS_SOURCE_FILES := strtol_base_str bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base printf/printf
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))
@@ -63,10 +63,9 @@ TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FIL
 ../libmy.a: $(OBJECT_FILES)
 	$(AR) rcs $@ $^
 
-tests_binary: override CFLAGS += --coverage
-tests_binary: $(TESTS_OBJECT_FILES)
+tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 	rm -rf obj/src
-	$(MAKE) ../libmy.a CFLAGS="--coverage"
+	$(MAKE) ../libmy.a CFLAGS="$(CFLAGS) --coverage"
 	$(CC) -o $@ $(CFLAGS) -L.. $(TESTS_OBJECT_FILES) -lcriterion -lmy --coverage
 
 ../../include/%.h: include/%.h
@@ -76,11 +75,13 @@ tests_binary: $(TESTS_OBJECT_FILES)
 obj/%.o: %.c
 	@mkdir --parents obj/src/bigint
 	@mkdir --parents obj/src/my_string
+	@mkdir --parents obj/src/printf
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj/tests/%.o: ../../tests/libmy/%.c
 	@mkdir --parents obj/tests/bigint
-	$(CC) -c $< -o $@ $(CFLAGS)
+	@mkdir --parents obj/tests/printf
+	$(CC) -c $< -o $@ $(CFLAGS) --coverage
 
 # Include dependencies
 include $(shell [ -d obj ] && find obj/ -type f -name '*.d')

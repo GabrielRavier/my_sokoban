@@ -31,6 +31,13 @@ Test(my_printf, format_s, .init = redirect_std_streams)
 Test(my_printf, format_decimal, .init = redirect_std_streams)
 {
     my_printf("%d", 1239);
+    my_printf("%d", -1239);
+    cr_assert_stdout_eq_str("1239-1239");
+}
+
+Test(my_printf, format_unsigned, .init = redirect_std_streams)
+{
+    my_printf("%u", 1239);
     cr_assert_stdout_eq_str("1239");
 }
 
@@ -38,6 +45,12 @@ Test(my_printf, format_octal, .init = redirect_std_streams)
 {
     my_printf("%o", 01123);
     cr_assert_stdout_eq_str("1123");
+}
+
+Test(my_printf, format_hex, .init = redirect_std_streams)
+{
+    my_printf("%x", 0x1234);
+    cr_assert_stdout_eq_str("1234");
 }
 
 Test(my_printf, format_epitech_extension_capital_s, .init = redirect_std_streams)

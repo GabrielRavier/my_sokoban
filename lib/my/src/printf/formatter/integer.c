@@ -18,5 +18,6 @@ void asprintf_format_integer(struct my_string *destination, va_list arguments,
         integer_argument = va_arg(arguments, unsigned);
     asprintf_append_number_base(destination,
         integer_argument, (format_char == 'b' ? 2 : (format_char == 'o' ? 8 :
-             (format_char == 'x' ? 16 : 10))));
+            ((format_char == 'x' || format_char == 'X') ? 16 : 10))),
+        format_char == 'X');
 }

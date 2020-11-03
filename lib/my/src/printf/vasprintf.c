@@ -22,6 +22,7 @@ static const formatter_func_t formatting_functions[UCHAR_MAX] =
     ['o'] = &asprintf_format_integer,
     ['u'] = &asprintf_format_integer,
     ['x'] = &asprintf_format_integer,
+    ['X'] = &asprintf_format_integer,
     ['c'] = &asprintf_format_char,
     ['s'] = &asprintf_format_cstring,
     ['S'] = &asprintf_format_cstring,

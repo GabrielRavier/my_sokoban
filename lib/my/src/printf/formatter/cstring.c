@@ -23,7 +23,7 @@ void asprintf_format_cstring(struct my_string *destination, va_list arguments,
             else {
                 my_string_append_char(destination, '\\');
                 asprintf_append_number_base(destination,
-                                   (unsigned char)string_argument[i], 8);
+                    (unsigned char)string_argument[i], 8, false);
             }
     }
 }

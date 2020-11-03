@@ -47,10 +47,18 @@ Test(my_printf, format_octal, .init = redirect_std_streams)
     cr_assert_stdout_eq_str("1123");
 }
 
-Test(my_printf, format_hex, .init = redirect_std_streams)
+Test(my_printf, format_hex_lowercase, .init = redirect_std_streams)
 {
     my_printf("%x", 0x1234);
-    cr_assert_stdout_eq_str("1234");
+    my_printf("%x", 0xabcd);
+    cr_assert_stdout_eq_str("1234abcd");
+}
+
+Test(my_printf, format_hex_uppercase, .init = redirect_std_streams)
+{
+    my_printf("%X", 0x1234);
+    my_printf("%X", 0xABCD);
+    cr_assert_stdout_eq_str("1234ABCD");
 }
 
 Test(my_printf, format_epitech_extension_capital_s, .init = redirect_std_streams)

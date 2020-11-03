@@ -80,7 +80,7 @@ obj/tests/%.o: ../../tests/libmy/%.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Include dependencies
-include $(shell find obj/ -type f -name '*.d')
+include $(shell [ -d obj ] && find obj/ -type f -name '*.d')
 
 # Remove all object files
 clean:

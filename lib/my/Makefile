@@ -63,9 +63,10 @@ TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FIL
 ../libmy.a: $(OBJECT_FILES)
 	$(AR) rcs $@ $^
 
-tests_binary:
-	$(MAKE) fclean
-	$(MAKE) ../libmy.a $(TESTS_OBJECT_FILES) CFLAGS='--coverage'
+tests_binary: override CFLAGS += --coverage
+tests_binary: $(TESTS_OBJECT_FILES)
+	rm -rf obj/src
+	$(MAKE) ../libmy.a CFLAGS="--coverage"
 	$(CC) -o $@ $(CFLAGS) -L.. $(TESTS_OBJECT_FILES) -lcriterion -lmy --coverage
 
 ../../include/%.h: include/%.h

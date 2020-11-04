@@ -133,6 +133,34 @@ Test(my_printf, through_int_checks, .init = cr_redirect_stdout, .fini = compare_
     }
 }
 
+Test(my_printf, through_long_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    const long values[] = {LONG_MIN, -17, -1, 0, 1, 17, 4711, 65535, LONG_MAX};
+
+    for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
+        compare_printfs("%ld", values[i]);
+        compare_printfs("%lx", values[i]);
+        compare_printfs("%lX", values[i]);
+        compare_printfs("%lo", values[i]);
+        compare_printfs("%#lx", values[i]);
+        compare_printfs("%#lX", values[i]);
+        compare_printfs("%10ld", values[i]);
+        compare_printfs("%10lx", values[i]);
+        compare_printfs("%10lX", values[i]);
+        compare_printfs("%10lo", values[i]);
+        compare_printfs("%#10lx", values[i]);
+        compare_printfs("%#10lX", values[i]);
+        compare_printfs("%#10lo", values[i]);
+        compare_printfs("%-10ld", values[i]);
+        compare_printfs("%-10lx", values[i]);
+        compare_printfs("%-10lX", values[i]);
+        compare_printfs("%-10lo", values[i]);
+        compare_printfs("%-#10lx", values[i]);
+        compare_printfs("%-#10lX", values[i]);
+        compare_printfs("%-#10lo", values[i]);
+    }
+}
+
 Test(my_printf, format_epitech_extension_capital_s)
 {
     cr_redirect_stdout();

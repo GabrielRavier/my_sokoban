@@ -20,7 +20,7 @@ MY_ATTR_NORETURN static void error_in_assert(void)
 }
 
 // This uses __builtin_trap to avoid problems with restrictions (say, being
-// forbidden from using exit(3))
+// forbidden from using abort(3))
 void my_assert_fail(const char *expression, const char *file_name,
     int line_number, const char *function_name)
 {

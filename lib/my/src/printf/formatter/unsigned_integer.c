@@ -12,6 +12,8 @@ static intmax_t get_arg(va_list arguments,
 {
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG)
         return va_arg(arguments, unsigned long);
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG_LONG)
+        return va_arg(arguments, unsigned long long);
     return va_arg(arguments, unsigned);
 }
 

@@ -14,7 +14,7 @@
 
 // Determines whether two expressions have the same type, though it does not
 // determine whether they have different qualifiers
-#define MY_IS_SAME_TYPE(a, b) __builtin_types_compatible(typeof(a), typeof(b))
+#define MY_IS_SAME_TYPE(a, b) __builtin_types_compatible_p(typeof(a), typeof(b))
 
 // Fails to compile if the passed expression is not an array
 #define MY_BUILD_BUG_ON_NON_ARRAY(array) \

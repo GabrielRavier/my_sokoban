@@ -93,7 +93,7 @@ Test(my_printf, through_int_checks)
 {
     const int values[] = {INT_MIN, -17, -1, 0, 1, 17, 4711, 65535, INT_MAX};
 
-    for (int i = 0; i < MY_ARRAY_SIZE(values); ++i) {
+    for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%d", values[i]);
         compare_printfs("%x", values[i]);
         compare_printfs("%X", values[i]);

@@ -15,7 +15,7 @@
 #include <stdbool.h>
 #include <limits.h>
 
-static char *combined_libc = "";
+static char *combined_libc = NULL;
 
 static void compare_all_libc_to_stdout()
 {
@@ -41,9 +41,17 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     va_end(arguments);
 
     cr_assert_str_eq(result_us, result_libc);
-    asprintf(&combined_libc, "%s%s", combined_libc, result_libc);
-    free(result_libc);
+
+    if (combined_libc) {
+        char *old_combined_libc = combined_libc;
+        asprintf(&combined_libc, "%s%s", combined_libc, result_libc);
+        free(old_combined_libc);
+    }
+    else
+        asprintf(&combined_libc, "%s", result_libc);
+
     free(result_us);
+    free(result_libc);
 }
 
 Test(my_printf, simple_string, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

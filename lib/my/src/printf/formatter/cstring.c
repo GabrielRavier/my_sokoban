@@ -10,7 +10,7 @@
 #include "my/ctype.h"
 
 void asprintf_format_cstring(struct my_string *destination, va_list arguments,
-    const struct my_printf_conversion_info *format_info)
+    struct my_printf_conversion_info *format_info)
 {
     const char *string_argument = va_arg(arguments, const char *);
 

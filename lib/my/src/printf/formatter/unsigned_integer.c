@@ -7,8 +7,8 @@
 
 #include "my/internal/printf/formatter.h"
 
-void asprintf_format_unsigned_integer(struct my_string *destination, va_list arguments,
-    const struct my_printf_conversion_info *format_info)
+void asprintf_format_unsigned_integer(struct my_string *destination,
+    va_list arguments, struct my_printf_conversion_info *format_info)
 {
     unsigned unsigned_argument = va_arg(arguments, unsigned);
 

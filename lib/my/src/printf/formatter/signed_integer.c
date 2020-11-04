@@ -12,7 +12,7 @@
 // the issue of INTMAX_MIN, since casting that to uintptr_t on 2s complement
 // (now mandatory in C2x) will result in the corresponding unsigned value
 void asprintf_format_signed_integer(struct my_string *destination,
-    va_list arguments, const struct my_printf_conversion_info *format_info)
+    va_list arguments, struct my_printf_conversion_info *format_info)
 {
     intptr_t signed_argument = va_arg(arguments, int);
 

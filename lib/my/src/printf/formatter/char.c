@@ -8,7 +8,7 @@
 #include "my/internal/printf/formatter.h"
 
 void asprintf_format_char(struct my_string *destination, va_list arguments,
-    const struct my_printf_conversion_info *format_info)
+    struct my_printf_conversion_info *format_info)
 {
     (void)format_info;
     my_string_append_char(destination, va_arg(arguments, int));

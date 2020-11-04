@@ -7,10 +7,18 @@
 
 #include "my/internal/printf/formatter.h"
 
+static intmax_t get_arg(va_list arguments,
+    struct my_printf_conversion_info *format_info)
+{
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG)
+        return va_arg(arguments, unsigned long);
+    return va_arg(arguments, unsigned);
+}
+
 void asprintf_format_unsigned_integer(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {
-    uintptr_t unsigned_argument = va_arg(arguments, unsigned);
+    uintptr_t unsigned_argument = get_arg(arguments, format_info);
     int base = (format_info->conversion_specifier == 'b' ? 2 :
         (format_info->conversion_specifier == 'o' ? 8 :
         ((format_info->conversion_specifier == 'x' ||

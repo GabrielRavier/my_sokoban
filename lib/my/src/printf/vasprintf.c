@@ -35,8 +35,11 @@ static void do_padding(struct my_string *destination,
         destination_length_before_conversion;
 
     while (converted_length++ < (size_t)conversion_info->field_width)
-        my_string_insert_char(destination, ' ',
-            destination_length_before_conversion);
+        if (conversion_info->flag_minus)
+            my_string_append_char(destination, ' ');
+        else
+            my_string_insert_char(destination, ' ',
+                destination_length_before_conversion);
 }
 
 // Returns the next character after the conversion specifier.

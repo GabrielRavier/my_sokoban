@@ -15,7 +15,7 @@
 #define DO_MODIFIER(modifier_string, modifier_value)                \
     do {                                                            \
         if (parse_single_length_modifier(conversion_info, to_parse, \
-            modifier_string, PRINTF_LENGTH_MODIFIER_CHAR))          \
+            modifier_string, modifier_value))                       \
             return;                                                 \
     } while (0)
 

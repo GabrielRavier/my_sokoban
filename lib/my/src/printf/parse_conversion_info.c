@@ -12,11 +12,11 @@
 #define MAKE_FLAG_CASE(character, info_field_to_set) \
     case character:                                  \
         conversion_info->info_field_to_set = true
-#define DO_MODIFIER(modifier_string, modifier_value)                      \
-    do {                                                                  \
-        if (parse_single_length_modifier(conversion_info, to_parse, "hh", \
-            PRINTF_LENGTH_MODIFIER_CHAR))                                 \
-            return;                                                       \
+#define DO_MODIFIER(modifier_string, modifier_value)                \
+    do {                                                            \
+        if (parse_single_length_modifier(conversion_info, to_parse, \
+            modifier_string, PRINTF_LENGTH_MODIFIER_CHAR))          \
+            return;                                                 \
     } while (0)
 
 
@@ -81,12 +81,15 @@ static bool parse_single_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse,
     const char *length_modifier_string, int length_modifier_value)
 {
-    if (my_strcmp(length_modifier_string, *to_parse) == 0) {
+    size_t length_modifier_string_length = my_strlen(length_modifier_string);
+
+    if (my_strncmp(length_modifier_string, *to_parse,
+        length_modifier_string_length) == 0) {
         conversion_info->length_modifier = length_modifier_value;
-        *to_parse += my_strlen(length_modifier_string);
-        return true;
+        *to_parse += length_modifier_string_length;
+        return (true);
     }
-    return false;
+    return (false);
 }
 
 void parse_printf_length_modifier(

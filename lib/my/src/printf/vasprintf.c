@@ -27,11 +27,24 @@ static const formatter_func_t formatting_functions[UCHAR_MAX] = {
     ['S'] = &asprintf_format_cstring,
 };
 
+static void do_padding(struct my_string *destination,
+    size_t destination_length_before_conversion,
+    const struct my_printf_conversion_info *conversion_info)
+{
+    size_t converted_length = destination->length -
+        destination_length_before_conversion;
+
+    while (converted_length++ < (size_t)conversion_info->field_width)
+        my_string_insert_char(destination, ' ',
+            destination_length_before_conversion);
+}
+
 // Returns the next character after the conversion specifier.
 static const char *do_conversion_specification(struct my_string *destination,
     const char *conversion_specification, va_list arguments)
 {
     struct my_printf_conversion_info conversion_info = { 0 };
+    size_t destination_length_before_conversion = destination->length;
 
     parse_printf_flags(&conversion_info, &conversion_specification);
     parse_printf_field_width(&conversion_info, &conversion_specification,
@@ -45,6 +58,8 @@ static const char *do_conversion_specification(struct my_string *destination,
         formatting_functions[
             (unsigned char)conversion_info.conversion_specifier](destination,
             arguments, &conversion_info);
+    do_padding(destination, destination_length_before_conversion,
+        &conversion_info);
     return conversion_specification;
 }
 

@@ -10,10 +10,10 @@
 #include "my/ctype.h"
 
 void asprintf_format_cstring(struct my_string *destination, va_list arguments,
-    char format_char)
+    const struct my_printf_conversion_info *format_info)
 {
     const char *string_argument = va_arg(arguments, const char *);
-    if (format_char == 's')
+    if (format_info->conversion_specifier == 's')
         my_string_append(destination, string_argument,
                          my_strlen(string_argument));
     else {

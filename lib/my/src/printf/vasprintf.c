@@ -14,8 +14,7 @@
 #include <limits.h>
 #include <assert.h>
 
-static const formatter_func_t formatting_functions[UCHAR_MAX] =
-{
+static const formatter_func_t formatting_functions[UCHAR_MAX] = {
     ['d'] = &asprintf_format_integer,
     ['i'] = &asprintf_format_integer,
     ['b'] = &asprintf_format_integer,
@@ -28,8 +27,25 @@ static const formatter_func_t formatting_functions[UCHAR_MAX] =
     ['S'] = &asprintf_format_cstring,
 };
 
-static void do_my_string_printf(struct my_string *destination, const char *format,
-    va_list arguments)
+// Returns the next character after the conversion specifier
+static const char *do_conversion_specification(struct my_string *destination,
+    const char *conversion_specification, va_list arguments)
+{
+    struct my_printf_conversion_info conversion_info;
+
+    parse_printf_flags(&conversion_info, &conversion_specification);
+    parse_printf_field_width(&conversion_info, &conversion_specification);
+    parse_printf_precision(&conversion_info, &conversion_specification);
+    parse_printf_length(&conversion_info, &conversion_specification);
+    conversion_info.conversion_specifier = *conversion_specification++;
+    if (formatting_functions[(unsigned char)conversion_info.conversion_specifier] != NULL)
+        formatting_functions[(unsigned char)conversion_info.conversion_specifier](destination,
+            arguments, &conversion_info);
+    return conversion_specification;
+}
+
+static void do_my_string_printf(struct my_string *destination,
+    const char *format, va_list arguments)
 {
     char current_char;
 
@@ -42,10 +58,7 @@ static void do_my_string_printf(struct my_string *destination, const char *forma
                 return;
             my_string_append_char(destination, current_char);
         }
-        current_char = *format++;
-        if (formatting_functions[(unsigned char)current_char] != NULL)
-            formatting_functions[(unsigned char)current_char](destination,
-                arguments, current_char);
+        format = do_conversion_specification(destination, format, arguments);
     }
 }
 

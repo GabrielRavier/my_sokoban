@@ -35,6 +35,13 @@ Test(my_printf, format_decimal, .init = redirect_std_streams)
     cr_assert_stdout_eq_str("1239-1239");
 }
 
+Test(my_printf, format_integer, .init = redirect_std_streams)
+{
+    my_printf("%i", 1239);
+    my_printf("%i", -1239);
+    cr_assert_stdout_eq_str("1239-1239");
+}
+
 Test(my_printf, format_unsigned, .init = redirect_std_streams)
 {
     my_printf("%u", 1239);

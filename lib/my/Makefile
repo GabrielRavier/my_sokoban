@@ -32,7 +32,7 @@ SOURCE_FILES += isprint isupper islower isdigit isalpha isalnum isspace toupper 
 SOURCE_FILES += fabsf
 
 # Stuff related to stdio.h
-SOURCE_FILES += putchar dputc dputs puts printf/printf printf/vprintf printf/dprintf printf/vdprintf printf/asprintf printf/vasprintf printf/formatter/append_number_base printf/formatter/char printf/formatter/cstring printf/formatter/integer
+SOURCE_FILES += putchar dputc dputs puts printf/printf printf/vprintf printf/dprintf printf/vdprintf printf/asprintf printf/vasprintf printf/formatter/append_number_base printf/formatter/char printf/formatter/cstring printf/formatter/integer printf/parse_conversion_info
 
 # Stuff related to stdlib.h
 SOURCE_FILES += qsort qsort_r realloc_size strtol_base_str strtol_base_str_part2

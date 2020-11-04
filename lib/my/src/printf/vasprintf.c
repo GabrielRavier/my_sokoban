@@ -27,19 +27,23 @@ static const formatter_func_t formatting_functions[UCHAR_MAX] = {
     ['S'] = &asprintf_format_cstring,
 };
 
-// Returns the next character after the conversion specifier
+// Returns the next character after the conversion specifier.
 static const char *do_conversion_specification(struct my_string *destination,
     const char *conversion_specification, va_list arguments)
 {
-    struct my_printf_conversion_info conversion_info;
+    struct my_printf_conversion_info conversion_info = { 0 };
 
     parse_printf_flags(&conversion_info, &conversion_specification);
-    parse_printf_field_width(&conversion_info, &conversion_specification);
-    parse_printf_precision(&conversion_info, &conversion_specification);
-    parse_printf_length(&conversion_info, &conversion_specification);
+    parse_printf_field_width(&conversion_info, &conversion_specification,
+        arguments);
+    parse_printf_precision(&conversion_info, &conversion_specification,
+        arguments);
+    parse_printf_length_modifier(&conversion_info, &conversion_specification);
     conversion_info.conversion_specifier = *conversion_specification++;
-    if (formatting_functions[(unsigned char)conversion_info.conversion_specifier] != NULL)
-        formatting_functions[(unsigned char)conversion_info.conversion_specifier](destination,
+    if (formatting_functions[
+            (unsigned char)conversion_info.conversion_specifier] != NULL)
+        formatting_functions[
+            (unsigned char)conversion_info.conversion_specifier](destination,
             arguments, &conversion_info);
     return conversion_specification;
 }

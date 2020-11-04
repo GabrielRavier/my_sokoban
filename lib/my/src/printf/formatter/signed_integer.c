@@ -8,7 +8,7 @@
 #include "my/internal/printf/formatter.h"
 #include <limits.h>
 
-static intptr_t get_arg(va_list arguments,
+static intmax_t get_arg(va_list arguments,
     struct my_printf_conversion_info *format_info)
 {
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG)

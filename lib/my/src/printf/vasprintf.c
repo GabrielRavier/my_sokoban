@@ -15,13 +15,13 @@
 #include <assert.h>
 
 static const formatter_func_t formatting_functions[UCHAR_MAX] = {
-    ['d'] = &asprintf_format_integer,
-    ['i'] = &asprintf_format_integer,
-    ['b'] = &asprintf_format_integer,
-    ['o'] = &asprintf_format_integer,
-    ['u'] = &asprintf_format_integer,
-    ['x'] = &asprintf_format_integer,
-    ['X'] = &asprintf_format_integer,
+    ['d'] = &asprintf_format_signed_integer,
+    ['i'] = &asprintf_format_signed_integer,
+    ['b'] = &asprintf_format_unsigned_integer,
+    ['o'] = &asprintf_format_unsigned_integer,
+    ['u'] = &asprintf_format_unsigned_integer,
+    ['x'] = &asprintf_format_unsigned_integer,
+    ['X'] = &asprintf_format_unsigned_integer,
     ['c'] = &asprintf_format_char,
     ['s'] = &asprintf_format_cstring,
     ['S'] = &asprintf_format_cstring,

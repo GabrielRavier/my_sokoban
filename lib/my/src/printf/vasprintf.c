@@ -63,7 +63,7 @@ static const char *do_conversion_specification(struct my_string *destination,
             arguments, &conversion_info);
     do_padding(destination, destination_length_before_conversion,
         &conversion_info);
-    return conversion_specification;
+    return (conversion_specification);
 }
 
 static void do_my_string_printf(struct my_string *destination,
@@ -94,5 +94,5 @@ int my_vasprintf(char **result_string_ptr, const char *format,
     *result_string_ptr = result->string;
     resulting_length = result->length;
     free(result);
-    return (int)resulting_length;
+    return ((int)resulting_length);
 }

@@ -15,5 +15,5 @@ int my_asprintf(char **result_string_ptr, const char *format, ...)
     va_start(arguments, format);
     result = my_vasprintf(result_string_ptr, format, arguments);
     va_end(arguments);
-    return result;
+    return (result);
 }

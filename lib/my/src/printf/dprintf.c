@@ -15,5 +15,5 @@ int my_dprintf(int fd, const char *format, ...)
     va_start(arguments, format);
     result = my_vdprintf(fd, format, arguments);
     va_end(arguments);
-    return result;
+    return (result);
 }

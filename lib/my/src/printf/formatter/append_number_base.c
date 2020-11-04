@@ -10,9 +10,9 @@
 #include <limits.h>
 
 void asprintf_append_number_base(struct my_string *destination,
-    uintptr_t number, int base, bool is_uppercase)
+    uintmax_t number, int base, bool is_uppercase)
 {
-    uintptr_t tmp = number / base;
+    uintmax_t tmp = number / base;
     if (tmp != 0)
         asprintf_append_number_base(destination, tmp, base, is_uppercase);
     my_string_append_char(destination, (is_uppercase ? "0123456789ABCDEF" :

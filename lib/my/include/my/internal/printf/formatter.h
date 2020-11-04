@@ -17,7 +17,7 @@ typedef void (*formatter_func_t)(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info);
 
 void asprintf_append_number_base(struct my_string *destination,
-    uintptr_t number, int base, bool is_uppercase);
+    uintmax_t number, int base, bool is_uppercase);
 void asprintf_format_signed_integer(struct my_string *destination, va_list arguments,
     struct my_printf_conversion_info *format_info);
 void asprintf_format_unsigned_integer(struct my_string *destination, va_list arguments,

@@ -12,6 +12,7 @@
 #include "my/stdio.h"
 #include "my/macros.h"
 #include <stdio.h>
+#include <math.h>
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -464,7 +465,7 @@ Test(my_printf, through_string_checks, .init = cr_redirect_stdout, .fini = compa
 
 Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    static const double values[] = {-(0.0 / 0.0), -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
+    static const double values[] = {-(0.0 / 0.0), -INFINITY, -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, INFINITY, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
 
     for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%f", values[i]);
@@ -509,7 +510,7 @@ Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compar
 
 Test(my_printf, through_float_widths_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    static const double values[] = {-(0.0 / 0.0), -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
+    static const double values[] = {-(0.0 / 0.0), -INFINITY -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, INFINITY, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
     static const int lengths[] = {0, 1, 1, 5, 5, 10, 0, 10, 5, 1, -1, 0, -1, -5, -5, -10, -10, -5, -1};
 
     for (size_t i = 0; i < (MY_ARRAY_SIZE(lengths) - 1); ++i) {

@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <limits.h>
+#include <assert.h>
 
 static char *combined_libc = NULL;
 
@@ -74,6 +75,16 @@ Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to
     compare_printfs("unsigned char: %hhu %hhu %hhu", (char)-12, (char)0, (char)254);
     compare_printfs("short: %hd %hd %hd", (short)-1234, (short)0, (short)1234);
     compare_printfs("unsigned short: %hu %hu %hu", (short)-1234, (short)0, (short)1234);
+    compare_printfs("int: %d %d %d", -12345678, 0, 12345678);
+    compare_printfs("unsigned int: %u %u %u", -12345678, 0, 12345678);
+    compare_printfs("long: %ld %ld %ld", -12345678L, 0L, 12345678L);
+    compare_printfs("unsigned long: %lu %lu %lu", -12345678L, 0L, 12345678L);
+    compare_printfs("long long: %lld %lld %lld", -12345678LL, 0LL, 12345678LL);
+    compare_printfs("unsigned long long: %llu %llu %llu", -12345678LL, 0LL, 12345678LL);
+    compare_printfs("ssize_t: %zd %zd %zd", (ssize_t)-12345678, (ssize_t)0, (ssize_t)12345678);
+    compare_printfs("size_t: %zu %zu %zu", (size_t)-12345678, (size_t)0, (size_t)12345678);
+    compare_printfs("intmax_t: %jd %jd %jd", (intptr_t)-12345678, (intptr_t)0, (intptr_t)12345678);
+    compare_printfs("uintmax_t: %ju %ju %ju", (uintptr_t)-12345678, (uintptr_t)0, (uintptr_t)12345678);
 }
 
 Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

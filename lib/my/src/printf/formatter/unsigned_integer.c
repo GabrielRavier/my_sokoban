@@ -10,17 +10,19 @@
 static intmax_t get_arg(va_list arguments,
     struct my_printf_conversion_info *format_info)
 {
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR)
+        return (unsigned char)va_arg(arguments, unsigned int);
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SHORT)
+        return (unsigned short)va_arg(arguments, unsigned int);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG)
         return va_arg(arguments, unsigned long);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG_LONG)
         return va_arg(arguments, unsigned long long);
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_INTMAX)
+        return va_arg(arguments, uintmax_t);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SIZE_T)
         return va_arg(arguments, size_t);
-    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR)
-        return (unsigned char)va_arg(arguments, unsigned);
-    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SHORT)
-        return (unsigned short)va_arg(arguments, unsigned);
-    return va_arg(arguments, unsigned);
+    return va_arg(arguments, unsigned int);
 }
 
 struct my_string *asprintf_format_unsigned_integer(struct my_string *destination,

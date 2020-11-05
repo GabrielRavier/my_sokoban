@@ -89,6 +89,25 @@ Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to
     compare_printfs("unsigned ptrdiff_t: %tu %tu %tu", (ptrdiff_t)-12345678, (ptrdiff_t)0, (ptrdiff_t)12345678);
 }
 
+Test(my_printf, hex, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("unsigned char: %hhx %hhx %hhx", (char)-12, (char)0, (char)254);
+    compare_printfs("unsigned short: %hx %hx %hx", (short)-1234, (short)0, (short)1234);
+    compare_printfs("unsigned int: %x %x %x", -12345678, 0, 12345678);
+    compare_printfs("unsigned long: %lx %lx %lx", -12345678L, 0L, 12345678L);
+    compare_printfs("unsigned long long: %llx %llx %llx", -12345678LL, 0LL, 12345678LL);
+    compare_printfs("size_t: %zx %zx %zx", (size_t)-12345678, (size_t)0, (size_t)12345678);
+    compare_printfs("uintmax_t: %jx %jx %jx", (uintptr_t)-12345678, (uintptr_t)0, (uintptr_t)12345678);
+    compare_printfs("unsigned ptrdiff_t: %tx %tx %tx", (ptrdiff_t)-12345678, (ptrdiff_t)0, (ptrdiff_t)12345678);
+}
+
+Test(my_printf, alt_and_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("unsigned int: %#x %#X", 0xabcdef, 0XABCDEF);
+    compare_printfs("int: %+d %+d", 12345678, -12345678);
+    compare_printfs("int: % d % d", 12345678, -12345678);
+}
+
 Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%% %l% aaa");

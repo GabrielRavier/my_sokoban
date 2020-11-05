@@ -43,6 +43,8 @@ struct my_string *asprintf_format_signed_integer(struct my_string *destination,
         if (signed_argument != INTMAX_MIN)
             signed_argument = -signed_argument;
     }
+    else if (format_info->flag_plus || format_info->flag_space)
+        prefix = my_string_new_from_string(format_info->flag_plus ? "+" : " ", 1);
     asprintf_append_number_base(destination, (uintmax_t)signed_argument, 10,
         false);
     return prefix;

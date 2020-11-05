@@ -25,6 +25,7 @@ static const formatter_func_t formatting_functions[UCHAR_MAX] = {
     ['c'] = &asprintf_format_char,
     ['s'] = &asprintf_format_cstring,
     ['S'] = &asprintf_format_cstring,
+    ['f'] = &asprintf_format_decimal_float,
 };
 
 static void do_padding(struct my_string *destination,

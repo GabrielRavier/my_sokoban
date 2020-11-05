@@ -42,7 +42,7 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     vasprintf(&result_libc, format, arguments);
     va_end(arguments);
 
-    if (result_us != NULL && result_libc != NULL)
+    if (result_us != NULL || result_libc != NULL)
         cr_assert_str_eq(result_us, result_libc);
 
     if (result_libc)
@@ -207,6 +207,34 @@ Test(my_printf, format_precision_string, .init = cr_redirect_stdout, .fini = com
 Test(my_printf, too_many_args, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%d %d", 123, 456, 789);
+}
+
+Test(my_printf, some_format_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    static const int values[] = {INT_MIN, -17, -1, 0, 1, 17, 4711, 65535, INT_MAX, 2, 5, 10, 99, 100, 1000000, 999999999, -2, -5, -10, -99, -100, -9999999};
+
+    for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
+        compare_printfs("%6d", values[i]);
+        compare_printfs("%6x", values[i]);
+        compare_printfs("%6X", values[i]);
+        compare_printfs("%6o", values[i]);
+        compare_printfs("%-6d", values[i]);
+        compare_printfs("%-6x", values[i]);
+        compare_printfs("%-6X", values[i]);
+        compare_printfs("%-6o", values[i]);
+        compare_printfs("%+6d", values[i]);
+        compare_printfs("%+6x", values[i]);
+        compare_printfs("%+6X", values[i]);
+        compare_printfs("%+6o", values[i]);
+        compare_printfs("%06d", values[i]);
+        compare_printfs("%06x", values[i]);
+        compare_printfs("%06X", values[i]);
+        compare_printfs("%06o", values[i]);
+        compare_printfs("% 6d", values[i]);
+        compare_printfs("% 6x", values[i]);
+        compare_printfs("% 6X", values[i]);
+        compare_printfs("% 6o", values[i]);
+    }
 }
 
 Test(my_printf, through_int_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

@@ -193,9 +193,46 @@ Test(my_printf, through_long_long_checks, .init = cr_redirect_stdout, .fini = co
 
 Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    compare_printfs("%f", 0.0);
-    compare_printfs("%f", 1.0);
-    compare_printfs("%10f", 0.0);
+    static const double values[] = { -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007,
+        3.1415926, 14.7845, 34.24758, 9999, 9999999 };
+
+    for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
+        compare_printfs("%f", values[i]);
+        compare_printfs("%10f", values[i]);
+        compare_printfs("%.2f", values[i]);
+        compare_printfs("%7.0f", values[i]);
+        compare_printfs("%5.2f", values[i]);
+        compare_printfs("%0f", values[i]);
+        compare_printfs("%#f", values[i]);
+        compare_printfs("%e", values[i]);
+        compare_printfs("%10e", values[i]);
+        compare_printfs("%.2e", values[i]);
+        compare_printfs("%7.0e", values[i]);
+        compare_printfs("%5.2e", values[i]);
+        compare_printfs("%0e", values[i]);
+        compare_printfs("%#e", values[i]);
+        compare_printfs("%E", values[i]);
+        compare_printfs("%10E", values[i]);
+        compare_printfs("%.2E", values[i]);
+        compare_printfs("%7.0E", values[i]);
+        compare_printfs("%5.2E", values[i]);
+        compare_printfs("%0E", values[i]);
+        compare_printfs("%#E", values[i]);
+        compare_printfs("%g", values[i]);
+        compare_printfs("%10g", values[i]);
+        compare_printfs("%.2g", values[i]);
+        compare_printfs("%7.0g", values[i]);
+        compare_printfs("%5.2g", values[i]);
+        compare_printfs("%0g", values[i]);
+        compare_printfs("%#g", values[i]);
+        compare_printfs("%G", values[i]);
+        compare_printfs("%10G", values[i]);
+        compare_printfs("%.2G", values[i]);
+        compare_printfs("%7.0G", values[i]);
+        compare_printfs("%5.2G", values[i]);
+        compare_printfs("%0G", values[i]);
+        compare_printfs("%#G", values[i]);
+    }
 }
 
 #endif

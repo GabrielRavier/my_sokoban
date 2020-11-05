@@ -26,6 +26,13 @@ static const formatter_func_t formatting_functions[UCHAR_MAX] = {
     ['s'] = &asprintf_format_cstring,
     ['S'] = &asprintf_format_cstring,
     ['f'] = &asprintf_format_decimal_float,
+    ['F'] = &asprintf_format_decimal_float,
+    ['e'] = &asprintf_format_decimal_float,
+    ['E'] = &asprintf_format_decimal_float,
+    ['g'] = &asprintf_format_decimal_float,
+    ['G'] = &asprintf_format_decimal_float,
+    ['a'] = &asprintf_format_decimal_float,
+    ['A'] = &asprintf_format_decimal_float,
 };
 
 static void do_padding(struct my_string *destination,

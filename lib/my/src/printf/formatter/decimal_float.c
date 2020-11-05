@@ -55,7 +55,7 @@ struct my_string *asprintf_format_decimal_float(struct my_string *destination,
 }
 #else
 
-void asprintf_format_decimal_float(struct my_string *destination,
+struct my_string *asprintf_format_decimal_float(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {
     (void)destination;

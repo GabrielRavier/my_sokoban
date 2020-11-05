@@ -103,6 +103,13 @@ Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to
     compare_printfs("uintmax_t: %ju %ju %ju", (uintptr_t)-12345678, (uintptr_t)0, (uintptr_t)12345678);
     compare_printfs("ptrdiff_t: %td %td %td", (ptrdiff_t)-12345678, (ptrdiff_t)0, (ptrdiff_t)12345678);
     compare_printfs("unsigned ptrdiff_t: %tu %tu %tu", (ptrdiff_t)-12345678, (ptrdiff_t)0, (ptrdiff_t)12345678);
+    compare_printfs("%#-12x", 0x1234abcd);
+    compare_printfs("%#12x", 0x1234abcd);
+    compare_printfs("%d|%03d|%3d|%+d|% d|%+d|% d", 0, 1, 12, 123, 1234, -123, -1234);
+    compare_printfs("%hhu|%hhu|%hhu|%hhu|%hhu", 0, 1, 257, 128, -1);
+    compare_printfs("%hhd|%hhd|%hhd|%hhd|%hhd", 0, 1, 257, 128, -1);
+    compare_printfs("%ho%ho%#ho", 1037, 5282, -11627);
+    compare_printfs("%.2d|%.1d|%.0d|%.*d|%1.0d", 0, 0, 0, 0, 0, 0);
 }
 
 Test(my_printf, hex, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

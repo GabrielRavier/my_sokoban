@@ -29,6 +29,14 @@ static intmax_t get_arg(va_list arguments,
     return va_arg(arguments, unsigned int);
 }
 
+static void do_precision(struct my_string *destination, size_t pos_before,
+    struct my_printf_conversion_info *format_info)
+{
+    format_info->precision -= (destination->length - pos_before);
+    while (format_info->precision-- > 0)
+        my_string_insert_char(destination, '0', pos_before);
+}
+
 struct my_string *asprintf_format_unsigned_integer(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {
@@ -38,15 +46,20 @@ struct my_string *asprintf_format_unsigned_integer(struct my_string *destination
         ((format_info->conversion_specifier == 'x' ||
             format_info->conversion_specifier == 'X') ? 16 : 10)));
     struct my_string *prefix = NULL;
+    size_t pos_before = destination->length;
 
-    if (format_info->flag_hash && (base == 16 || base == 8) &&
-        unsigned_argument) {
+    if (format_info->precision == -1 || (format_info->flag_hash &&
+        format_info->precision == 0))
+        format_info->precision = 1;
+    if (format_info->flag_hash && (base == 16 || base == 8) && unsigned_argument) {
         prefix = my_string_new_from_string("0", 1);
         if (base == 16)
             my_string_append_char(prefix,
                 format_info->conversion_specifier);
     }
-    asprintf_append_number_base(destination, unsigned_argument, base,
-        format_info->conversion_specifier == 'X');
+    if (unsigned_argument)
+        asprintf_append_number_base(destination, unsigned_argument, base,
+            format_info->conversion_specifier == 'X');
+    do_precision(destination, pos_before, format_info);
     return prefix;
 }

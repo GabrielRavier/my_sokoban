@@ -129,9 +129,19 @@ Test(my_printf, through_int_checks, .init = cr_redirect_stdout, .fini = compare_
         compare_printfs("%10x", values[i]);
         compare_printfs("%10X", values[i]);
         compare_printfs("%10o", values[i]);
+        compare_printfs("%010d", values[i]);
+        compare_printfs("%010x", values[i]);
+        compare_printfs("%010X", values[i]);
+        compare_printfs("%010o", values[i]);
         compare_printfs("%#10x", values[i]);
         compare_printfs("%#10X", values[i]);
         compare_printfs("%#10o", values[i]);
+        compare_printfs("%0#10x", values[i]);
+        compare_printfs("%0#10X", values[i]);
+        compare_printfs("%0#10o", values[i]);
+        compare_printfs("%#010x", values[i]);
+        compare_printfs("%#010X", values[i]);
+        compare_printfs("%#010o", values[i]);
         compare_printfs("%-10d", values[i]);
         compare_printfs("%-10x", values[i]);
         compare_printfs("%-10X", values[i]);
@@ -236,6 +246,7 @@ Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compar
     for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%f", values[i]);
         compare_printfs("%10f", values[i]);
+        compare_printfs("%010f", values[i]);
         compare_printfs("%.2f", values[i]);
         compare_printfs("%.0f", values[i]);
         compare_printfs("%7.0f", values[i]);

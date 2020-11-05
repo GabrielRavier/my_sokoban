@@ -9,7 +9,7 @@
 #include "my/string.h"
 #include "my/ctype.h"
 
-void asprintf_format_cstring(struct my_string *destination, va_list arguments,
+struct my_string *asprintf_format_cstring(struct my_string *destination, va_list arguments,
     struct my_printf_conversion_info *format_info)
 {
     const char *string_argument = va_arg(arguments, const char *);
@@ -24,4 +24,5 @@ void asprintf_format_cstring(struct my_string *destination, va_list arguments,
             asprintf_append_number_base(destination,
                 (unsigned char)string_argument[i], 8, false);
         }
+    return NULL;
 }

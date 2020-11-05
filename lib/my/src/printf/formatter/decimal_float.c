@@ -40,7 +40,7 @@ static struct my_string *make_format_string(
     return format_string;
 }
 
-void asprintf_format_decimal_float(struct my_string *destination,
+struct my_string *asprintf_format_decimal_float(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {
     char *buffer;
@@ -51,6 +51,7 @@ void asprintf_format_decimal_float(struct my_string *destination,
         free(buffer);
     }
     my_string_free(format_string);
+    return NULL;
 }
 #else
 

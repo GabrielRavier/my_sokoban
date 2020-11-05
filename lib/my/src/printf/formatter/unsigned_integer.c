@@ -19,7 +19,7 @@ static intmax_t get_arg(va_list arguments,
     return va_arg(arguments, unsigned);
 }
 
-void asprintf_format_unsigned_integer(struct my_string *destination,
+struct my_string *asprintf_format_unsigned_integer(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {
     uintptr_t unsigned_argument = get_arg(arguments, format_info);
@@ -27,14 +27,16 @@ void asprintf_format_unsigned_integer(struct my_string *destination,
         (format_info->conversion_specifier == 'o' ? 8 :
         ((format_info->conversion_specifier == 'x' ||
             format_info->conversion_specifier == 'X') ? 16 : 10)));
+    struct my_string *prefix = NULL;
 
     if (format_info->flag_hash && (base == 16 || base == 8) &&
         unsigned_argument) {
-        my_string_append_char(destination, '0');
+        prefix = my_string_new_from_string("0", 1);
         if (base == 16)
-            my_string_append_char(destination,
+            my_string_append_char(prefix,
                 format_info->conversion_specifier);
     }
     asprintf_append_number_base(destination, unsigned_argument, base,
         format_info->conversion_specifier == 'X');
+    return prefix;
 }

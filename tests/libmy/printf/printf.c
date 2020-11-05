@@ -59,6 +59,13 @@ Test(my_printf, simple_string, .init = cr_redirect_stdout, .fini = compare_all_l
 {
     compare_printfs("Hello world");
     compare_printfs("0123456789");
+    compare_printfs("hello");
+}
+
+Test(my_printf, basic_tests, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("hello%d", -123);
+    compare_printfs("%s%04d%X", "hello", 123, 0xfaceU);
 }
 
 Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

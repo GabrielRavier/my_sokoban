@@ -240,8 +240,8 @@ Test(my_printf, through_size_t_checks, .init = cr_redirect_stdout, .fini = compa
 
 Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    static const double values[] = { -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007,
-        3.1415926, 14.7845, 34.24758, 9999, 9999999 };
+    static const double values[] = {-(0.0 / 0.0), -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007,
+        3.1415926, 14.7845, 34.24758, 9999, 9999999, (0.0 / 0.0)};
 
     for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%f", values[i]);

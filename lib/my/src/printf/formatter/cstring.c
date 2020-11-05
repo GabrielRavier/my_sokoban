@@ -24,5 +24,5 @@ struct my_string *asprintf_format_cstring(struct my_string *destination, va_list
             asprintf_append_number_base(destination,
                 (unsigned char)string_argument[i], 8, false);
         }
-    return NULL;
+    return (NULL);
 }

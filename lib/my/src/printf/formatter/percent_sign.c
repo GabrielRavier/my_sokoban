@@ -13,5 +13,5 @@ struct my_string *asprintf_format_percent_sign(struct my_string *destination, va
     (void)arguments;
     (void)format_info;
     my_string_append_char(destination, '%');
-    return NULL;
+    return (NULL);
 }

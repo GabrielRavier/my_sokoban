@@ -51,10 +51,11 @@ struct my_string *asprintf_format_unsigned_integer(struct my_string *destination
     if (format_info->precision == -1 || (format_info->flag_hash &&
         format_info->precision == 0))
         format_info->precision = 1;
-    if (format_info->flag_hash && (base == 16 || base == 8) && unsigned_argument) {
+    if (format_info->flag_hash && (base == 16 || base == 8) &&
+        unsigned_argument) {
         prefix = my_string_new_from_string("0", 1);
         if (base == 16)
-            my_string_append_char(prefix,
+            my_string_append_char((base == 16) ? prefix : NULL,
                 format_info->conversion_specifier);
     }
     if (unsigned_argument)

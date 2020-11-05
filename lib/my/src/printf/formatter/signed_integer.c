@@ -62,7 +62,7 @@ struct my_string *asprintf_format_signed_integer(struct my_string *destination,
         asprintf_append_number_base(destination, (uintmax_t)signed_argument, 10,
             false);
     do_precision(destination, pos_before, format_info);
-    return prefix;
+    return (prefix);
 }
 
 

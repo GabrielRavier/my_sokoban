@@ -51,7 +51,7 @@ struct my_string *asprintf_format_decimal_float(struct my_string *destination,
         free(buffer);
     }
     my_string_free(format_string);
-    return NULL;
+    return (NULL);
 }
 #else
 
@@ -61,5 +61,6 @@ struct my_string *asprintf_format_decimal_float(struct my_string *destination,
     (void)destination;
     (void)arguments;
     (void)format_info;
+    return (NULL);
 }
 #endif

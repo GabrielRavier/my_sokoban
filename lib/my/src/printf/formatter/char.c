@@ -12,5 +12,5 @@ struct my_string *asprintf_format_char(struct my_string *destination, va_list ar
 {
     (void)format_info;
     my_string_append_char(destination, va_arg(arguments, int));
-    return NULL;
+    return (NULL);
 }

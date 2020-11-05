@@ -50,8 +50,9 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
             char *old_combined_libc = combined_libc;
             asprintf(&combined_libc, "%s%s", combined_libc, result_libc);
             free(old_combined_libc);
-        } else
+        } else {
             asprintf(&combined_libc, "%s", result_libc);
+        }
 
     free(result_us);
     free(result_libc);

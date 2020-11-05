@@ -43,3 +43,13 @@ void parse_printf_precision(struct my_printf_conversion_info *conversion_info,
     const char **to_parse, va_list arguments);
 void parse_printf_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse);
+
+#define INTERNAL_MAKE_FLAG_CASE(character, info_field_to_set) \
+    case character:                                           \
+        conversion_info->info_field_to_set = true
+#define INTERNAL_DO_MODIFIER(modifier_string, modifier_value)       \
+    do {                                                            \
+        if (parse_single_length_modifier(conversion_info, to_parse, \
+            modifier_string, modifier_value))                       \
+            return;                                                 \
+    } while (0)

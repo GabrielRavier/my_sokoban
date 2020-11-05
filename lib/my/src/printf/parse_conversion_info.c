@@ -9,31 +9,20 @@
 #include "my/string.h"
 #include "my/ctype.h"
 
-#define MAKE_FLAG_CASE(character, info_field_to_set) \
-    case character:                                  \
-        conversion_info->info_field_to_set = true
-#define DO_MODIFIER(modifier_string, modifier_value)                \
-    do {                                                            \
-        if (parse_single_length_modifier(conversion_info, to_parse, \
-            modifier_string, modifier_value))                       \
-            return;                                                 \
-    } while (0)
-
-
 void parse_printf_flags(struct my_printf_conversion_info *conversion_info,
     const char **to_parse)
 {
     while (1) {
         switch (**to_parse) {
-            MAKE_FLAG_CASE('-', flag_minus);
+            INTERNAL_MAKE_FLAG_CASE('-', flag_minus);
             break;
-            MAKE_FLAG_CASE('+', flag_plus);
+            INTERNAL_MAKE_FLAG_CASE('+', flag_plus);
             break;
-            MAKE_FLAG_CASE(' ', flag_space);
+            INTERNAL_MAKE_FLAG_CASE(' ', flag_space);
             break;
-            MAKE_FLAG_CASE('#', flag_hash);
+            INTERNAL_MAKE_FLAG_CASE('#', flag_hash);
             break;
-            MAKE_FLAG_CASE('0', flag_0);
+            INTERNAL_MAKE_FLAG_CASE('0', flag_0);
             break;
         default:
             return;
@@ -97,15 +86,15 @@ static bool parse_single_length_modifier(
 void parse_printf_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse)
 {
-    DO_MODIFIER("hh", PRINTF_LENGTH_MODIFIER_CHAR);
-    DO_MODIFIER("h", PRINTF_LENGTH_MODIFIER_SHORT);
-    DO_MODIFIER("ll", PRINTF_LENGTH_MODIFIER_LONG_LONG);
-    DO_MODIFIER("l", PRINTF_LENGTH_MODIFIER_LONG);
-    DO_MODIFIER("j", PRINTF_LENGTH_MODIFIER_INTMAX);
-    DO_MODIFIER("z", PRINTF_LENGTH_MODIFIER_SIZE_T);
-    DO_MODIFIER("t", PRINTF_LENGTH_MODIFIER_PTRDIFF_T);
-    DO_MODIFIER("L", PRINTF_LENGTH_MODIFIER_LONG_LONG);
-    DO_MODIFIER("H", PRINTF_LENGTH_MODIFIER_DECIMAL32);
-    DO_MODIFIER("DD", PRINTF_LENGTH_MODIFIER_DECIMAL128);
-    DO_MODIFIER("D", PRINTF_LENGTH_MODIFIER_DECIMAL64);
+    INTERNAL_DO_MODIFIER("hh", PRINTF_LENGTH_MODIFIER_CHAR);
+    INTERNAL_DO_MODIFIER("h", PRINTF_LENGTH_MODIFIER_SHORT);
+    INTERNAL_DO_MODIFIER("ll", PRINTF_LENGTH_MODIFIER_LONG_LONG);
+    INTERNAL_DO_MODIFIER("l", PRINTF_LENGTH_MODIFIER_LONG);
+    INTERNAL_DO_MODIFIER("j", PRINTF_LENGTH_MODIFIER_INTMAX);
+    INTERNAL_DO_MODIFIER("z", PRINTF_LENGTH_MODIFIER_SIZE_T);
+    INTERNAL_DO_MODIFIER("t", PRINTF_LENGTH_MODIFIER_PTRDIFF_T);
+    INTERNAL_DO_MODIFIER("L", PRINTF_LENGTH_MODIFIER_LONG_LONG);
+    INTERNAL_DO_MODIFIER("H", PRINTF_LENGTH_MODIFIER_DECIMAL32);
+    INTERNAL_DO_MODIFIER("DD", PRINTF_LENGTH_MODIFIER_DECIMAL128);
+    INTERNAL_DO_MODIFIER("D", PRINTF_LENGTH_MODIFIER_DECIMAL64);
 }

@@ -37,14 +37,20 @@ static void do_precision(struct my_string *destination, size_t pos_before,
         my_string_insert_char(destination, '0', pos_before);
 }
 
-struct my_string *asprintf_format_unsigned_integer(struct my_string *destination,
-    va_list arguments, struct my_printf_conversion_info *format_info)
+static int base_from_specifier(char conversion_specifier)
+{
+    return (conversion_specifier == 'b' ? 2 :
+        (conversion_specifier == 'o' ? 8 :
+        ((conversion_specifier == 'x' ||
+            conversion_specifier == 'X') ? 16 : 10)));
+}
+
+struct my_string *asprintf_format_unsigned_integer(
+    struct my_string *destination, va_list arguments,
+    struct my_printf_conversion_info *format_info)
 {
     uintptr_t unsigned_argument = get_arg(arguments, format_info);
-    int base = (format_info->conversion_specifier == 'b' ? 2 :
-        (format_info->conversion_specifier == 'o' ? 8 :
-        ((format_info->conversion_specifier == 'x' ||
-            format_info->conversion_specifier == 'X') ? 16 : 10)));
+    int base = base_from_specifier(format_info->conversion_specifier);
     struct my_string *prefix = NULL;
     size_t pos_before = destination->length;
 

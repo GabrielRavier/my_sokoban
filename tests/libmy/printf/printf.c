@@ -61,9 +61,15 @@ Test(my_printf, simple_string, .init = cr_redirect_stdout, .fini = compare_all_l
     compare_printfs("0123456789");
 }
 
+Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%% %l% aaa");
+}
+
 Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%s", "string");
+    compare_printfs("%s %s", "string1", "string2");
 }
 
 Test(my_printf, format_decimal, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -84,6 +90,7 @@ Test(my_printf, format_unsigned, .init = cr_redirect_stdout, .fini = compare_all
 Test(my_printf, format_octal, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%o", 01123);
+    compare_printfs("%#.o", 0);
 }
 
 Test(my_printf, format_hex_lowercase, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -230,6 +237,7 @@ Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compar
         compare_printfs("%f", values[i]);
         compare_printfs("%10f", values[i]);
         compare_printfs("%.2f", values[i]);
+        compare_printfs("%.0f", values[i]);
         compare_printfs("%7.0f", values[i]);
         compare_printfs("%5.2f", values[i]);
         compare_printfs("%0f", values[i]);

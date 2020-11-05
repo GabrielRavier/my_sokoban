@@ -28,3 +28,5 @@ void asprintf_format_cstring(struct my_string *destination, va_list arguments,
     struct my_printf_conversion_info *format_info);
 void asprintf_format_decimal_float(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info);
+void asprintf_format_percent_sign(struct my_string *destination,
+    va_list arguments, struct my_printf_conversion_info *format_info);

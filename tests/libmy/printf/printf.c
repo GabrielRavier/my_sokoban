@@ -110,6 +110,7 @@ Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to
     compare_printfs("%hhd|%hhd|%hhd|%hhd|%hhd", 0, 1, 257, 128, -1);
     compare_printfs("%ho%ho%#ho", 1037, 5282, -11627);
     compare_printfs("%.2d|%.1d|%.0d|%.*d|%1.0d", 0, 0, 0, 0, 0, 0);
+    compare_printfs("%#02x|%#02x|%#02x", (char)-16, (char)-16 & 0xff, (unsigned char)(char)-16);
 }
 
 Test(my_printf, hex, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -229,6 +230,15 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
 {
     compare_printfs("%s", "string");
     compare_printfs("%s %s", "string1", "string2");
+    compare_printfs("%s%.0s", "", "123");
+    compare_printfs("%s|%.3s|%.*s", "ABCD", "abcdef", 3, "123456");
+    compare_printfs("%-3s|%3s|%-*s|%*s|%*s", "1", "2", 3, "3", 3, "4", -3, "5");
+    compare_printfs("%-10.4s", "123456");
+    compare_printfs("%10.4s", "123456");
+    compare_printfs("%4.*s", -5, "123456");
+    compare_printfs("%.s", "123456");
+    compare_printfs("%.s|%.0s|%.*s", "a", "b", 0, "c");
+    compare_printfs("%-3.s|%-3.0s|%-3.*s", "a", "b", 0, "c");
 }
 
 Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

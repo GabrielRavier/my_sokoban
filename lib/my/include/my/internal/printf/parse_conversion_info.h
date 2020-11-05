@@ -28,9 +28,6 @@ struct my_printf_conversion_info {
         PRINTF_LENGTH_MODIFIER_SIZE_T,
         PRINTF_LENGTH_MODIFIER_PTRDIFF_T,
         PRINTF_LENGTH_MODIFIER_LONG_DOUBLE,
-        PRINTF_LENGTH_MODIFIER_DECIMAL32,
-        PRINTF_LENGTH_MODIFIER_DECIMAL64,
-        PRINTF_LENGTH_MODIFIER_DECIMAL128
     } length_modifier;
     char conversion_specifier;
 };

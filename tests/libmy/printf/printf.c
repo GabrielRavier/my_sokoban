@@ -42,15 +42,16 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     vasprintf(&result_libc, format, arguments);
     va_end(arguments);
 
-    cr_assert_str_eq(result_us, result_libc);
+    if (result_us != NULL && result_libc != NULL)
+        cr_assert_str_eq(result_us, result_libc);
 
-    if (combined_libc) {
-        char *old_combined_libc = combined_libc;
-        asprintf(&combined_libc, "%s%s", combined_libc, result_libc);
-        free(old_combined_libc);
-    }
-    else
-        asprintf(&combined_libc, "%s", result_libc);
+    if (result_libc)
+        if (combined_libc) {
+            char *old_combined_libc = combined_libc;
+            asprintf(&combined_libc, "%s%s", combined_libc, result_libc);
+            free(old_combined_libc);
+        } else
+            asprintf(&combined_libc, "%s", result_libc);
 
     free(result_us);
     free(result_libc);
@@ -135,6 +136,23 @@ Test(my_printf, formatting, .init = cr_redirect_stdout, .fini = compare_all_libc
     compare_printfs("%010s", "test");
     compare_printfs("%-10s", "test");
     compare_printfs("%-010s", "test");
+}
+
+Test(my_printf, field_width, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    const char *input = "0123456789";
+    compare_printfs("%.", input);
+    compare_printfs("%.s", input);
+    compare_printfs("%.*s", 1, input);
+    compare_printfs("%.*s", 2, input);
+    compare_printfs("%.*s", 3, input);
+    compare_printfs("%.*s", 4, input);
+    compare_printfs("%.*s", 5, input);
+    compare_printfs("%.*s", 6, input);
+    compare_printfs("%.*s", 7, input);
+    compare_printfs("%.*s", 8, input);
+    compare_printfs("%.*s", 9, input);
+    compare_printfs("%.*s", 10, input);
 }
 
 Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

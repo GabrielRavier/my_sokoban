@@ -95,10 +95,12 @@ static const char *do_conversion_specification(struct my_string *destination,
         do_padding(destination, destination_length_before_conversion,
             formatter_function(destination, arguments, &conversion_info),
                 &conversion_info);
+    else
+        return NULL;
     return (conversion_specification);
 }
 
-static void do_my_string_printf(struct my_string *destination,
+static bool do_my_string_printf(struct my_string *destination,
     const char *format, va_list arguments)
 {
     char current_char;
@@ -109,10 +111,12 @@ static void do_my_string_printf(struct my_string *destination,
             if (current_char == '%')
                 break;
             if (current_char == '\0')
-                return;
+                return true;
             my_string_append_char(destination, current_char);
         }
         format = do_conversion_specification(destination, format, arguments);
+        if (!format)
+            return false;
     }
 }
 
@@ -122,7 +126,11 @@ int my_vasprintf(char **result_string_ptr, const char *format,
     struct my_string *result = my_string_new();
     size_t resulting_length;
 
-    do_my_string_printf(result, format, arguments);
+    if (!do_my_string_printf(result, format, arguments)) {
+        *result_string_ptr = NULL;
+        my_string_free(result);
+        return -1;
+    }
     *result_string_ptr = result->string;
     resulting_length = result->length;
     free(result);

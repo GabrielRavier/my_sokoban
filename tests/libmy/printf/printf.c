@@ -108,6 +108,35 @@ Test(my_printf, alt_and_sign, .init = cr_redirect_stdout, .fini = compare_all_li
     compare_printfs("int: % d % d", 12345678, -12345678);
 }
 
+Test(my_printf, formatting, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("int: a%8da", 12345678);
+    compare_printfs("int: a%9da", 12345678);
+    compare_printfs("int: a%-9da", 12345678);
+    compare_printfs("int: a%10da", 12345678);
+    compare_printfs("int: a%-10da", 12345678);
+    compare_printfs("int: a%09da", 12345678);
+    compare_printfs("int: a%010da", 12345678);
+    compare_printfs("int: a%6da", 12345678);
+
+    compare_printfs("a%1sa", "b");
+    compare_printfs("a%9sa", "b");
+    compare_printfs("a%-9sa", "b");
+    compare_printfs("a%5sa", "thisisatest");
+
+    compare_printfs("%03d", -2);
+    compare_printfs("%0+3d", -2);
+    compare_printfs("%0+3d", 2);
+    compare_printfs("%+3d", 2);
+    compare_printfs("% 3d", -2000);
+    compare_printfs("% 3d", 2000);
+    compare_printfs("%+3d", 2000);
+    compare_printfs("%10s", "test");
+    compare_printfs("%010s", "test");
+    compare_printfs("%-10s", "test");
+    compare_printfs("%-010s", "test");
+}
+
 Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%% %l% aaa");

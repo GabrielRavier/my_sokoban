@@ -10,7 +10,7 @@
 // Produces a build error if expression is non-zero, but still allows usage in
 // constant expressions
 #define MY_BUILD_BUG_ON_ZERO(expression) \
-    ((int)(sizeof(struct { int : (-!!(expression)); })))
+    ((int)(__extension__ sizeof(struct { int : (-!!(expression)); })))
 
 // Determines whether two expressions have the same type, though it does not
 // determine whether they have different qualifiers

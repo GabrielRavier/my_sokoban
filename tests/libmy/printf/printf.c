@@ -189,11 +189,16 @@ Test(my_printf, through_long_long_checks, .init = cr_redirect_stdout, .fini = co
     }
 }
 
+#ifdef LIBMY_FLOATING_POINT_CLUDGE
+
 Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%f", 0.0);
+    compare_printfs("%f", 1.0);
     compare_printfs("%10f", 0.0);
 }
+
+#endif
 
 Test(my_printf, format_epitech_extension_capital_s)
 {

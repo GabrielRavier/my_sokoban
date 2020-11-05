@@ -359,6 +359,15 @@ Test(my_printf, through_size_t_checks, .init = cr_redirect_stdout, .fini = compa
     }
 }
 
+Test(my_printf, through_string_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%*.*s", 10, 10, "Here be a nice little string");
+    compare_printfs("%*.*s", 10, 5, "Here be a nice little string");
+    compare_printfs("%*.*s", -10, 10, "Here be a nice little string");
+    compare_printfs("%30s", "Here be a nice little string");
+    compare_printfs("%-30s", "Here be a nice little string");
+}
+
 #ifdef LIBMY_FLOATING_POINT_CLUDGE
 
 Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

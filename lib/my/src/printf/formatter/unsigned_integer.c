@@ -55,7 +55,7 @@ struct my_string *asprintf_format_unsigned_integer(struct my_string *destination
         unsigned_argument) {
         prefix = my_string_new_from_string("0", 1);
         if (base == 16)
-            my_string_append_char((base == 16) ? prefix : NULL,
+            my_string_append_char(prefix,
                 format_info->conversion_specifier);
     }
     if (unsigned_argument)

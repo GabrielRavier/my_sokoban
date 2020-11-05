@@ -28,10 +28,12 @@ void asprintf_format_unsigned_integer(struct my_string *destination,
         ((format_info->conversion_specifier == 'x' ||
             format_info->conversion_specifier == 'X') ? 16 : 10)));
 
-    if (format_info->flag_hash && (base == 16 || base == 8) && unsigned_argument) {
+    if (format_info->flag_hash && (base == 16 || base == 8) &&
+        unsigned_argument) {
         my_string_append_char(destination, '0');
         if (base == 16)
-            my_string_append_char(destination, format_info->conversion_specifier);
+            my_string_append_char(destination,
+                format_info->conversion_specifier);
     }
     asprintf_append_number_base(destination, unsigned_argument, base,
         format_info->conversion_specifier == 'X');

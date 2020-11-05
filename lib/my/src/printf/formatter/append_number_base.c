@@ -15,6 +15,7 @@ void asprintf_append_number_base(struct my_string *destination,
     uintmax_t tmp = number / base;
     if (tmp != 0)
         asprintf_append_number_base(destination, tmp, base, is_uppercase);
-    my_string_append_char(destination, (is_uppercase ? "0123456789ABCDEF" :
-        "0123456789abcdef")[number % base]);
+    my_string_append_char(destination,
+        (is_uppercase ? "0123456789ABCDEF" :
+            "0123456789abcdef")[number % base]);
 }

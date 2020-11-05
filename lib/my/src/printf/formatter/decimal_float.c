@@ -30,7 +30,7 @@ static struct my_string *make_format_string(
     if (format_info->flag_0)
         my_string_append_char(format_string, '0');
     asprintf_append_number_base(format_string, format_info->field_width, 10,
-       false);
+        false);
     if (format_info->precision != -1)
         asprintf_append_number_base(my_string_append_char(format_string, '.'),
             format_info->precision, 10, false);

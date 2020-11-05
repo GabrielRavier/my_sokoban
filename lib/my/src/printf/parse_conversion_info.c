@@ -31,19 +31,17 @@ void parse_printf_flags(struct my_printf_conversion_info *conversion_info,
     }
 }
 
-void parse_printf_field_width(
-    struct my_printf_conversion_info *conversion_info, const char **to_parse,
-    va_list arguments)
+void parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
+    const char **to_parse, va_list arguments)
 {
     if (**to_parse == '*') {
         conversion_info->field_width = va_arg(arguments, int);
         ++*to_parse;
-    }
-    else {
+    } else {
         conversion_info->field_width = 0;
         while (my_isdigit(**to_parse))
-            conversion_info->field_width = conversion_info->field_width * 10
-                + (*((*to_parse)++) - '0');
+            conversion_info->field_width =
+                conversion_info->field_width * 10 + (*((*to_parse)++) - '0');
     }
 }
 
@@ -54,15 +52,13 @@ void parse_printf_precision(struct my_printf_conversion_info *conversion_info,
         if (*++*to_parse == '*') {
             conversion_info->precision = va_arg(arguments, int);
             ++*to_parse;
-        }
-        else {
+        } else {
             conversion_info->precision = 0;
             while (my_isdigit(**to_parse))
-                conversion_info->precision = conversion_info->precision * 10
-                    + (*((*to_parse)++) - '0');
+                conversion_info->precision =
+                    conversion_info->precision * 10 + (*((*to_parse)++) - '0');
         }
-    }
-    else
+    } else
         conversion_info->precision = -1;
 }
 
@@ -73,7 +69,7 @@ static bool parse_single_length_modifier(
     size_t length_modifier_string_length = my_strlen(length_modifier_string);
 
     if (my_strncmp(length_modifier_string, *to_parse,
-        length_modifier_string_length) == 0) {
+            length_modifier_string_length) == 0) {
         conversion_info->length_modifier = length_modifier_value;
         *to_parse += length_modifier_string_length;
         return (true);

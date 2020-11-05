@@ -7,6 +7,8 @@
 
 #include "my/internal/printf/formatter.h"
 
+// We assume size_t is the unsigned counterpart to ptrdiff_t, which seems
+// reasonable to me
 static intmax_t get_arg(va_list arguments,
     struct my_printf_conversion_info *format_info)
 {
@@ -21,6 +23,8 @@ static intmax_t get_arg(va_list arguments,
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_INTMAX)
         return va_arg(arguments, uintmax_t);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SIZE_T)
+        return va_arg(arguments, size_t);
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_PTRDIFF_T)
         return va_arg(arguments, size_t);
     return va_arg(arguments, unsigned int);
 }

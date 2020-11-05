@@ -6,6 +6,7 @@
 */
 
 #include "my/internal/printf/formatter.h"
+#include <sys/types.h>
 #include <limits.h>
 
 static intmax_t get_arg(va_list arguments,
@@ -15,6 +16,8 @@ static intmax_t get_arg(va_list arguments,
         return va_arg(arguments, long);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG_LONG)
         return va_arg(arguments, long long);
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SIZE_T)
+        return va_arg(arguments, ssize_t);
     return va_arg(arguments, int);
 }
 

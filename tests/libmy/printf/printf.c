@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <limits.h>
 
 static char *combined_libc = NULL;
@@ -96,7 +97,7 @@ Test(my_printf, format_hex_uppercase, .init = cr_redirect_stdout, .fini = compar
 
 Test(my_printf, format_precision_string, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    const char array[5] = {'a', 'b', 'c', 'n', 'o'};
+    static const char array[5] = {'a', 'b', 'c', 'n', 'o'};
     compare_printfs("%.*s", 3, array);
 }
 
@@ -107,7 +108,7 @@ Test(my_printf, too_many_args, .init = cr_redirect_stdout, .fini = compare_all_l
 
 Test(my_printf, through_int_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    const int values[] = {INT_MIN, -17, -1, 0, 1, 17, 4711, 65535, INT_MAX};
+    static const int values[] = {INT_MIN, -17, -1, 0, 1, 17, 4711, 65535, INT_MAX};
 
     for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%d", values[i]);
@@ -135,7 +136,7 @@ Test(my_printf, through_int_checks, .init = cr_redirect_stdout, .fini = compare_
 
 Test(my_printf, through_long_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    const long values[] = {LONG_MIN, -17, -1, 0, 1, 17, 4711, 65535, LONG_MAX};
+    static const long values[] = {LONG_MIN, -17, -1, 0, 1, 17, 4711, 65535, LONG_MAX};
 
     for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%ld", values[i]);
@@ -163,7 +164,7 @@ Test(my_printf, through_long_checks, .init = cr_redirect_stdout, .fini = compare
 
 Test(my_printf, through_long_long_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
-    const long long values[] = {LLONG_MIN, LONG_MIN, -17, -1, 0, 1, 17, 4711, 65535, LONG_MAX, LLONG_MAX};
+    static const long long values[] = {LLONG_MIN, LONG_MIN, -17, -1, 0, 1, 17, 4711, 65535, LONG_MAX, LLONG_MAX};
 
     for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%lld", values[i]);
@@ -186,6 +187,34 @@ Test(my_printf, through_long_long_checks, .init = cr_redirect_stdout, .fini = co
         compare_printfs("%-#10llx", values[i]);
         compare_printfs("%-#10llX", values[i]);
         compare_printfs("%-#10llo", values[i]);
+    }
+}
+
+Test(my_printf, through_size_t_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    static const size_t values[] = {0, 1, 2, 200, SIZE_MAX};
+
+    for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
+        compare_printfs("%zd", values[i]);
+        compare_printfs("%zx", values[i]);
+        compare_printfs("%zX", values[i]);
+        compare_printfs("%zo", values[i]);
+        compare_printfs("%#zx", values[i]);
+        compare_printfs("%#zX", values[i]);
+        compare_printfs("%10zu", values[i]);
+        compare_printfs("%10zx", values[i]);
+        compare_printfs("%10zX", values[i]);
+        compare_printfs("%10zo", values[i]);
+        compare_printfs("%#10zx", values[i]);
+        compare_printfs("%#10zX", values[i]);
+        compare_printfs("%#10zo", values[i]);
+        compare_printfs("%-10zu", values[i]);
+        compare_printfs("%-10zx", values[i]);
+        compare_printfs("%-10zX", values[i]);
+        compare_printfs("%-10zo", values[i]);
+        compare_printfs("%-#10zx", values[i]);
+        compare_printfs("%-#10zX", values[i]);
+        compare_printfs("%-#10zo", values[i]);
     }
 }
 

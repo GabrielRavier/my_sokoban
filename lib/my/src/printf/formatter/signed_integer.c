@@ -18,6 +18,10 @@ static intmax_t get_arg(va_list arguments,
         return va_arg(arguments, long long);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SIZE_T)
         return va_arg(arguments, ssize_t);
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR)
+        return (char)va_arg(arguments, int);
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SHORT)
+        return (short)va_arg(arguments, int);
     return va_arg(arguments, int);
 }
 

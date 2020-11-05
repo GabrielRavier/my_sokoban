@@ -111,12 +111,12 @@ static bool do_my_string_printf(struct my_string *destination,
             if (current_char == '%')
                 break;
             if (current_char == '\0')
-                return true;
+                return (true);
             my_string_append_char(destination, current_char);
         }
         format = do_conversion_specification(destination, format, arguments);
         if (!format)
-            return false;
+            return (false);
     }
 }
 
@@ -129,7 +129,7 @@ int my_vasprintf(char **result_string_ptr, const char *format,
     if (!do_my_string_printf(result, format, arguments)) {
         *result_string_ptr = NULL;
         my_string_free(result);
-        return -1;
+        return (-1);
     }
     *result_string_ptr = result->string;
     resulting_length = result->length;

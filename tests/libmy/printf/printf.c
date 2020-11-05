@@ -8,6 +8,7 @@
 #define _GNU_SOURCE
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
+#include "my/my_string.h"
 #include "my/stdio.h"
 #include "my/macros.h"
 #include <stdio.h>
@@ -17,11 +18,12 @@
 #include <limits.h>
 #include <assert.h>
 
-static char *combined_libc = NULL;
+static struct my_string *combined_libc = NULL;
 
 static void compare_all_libc_to_stdout()
 {
-    cr_assert_stdout_eq_str(combined_libc);
+    FILE *libc_output_as_FILE = fmemopen(combined_libc->string, combined_libc->length, "r");
+    cr_assert_stdout_eq(libc_output_as_FILE);
     free(combined_libc);
 }
 
@@ -35,24 +37,25 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     va_end(arguments);
 
     va_start(arguments, format);
-    my_vasprintf(&result_us, format, arguments);
+    int our_length = my_vasprintf(&result_us, format, arguments);
     va_end(arguments);
 
     va_start(arguments, format);
-    vasprintf(&result_libc, format, arguments);
+    int libc_length = vasprintf(&result_libc, format, arguments);
     va_end(arguments);
 
-    if (result_us != NULL || result_libc != NULL)
+    if (result_us != NULL || result_libc != NULL) {
         cr_assert_str_eq(result_us, result_libc);
+        cr_assert_eq(our_length, libc_length);
+        cr_assert_eq(memcmp(result_us, result_libc, our_length), 0);
+    }
 
-    if (result_libc)
-        if (combined_libc) {
-            char *old_combined_libc = combined_libc;
-            asprintf(&combined_libc, "%s%s", combined_libc, result_libc);
-            free(old_combined_libc);
-        } else {
-            asprintf(&combined_libc, "%s", result_libc);
-        }
+    if (result_libc) {
+        if (combined_libc)
+            my_string_append(combined_libc, result_libc, libc_length);
+        else
+            combined_libc = my_string_new_from_string(result_libc, libc_length);
+    }
 
     free(result_us);
     free(result_libc);
@@ -63,12 +66,23 @@ Test(my_printf, simple_string, .init = cr_redirect_stdout, .fini = compare_all_l
     compare_printfs("Hello world");
     compare_printfs("0123456789");
     compare_printfs("hello");
+    compare_printfs("");
 }
 
 Test(my_printf, basic, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("hello%d", -123);
     compare_printfs("%s%04d%X", "hello", 123, 0xfaceU);
+    compare_printfs("%d %s", 1, "one");
+    compare_printfs("100%%");
+    compare_printfs("xxx%cyyy", '%');
+}
+
+Test(my_printf, random, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%-5d", 45);
+    compare_printfs("%s\n%s\n%s", "one", "two", "three");
+    compare_printfs("%s\41%s", "one", "two");
 }
 
 Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -142,7 +156,35 @@ Test(my_printf, formatting, .init = cr_redirect_stdout, .fini = compare_all_libc
 Test(my_printf, field_width, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     const char *input = "0123456789";
-    compare_printfs("%.", input);
+    //compare_printfs("%", input); // Makes glibc printf give random shit
+    compare_printfs("%s", input);
+    compare_printfs("%*s", 1, input);
+    compare_printfs("%*s", 2, input);
+    compare_printfs("%*s", 3, input);
+    compare_printfs("%*s", 4, input);
+    compare_printfs("%*s", 5, input);
+    compare_printfs("%*s", 6, input);
+    compare_printfs("%*s", 7, input);
+    compare_printfs("%*s", 8, input);
+    compare_printfs("%*s", 9, input);
+    compare_printfs("%*s", 10, input);
+    compare_printfs("%*s", -1, input);
+    compare_printfs("%*s", -2, input);
+    compare_printfs("%*s", -3, input);
+    compare_printfs("%*s", -4, input);
+    compare_printfs("%*s", -5, input);
+    compare_printfs("%*s", -6, input);
+    compare_printfs("%*s", -7, input);
+    compare_printfs("%*s", -8, input);
+    compare_printfs("%*s", -9, input);
+    compare_printfs("%*s", -10, input);
+    compare_printfs("%10s", input);
+}
+
+Test(my_printf, precision, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    const char *input = "0123456789";
+    //compare_printfs("%.", input); // Makes glibc give random shit
     compare_printfs("%.s", input);
     compare_printfs("%.*s", 1, input);
     compare_printfs("%.*s", 2, input);
@@ -154,6 +196,21 @@ Test(my_printf, field_width, .init = cr_redirect_stdout, .fini = compare_all_lib
     compare_printfs("%.*s", 8, input);
     compare_printfs("%.*s", 9, input);
     compare_printfs("%.*s", 10, input);
+    compare_printfs("%.*s", -1, input);
+    compare_printfs("%.*s", -2, input);
+    compare_printfs("%.*s", -3, input);
+    compare_printfs("%.*s", -4, input);
+    compare_printfs("%.*s", -5, input);
+    compare_printfs("%.*s", -6, input);
+    compare_printfs("%.*s", -7, input);
+    compare_printfs("%.*s", -8, input);
+    compare_printfs("%.*s", -9, input);
+    compare_printfs("%.*s", -10, input);
+    compare_printfs("%.10s", input);
+    compare_printfs("%3.10s", input);
+    compare_printfs("%10.3s", input);
+    compare_printfs("%*.*s", 10, 3, input);
+    compare_printfs("%*.*s", -10, -3, input);
 }
 
 Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -165,6 +222,16 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
 {
     compare_printfs("%s", "string");
     compare_printfs("%s %s", "string1", "string2");
+}
+
+Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%c", 'a');
+}
+
+Test(my_printf, format_c_null_terminator, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%c", '\0');
 }
 
 Test(my_printf, format_decimal, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -191,6 +258,9 @@ Test(my_printf, format_octal, .init = cr_redirect_stdout, .fini = compare_all_li
 Test(my_printf, format_hex_lowercase, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%x %x", 0x1234, 0xabcd);
+    compare_printfs("%x", -1);
+    compare_printfs("%04x", 255);
+    compare_printfs("%08x", 65537);
 }
 
 Test(my_printf, format_hex_uppercase, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -364,8 +434,13 @@ Test(my_printf, through_string_checks, .init = cr_redirect_stdout, .fini = compa
     compare_printfs("%*.*s", 10, 10, "Here be a nice little string");
     compare_printfs("%*.*s", 10, 5, "Here be a nice little string");
     compare_printfs("%*.*s", -10, 10, "Here be a nice little string");
+    compare_printfs("%*.*s", -10, -10, "Here be a nice little string");
+    compare_printfs("%*.*s", -10, -5, "Here be a nice little string");
+    compare_printfs("%*.*s", 10, -10, "Here be a nice little string");
+    compare_printfs("%-10.10s", "Here be a nice little string");
     compare_printfs("%30s", "Here be a nice little string");
     compare_printfs("%-30s", "Here be a nice little string");
+    compare_printfs("%1000s", "Here be a nice little string");
 }
 
 #ifdef LIBMY_FLOATING_POINT_CLUDGE
@@ -418,7 +493,7 @@ Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compar
 Test(my_printf, through_float_widths_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     static const double values[] = {-(0.0 / 0.0), -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
-    static const int lengths[] = {1, 1, 5, 5, 10, 10, 5, 1};
+    static const int lengths[] = {1, 1, 5, 5, 10, 10, 5, 1, -1, -1, -5, -5, -10, -10, -5, -1};
 
     for (size_t i = 0; i < (MY_ARRAY_SIZE(lengths) - 1); ++i) {
         for (size_t j = 0; j < MY_ARRAY_SIZE(values); ++j) {

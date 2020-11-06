@@ -388,6 +388,22 @@ Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%3lc>", 0x03c0);
     compare_printfs("<%-2lc>", L'=');
     compare_printfs("<%-3lc>", 0x03c0);
+    compare_printfs("<%#c>", '=');
+    compare_printfs("<% -3c>", '=');
+    compare_printfs("<%+-3c>", '=');
+    compare_printfs("<%03c>", '=');
+    compare_printfs("<%-03c>", '=');
+    compare_printfs("<%3.2c>", '=');
+    compare_printfs("<%hc>", '=');
+    compare_printfs("<%#lc>", 0x03c0);
+    compare_printfs("<% -4lc>", 0x03c0);
+    compare_printfs("<%+-4lc>", 0x03c0);
+    compare_printfs("<%04lc>", 0x03c0);
+    compare_printfs("<%-04lc>", 0x03c0);
+    compare_printfs("<%4.5lc>", 0x03c0);
+    compare_printfs("<%4.3lc>", 0x03c0);
+    compare_printfs("<%4.1lc>", 0x03c0);
+    compare_printfs("<%llc>", 0xfe);
 }
 
 Test(my_printf, format_p, .init = do_init, .fini = compare_all_libc_to_stdout)

@@ -5,9 +5,9 @@
 ** Implements my_vasprintf
 */
 
-#include "my/internal/printf/parse_conversion_info.h"
 #include "my/stdio.h"
 #include "my/internal/printf/formatter.h"
+#include "my/internal/printf/padding.h"
 #include "my/my_string.h"
 #include "my/string.h"
 #include "my/ctype.h"
@@ -38,41 +38,17 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['p'] = &asprintf_format_pointer,
 };
 
-static void do_padding_loop(struct my_string *destination,
-    size_t destination_length_before_conversion, size_t converted_length,
-    struct my_printf_conversion_info *conversion_info)
+static void parse_format(
+    struct my_printf_conversion_info *conversion_info,
+    const char **conversion_specification, va_list arguments)
 {
-    while (converted_length++ < (size_t)conversion_info->field_width)
-        if (conversion_info->flag_minus)
-            my_string_append_char(destination, ' ');
-        else
-            my_string_insert_char(destination,
-                conversion_info->flag_0 ? '0' : ' ',
-                destination_length_before_conversion);
-}
-
-static void do_padding(struct my_string *destination,
-    size_t destination_length_before_conversion,
-    struct my_string *prefixed_string,
-    struct my_printf_conversion_info *conversion_info)
-{
-    formatter_func_t formatting_func = formatter_functions[
-        (unsigned char)conversion_info->conversion_specifier];
-    size_t converted_length = destination->length -
-        destination_length_before_conversion + (prefixed_string ?
-            prefixed_string->length : 0);
-
-    if (formatting_func != &asprintf_format_unsigned_integer &&
-        formatting_func != &asprintf_format_signed_integer)
-        conversion_info->flag_0 = false;
-    if (!conversion_info->flag_0 && prefixed_string)
-        my_string_insert(destination, prefixed_string->string,
-            prefixed_string->length, destination_length_before_conversion);
-    do_padding_loop(destination, destination_length_before_conversion,
-        converted_length, conversion_info);
-    if (conversion_info->flag_0 && prefixed_string)
-        my_string_insert(destination, prefixed_string->string,
-            prefixed_string->length, destination_length_before_conversion);
+    parse_printf_flags(conversion_info, conversion_specification);
+    parse_printf_field_width(conversion_info, conversion_specification,
+        arguments);
+    parse_printf_precision(conversion_info, conversion_specification,
+        arguments);
+    parse_printf_length_modifier(conversion_info, conversion_specification);
+    conversion_info->conversion_specifier = *((*conversion_specification)++);
 }
 
 // Returns the next character after the conversion specifier.
@@ -82,22 +58,19 @@ static const char *do_conversion_specification(struct my_string *destination,
     struct my_printf_conversion_info conversion_info = { 0 };
     size_t destination_length_before_conversion = destination->length;
     formatter_func_t formatter_function;
+    const char *original_conv_spec_ptr = conversion_specification;
 
-    parse_printf_flags(&conversion_info, &conversion_specification);
-    parse_printf_field_width(&conversion_info, &conversion_specification,
-        arguments);
-    parse_printf_precision(&conversion_info, &conversion_specification,
-        arguments);
-    parse_printf_length_modifier(&conversion_info, &conversion_specification);
-    conversion_info.conversion_specifier = *conversion_specification++;
+    parse_format(&conversion_info, &conversion_specification, arguments);
     formatter_function = formatter_functions[
         (unsigned char)conversion_info.conversion_specifier];
     if (formatter_function != NULL)
-        do_padding(destination, destination_length_before_conversion,
-            formatter_function(destination, arguments, &conversion_info),
-                &conversion_info);
+        asprintf_do_padding(&((struct asprintf_do_padding_params){destination,
+            destination_length_before_conversion, formatter_function(
+                destination, arguments, &conversion_info),
+            &conversion_info, formatter_function}));
     else
-        return NULL;
+        my_string_append(destination, original_conv_spec_ptr - 1,
+            conversion_specification - original_conv_spec_ptr + 1);
     return (conversion_specification);
 }
 
@@ -115,7 +88,7 @@ static bool do_my_string_printf(struct my_string *destination,
                 return (true);
             my_string_append_char(destination, current_char);
         }
-        format = do_conversion_specification(destination, format, arguments);
+        format  = do_conversion_specification(destination, format, arguments);
         if (!format)
             return (false);
     }

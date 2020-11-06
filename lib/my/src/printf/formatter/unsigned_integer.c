@@ -6,10 +6,11 @@
 */
 
 #include "my/internal/printf/formatter.h"
+#include "my/internal/printf/parse_conversion_info.h"
 
 // We assume size_t is the unsigned counterpart to ptrdiff_t, which seems
 // reasonable to me
-static intmax_t get_arg(va_list arguments,
+static uintmax_t get_arg(va_list arguments,
     struct my_printf_conversion_info *format_info)
 {
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR)
@@ -45,27 +46,38 @@ static int base_from_specifier(char conversion_specifier)
             conversion_specifier == 'X') ? 16 : 10)));
 }
 
-struct my_string *asprintf_format_unsigned_integer(
-    struct my_string *destination, va_list arguments,
-    struct my_printf_conversion_info *format_info)
+static struct my_string *do_preprinting_stuff(
+    struct my_printf_conversion_info *format_info, int base, uintmax_t argument)
 {
-    uintptr_t unsigned_argument = get_arg(arguments, format_info);
-    int base = base_from_specifier(format_info->conversion_specifier);
     struct my_string *prefix = NULL;
-    size_t pos_before = destination->length;
 
+    if (format_info->precision != -1)
+        format_info->flag_0 = false;
     if (format_info->precision == -1 || (format_info->flag_hash &&
         format_info->precision == 0))
         format_info->precision = 1;
     if (format_info->flag_hash && (base == 16 || base == 8) &&
-        unsigned_argument) {
+        argument) {
         prefix = my_string_new_from_string("0", 1);
         if (base == 16)
             my_string_append_char(prefix,
                 format_info->conversion_specifier);
     }
-    if (unsigned_argument)
-        asprintf_append_number_base(destination, unsigned_argument, base,
+    return prefix;
+}
+
+struct my_string *asprintf_format_unsigned_integer(
+    struct my_string *destination, va_list arguments,
+    struct my_printf_conversion_info *format_info)
+{
+    uintmax_t argument = get_arg(arguments, format_info);
+    int base = base_from_specifier(format_info->conversion_specifier);
+    struct my_string *prefix = do_preprinting_stuff(format_info, base,
+        argument);
+    size_t pos_before = destination->length;
+
+    if (argument)
+        asprintf_append_number_base(destination, argument, base,
             format_info->conversion_specifier == 'X');
     do_precision(destination, pos_before, format_info);
     return prefix;

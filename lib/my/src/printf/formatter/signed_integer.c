@@ -38,28 +38,38 @@ static void do_precision(struct my_string *destination, size_t pos_before,
         my_string_insert_char(destination, '0', pos_before);
 }
 
+static struct my_string *do_preprinting_stuff(
+    struct my_printf_conversion_info *format_info, intmax_t *argument)
+{
+    struct my_string *prefix = NULL;
+
+    if (format_info->precision == -1)
+        format_info->precision = 1;
+    else
+        format_info->flag_0 = false;
+    if (*argument < 0) {
+        prefix = my_string_new_from_string("-", 1);
+        if (*argument != INTMAX_MIN)
+            *argument = -*argument;
+    }
+    else if (format_info->flag_plus || format_info->flag_space)
+        prefix = my_string_new_from_string(format_info->flag_plus ? "+" : " ",
+            1);
+    return prefix;
+}
+
 // Note: The cast to uintptr_t (done explicitly here for clarity) will handle
 // the issue of INTMAX_MIN, since casting that to uintptr_t on 2s complement
 // (now mandatory in C2x) will result in the corresponding unsigned value
 struct my_string *asprintf_format_signed_integer(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {
-    intmax_t signed_argument = get_arg(arguments, format_info);
-    struct my_string *prefix = NULL;
+    intmax_t argument = get_arg(arguments, format_info);
+    struct my_string *prefix = do_preprinting_stuff(format_info, &argument);
     size_t pos_before = destination->length;
 
-    if (format_info->precision == -1)
-        format_info->precision = 1;
-    if (signed_argument < 0) {
-        prefix = my_string_new_from_string("-", 1);
-        if (signed_argument != INTMAX_MIN)
-            signed_argument = -signed_argument;
-    }
-    else if (format_info->flag_plus || format_info->flag_space)
-        prefix = my_string_new_from_string(format_info->flag_plus ? "+" : " ",
-            1);
-    if (signed_argument)
-        asprintf_append_number_base(destination, (uintmax_t)signed_argument, 10,
+    if (argument)
+        asprintf_append_number_base(destination, (uintmax_t)argument, 10,
             false);
     do_precision(destination, pos_before, format_info);
     return (prefix);

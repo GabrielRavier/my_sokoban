@@ -81,6 +81,12 @@ Test(my_printf, basic, .init = cr_redirect_stdout, .fini = compare_all_libc_to_s
     compare_printfs("xxx%cyyy", '%');
 }
 
+Test(my_printf, invalid, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("hello%w");
+    compare_printfs("hello%0w");
+}
+
 Test(my_printf, random, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%-5d", 45);
@@ -91,6 +97,9 @@ Test(my_printf, random, .init = cr_redirect_stdout, .fini = compare_all_libc_to_
 Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("char: %hhd %hhd %hhd", (char)-12, (char)0, (char)254);
+    compare_printfs("char: %hhd %hhd %hhd", CHAR_MIN, (char)0, CHAR_MAX);
+    compare_printfs("char: %+.4hhd %+.4hhd %+.4hhd", (char)-12, (char)0, (char)254);
+    compare_printfs("char: % 04hhd % 04hhd % 04hhd", CHAR_MIN, (char)0, CHAR_MAX);
     compare_printfs("unsigned char: %hhu %hhu %hhu", (char)-12, (char)0, (char)254);
     compare_printfs("short: %hd %hd %hd", (short)-1234, (short)0, (short)1234);
     compare_printfs("unsigned short: %hu %hu %hu", (short)-1234, (short)0, (short)1234);
@@ -267,6 +276,47 @@ Test(my_printf, format_c_null_terminator, .init = cr_redirect_stdout, .fini = co
 Test(my_printf, format_decimal, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%d %d", 1239, -1239);
+    compare_printfs("<%d>", 0);
+    compare_printfs("<%d>", 1);
+    compare_printfs("<%d>", -1);
+    compare_printfs("<%d>", 42);
+    compare_printfs("<%d>", INT_MAX);
+    compare_printfs("<%d>", INT_MIN);
+    compare_printfs("<% d>", 42);
+    compare_printfs("<% d>", -42);
+    compare_printfs("<%+d>", 42);
+    compare_printfs("<%+d>", -42);
+    compare_printfs("<% +d>", 42);
+    compare_printfs("<% +d>", -42);
+    compare_printfs("<%-4d>", 42);
+    compare_printfs("<% -4d>", 42);
+    compare_printfs("<%+-4d>", 42);
+    compare_printfs("<%04d>", 42);
+    compare_printfs("<%-04d>", 42);
+    compare_printfs("<% 04d>", 42);
+    compare_printfs("<%+04d>", 42);
+    compare_printfs("<%4.3d>", 42);
+    compare_printfs("<% 5.3d>", 42);
+    compare_printfs("<%+5.3d>", 42);
+    compare_printfs("<%-4.3d>", 42);
+    compare_printfs("<%04.3d>", 42);
+
+    compare_printfs("<%hhd>", CHAR_MIN);
+    compare_printfs("<%hhd>", -1);
+    compare_printfs("<%hhd>", 0);
+    compare_printfs("<%hhd>", 1);
+    compare_printfs("<%hhd>", CHAR_MAX);
+    compare_printfs("<%+.4hhd>", 42);
+    compare_printfs("<% 04hhd>", 42);
+
+    compare_printfs("<%hd>", SHRT_MIN);
+    compare_printfs("<%hd>", -1);
+    compare_printfs("<%hd>", 0);
+    compare_printfs("<%hd>", 1);
+    compare_printfs("<%hd>", SHRT_MAX);
+
+    compare_printfs("<%#d>", 42);
+    compare_printfs("<%#Ld>", (long long)12391284012410);
 }
 
 Test(my_printf, format_integer, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -322,10 +372,26 @@ Test(my_printf, some_format_checks, .init = cr_redirect_stdout, .fini = compare_
         compare_printfs("%-6x", values[i]);
         compare_printfs("%-6X", values[i]);
         compare_printfs("%-6o", values[i]);
+        compare_printfs("%-4d", values[i]);
+        compare_printfs("%-4x", values[i]);
+        compare_printfs("%-4X", values[i]);
+        compare_printfs("%-4o", values[i]);
         compare_printfs("%+6d", values[i]);
         compare_printfs("%+6x", values[i]);
         compare_printfs("%+6X", values[i]);
         compare_printfs("%+6o", values[i]);
+        compare_printfs("%+d", values[i]);
+        compare_printfs("%+x", values[i]);
+        compare_printfs("%+o", values[i]);
+        compare_printfs("%+X", values[i]);
+        compare_printfs("%+ d", values[i]);
+        compare_printfs("%+ x", values[i]);
+        compare_printfs("%+ X", values[i]);
+        compare_printfs("%+ o", values[i]);
+        compare_printfs("% +d", values[i]);
+        compare_printfs("% +x", values[i]);
+        compare_printfs("% +X", values[i]);
+        compare_printfs("% +o", values[i]);
         compare_printfs("%06d", values[i]);
         compare_printfs("%06x", values[i]);
         compare_printfs("%06X", values[i]);
@@ -334,6 +400,38 @@ Test(my_printf, some_format_checks, .init = cr_redirect_stdout, .fini = compare_
         compare_printfs("% 6x", values[i]);
         compare_printfs("% 6X", values[i]);
         compare_printfs("% 6o", values[i]);
+        compare_printfs("%4.3d", values[i]);
+        compare_printfs("%4.3x", values[i]);
+        compare_printfs("%4.3X", values[i]);
+        compare_printfs("%4.3o", values[i]);
+        compare_printfs("% 4.3d", values[i]);
+        compare_printfs("% 4.3x", values[i]);
+        compare_printfs("% 4.3X", values[i]);
+        compare_printfs("% 4.3o", values[i]);
+        compare_printfs("%+4.3d", values[i]);
+        compare_printfs("%+4.3x", values[i]);
+        compare_printfs("%+4.3X", values[i]);
+        compare_printfs("%+4.3o", values[i]);
+        compare_printfs("%-4.3d", values[i]);
+        compare_printfs("%-4.3x", values[i]);
+        compare_printfs("%-4.3X", values[i]);
+        compare_printfs("%-4.3o", values[i]);
+        compare_printfs("%5.3d", values[i]);
+        compare_printfs("%5.3x", values[i]);
+        compare_printfs("%5.3X", values[i]);
+        compare_printfs("%5.3o", values[i]);
+        compare_printfs("% 5.3d", values[i]);
+        compare_printfs("% 5.3x", values[i]);
+        compare_printfs("% 5.3X", values[i]);
+        compare_printfs("% 5.3o", values[i]);
+        compare_printfs("%+5.3d", values[i]);
+        compare_printfs("%+5.3x", values[i]);
+        compare_printfs("%+5.3X", values[i]);
+        compare_printfs("%+5.3o", values[i]);
+        compare_printfs("%-5.3d", values[i]);
+        compare_printfs("%-5.3x", values[i]);
+        compare_printfs("%-5.3X", values[i]);
+        compare_printfs("%-5.3o", values[i]);
     }
 }
 

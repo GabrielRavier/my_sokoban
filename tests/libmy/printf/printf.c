@@ -11,6 +11,7 @@
 #include "my/my_string.h"
 #include "my/stdio.h"
 #include "my/macros.h"
+#include <locale.h>
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
@@ -26,6 +27,12 @@ static void compare_all_libc_to_stdout()
     FILE *libc_output_as_FILE = fmemopen(combined_libc->string, combined_libc->length, "r");
     cr_assert_stdout_eq(libc_output_as_FILE);
     free(combined_libc);
+}
+
+static void do_init()
+{
+    cr_redirect_stdout();
+    setlocale(LC_ALL, "en_US.utf8");
 }
 
 MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *format, ...)
@@ -64,7 +71,7 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     free(result_libc);
 }
 
-Test(my_printf, simple_string, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, simple_string, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("Hello world");
     compare_printfs("0123456789");
@@ -74,7 +81,7 @@ Test(my_printf, simple_string, .init = cr_redirect_stdout, .fini = compare_all_l
     compare_printfs("");
 }
 
-Test(my_printf, basic, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("hello%d", -123);
     compare_printfs("%s%04d%X", "hello", 123, 0xfaceU);
@@ -103,20 +110,20 @@ Test(my_printf, basic, .init = cr_redirect_stdout, .fini = compare_all_libc_to_s
     compare_printfs("left-justified variable width : '%*c'\n", -5, 'x');
 }
 
-Test(my_printf, invalid, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("hello%w");
     compare_printfs("hello%0w");
 }
 
-Test(my_printf, random, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, random, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%-5d", 45);
     compare_printfs("%s\n%s\n%s", "one", "two", "three");
     compare_printfs("%s\41%s", "one", "two");
 }
 
-Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("char: %hhd %hhd %hhd", (char)-12, (char)0, (char)254);
     compare_printfs("char: %hhd %hhd %hhd", CHAR_MIN, (char)0, CHAR_MAX);
@@ -147,7 +154,7 @@ Test(my_printf, numbers, .init = cr_redirect_stdout, .fini = compare_all_libc_to
     compare_printfs("%#02x|%#02x|%#02x", (char)-16, (char)-16 & 0xff, (unsigned char)(char)-16);
 }
 
-Test(my_printf, hex, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, hex, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("unsigned char: %hhx %hhx %hhx", (char)-12, (char)0, (char)254);
     compare_printfs("unsigned short: %hx %hx %hx", (short)-1234, (short)0, (short)1234);
@@ -159,14 +166,14 @@ Test(my_printf, hex, .init = cr_redirect_stdout, .fini = compare_all_libc_to_std
     compare_printfs("unsigned ptrdiff_t: %tx %tx %tx", (ptrdiff_t)-12345678, (ptrdiff_t)0, (ptrdiff_t)12345678);
 }
 
-Test(my_printf, alt_and_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, alt_and_sign, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("unsigned int: %#x %#X", 0xabcdef, 0XABCDEF);
     compare_printfs("int: %+d %+d", 12345678, -12345678);
     compare_printfs("int: % d % d", 12345678, -12345678);
 }
 
-Test(my_printf, formatting, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, formatting, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("int: a%8da", 12345678);
     compare_printfs("int: a%9da", 12345678);
@@ -195,7 +202,7 @@ Test(my_printf, formatting, .init = cr_redirect_stdout, .fini = compare_all_libc
     compare_printfs("%-010s", "test");
 }
 
-Test(my_printf, field_width, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     const char *input = "0123456789";
     //compare_printfs("%", input); // Makes glibc printf give random shit
@@ -223,7 +230,7 @@ Test(my_printf, field_width, .init = cr_redirect_stdout, .fini = compare_all_lib
     compare_printfs("%10s", input);
 }
 
-Test(my_printf, precision, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     const char *input = "0123456789";
     //compare_printfs("%.", input); // Makes glibc give random shit
@@ -255,12 +262,12 @@ Test(my_printf, precision, .init = cr_redirect_stdout, .fini = compare_all_libc_
     compare_printfs("%*.*s", -10, -3, input);
 }
 
-Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%% %l% aaa");
 }
 
-Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%s", "foo");
     compare_printfs("%s", "string");
@@ -292,8 +299,8 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     static const wchar_t bad_ws[] = { 0x0391, 0xdeef, 0x3c9, 0 };
 
     compare_printfs("<%ls>", L"text");
-    //compare_printfs("<%ls>", a_ws); // These two fail here as of right now, might be related to the fact that I'm not really capable of doing magical input sanitization like glibc
-    //compare_printfs("<%ls>", bad_ws);
+    compare_printfs("<%ls>", a_ws);
+    //compare_printfs("<%ls>", bad_ws); // Fails as of right now, this is probably bad data that I need to filter out somehow
     compare_printfs("<%-ls>", L"text");
     compare_printfs("<%6ls>", L"text");
     compare_printfs("<%-6ls>", L"text");
@@ -305,7 +312,7 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("<%+-6ls>", L"text");
     compare_printfs("<%06ls>", L"text");
     compare_printfs("<%-06ls>", L"text");
-    //compare_printfs("<%lls>", "text"); // Idk wtf glibc is doing but this is UB anyway, I'll make my implementation reject it if I have the time later
+    compare_printfs("<%lls>", L"text");
 
     static const wchar_t wstr[] = L" X Yabc Z W";
     compare_printfs("|%13ls|\n", wstr);
@@ -314,9 +321,18 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("|%13.11ls|\n", wstr);
     compare_printfs("|%13.15ls|\n", &wstr[2]);
     compare_printfs("|%13lc|\n", (wint_t)wstr[5]);
+
+    wchar_t wz [3] = L"@@";
+    wchar_t wn [3] = L"@@@";
+    compare_printfs("%ls", wz);
+    compare_printfs("%4ls", wz);
+    compare_printfs("%4ls", wn);
+    compare_printfs("%9ls", wz);
+    compare_printfs("%9ls", wn);
+    compare_printfs("%10ls", wz);
 }
 
-Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%c", 'a');
     compare_printfs("<%c>", '=');
@@ -334,12 +350,12 @@ Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("<%hc>", '=');
     compare_printfs("<%lc>", L'=');
     compare_printfs("<%lc>", L'\t');
-    //compare_printfs("<%lc>", (wint_t)0x3C0); // glibc rejects this character, we don't and I think rejecting it would require some sort of database of valid characters, so ¯\_(ツ)_/¯, maybe I'll do it when I've finished everything else
+    compare_printfs("<%lc>", (wint_t)0x3C0);
     compare_printfs("<%lc>", L'\0');
     compare_printfs("<%-lc>", L'=');
     compare_printfs("<%2lc>", L'=');
     compare_printfs("<%-2lc>", L'=');
-    //compare_printfs("<%lc>", 0x00fe); // Fails rn, probably for the same reason as above
+    compare_printfs("<%lc>", 0x00fe);
     compare_printfs("<%#lc>", L'=');
     compare_printfs("<% -3lc>", L'=');
     compare_printfs("<%+-3lc>", L'=');
@@ -347,9 +363,21 @@ Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("<%-03lc>", L'=');
     compare_printfs("<%3.2lc>", L'=');
     compare_printfs("<%llc>", '=');
+    compare_printfs("<%lc>", L'=');
+    compare_printfs("<%lc>", L'\t');
+    compare_printfs("<%lc>", L'è');
+    compare_printfs("<%lc>", 0x00fe);
+    compare_printfs("<%lc>", 0x03c0);
+    compare_printfs("<%lc>", 0x123456);
+    compare_printfs("<%-lc>", L'=');
+    compare_printfs("<%-lc>", 0x03c0);
+    compare_printfs("<%2lc>", L'=');
+    compare_printfs("<%3lc>", 0x03c0);
+    compare_printfs("<%-2lc>", L'=');
+    compare_printfs("<%-3lc>", 0x03c0);
 }
 
-Test(my_printf, format_p, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_p, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%p", ((void *)0xffff0123456789abUL));
     compare_printfs("%p", ((void *)0x00000123456789abUL));
@@ -357,12 +385,12 @@ Test(my_printf, format_p, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("%p", NULL);
 }
 
-Test(my_printf, format_c_null_terminator, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_c_null_terminator, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%c", '\0');
 }
 
-Test(my_printf, format_decimal, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%d %d", 1239, -1239);
     compare_printfs("<%d>", 0);
@@ -408,23 +436,23 @@ Test(my_printf, format_decimal, .init = cr_redirect_stdout, .fini = compare_all_
     compare_printfs("<%#Ld>", (long long)12391284012410);
 }
 
-Test(my_printf, format_integer, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%i %i", 1239, -1239);
 }
 
-Test(my_printf, format_unsigned, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_unsigned, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%u", 1239);
 }
 
-Test(my_printf, format_octal, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_octal, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%o", 01123);
     compare_printfs("%#.o", 0);
 }
 
-Test(my_printf, format_hex_lowercase, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_hex_lowercase, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%x %x", 0x1234, 0xabcd);
     compare_printfs("%x", -1);
@@ -432,23 +460,23 @@ Test(my_printf, format_hex_lowercase, .init = cr_redirect_stdout, .fini = compar
     compare_printfs("%08x", 65537);
 }
 
-Test(my_printf, format_hex_uppercase, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_hex_uppercase, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%X %X", 0x1234, 0xABCD);
 }
 
-Test(my_printf, format_precision_string, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, format_precision_string, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const char array[5] = {'a', 'b', 'c', 'n', 'o'};
     compare_printfs("%.*s", 3, array);
 }
 
-Test(my_printf, too_many_args, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, too_many_args, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%d %d", 123, 456, 789);
 }
 
-Test(my_printf, some_format_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, some_format_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const int values[] = {INT_MIN, -17, -1, 0, 1, 17, 4711, 65535, INT_MAX, 2, 5, 10, 99, 100, 1000000, 999999999, -2, -5, -10, -99, -100, -9999999};
 
@@ -524,7 +552,7 @@ Test(my_printf, some_format_checks, .init = cr_redirect_stdout, .fini = compare_
     }
 }
 
-Test(my_printf, through_int_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, through_int_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const int values[] = {INT_MIN, -17, -1, 0, 1, 17, 4711, 65535, INT_MAX};
 
@@ -562,7 +590,7 @@ Test(my_printf, through_int_checks, .init = cr_redirect_stdout, .fini = compare_
     }
 }
 
-Test(my_printf, through_long_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, through_long_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const long values[] = {LONG_MIN, -17, -1, 0, 1, 17, 4711, 65535, LONG_MAX};
 
@@ -590,7 +618,7 @@ Test(my_printf, through_long_checks, .init = cr_redirect_stdout, .fini = compare
     }
 }
 
-Test(my_printf, through_long_long_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, through_long_long_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const long long values[] = {LLONG_MIN, LONG_MIN, -17, -1, 0, 1, 17, 4711, 65535, LONG_MAX, LLONG_MAX};
 
@@ -618,7 +646,7 @@ Test(my_printf, through_long_long_checks, .init = cr_redirect_stdout, .fini = co
     }
 }
 
-Test(my_printf, through_size_t_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, through_size_t_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const size_t values[] = {0, 1, 2, 200, SIZE_MAX};
 
@@ -646,7 +674,7 @@ Test(my_printf, through_size_t_checks, .init = cr_redirect_stdout, .fini = compa
     }
 }
 
-Test(my_printf, through_string_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, through_string_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%*.*s", 10, 10, "Here be a nice little string");
     compare_printfs("%*.*s", 10, 5, "Here be a nice little string");
@@ -662,7 +690,7 @@ Test(my_printf, through_string_checks, .init = cr_redirect_stdout, .fini = compa
 
 #ifdef LIBMY_FLOATING_POINT_CLUDGE
 
-Test(my_printf, some_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("floats: %4.2f %+.0e %E \n", 3.1416, 3.1416, 3.1416);
     compare_printfs("Rounding:\t%f %.0f %.32f\n", 1.5, 1.5, 1.3);
@@ -762,7 +790,7 @@ Test(my_printf, some_float_checks, .init = cr_redirect_stdout, .fini = compare_a
     compare_printfs("%La", -0x8.777675747372717p-16248L);
 }
 
-Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, through_float_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const double values[] = {-(0.0 / 0.0), -INFINITY, -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, INFINITY, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
 
@@ -807,7 +835,7 @@ Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compar
     }
 }
 
-Test(my_printf, through_float_widths_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+Test(my_printf, through_float_widths_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     static const double values[] = {-(0.0 / 0.0), -INFINITY -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, INFINITY, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
     static const int lengths[] = {0, 1, 1, 5, 5, 10, 0, 10, 5, 1, -1, 0, -1, -5, -5, -10, -10, -5, -1};

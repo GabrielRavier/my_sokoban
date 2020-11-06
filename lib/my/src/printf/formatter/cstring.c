@@ -27,12 +27,14 @@ static void do_wchar_string(struct my_string *destination,
     }
 }
 
+// We treat LONG_LONG as if it was LONG for glibc compatibility
 struct my_string *asprintf_format_cstring(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {
     const char *string_argument;
 
-    if (format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG) {
+    if (format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG &&
+        format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG_LONG) {
         string_argument = va_arg(arguments, const char *);
         for (size_t i = 0; string_argument[i] != '\0' &&
                  i < (size_t)format_info->precision; ++i)

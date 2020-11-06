@@ -295,11 +295,11 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%-06s>", "text");
     compare_printfs("<%hs>", "text");
 
-    static const wchar_t a_ws[] = { 0x0421, 0x043e, 0x0444, 0x044f, 0 };
-    static const wchar_t bad_ws[] = { 0x0391, 0xdeef, 0x3c9, 0 };
+    static const wchar_t ws[] = { 0x0421, 0x043e, 0x0444, 0x044f, 0 };
+    static const wchar_t wsbad[] = { 0x0391, 0xdeef, 0x3c9, 0 };
 
     compare_printfs("<%ls>", L"text");
-    compare_printfs("<%ls>", a_ws);
+    compare_printfs("<%ls>", ws);
     //compare_printfs("<%ls>", bad_ws); // Fails as of right now, this is probably bad data that I need to filter out somehow
     compare_printfs("<%-ls>", L"text");
     compare_printfs("<%6ls>", L"text");
@@ -330,6 +330,18 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%9ls", wz);
     compare_printfs("%9ls", wn);
     compare_printfs("%10ls", wz);
+
+    compare_printfs("<%ls>", ws);
+    //compare_printfs("<%ls>", wsbad); // See above
+    compare_printfs("<%-ls>", ws);
+    compare_printfs("<%9ls>", ws);
+    compare_printfs("<%-9ls>", ws);
+    compare_printfs("<%.4ls>", ws);
+    compare_printfs("<%.3ls>", ws);
+    compare_printfs("<%6.4ls>", ws);
+    compare_printfs("<%3.3ls>", ws);
+    compare_printfs("<%-6.4ls>", ws);
+    compare_printfs("<%-3.3ls>", ws);
 }
 
 Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)

@@ -286,6 +286,14 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("<%06ls>", L"text");
     compare_printfs("<%-06ls>", L"text");
     //compare_printfs("<%lls>", "text"); // Idk wtf glibc is doing but this is UB anyway, I'll make my implementation reject it if I have the time later
+
+    static const wchar_t wstr[] = L" X Yabc Z W";
+    compare_printfs("|%13ls|\n", wstr);
+    compare_printfs("|%-13.9ls|\n", wstr);
+    compare_printfs("|%13.10ls|\n", wstr);
+    compare_printfs("|%13.11ls|\n", wstr);
+    compare_printfs("|%13.15ls|\n", &wstr[2]);
+    compare_printfs("|%13lc|\n", (wint_t)wstr[5]);
 }
 
 Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

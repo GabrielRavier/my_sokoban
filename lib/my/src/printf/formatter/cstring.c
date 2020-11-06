@@ -9,20 +9,44 @@
 #include "my/string.h"
 #include "my/ctype.h"
 
-struct my_string *asprintf_format_cstring(struct my_string *destination, va_list arguments,
-    struct my_printf_conversion_info *format_info)
+static void do_wchar_string(struct my_string *destination,
+    struct my_printf_conversion_info *format_info, const wchar_t *wide_string)
 {
-    const char *string_argument = va_arg(arguments, const char *);
+    size_t bytes_written = 0;
+    size_t wide_character_length;
+    char buffer[4];
 
-    for (size_t i = 0; string_argument[i] != '\0' &&
-            i < (size_t)format_info->precision; ++i)
-        if ((format_info->conversion_specifier == 's') ||
-            (my_isprint(string_argument[i])))
-            my_string_append_char(destination, string_argument[i]);
-        else {
-            my_string_append_char(destination, '\\');
-            asprintf_append_number_base(destination,
-                (unsigned char)string_argument[i], 8, false);
-        }
+    while (*wide_string != L'\0') {
+        wide_character_length = asprintf_utf32_char_to_utf8(buffer,
+            *wide_string++);
+        if ((bytes_written + wide_character_length) >
+            (size_t)format_info->precision)
+            break;
+        my_string_append(destination, buffer, wide_character_length);
+        bytes_written += wide_character_length;
+    }
+}
+
+struct my_string *asprintf_format_cstring(struct my_string *destination,
+    va_list arguments, struct my_printf_conversion_info *format_info)
+{
+    const char *string_argument;
+
+    if (format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG) {
+        string_argument = va_arg(arguments, const char *);
+        for (size_t i = 0; string_argument[i] != '\0' &&
+                 i < (size_t)format_info->precision; ++i)
+            if ((format_info->conversion_specifier == 's') ||
+                (my_isprint(string_argument[i])))
+                my_string_append_char(destination, string_argument[i]);
+            else {
+                my_string_append_char(destination, '\\');
+                asprintf_append_number_base(destination,
+                    (unsigned char)string_argument[i], 8, false);
+            }
+    }
+    else
+        do_wchar_string(destination, format_info,
+             va_arg(arguments, const wchar_t *));
     return (NULL);
 }

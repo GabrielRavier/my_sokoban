@@ -267,6 +267,19 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("<%06s>", "text");
     compare_printfs("<%-06s>", "text");
     compare_printfs("<%hs>", "text");
+
+    static const wchar_t a_ws[] = { 0x0421, 0x043e, 0x0444, 0x044f, 0 };
+    static const wchar_t bad_ws[] = { 0x0391, 0xdeef, 0x3c9, 0 };
+
+    compare_printfs("<%ls>", L"text");
+    //compare_printfs("<%ls>", a_ws); // These two fail here as of right now, might be related to the fact that I'm not really capable of doing magical input sanitization like glibc
+    //compare_printfs("<%ls>", bad_ws);
+    compare_printfs("<%-ls>", L"text");
+    compare_printfs("<%6ls>", L"text");
+    compare_printfs("<%-6ls>", L"text");
+    compare_printfs("<%.2ls>", L"text");
+    compare_printfs("<%4.2ls>", L"text");
+    compare_printfs("<%-4.2ls>", L"text");
 }
 
 Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

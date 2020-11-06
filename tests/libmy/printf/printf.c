@@ -86,11 +86,21 @@ Test(my_printf, basic, .init = cr_redirect_stdout, .fini = compare_all_libc_to_s
     compare_printfs("Preceding with blanks: %10d \n", 1977);
     compare_printfs("Preceding with zeros: %010d \n", 1977);
     compare_printfs("Some different radices: %d %x %o %#x %#o \n", 100, 100, 100, 100, 100);
-    compare_printfs("floats: %4.2f %+.0e %E \n", 3.1416, 3.1416, 3.1416);
     compare_printfs("Width trick: %*d \n", 5, 10);
     compare_printfs("%s \n", "A string");
     compare_printfs("%*d", 5, 10);
     compare_printfs("%.*s", 3, "abcdef");
+
+    const char* s = "Hello";
+    compare_printfs("\t[%10s]\n\t[%-10s]\n\t[%*s]\n\t[%-10.*s]\n\t[%-*.*s]\n", s, s, 10, s, 4, s, 10, 4, s);
+    compare_printfs("Characters:\t%c %%\n", 65);
+    compare_printfs("Integers\n");
+    compare_printfs("Decimal:\t%i %d %.6i %i %.0i %+i %i\n", 1, 2, 3, 0, 0, 4, -4);
+    compare_printfs("Hexadecimal:\t%x %x %X %#x\n", 5, 10, 10, 6);
+    compare_printfs("Octal:\t%o %#o %#o\n", 10, 10, 4);
+    compare_printfs("Variable width control:\n");
+    compare_printfs("right-justified variable width: '%*c'\n", 5, 'x');
+    compare_printfs("left-justified variable width : '%*c'\n", -5, 'x');
 }
 
 Test(my_printf, invalid, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -656,6 +666,12 @@ Test(my_printf, through_string_checks, .init = cr_redirect_stdout, .fini = compa
 
 Test(my_printf, some_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
+    compare_printfs("floats: %4.2f %+.0e %E \n", 3.1416, 3.1416, 3.1416);
+    compare_printfs("Rounding:\t%f %.0f %.32f\n", 1.5, 1.5, 1.3);
+    compare_printfs("Padding:\t%05.2f %.2f %5.2f\n", 1.5, 1.5, 1.5);
+    compare_printfs("Scientific:\t%E %e\n", 1.5, 1.5);
+    compare_printfs("Hexadecimal:\t%a %A\n", 1.5, 1.5);
+    compare_printfs("Special values:\t0/0=%g 1/0=%g\n", 0.0/0.0, 1.0/0.0);
     compare_printfs("%13E", 1.0);
     compare_printfs("%13f", 1.0);
     compare_printfs("%13G", 1.0);

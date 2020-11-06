@@ -473,6 +473,100 @@ Test(my_printf, through_string_checks, .init = cr_redirect_stdout, .fini = compa
 
 #ifdef LIBMY_FLOATING_POINT_CLUDGE
 
+Test(my_printf, some_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%13E", 1.0);
+    compare_printfs("%13f", 1.0);
+    compare_printfs("%13G", 1.0);
+    compare_printfs("%13LE", 1.0L);
+    compare_printfs("%13Lf", 1.0L);
+    compare_printfs("%13LG", 1.0L);
+    compare_printfs("%.*f", -2, 2.7182818);
+    compare_printfs("%e", 1234567.8);
+    compare_printfs("%f", 1234567.8);
+    compare_printfs("%G", 1234567.8);
+    compare_printfs("%Le", 1234567.8L);
+    compare_printfs("%Lf", 1234567.8L);
+    compare_printfs("%LG", 1234567.8L);
+    compare_printfs("%Lf", 123456789.8642097531L);
+    compare_printfs("%LG", -123456789.8642097531L);
+    compare_printfs("%.10Lf", 123456789.8642097531L);
+    compare_printfs("%27.18Le", 3.14159265358979323846e-4000L);
+    compare_printfs("%e", NAN);
+    compare_printfs("%F", NAN);
+    compare_printfs("%g", NAN);
+    compare_printfs("%LE", (long double)NAN);
+    compare_printfs("%05e", NAN);
+    compare_printfs("%E", HUGE_VAL);
+    compare_printfs("%f", -HUGE_VAL);
+    compare_printfs("%+g", HUGE_VAL);
+    compare_printfs("%4.2Le", HUGE_VALL);
+    compare_printfs("%Lf", -HUGE_VALL);
+    compare_printfs("%05e", HUGE_VAL);
+    compare_printfs("%05e", -HUGE_VAL);
+    compare_printfs("%e", 0.0);
+    compare_printfs("%F", (double)0.0);
+    compare_printfs("%G", 0.0);
+    compare_printfs("%3.0Lg", 0.0L);
+    compare_printfs("%5.0f", 0.001);
+    compare_printfs("%.4e", 1.0123456789);
+    compare_printfs("%.4f", 1.0123456789);
+    compare_printfs("%.4g", 1.0123456789);
+    compare_printfs("%.4e", 0.0123456789);
+    compare_printfs("%.4f", 0.0123456789);
+    compare_printfs("%.4g", 0.0123456789);
+    compare_printfs("%+e", 0.25);
+    compare_printfs("%+F", 0.0);
+    compare_printfs("%+g", -1.0);
+    compare_printfs("% e", -1.0);
+    compare_printfs("% +f", 1.0);
+    compare_printfs("% g", 1.0);
+    compare_printfs("% g", 0.0);
+    compare_printfs("%#.3e", 1.25);
+    compare_printfs("%#f", 123.0);
+    compare_printfs("%#7.5g", 12345.0);
+    compare_printfs("%#8g", 1.0);
+    compare_printfs("%#.2g", 0.0);
+    compare_printfs("%08.1E", 3.25);
+    compare_printfs("%06.2F", 3.25);
+    compare_printfs("%07.4G", 3.25);
+    compare_printfs("%g", 3.14159e-5);
+    compare_printfs("%g", 3.14159e-4);
+    compare_printfs("%g", 3.14159e6);
+    compare_printfs("%g", 3.14159e5);
+    compare_printfs("%#g", 3.14159e5);
+    compare_printfs("%13e", 9000.0);
+    compare_printfs("%12f", 9000.0);
+    compare_printfs("%5g", 9000.0);
+    compare_printfs("%#8g", 900000.0);
+    compare_printfs("%6g", 9000000.0);
+    compare_printfs("%13e", 0.0009);
+    compare_printfs("%9f", 0.0009);
+    compare_printfs("%7g", 0.0009);
+    compare_printfs("%6g", 0.00009);
+    compare_printfs("%#12g", 0.00009);
+    compare_printfs("%#7.1g", 0.00009);
+    compare_printfs("%4.1f", 0.0);
+    compare_printfs("%4.1f", 90.0);
+    compare_printfs("%4.0f", 100.0);
+    compare_printfs("%4.1e", 90.0);
+    compare_printfs("%4.0e", 100.0);
+    compare_printfs("%a", 0x0.0p0);
+    compare_printfs("%#LA", 0x0.0p0L);
+    compare_printfs("%La", (long double)INFINITY);
+    compare_printfs("%+A", INFINITY);
+    compare_printfs("%La", (long double)NAN);
+    compare_printfs("%A", NAN);
+    compare_printfs("%10a", 0x1.23p0);
+    compare_printfs("%12a", 0x1.23p-500);
+    compare_printfs("%10.1a", 0x1.23p40);
+    compare_printfs("%32.24A", 0x1.23p-4);
+    compare_printfs("%a", 0x1p-1074);
+    compare_printfs("%a", 0x1.2345p-1024);
+    compare_printfs("%La", -0x1.e7d7c7b7a7978777675747372717p-14344L);
+    compare_printfs("%La", -0x8.777675747372717p-16248L);
+}
+
 Test(my_printf, through_float_checks, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     static const double values[] = {-(0.0 / 0.0), -INFINITY, -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, INFINITY, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};

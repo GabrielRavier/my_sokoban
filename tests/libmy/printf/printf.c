@@ -108,6 +108,7 @@ Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("Variable width control:\n");
     compare_printfs("right-justified variable width: '%*c'\n", 5, 'x');
     compare_printfs("left-justified variable width : '%*c'\n", -5, 'x');
+    compare_printfs("a%db%zdc%ue%zuf%xh%zxq%pe%sr", (int)-1, (uintptr_t)-2, (unsigned)-4, (uintptr_t)5, (unsigned)10, (uintptr_t)11, (void *)0x123, "_string_");
 }
 
 Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -152,6 +153,12 @@ Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%ho%ho%#ho", 1037, 5282, -11627);
     compare_printfs("%.2d|%.1d|%.0d|%.*d|%1.0d", 0, 0, 0, 0, 0, 0);
     compare_printfs("%#02x|%#02x|%#02x", (char)-16, (char)-16 & 0xff, (unsigned char)(char)-16);
+    compare_printfs("%d-%d", INT_MIN, INT_MAX);
+    compare_printfs("%u-%u", 0, UINT_MAX);
+    compare_printfs("%x-%x", 0, UINT_MAX);
+    compare_printfs("%zd-%zd", (size_t)LONG_MIN, (size_t)LONG_MAX);
+    compare_printfs("%zu-%zu", (size_t)0, (size_t)ULONG_MAX);
+    compare_printfs("%zx-%zx", (size_t)0, (size_t)ULONG_MAX);
 }
 
 Test(my_printf, hex, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -200,6 +207,16 @@ Test(my_printf, formatting, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%010s", "test");
     compare_printfs("%-10s", "test");
     compare_printfs("%-010s", "test");
+    compare_printfs("%3d - %3d", 1, 0);
+    compare_printfs("%3d - %3d", -1, 123);
+    compare_printfs("%3d - %3d", -1, -123);
+    compare_printfs("%3d - %3d", 12, 1234);
+    compare_printfs("%3d - %3d", -12, -1234);
+    compare_printfs("%03d - %03d", 1, 0);
+    compare_printfs("%03d - %03d", -1, 123);
+    compare_printfs("%03d - %03d", -1, -123);
+    compare_printfs("%03d - %03d", 12, 1234);
+    compare_printfs("%03d - %03d", -12, -1234);
 }
 
 Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -270,6 +287,7 @@ Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_t
 Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%s", "foo");
+    compare_printfs("%s", "abcdef");
     compare_printfs("%s", "string");
     compare_printfs("%s %s", "string1", "string2");
     compare_printfs("%s%.0s", "", "123");
@@ -288,6 +306,10 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%.2s>", "text");
     compare_printfs("<%4.2s>", "text");
     compare_printfs("<%-4.2s>", "text");
+    compare_printfs(".*s", 3, "12345");
+    compare_printfs(".*s", 6, "12345");
+    compare_printfs("-6s", "12345");
+    compare_printfs("-10s", "12345");
     compare_printfs("<%#s>", "text");
     compare_printfs("<% -6s>", "text");
     compare_printfs("<%+-6s>", "text");
@@ -422,6 +444,7 @@ Test(my_printf, format_c_null_terminator, .init = do_init, .fini = compare_all_l
 Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%d %d", 1239, -1239);
+    compare_printfs("%d", -123456789);
     compare_printfs("<%d>", 0);
     compare_printfs("<%d>", 1);
     compare_printfs("<%d>", -1);
@@ -742,6 +765,11 @@ Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_
     compare_printfs("%LG", 1234567.8L);
     compare_printfs("%Lf", 123456789.8642097531L);
     compare_printfs("%LG", -123456789.8642097531L);
+    compare_printfs("%lle", 1234567.8L);
+    compare_printfs("%llf", 1234567.8L);
+    compare_printfs("%llG", 1234567.8L);
+    compare_printfs("%llf", 123456789.8642097531L);
+    compare_printfs("%llG", -123456789.8642097531L);
     compare_printfs("%.10Lf", 123456789.8642097531L);
     compare_printfs("%27.18Le", 3.14159265358979323846e-4000L);
     compare_printfs("%e", NAN);

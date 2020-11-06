@@ -14,21 +14,21 @@ static size_t do_lead_and_length(wchar_t wide_char, unsigned char *lead)
 {
     if ((wide_char & ~0x7F) == 0) {
         *lead = 0;
-        return 1;
+        return (1);
     }
     if ((wide_char & ~0x7FF) == 0) {
         *lead = 0xC0;
-        return 2;
+        return (2);
     }
     if ((wide_char & ~0xFFFF) == 0) {
         *lead = 0xE0;
-        return 3;
+        return (3);
     }
     if ((wide_char & ~0x1FFFFF) == 0) {
         *lead = 0xF0;
-        return 4;
+        return (4);
     }
-    return 0;
+    return (0);
 }
 
 size_t asprintf_utf32_char_to_utf8(char *destination, wchar_t wide_char)
@@ -38,15 +38,15 @@ size_t asprintf_utf32_char_to_utf8(char *destination, wchar_t wide_char)
 
     if (wide_char == L'\0') {
         *destination = '\0';
-        return 1;
+        return (1);
     }
     length = do_lead_and_length(wide_char, &lead);
     if (length == 0)
-        return 0;
+        return (0);
     for (size_t i = length - 1; i > 0; --i) {
         destination[i] = (wide_char & 0x3F) | 0x80;
         wide_char >>= 6;
     }
     *destination = (wide_char & 0xFF) | lead;
-    return length;
+    return (length);
 }

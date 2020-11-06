@@ -63,7 +63,7 @@ static struct my_string *do_preprinting_stuff(
             my_string_append_char(prefix,
                 format_info->conversion_specifier);
     }
-    return prefix;
+    return (prefix);
 }
 
 struct my_string *asprintf_format_unsigned_integer(
@@ -80,5 +80,5 @@ struct my_string *asprintf_format_unsigned_integer(
         asprintf_append_number_base(destination, argument, base,
             format_info->conversion_specifier == 'X');
     do_precision(destination, pos_before, format_info);
-    return prefix;
+    return (prefix);
 }

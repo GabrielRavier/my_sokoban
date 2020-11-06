@@ -504,6 +504,13 @@ Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_std
 
     for (int i = -100; i < 100; ++i)
         compare_printfs("%d", i);
+
+    compare_printfs("%.3d\n", 42);
+    compare_printfs("%.10d\n", 12345);
+    compare_printfs("%.1d\n", 0);
+    compare_printfs("%.0d\n", 0);
+    compare_printfs("%.0d\n", 1);
+    compare_printfs("%.0d\n", 123);
 }
 
 Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -883,6 +890,7 @@ Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_
     compare_printfs("%a", 0x1.2345p-1024);
     compare_printfs("%La", -0x1.e7d7c7b7a7978777675747372717p-14344L);
     compare_printfs("%La", -0x8.777675747372717p-16248L);
+    compare_printfs("%#.0f", 1.0);
 }
 
 Test(my_printf, through_float_checks, .init = do_init, .fini = compare_all_libc_to_stdout)

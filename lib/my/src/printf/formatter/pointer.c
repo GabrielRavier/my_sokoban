@@ -19,5 +19,5 @@ struct my_string *asprintf_format_pointer(struct my_string *destination,
     }
     else
         my_string_append(destination, "(nil)", 5);
-    return prefix;
+    return (prefix);
 }

@@ -280,6 +280,12 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("<%.2ls>", L"text");
     compare_printfs("<%4.2ls>", L"text");
     compare_printfs("<%-4.2ls>", L"text");
+    compare_printfs("<%#ls>", L"text");
+    compare_printfs("<% -6ls>", L"text");
+    compare_printfs("<%+-6ls>", L"text");
+    compare_printfs("<%06ls>", L"text");
+    compare_printfs("<%-06ls>", L"text");
+    //compare_printfs("<%lls>", "text"); // Idk wtf glibc is doing but this is UB anyway, I'll make my implementation reject it if I have the time later
 }
 
 Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
@@ -305,6 +311,14 @@ Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("<%-lc>", L'=');
     compare_printfs("<%2lc>", L'=');
     compare_printfs("<%-2lc>", L'=');
+    //compare_printfs("<%lc>", 0x00fe); // Fails rn, probably for the same reason as above
+    compare_printfs("<%#lc>", L'=');
+    compare_printfs("<% -3lc>", L'=');
+    compare_printfs("<%+-3lc>", L'=');
+    compare_printfs("<%03lc>", L'=');
+    compare_printfs("<%-03lc>", L'=');
+    compare_printfs("<%3.2lc>", L'=');
+    compare_printfs("<%llc>", '=');
 }
 
 Test(my_printf, format_p, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

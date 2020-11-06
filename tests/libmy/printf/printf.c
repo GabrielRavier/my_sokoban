@@ -109,6 +109,17 @@ Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("right-justified variable width: '%*c'\n", 5, 'x');
     compare_printfs("left-justified variable width : '%*c'\n", -5, 'x');
     compare_printfs("a%db%zdc%ue%zuf%xh%zxq%pe%sr", (int)-1, (uintptr_t)-2, (unsigned)-4, (uintptr_t)5, (unsigned)10, (uintptr_t)11, (void *)0x123, "_string_");
+    compare_printfs("%-010d", 10);
+    compare_printfs("%-010u", 4294967294);
+    compare_printfs("%-0#10x", 2147483647);
+    compare_printfs("%010X", 2147483647);
+    compare_printfs("%+0#10o", 2147483647);
+    compare_printfs("%05i", 2147483647);
+    compare_printfs("%010c", 'A');
+    compare_printfs("%-010s", "Oui une pomme sur un arbre sa tombe");
+    compare_printfs("%020p", (void *)"str");
+    compare_printfs("%%");
+    compare_printfs("%-11C", L'1');
 }
 
 Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -382,6 +393,8 @@ Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%-03c>", '=');
     compare_printfs("<%3.2c>", '=');
     compare_printfs("<%hc>", '=');
+    for (int i = (CHAR_MIN - 1000); i < CHAR_MAX + 1000; ++i)
+        compare_printfs("%c", i);
     compare_printfs("<%lc>", L'=');
     compare_printfs("<%lc>", L'\t');
     compare_printfs("<%lc>", (wint_t)0x3C0);
@@ -486,6 +499,9 @@ Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_std
 
     compare_printfs("<%#d>", 42);
     compare_printfs("<%#Ld>", (long long)12391284012410);
+
+    for (int i = -100; i < 100; ++i)
+        compare_printfs("%d", i);
 }
 
 Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -496,11 +512,16 @@ Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_std
 Test(my_printf, format_unsigned, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%u", 1239);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%u", i);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%08u", i);
 }
 
 Test(my_printf, format_octal, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%o", 01123);
+    compare_printfs("%o", 0x12345678);
     compare_printfs("%#.o", 0);
 }
 
@@ -510,11 +531,26 @@ Test(my_printf, format_hex_lowercase, .init = do_init, .fini = compare_all_libc_
     compare_printfs("%x", -1);
     compare_printfs("%04x", 255);
     compare_printfs("%08x", 65537);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%x", i);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%04x", i);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%08x", i);
 }
 
 Test(my_printf, format_hex_uppercase, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%X %X", 0x1234, 0xABCD);
+    compare_printfs("%X", -1);
+    compare_printfs("%04X", 255);
+    compare_printfs("%08X", 65537);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%X", i);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%04X", i);
+    for (unsigned i = -100; i < 100; ++i)
+        compare_printfs("%08X", i);
 }
 
 Test(my_printf, format_precision_string, .init = do_init, .fini = compare_all_libc_to_stdout)

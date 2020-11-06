@@ -28,6 +28,8 @@ static void do_wchar_string(struct my_string *destination,
 }
 
 // We treat LONG_LONG as if it was LONG for glibc compatibility
+// I would support the SUS S specifier, but the epitech mandates that we use it
+// for a different purpose
 struct my_string *asprintf_format_cstring(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info)
 {

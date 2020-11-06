@@ -28,7 +28,8 @@ void asprintf_do_padding(const struct asprintf_do_padding_params *params)
         (params->prefixed_string ? params->prefixed_string->length : 0);
 
     if (params->formatting_func != &asprintf_format_unsigned_integer &&
-        params->formatting_func != &asprintf_format_signed_integer)
+        params->formatting_func != &asprintf_format_signed_integer &&
+        params->formatting_func != &asprintf_format_pointer)
         params->conversion_info->flag_0 = false;
     if (!params->conversion_info->flag_0 && params->prefixed_string)
         my_string_insert(params->destination, params->prefixed_string->string,

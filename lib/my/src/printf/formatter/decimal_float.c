@@ -45,9 +45,9 @@ struct my_string *asprintf_format_decimal_float(struct my_string *destination,
 {
     char *buffer;
     struct my_string *format_string = make_format_string(format_info);
-    vasprintf(&buffer, format_string->string, arguments);
+    int length = vasprintf(&buffer, format_string->string, arguments);
     if (buffer) {
-        my_string_append(destination, buffer, my_strlen(buffer));
+        my_string_append(destination, buffer, length);
         free(buffer);
     }
     my_string_free(format_string);

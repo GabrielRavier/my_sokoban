@@ -35,6 +35,7 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['a'] = &asprintf_format_decimal_float,
     ['A'] = &asprintf_format_decimal_float,
     ['%'] = &asprintf_format_percent_sign,
+    ['p'] = &asprintf_format_pointer,
 };
 
 static void do_padding_loop(struct my_string *destination,

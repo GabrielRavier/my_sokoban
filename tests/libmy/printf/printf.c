@@ -247,6 +247,13 @@ Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("%c", 'a');
 }
 
+Test(my_printf, format_p, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%p", ((void *)0xffff0123456789abUL));
+    compare_printfs("%p", ((void *)0x00000123456789abUL));
+    compare_printfs("%p", ((void *)0x456789ab));
+}
+
 Test(my_printf, format_c_null_terminator, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%c", '\0');

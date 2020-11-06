@@ -23,3 +23,5 @@
 #define MY_ATTR_PURE MY_ATTRIBUTE((pure))
 #define MY_ATTR_MALLOC MY_ATTRIBUTE((malloc))
 #define MY_ATTR_NORETURN MY_ATTRIBUTE((noreturn))
+#define MY_ATTR_FORMAT(archetype, string_index, first_to_check) \
+    MY_ATTRIBUTE((format(archetype, string_index, first_to_check)))

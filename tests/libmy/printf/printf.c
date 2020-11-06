@@ -81,6 +81,16 @@ Test(my_printf, basic, .init = cr_redirect_stdout, .fini = compare_all_libc_to_s
     compare_printfs("%d %s", 1, "one");
     compare_printfs("100%%");
     compare_printfs("xxx%cyyy", '%');
+    compare_printfs("Characters: %c %c \n", 'a', 65);
+    compare_printfs("Decimals: %d %ld\n", 1977, 650000L);
+    compare_printfs("Preceding with blanks: %10d \n", 1977);
+    compare_printfs("Preceding with zeros: %010d \n", 1977);
+    compare_printfs("Some different radices: %d %x %o %#x %#o \n", 100, 100, 100, 100, 100);
+    compare_printfs("floats: %4.2f %+.0e %E \n", 3.1416, 3.1416, 3.1416);
+    compare_printfs("Width trick: %*d \n", 5, 10);
+    compare_printfs("%s \n", "A string");
+    compare_printfs("%*d", 5, 10);
+    compare_printfs("%.*s", 3, "abcdef");
 }
 
 Test(my_printf, invalid, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

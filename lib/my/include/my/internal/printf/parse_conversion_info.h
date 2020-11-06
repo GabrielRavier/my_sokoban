@@ -10,6 +10,8 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+// We reuse PRINTF_LENGTH_MODIFIER_LONG_LONG for long double, for glibc
+// compatibility
 struct my_printf_conversion_info {
     bool flag_minus;
     bool flag_plus;
@@ -27,7 +29,6 @@ struct my_printf_conversion_info {
         PRINTF_LENGTH_MODIFIER_INTMAX,
         PRINTF_LENGTH_MODIFIER_SIZE_T,
         PRINTF_LENGTH_MODIFIER_PTRDIFF_T,
-        PRINTF_LENGTH_MODIFIER_LONG_DOUBLE,
     } length_modifier;
     char conversion_specifier;
 };

@@ -34,7 +34,7 @@ static struct my_string *make_format_string(
     if (format_info->precision != -1)
         asprintf_append_number_base(my_string_append_char(format_string, '.'),
             format_info->precision, 10, false);
-    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG_DOUBLE)
+    if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG_LONG)
         my_string_append_char(format_string, 'L');
     my_string_append_char(format_string, format_info->conversion_specifier);
     return format_string;

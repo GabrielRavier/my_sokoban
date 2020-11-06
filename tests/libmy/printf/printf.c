@@ -292,6 +292,7 @@ Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
 
 Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
+    compare_printfs("%%");
     compare_printfs("%% %l% aaa");
 }
 
@@ -458,6 +459,7 @@ Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_std
 {
     compare_printfs("%d %d", 1239, -1239);
     compare_printfs("%d", -123456789);
+    compare_printfs("%d", 137);
     compare_printfs("<%d>", 0);
     compare_printfs("<%d>", 1);
     compare_printfs("<%d>", -1);

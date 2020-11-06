@@ -85,7 +85,7 @@ static bool parse_single_length_modifier(
     return (false);
 }
 
-// We place hh before h, ll before l and DD before D because otherwise the
+// We place hh before h and ll before l because otherwise the
 // smaller substrings would match
 void parse_printf_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse)
@@ -93,9 +93,11 @@ void parse_printf_length_modifier(
     INTERNAL_DO_MODIFIER("hh", PRINTF_LENGTH_MODIFIER_CHAR);
     INTERNAL_DO_MODIFIER("h", PRINTF_LENGTH_MODIFIER_SHORT);
     INTERNAL_DO_MODIFIER("ll", PRINTF_LENGTH_MODIFIER_LONG_LONG);
+    INTERNAL_DO_MODIFIER("q", PRINTF_LENGTH_MODIFIER_LONG_LONG);
     INTERNAL_DO_MODIFIER("l", PRINTF_LENGTH_MODIFIER_LONG);
     INTERNAL_DO_MODIFIER("j", PRINTF_LENGTH_MODIFIER_INTMAX);
     INTERNAL_DO_MODIFIER("z", PRINTF_LENGTH_MODIFIER_SIZE_T);
+    INTERNAL_DO_MODIFIER("Z", PRINTF_LENGTH_MODIFIER_SIZE_T);
     INTERNAL_DO_MODIFIER("t", PRINTF_LENGTH_MODIFIER_PTRDIFF_T);
     INTERNAL_DO_MODIFIER("L", PRINTF_LENGTH_MODIFIER_LONG_LONG);
 }

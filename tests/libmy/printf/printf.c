@@ -366,6 +366,7 @@ Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%lc>", L'=');
     compare_printfs("<%lc>", L'\t');
     compare_printfs("<%lc>", L'è');
+    compare_printfs("<%llc>", L'è');
     compare_printfs("<%lc>", 0x00fe);
     compare_printfs("<%lc>", 0x03c0);
     compare_printfs("<%lc>", 0x123456);

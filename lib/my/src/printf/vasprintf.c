@@ -101,7 +101,6 @@ int my_vasprintf(char **result_string_ptr, const char *format,
     size_t resulting_length;
 
     if (!do_my_string_printf(result, format, arguments)) {
-        *result_string_ptr = NULL;
         my_string_free(result);
         return (-1);
     }

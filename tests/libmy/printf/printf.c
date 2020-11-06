@@ -31,7 +31,7 @@ static void compare_all_libc_to_stdout()
 MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *format, ...)
 {
     va_list arguments;
-    char *result_us, *result_libc;
+    char *result_us = NULL, *result_libc = NULL;
 
     va_start(arguments, format);
     int our_printf_retval = my_vprintf(format, arguments);
@@ -69,6 +69,8 @@ Test(my_printf, simple_string, .init = cr_redirect_stdout, .fini = compare_all_l
     compare_printfs("Hello world");
     compare_printfs("0123456789");
     compare_printfs("hello");
+    compare_printfs("baz");
+    compare_printfs("\012\001");
     compare_printfs("");
 }
 
@@ -240,6 +242,7 @@ Test(my_printf, format_percent_sign, .init = cr_redirect_stdout, .fini = compare
 
 Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
+    compare_printfs("%s", "foo");
     compare_printfs("%s", "string");
     compare_printfs("%s %s", "string1", "string2");
     compare_printfs("%s%.0s", "", "123");
@@ -251,11 +254,44 @@ Test(my_printf, format_s, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("%.s", "123456");
     compare_printfs("%.s|%.0s|%.*s", "a", "b", 0, "c");
     compare_printfs("%-3.s|%-3.0s|%-3.*s", "a", "b", 0, "c");
+    compare_printfs("<%s>", "text");
+    compare_printfs("<%-s>", "text");
+    compare_printfs("<%6s>", "text");
+    compare_printfs("<%-6s>", "text");
+    compare_printfs("<%.2s>", "text");
+    compare_printfs("<%4.2s>", "text");
+    compare_printfs("<%-4.2s>", "text");
+    compare_printfs("<%#s>", "text");
+    compare_printfs("<% -6s>", "text");
+    compare_printfs("<%+-6s>", "text");
+    compare_printfs("<%06s>", "text");
+    compare_printfs("<%-06s>", "text");
+    compare_printfs("<%hs>", "text");
 }
 
 Test(my_printf, format_c, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%c", 'a');
+    compare_printfs("<%c>", '=');
+    compare_printfs("<%c>", '\t');
+    compare_printfs("<%c>", 0xfe);
+    compare_printfs("<%-c>", '=');
+    compare_printfs("<%2c>", '=');
+    compare_printfs("<%-2c>", '=');
+    compare_printfs("<%#c>", '=');
+    compare_printfs("<% -3c>", '=');
+    compare_printfs("<%+-3c>", '=');
+    compare_printfs("<%03c>", '=');
+    compare_printfs("<%-03c>", '=');
+    compare_printfs("<%3.2c>", '=');
+    compare_printfs("<%hc>", '=');
+    compare_printfs("<%lc>", L'=');
+    compare_printfs("<%lc>", L'\t');
+    //compare_printfs("<%lc>", (wint_t)0x3C0); // glibc rejects this character, we don't and I think rejecting it would require some sort of database of valid characters, so ¯\_(ツ)_/¯, maybe I'll do it when I've finished everything else
+    compare_printfs("<%lc>", L'\0');
+    compare_printfs("<%-lc>", L'=');
+    compare_printfs("<%2lc>", L'=');
+    compare_printfs("<%-2lc>", L'=');
 }
 
 Test(my_printf, format_p, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

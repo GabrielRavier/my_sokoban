@@ -34,7 +34,7 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     char *result_us, *result_libc;
 
     va_start(arguments, format);
-    my_vprintf(format, arguments);
+    int our_printf_retval = my_vprintf(format, arguments);
     va_end(arguments);
 
     va_start(arguments, format);
@@ -57,6 +57,8 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
         else
             combined_libc = my_string_new_from_string(result_libc, libc_length);
     }
+    else
+        cr_assert(our_printf_retval < 0);
 
     free(result_us);
     free(result_libc);

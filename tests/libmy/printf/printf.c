@@ -355,8 +355,6 @@ Test(my_printf, format_p, .init = cr_redirect_stdout, .fini = compare_all_libc_t
     compare_printfs("%p", ((void *)0x00000123456789abUL));
     compare_printfs("%p", ((void *)0x456789ab));
     compare_printfs("%p", NULL);
-    compare_printfs("%px", NULL);
-    compare_printfs("%pE", NULL);
 }
 
 Test(my_printf, format_c_null_terminator, .init = cr_redirect_stdout, .fini = compare_all_libc_to_stdout)

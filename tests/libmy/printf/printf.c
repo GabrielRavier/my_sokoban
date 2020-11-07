@@ -200,6 +200,7 @@ Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%u-%u", 0, UINT_MAX);
     compare_printfs("%x-%x", 0, UINT_MAX);
     compare_printfs("%zd-%zd", (size_t)LONG_MIN, (size_t)LONG_MAX);
+    compare_printfs("%zd", (ssize_t)1);
     compare_printfs("%zu-%zu", (size_t)0, (size_t)ULONG_MAX);
     compare_printfs("%zx-%zx", (size_t)0, (size_t)ULONG_MAX);
 
@@ -390,6 +391,19 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%s", "foo");
     compare_printfs("%s", "abcdef");
     compare_printfs("%s", "string");
+    compare_printfs("a%sb", (char *)NULL);
+    compare_printfs("a%5sb", (char *)NULL);
+    compare_printfs("a%.5sb", (char *)NULL);
+    compare_printfs("a%74sb", (char *)NULL);
+    compare_printfs("a%.74sb", (char *)NULL);
+    compare_printfs("a%1sb", (char *)NULL);
+    compare_printfs("a%.1sb", (char *)NULL);
+    compare_printfs("a%0sb", (char *)NULL);
+    compare_printfs("a%.0sb", (char *)NULL);
+    compare_printfs("a%6sb", (char *)NULL);
+    compare_printfs("a%.6sb", (char *)NULL);
+    compare_printfs("a%7sb", (char *)NULL);
+    compare_printfs("a%.7sb", (char *)NULL);
     compare_printfs("%s %s", "string1", "string2");
     compare_printfs("%s%.0s", "", "123");
     compare_printfs("%s|%.3s|%.*s", "ABCD", "abcdef", 3, "123456");
@@ -445,6 +459,19 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%06ls>", L"text");
     compare_printfs("<%-06ls>", L"text");
     compare_printfs("<%lls>", L"text");
+    compare_printfs("a%lsb", (wchar_t *)NULL);
+    compare_printfs("a%5lsb", (wchar_t *)NULL);
+    compare_printfs("a%.5lsb", (wchar_t *)NULL);
+    compare_printfs("a%74lsb", (wchar_t *)NULL);
+    compare_printfs("a%.74lsb", (wchar_t *)NULL);
+    compare_printfs("a%1lsb", (wchar_t *)NULL);
+    compare_printfs("a%.1lsb", (wchar_t *)NULL);
+    compare_printfs("a%0lsb", (wchar_t *)NULL);
+    compare_printfs("a%.0lsb", (wchar_t *)NULL);
+    compare_printfs("a%6lsb", (wchar_t *)NULL);
+    compare_printfs("a%.6lsb", (wchar_t *)NULL);
+    compare_printfs("a%7lsb", (wchar_t *)NULL);
+    compare_printfs("a%.7lsb", (wchar_t *)NULL);
 
     static const wchar_t wstr[] = L" X Yabc Z W";
     compare_printfs("|%13ls|\n", wstr);
@@ -523,6 +550,13 @@ Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%lc>", 0x00fe);
     compare_printfs("<%lc>", 0x03c0);
     compare_printfs("<%lc>", 0x123456);
+    compare_printfs("<%C>", L'=');
+    compare_printfs("<%C>", L'\t');
+    compare_printfs("<%C>", L'è');
+    compare_printfs("<%C>", L'è');
+    compare_printfs("<%C>", 0x00fe);
+    compare_printfs("<%C>", 0x03c0);
+    compare_printfs("<%C>", 0x123456);
     compare_printfs("<%-lc>", L'=');
     compare_printfs("<%-lc>", 0x03c0);
     compare_printfs("<%2lc>", L'=');

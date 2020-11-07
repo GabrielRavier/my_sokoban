@@ -16,6 +16,9 @@ static void do_wchar_string(struct my_string *destination,
     size_t wide_character_length;
     char buffer[4];
 
+    if (!wide_string)
+        wide_string = (size_t)format_info->precision >= 6
+                ? L"(null)" : L"";
     while (*wide_string != L'\0') {
         wide_character_length = asprintf_utf32_char_to_utf8(buffer,
             *wide_string++);
@@ -38,6 +41,9 @@ struct my_string *asprintf_format_cstring(struct my_string *destination,
     if (format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG &&
         format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG_LONG) {
         string_argument = va_arg(arguments, const char *);
+        if (!string_argument)
+            string_argument = (size_t)format_info->precision >= 6
+                ? "(null)" : "";
         for (size_t i = 0; string_argument[i] != '\0' &&
                  i < (size_t)format_info->precision; ++i)
             if ((format_info->conversion_specifier == 's') ||

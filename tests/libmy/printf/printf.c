@@ -120,6 +120,8 @@ Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%020p", (void *)"str");
     compare_printfs("%%");
     compare_printfs("%-11C", L'1');
+    compare_printfs("%d %s", 123, "456");
+    compare_printfs("%010000d", 0);
 }
 
 Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -170,6 +172,14 @@ Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%zd-%zd", (size_t)LONG_MIN, (size_t)LONG_MAX);
     compare_printfs("%zu-%zu", (size_t)0, (size_t)ULONG_MAX);
     compare_printfs("%zx-%zx", (size_t)0, (size_t)ULONG_MAX);
+
+    /* Test support of size specifiers as in C99.  */
+
+    compare_printfs("%ju %d\n", (uintmax_t) 12345671, 33, 44, 55);
+
+    compare_printfs("%zu %d\n", (size_t) 12345672, 33, 44, 55);
+
+    compare_printfs("%tu %d\n", (ptrdiff_t) 12345673, 33, 44, 55);
 }
 
 Test(my_printf, hex, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -802,6 +812,7 @@ Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_
     compare_printfs("%13Lf", 1.0L);
     compare_printfs("%13LG", 1.0L);
     compare_printfs("%.*f", -2, 2.7182818);
+    compare_printfs("%#.0f", 1.0);
     compare_printfs("%e", 1234567.8);
     compare_printfs("%f", 1234567.8);
     compare_printfs("%G", 1234567.8);
@@ -891,22 +902,223 @@ Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_
     compare_printfs("%La", -0x1.e7d7c7b7a7978777675747372717p-14344L);
     compare_printfs("%La", -0x8.777675747372717p-16248L);
     compare_printfs("%#.0f", 1.0);
+
+    /* Test the support of the 'a' and 'A' conversion specifier for hexadecimal
+       output of floating-point numbers.  */
+
+    /* Positive zero.  */
+    compare_printfs("%a %d\n", 0.0, 33, 44, 55);
+
+    /* Positive infinity.  */
+    compare_printfs("%a %d\n", INFINITY, 33, 44, 55);
+
+    /* Negative infinity.  */
+    compare_printfs("%a %d\n", -INFINITY, 33, 44, 55);
+
+    /* FLAG_ZERO with infinite number.  */
+    compare_printfs("%010a %d\n", INFINITY, 33, 44, 55);
+
+    /* Test the support of the %f format directive.  */
+
+    /* A positive number.  */
+    compare_printfs("%f %d\n", 12.75, 33, 44, 55);
+
+    /* A larger positive number.  */
+    compare_printfs("%f %d\n", 1234567.0, 33, 44, 55);
+
+    /* A negative number.  */
+    compare_printfs("%f %d\n", -0.03125, 33, 44, 55);
+
+    /* Positive zero.  */
+    compare_printfs("%f %d\n", 0.0, 33, 44, 55);
+
+    /* FLAG_ZERO.  */
+    compare_printfs("%015f %d\n", 1234.0, 33, 44, 55);
+
+    /* Precision.  */
+    compare_printfs("%.f %d\n", 1234.0, 33, 44, 55);
+
+    /* Precision with no rounding.  */
+    compare_printfs("%.2f %d\n", 999.95, 33, 44, 55);
+
+    /* Precision with rounding.  */
+    compare_printfs("%.2f %d\n", 999.996, 33, 44, 55);
+
+    /* A positive number.  */
+    compare_printfs("%Lf %d\n", 12.75L, 33, 44, 55);
+
+    /* A larger positive number.  */
+    compare_printfs("%Lf %d\n", 1234567.0L, 33, 44, 55);
+
+    /* A negative number.  */
+    compare_printfs("%Lf %d\n", -0.03125L, 33, 44, 55);
+
+    /* Positive zero.  */
+    compare_printfs("%Lf %d\n", 0.0L, 33, 44, 55);
+
+    /* FLAG_ZERO.  */
+    compare_printfs("%015Lf %d\n", 1234.0L, 33, 44, 55);
+
+    /* Precision.  */
+    compare_printfs("%.Lf %d\n", 1234.0L, 33, 44, 55);
+
+    /* Precision with no rounding.  */
+    compare_printfs("%.2Lf %d\n", 999.95L, 33, 44, 55);
+
+    /* Precision with rounding.  */
+    compare_printfs("%.2Lf %d\n", 999.996L, 33, 44, 55);
+
+    /* Test the support of the %F format directive.  */
+
+    /* A positive number.  */
+    compare_printfs("%F %d\n", 12.75, 33, 44, 55);
+
+    /* A larger positive number.  */
+    compare_printfs("%F %d\n", 1234567.0, 33, 44, 55);
+
+    /* A negative number.  */
+    compare_printfs("%F %d\n", -0.03125, 33, 44, 55);
+
+    /* Positive zero.  */
+    compare_printfs("%F %d\n", 0.0, 33, 44, 55);
+
+    /* FLAG_ZERO.  */
+    compare_printfs("%015F %d\n", 1234.0, 33, 44, 55);
+
+    /* Precision.  */
+    compare_printfs("%.F %d\n", 1234.0, 33, 44, 55);
+
+    /* Precision with no rounding.  */
+    compare_printfs("%.2F %d\n", 999.95, 33, 44, 55);
+
+    /* Precision with rounding.  */
+    compare_printfs("%.2F %d\n", 999.996, 33, 44, 55);
+
+    /* A positive number.  */
+    compare_printfs("%LF %d\n", 12.75L, 33, 44, 55);
+
+    /* A larger positive number.  */
+    compare_printfs("%LF %d\n", 1234567.0L, 33, 44, 55);
+
+    /* A negative number.  */
+    compare_printfs("%LF %d\n", -0.03125L, 33, 44, 55);
+
+    /* Positive zero.  */
+    compare_printfs("%LF %d\n", 0.0L, 33, 44, 55);
+
+    /* FLAG_ZERO.  */
+    compare_printfs("%015LF %d\n", 1234.0L, 33, 44, 55);
+
+    /* Precision.  */
+    compare_printfs("%.LF %d\n", 1234.0L, 33, 44, 55);
+
+    /* Precision with no rounding.  */
+    compare_printfs("%.2LF %d\n", 999.95L, 33, 44, 55);
+
+    /* Precision with rounding.  */
+    compare_printfs("%.2LF %d\n", 999.996L, 33, 44, 55);
+
+    compare_printfs("%Lg %d", (long double)1.5, 33, 44, 55);
+    compare_printfs("%a %d", 3.1416015625, 33, 44, 55);
+    compare_printfs("%A %d", -3.1416015625, 33, 44, 55);
+    compare_printfs("%a %d", 0.0, 33, 44, 55);
+    compare_printfs("%a %d", -0.0, 33, 44, 55);
+    compare_printfs("%a %d", INFINITY, 33, 44, 55);
+    compare_printfs("%a %d", -INFINITY, 33, 44, 55);
+    compare_printfs("%a %d", NAN, 33, 44, 55);
+    compare_printfs("%.0a %d", 1.5, 33, 44, 55);
+    compare_printfs("%.0a %d", 1.51, 33, 44, 55);
+    compare_printfs("%.1a %d", 1.51, 33, 44, 55);
+    compare_printfs("%.2a %d", 1.51, 33, 44, 55);
+    compare_printfs("%.3a %d", 1.51, 33, 44, 55);
+    compare_printfs("%.3a %d", 1.49999, 33, 44, 55);
+    compare_printfs("%.1a %d", 1.999, 33, 44, 55);
+    compare_printfs("%10a %d", 1.75, 33, 44, 55);
+    compare_printfs("%.10a %d", 1.75, 33, 44, 55);
+    compare_printfs("%.50a %d", 1.75, 33, 44, 55);
+    compare_printfs("%-10a %d", 1.75, 33, 44, 55);
+    compare_printfs("%+a %d", 1.75, 33, 44, 55);
+    compare_printfs("% a %d", 1.75, 33, 44, 55);
+    compare_printfs("%#a %d", 1.75, 33, 44, 55);
+    compare_printfs("%#a %d", 1.0, 33, 44, 55);
+    compare_printfs("%010a %d", 1.75, 33, 44, 55);
+    compare_printfs("%010a %d", INFINITY, 33, 44, 55);
+    compare_printfs("%050a %d", NAN, 33, 44, 55);
+    compare_printfs("%La %d", 3.1416015625L, 33, 44, 55);
+    compare_printfs("%LA %d", -3.1416015625L, 33, 44, 55);
+    compare_printfs("%La %d", 0.0L, 33, 44, 55);
+    compare_printfs("%La %d", -0.0L, 33, 44, 55);
+    compare_printfs("%La %d", (long double)INFINITY, 33, 44, 55);
+    compare_printfs("%La %d", (long double)-INFINITY, 33, 44, 55);
+    compare_printfs("%La %d", (long double)NAN, 33, 44, 55);
+    compare_printfs("%.0La %d", 1.5L, 33, 44, 55);
+    compare_printfs("%.0La %d", 1.51L, 33, 44, 55);
+    compare_printfs("%.1La %d", 1.51L, 33, 44, 55);
+    compare_printfs("%.2La %d", 1.51L, 33, 44, 55);
+    compare_printfs("%.3La %d", 1.51L, 33, 44, 55);
+    compare_printfs("%.3La %d", 1.49999L, 33, 44, 55);
+    compare_printfs("%.1La %d", 1.999L, 33, 44, 55);
+    compare_printfs("%10La %d", 1.75L, 33, 44, 55);
+    compare_printfs("%.10La %d", 1.75L, 33, 44, 55);
+    compare_printfs("%.50La %d", 1.75L, 33, 44, 55);
+    compare_printfs("%-10La %d", 1.75L, 33, 44, 55);
+    compare_printfs("%+La %d", 1.75L, 33, 44, 55);
+    compare_printfs("% La %d", 1.75L, 33, 44, 55);
+    compare_printfs("%#La %d", 1.75L, 33, 44, 55);
+    compare_printfs("%#La %d", 1.0L, 33, 44, 55);
+    compare_printfs("%010La %d", 1.75L, 33, 44, 55);
+    compare_printfs("%010La %d", (long double)INFINITY, 33, 44, 55);
+    compare_printfs("%050La %d", (long double)NAN, 33, 44, 55);
+    compare_printfs("%f %d", 12.75, 33, 44, 55);
+    compare_printfs("%f %d", 1234567.0, 33, 44, 55);
+    compare_printfs("%f %d", -0.03125, 33, 44, 55);
+    compare_printfs("%f %d", 0.0, 33, 44, 55);
+    compare_printfs("%f %d", -0.0, 33, 44, 55);
+    compare_printfs("%f %d", INFINITY, 33, 44, 55);
+    compare_printfs("%f %d", -INFINITY, 33, 44, 55);
+    compare_printfs("%f %d", NAN, 33, 44, 55);
+    compare_printfs("%10f %d", 1.75, 33, 44, 55);
+    compare_printfs("%-10f %d", 1.75, 33, 44, 55);
+    compare_printfs("%+f %d", 1.75, 33, 44, 55);
+    compare_printfs("% f %d", 1.75, 33, 44, 55);
+    compare_printfs("%#f %d", 1.75, 33, 44, 55);
+    compare_printfs("%#.f %d", 1.75, 33, 44, 55);
+    compare_printfs("%015f %d", 1234.0, 33, 44, 55);
+    compare_printfs("%015f %d", -INFINITY, 33, 44, 55);
+    compare_printfs("%050f %d", NAN, 33, 44, 55);
+    compare_printfs("%.f %d", 1234.0, 33, 44, 55);
+    compare_printfs("%.2f %d", 999.951, 33, 44, 55);
+    compare_printfs("%.2f %d", 999.996, 33, 44, 55);
+    compare_printfs("%Lf %d", 12.75L, 33, 44, 55);
+    compare_printfs("%Lf %d", 1234567.0L, 33, 44, 55);
 }
 
 Test(my_printf, through_float_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
-    static const double values[] = {-(0.0 / 0.0), -INFINITY, -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, INFINITY, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999};
+    static const double values[] = {-(0.0 / 0.0), -INFINITY, -99999, -99, -17.4, -4.3, -3.0, -1.5, -1, 0, 0.1, 0.2342374852, 0.2340007, 3.1415926, 14.7845, 34.24758, 9999, 9999999, INFINITY, (0.0 / 0.0), 0.001, 1.0e-20, 1.0, 100.0, 9.9999, -0.00543, -99.99999, 12.75, 1234567.0, -0.03125};
 
     for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
         compare_printfs("%f", values[i]);
         compare_printfs("%10f", values[i]);
         compare_printfs("%010f", values[i]);
+        compare_printfs("%015f", values[i]);
         compare_printfs("%.2f", values[i]);
         compare_printfs("%.0f", values[i]);
         compare_printfs("%7.0f", values[i]);
         compare_printfs("%5.2f", values[i]);
         compare_printfs("%0f", values[i]);
         compare_printfs("%#f", values[i]);
+        compare_printfs("%F", values[i]);
+        compare_printfs("%10F", values[i]);
+        compare_printfs("%010F", values[i]);
+        compare_printfs("%015F", values[i]);
+        compare_printfs("%.2F", values[i]);
+        compare_printfs("%.0F", values[i]);
+        compare_printfs("%.F", values[i]);
+        compare_printfs("%7.0F", values[i]);
+        compare_printfs("%5.2F", values[i]);
+        compare_printfs("%0F", values[i]);
+        compare_printfs("%#F", values[i]);
         compare_printfs("%e", values[i]);
         compare_printfs("%10e", values[i]);
         compare_printfs("%.2e", values[i]);
@@ -935,6 +1147,23 @@ Test(my_printf, through_float_checks, .init = do_init, .fini = compare_all_libc_
         compare_printfs("%5.2G", values[i]);
         compare_printfs("%0G", values[i]);
         compare_printfs("%#G", values[i]);
+    }
+}
+
+Test(my_printf, through_long_double_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
+{
+    static const long double values[] = {  1.234321234321234e-37L, 1.234321234321234e-36L, 1.234321234321234e-35L, 1.234321234321234e-34L, 1.234321234321234e-33L, 1.234321234321234e-32L, 1.234321234321234e-31L, 1.234321234321234e-30L, 1.234321234321234e-29L, 1.234321234321234e-28L, 1.234321234321234e-27L, 1.234321234321234e-26L, 1.234321234321234e-25L, 1.234321234321234e-24L, 1.234321234321234e-23L, 1.234321234321234e-22L, 1.234321234321234e-21L, 1.234321234321234e-20L, 1.234321234321234e-19L, 1.234321234321234e-18L, 1.234321234321234e-17L, 1.234321234321234e-16L, 1.234321234321234e-15L, 1.234321234321234e-14L, 1.234321234321234e-13L, 1.234321234321234e-12L, 1.234321234321234e-11L, 1.234321234321234e-10L, 1.234321234321234e-9L, 1.234321234321234e-8L, 1.234321234321234e-7L, 1.234321234321234e-6L, 1.234321234321234e-5L, 1.234321234321234e-4L, 1.234321234321234e-3L, 1.234321234321234e-2L, 1.234321234321234e-1L, 1.234321234321234L, 1.234321234321234e1L, 1.234321234321234e2L, 1.234321234321234e3L, 1.234321234321234e4L, 1.234321234321234e5L, 1.234321234321234e6L, 1.234321234321234e7L, 1.234321234321234e8L, 1.234321234321234e9L, 1.234321234321234e10L, 1.234321234321234e11L, 1.234321234321234e12L, 1.234321234321234e13L, 1.234321234321234e14L, 1.234321234321234e15L, 1.234321234321234e16L, 1.234321234321234e17L, 1.234321234321234e18L, 1.234321234321234e19L, 1.234321234321234e20L, 1.234321234321234e21L, 1.234321234321234e22L, 1.234321234321234e23L, 1.234321234321234e24L, 1.234321234321234e25L, 1.234321234321234e26L, 1.234321234321234e27L, 1.234321234321234e28L, 1.234321234321234e29L, 1.234321234321234e30L, 1.234321234321234e31L, 1.234321234321234e32L, 1.234321234321234e33L, 1.234321234321234e34L, 1.234321234321234e35L, 1.234321234321234e36L, -0.03125L, 0.0L, -0.0L, INFINITY, -INFINITY, NAN, 1.75L, 1234.0L, 999.951L, 999.996L };
+    for (size_t i = 0; i < MY_ARRAY_SIZE(values); ++i) {
+        compare_printfs("%Lf", values[i]);
+        compare_printfs("%10Lf", values[i]);
+        compare_printfs("%-10Lf", values[i]);
+        compare_printfs("%+Lf", values[i]);
+        compare_printfs("% Lf", values[i]);
+        compare_printfs("%#Lf", values[i]);
+        compare_printfs("%#.Lf", values[i]);
+        compare_printfs("%015Lf", values[i]);
+        compare_printfs("%.Lf", values[i]);
+        compare_printfs("%.2Lf", values[i]);
     }
 }
 

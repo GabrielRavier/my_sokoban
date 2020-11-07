@@ -73,9 +73,9 @@ static const char *do_conversion_specification(struct my_string *destination,
                 destination, arguments, &conversion_info),
             &conversion_info, formatter_function}));
     else
-        return asprintf_handle_invalid(destination, &conversion_info,
+        return (asprintf_handle_invalid(destination, &conversion_info,
             has_encountered_invalid) ? (conversion_specification -
-            (conversion_info.conversion_specifier == '\0') ) : NULL;
+            (conversion_info.conversion_specifier == '\0') ) : NULL);
     return (conversion_specification);
 }
 

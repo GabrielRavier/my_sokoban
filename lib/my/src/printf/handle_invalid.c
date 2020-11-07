@@ -30,7 +30,7 @@ bool asprintf_handle_invalid(struct my_string *destination,
     bool *has_encountered_invalid)
 {
     if (conversion_info->conversion_specifier == '\0' && !*has_encountered_invalid)
-        return false;
+        return (false);
     *has_encountered_invalid = true;
     my_string_append_char(destination, '%');
     stringisize_flags(destination, conversion_info);
@@ -42,5 +42,5 @@ bool asprintf_handle_invalid(struct my_string *destination,
             conversion_info->precision, 10, false);
     if (conversion_info->conversion_specifier != '\0')
         my_string_append_char(destination, conversion_info->conversion_specifier);
-    return true;
+    return (true);
 }

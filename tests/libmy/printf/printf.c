@@ -159,6 +159,9 @@ Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%#04.2z\n");
     compare_printfs("%\001");
     compare_printfs("%0- +#w");
+    compare_printfs("%0- +#1324.4321w");
+    compare_printfs("%01.4321w");
+    compare_printfs("%0.4321w");
     compare_printfs("% w");
 }
 

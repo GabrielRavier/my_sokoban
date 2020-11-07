@@ -1067,10 +1067,31 @@ Test(my_printf, through_string_checks, .init = do_init, .fini = compare_all_libc
 
 Test(my_printf, format_n, .init = do_init)
 {
-    int count = -1;
-    my_printf("%d %n", 123, &count);
-    cr_assert_eq(count, 4);
-    cr_assert_stdout_eq_str("123 ");
+    int count_int = -1;
+    signed char count_char = -1;
+    short count_short = -1;
+    long count_long = -1;
+    long long count_long_long = -1;
+    intmax_t count_intmax_t = -1;
+    ssize_t count_size_t = -1;
+    ptrdiff_t count_ptrdiff_t = -1;
+    my_printf("%d %n", 123, &count_int);
+    my_printf("%d %hhn", 123, &count_char);
+    my_printf("%d %hn", 123, &count_short);
+    my_printf("%d %ln", 123, &count_long);
+    my_printf("%d %lln", 123, &count_long_long);
+    my_printf("%d %jn", 123, &count_intmax_t);
+    my_printf("%d %zn", 123, &count_size_t);
+    my_printf("%d %tn", 123, &count_ptrdiff_t);
+    cr_assert_eq(count_int, 4);
+    cr_assert_eq(count_char, 4);
+    cr_assert_eq(count_short, 4);
+    cr_assert_eq(count_long, 4);
+    cr_assert_eq(count_long_long, 4);
+    cr_assert_eq(count_intmax_t, 4);
+    cr_assert_eq(count_size_t, 4);
+    cr_assert_eq(count_ptrdiff_t, 4);
+    cr_assert_stdout_eq_str("123 123 123 123 123 123 123 123 ");
 }
 
 #ifdef LIBMY_FLOATING_POINT_CLUDGE

@@ -22,22 +22,22 @@
 #include <assert.h>
 
 // Avoid getting shouted at 2000 times
-#ifdef __clang__
-    #pragma clang diagnostic ignored "-Wformat"
-#elif __GNUC__
+#ifdef __GNUC__
     #pragma GCC diagnostic ignored "-Wformat"
+    #pragma GCC diagnostic ignored "-Wformat-extra-args"
+    #pragma GCC diagnostic ignored "-Wformat-zero-length"
 #endif
 
 static struct my_string *combined_libc = NULL;
 
-static void compare_all_libc_to_stdout()
+static void compare_all_libc_to_stdout(void)
 {
     FILE *libc_output_as_FILE = fmemopen(combined_libc->string, combined_libc->length, "r");
     cr_assert_stdout_eq(libc_output_as_FILE);
     free(combined_libc);
 }
 
-static void do_init()
+static void do_init(void)
 {
     cr_redirect_stdout();
     setlocale(LC_ALL, "en_US.utf8");
@@ -656,12 +656,41 @@ Test(my_printf, format_hex_lowercase, .init = do_init, .fini = compare_all_libc_
     compare_printfs("%x", -1);
     compare_printfs("%04x", 255);
     compare_printfs("%08x", 65537);
-    for (unsigned i = -100; i < 100; ++i)
+    for (unsigned i = -100; i < 100; ++i) {
         compare_printfs("%x", i);
-    for (unsigned i = -100; i < 100; ++i)
         compare_printfs("%04x", i);
-    for (unsigned i = -100; i < 100; ++i)
         compare_printfs("%08x", i);
+    }
+    compare_printfs("%0x %0x %0x", 0, 1, 0xffff);
+    compare_printfs("% x % x % x", 0, 1, 0xffff);
+    compare_printfs("%+x %+x %+x", 0, 1, 0xffff);
+    compare_printfs("%-x %-x %-x", 0, 1, 0xffff);
+    compare_printfs("%#x %#x %#x", 0, 1, 0xffff);
+    compare_printfs("%.0x", 0);
+    compare_printfs("%.0x %.0x", 1, 0xffff);
+    compare_printfs("%.1x %.1x %.1x", 0, 1, 0xffff);
+    compare_printfs("%.2x %.2x %.2x %.2x", 0, 1, 255, 0xffff);
+    compare_printfs("%.3x %.3x %.3x %.3x %.3x", 0, 1, 0x12, 0x123, 0x1234);
+    compare_printfs("%1x.%1x.%1x", 0, 1, 0xffff);
+    compare_printfs("%2x.%2x.%2x", 1, 0x12, 0x123);
+    compare_printfs("%3x.%3x.%3x.%3x", 1, 0x12, 0x123, 0x1234);
+    compare_printfs("%#4x.%#4x.%#4x.%#4x.%#4x", 0, 1, 0x12, 0x123, 0x1234);
+    compare_printfs("% 4x.% 4x", 0x14, 0xffff);
+    compare_printfs("%+4x.%+4x", 0x16, 0xffff);
+    compare_printfs("%-4x.%-4x", 0x17, 0xffff);
+    compare_printfs("%04x.%04x.%04x.%04x.%04x", 0, 1, 0x12, 0x123, 0x1234);
+    compare_printfs("%08.4x", 1);
+    compare_printfs("%08.0x", 1);
+    compare_printfs("%08.x", 1);
+    compare_printfs("%8.3x.%8.3x.%8.3x.%8.3x.%8.3x", 0, 1, 0x12, 0x123, 0x1234);
+    compare_printfs("%08.4x.% 8.4x.%+8.4x", 0x12, 0x13, 0x14);
+    compare_printfs("%-8.3x.%-8.3x.%-8.3x.%-8.3x.%-8.3x", 0, 1, 0x12, 0x123, 0x1234);
+    compare_printfs("%#8.4x.%#8.4x.%#8.4x.%#8.4x.%#8.4x", 0, 1, 0x12, 0x123, 0x1234);
+    compare_printfs("%255x", 1);
+    compare_printfs("%-255x", 1);
+    compare_printfs("%.255x", 2);
+    compare_printfs("%lx %lx %lx %lx %lx %lx %lx %lx", 0L, 1L, 0x12345678L, 0x9abcdef0L, 0x7fffffffL, 0x80000000L, 0x80000001L, 0xffffffffL);
+    compare_printfs("%hx %hx %hx", 0, 2, 0xfffe);
 }
 
 Test(my_printf, format_hex_uppercase, .init = do_init, .fini = compare_all_libc_to_stdout)

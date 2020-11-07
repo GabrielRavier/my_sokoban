@@ -28,8 +28,10 @@
     #pragma GCC diagnostic ignored "-Wformat-zero-length"
 #endif
 
+// Stores all the output that the libc has given us during the current test
 static struct my_string *combined_libc = NULL;
 
+// Compares the content of the combined libc output to stdout
 static void compare_all_libc_to_stdout(void)
 {
     FILE *libc_output_as_FILE = fmemopen(combined_libc->string, combined_libc->length, "r");
@@ -37,12 +39,14 @@ static void compare_all_libc_to_stdout(void)
     free(combined_libc);
 }
 
+// Redirects stdout and sets the locale to a sane value (useful for wchar_t tests)
 static void do_init(void)
 {
     cr_redirect_stdout();
     setlocale(LC_ALL, "en_US.utf8");
 }
 
+// Compares the output that our printf and the printf of the libc gives for a given format and arguments
 MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *format, ...)
 {
     va_list arguments;

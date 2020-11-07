@@ -150,6 +150,14 @@ Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("hello%w");
     compare_printfs("hello%0w");
+    compare_printfs("hello%");
+    compare_printfs("hello%w%");
+    compare_printfs("hello%w%d", 123);
+    compare_printfs("hello%w%d%", 123);
+    compare_printfs("% #18.2z\n");
+    compare_printfs("%#04.2z");
+    compare_printfs("%#04.2z\n");
+    compare_printfs("%\001");
 }
 
 Test(my_prinf, mismatch_length_conversion, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -338,6 +346,14 @@ Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout
     compare_printfs("%*s", -9, input);
     compare_printfs("%*s", -10, input);
     compare_printfs("%10s", input);
+    compare_printfs("a%08xz", 0x123456);
+    compare_printfs("a%5dz", 1234);
+    compare_printfs("a%05dz", 1234);
+    compare_printfs("a%8dz", 1234);
+    compare_printfs("a%-8dz", 1234);
+    compare_printfs("A%-11sZ", "abcdef");
+    compare_printfs("A%s:%dZ", "hello", 1234);
+    compare_printfs("a%03d:%d:%02dz", 5, 5, 5);
 }
 
 Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)

@@ -7,7 +7,9 @@
 
 #include "my/stdio.h"
 #include "my/internal/printf/formatter.h"
+#include "my/internal/printf/parse_conversion_info.h"
 #include "my/internal/printf/padding.h"
+#include "my/internal/printf/handle_invalid.h"
 #include "my/my_string.h"
 #include "my/string.h"
 #include "my/ctype.h"
@@ -55,12 +57,12 @@ static void parse_format(
 
 // Returns the next character after the conversion specifier.
 static const char *do_conversion_specification(struct my_string *destination,
-    const char *conversion_specification, va_list arguments)
+    const char *conversion_specification, va_list arguments,
+    bool *has_encountered_invalid)
 {
     struct my_printf_conversion_info conversion_info = { 0 };
     const size_t destination_length_before_conversion = destination->length;
     formatter_func_t formatter_function;
-    const char *const original_conv_spec_ptr = conversion_specification;
 
     parse_format(&conversion_info, &conversion_specification, arguments);
     formatter_function = formatter_functions[
@@ -71,15 +73,21 @@ static const char *do_conversion_specification(struct my_string *destination,
                 destination, arguments, &conversion_info),
             &conversion_info, formatter_function}));
     else
-        my_string_append(destination, original_conv_spec_ptr - 1,
-            conversion_specification - original_conv_spec_ptr + 1);
+        return asprintf_handle_invalid(destination, &conversion_info,
+            has_encountered_invalid) ? (conversion_specification -
+            (conversion_info.conversion_specifier == '\0') ) : NULL;
     return (conversion_specification);
 }
 
+// has_encountered_invalid is related to extremely weird behaviour from glibc.
+// If glibc's printf encounters a '\0' as a conversion specifier, it will
+// return, *unless* it had already encountered an erroneous conversion
+// specifier, in which case it will continue as normal
 static bool do_my_string_printf(struct my_string *destination,
     const char *format, va_list arguments)
 {
     char current_char;
+    bool has_encountered_invalid = false;
 
     while (1) {
         while (1) {
@@ -90,7 +98,8 @@ static bool do_my_string_printf(struct my_string *destination,
                 return (true);
             my_string_append_char(destination, current_char);
         }
-        format  = do_conversion_specification(destination, format, arguments);
+        format = do_conversion_specification(destination, format, arguments,
+            &has_encountered_invalid);
         if (!format)
             return (false);
     }

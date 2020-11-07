@@ -158,6 +158,8 @@ Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%#04.2z");
     compare_printfs("%#04.2z\n");
     compare_printfs("%\001");
+    compare_printfs("%0- +#w");
+    compare_printfs("% w");
 }
 
 Test(my_prinf, mismatch_length_conversion, .init = do_init, .fini = compare_all_libc_to_stdout)

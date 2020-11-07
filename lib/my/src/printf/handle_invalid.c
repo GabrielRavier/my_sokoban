@@ -8,6 +8,8 @@
 #include "my/internal/printf/handle_invalid.h"
 #include "my/internal/printf/formatter.h"
 
+// The else if are deliberate, we have to eliminate redundant flags as glibc
+// also does so
 static void stringisize_flags(struct my_string *destination,
     struct my_printf_conversion_info *conversion_info)
 {
@@ -15,11 +17,11 @@ static void stringisize_flags(struct my_string *destination,
         my_string_append_char(destination, '#');
     if (conversion_info->flag_plus)
         my_string_append_char(destination, '+');
-    if (conversion_info->flag_space)
+    else if (conversion_info->flag_space)
         my_string_append_char(destination, ' ');
     if (conversion_info->flag_minus)
         my_string_append_char(destination, '-');
-    if (conversion_info->flag_0)
+    else if (conversion_info->flag_0)
         my_string_append_char(destination, '0');
 }
 

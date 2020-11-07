@@ -21,6 +21,12 @@
 #include <limits.h>
 #include <assert.h>
 
+#ifdef __clang__
+    #pragma clang diagnostic ignored "-Wformat"
+#elif __GNUC__
+    #pragma GCC diagnostic ignored "-Wformat"
+#endif
+
 static struct my_string *combined_libc = NULL;
 
 static void compare_all_libc_to_stdout()
@@ -177,9 +183,7 @@ Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
     /* Test support of size specifiers as in C99.  */
 
     compare_printfs("%ju %d\n", (uintmax_t) 12345671, 33, 44, 55);
-
     compare_printfs("%zu %d\n", (size_t) 12345672, 33, 44, 55);
-
     compare_printfs("%tu %d\n", (ptrdiff_t) 12345673, 33, 44, 55);
 }
 
@@ -299,6 +303,14 @@ Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%10.3s", input);
     compare_printfs("%*.*s", 10, 3, input);
     compare_printfs("%*.*s", -10, -3, input);
+    compare_printfs("%.4000d %d", 1234567, 99);
+    compare_printfs("%.*d %d", 4000, 1234567, 99);
+    compare_printfs("%.4000d %d", -1234567, 99);
+    compare_printfs("%.4000u %d", 1234567, 99);
+    compare_printfs("%.4000o %d", 1234567, 99);
+    compare_printfs("%.4000x %d", 1234567, 99);
+    compare_printfs("%#.4000x %d", 1234567, 99);
+    compare_printfs("%.4000s %d", input, 99);
 }
 
 Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -1103,6 +1115,8 @@ Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_
     compare_printfs("%.2f %d", 999.996, 33, 44, 55);
     compare_printfs("%Lf %d", 12.75L, 33, 44, 55);
     compare_printfs("%Lf %d", 1234567.0L, 33, 44, 55);
+    compare_printfs("%.4000f %d", 1.0, 99);
+    compare_printfs("%.511f %d", 1.0, 99);
 }
 
 Test(my_printf, through_float_checks, .init = do_init, .fini = compare_all_libc_to_stdout)

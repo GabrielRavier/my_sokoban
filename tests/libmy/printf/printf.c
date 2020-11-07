@@ -144,6 +144,14 @@ Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("hello%0w");
 }
 
+Test(my_prinf, mismatch_length_conversion, .init = do_init, .fini = compare_all_libc_to_stdout)
+{
+    compare_printfs("%hhc", 'a');
+    compare_printfs("%hc", 'b');
+    compare_printfs("%hhs", "foo");
+    compare_printfs("%hs", "foo");
+}
+
 Test(my_printf, random, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%-5d", 45);
@@ -255,7 +263,6 @@ Test(my_printf, formatting, .init = do_init, .fini = compare_all_libc_to_stdout)
 Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     const char *input = "0123456789";
-    //compare_printfs("%", input); // Makes glibc printf give random shit
     compare_printfs("%s", input);
     compare_printfs("%*s", 1, input);
     compare_printfs("%*s", 2, input);
@@ -283,7 +290,6 @@ Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout
 Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     const char *input = "0123456789";
-    //compare_printfs("%.", input); // Makes glibc give random shit
     compare_printfs("%.s", input);
     compare_printfs("%.*s", 1, input);
     compare_printfs("%.*s", 2, input);
@@ -494,7 +500,8 @@ Test(my_printf, format_p, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%p", ((void *)0xffff0123456789abUL));
     compare_printfs("%p", ((void *)0x00000123456789abUL));
     compare_printfs("%p", ((void *)0x456789ab));
-    compare_printfs("%p", NULL);
+    compare_printfs("%p", (void *)NULL);
+    compare_printfs("%p %p %p", (void *)1, (void *)0xabcd, (void *)0xef02);
 }
 
 Test(my_printf, format_c_null_terminator, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -594,6 +601,7 @@ Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_std
     compare_printfs("%hd %hd %hd", 0, 2, -2);
     compare_printfs("%i", -9);
     compare_printfs("%u %u %u %u %u %u", 0, 1, 0x7fff, 0x8000, 0x8001, 0xffff);
+    compare_printfs("%hhd", 123);
 }
 
 Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -705,6 +713,8 @@ Test(my_printf, format_hex_uppercase, .init = do_init, .fini = compare_all_libc_
         compare_printfs("%04X", i);
     for (unsigned i = -100; i < 100; ++i)
         compare_printfs("%08X", i);
+    compare_printfs("%X %X %X %X %X", 0, 0x1234, 0x5678, 0x9abc, 0xdef0);
+    compare_printfs("%#X %#X %#X %#X", 0xfedc, 0xba98, 0x7654, 0x3210);
 }
 
 Test(my_printf, format_precision_string, .init = do_init, .fini = compare_all_libc_to_stdout)

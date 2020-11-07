@@ -361,6 +361,12 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%06s>", "text");
     compare_printfs("<%-06s>", "text");
     compare_printfs("<%hs>", "text");
+    compare_printfs("%s", "");
+    compare_printfs("%s", "A");
+    compare_printfs("%s", "123456789\001\177\200\201\377");
+    compare_printfs("%0s %+s %-s % s %#s", "A", "B", "C", "D", "E");
+    compare_printfs("%1s.%2s.%5s.%10.2s", "A", "B", "C", "D");
+    compare_printfs("%.0s.%.1s.%.10s", "ABCDEF", "abcdef", "0123456789");
 
     static const wchar_t ws[] = { 0x0421, 0x043e, 0x0444, 0x044f, 0 };
     static const wchar_t wsbad[] = { 0x0391, 0xdeef, 0x3c9, 0 };
@@ -430,10 +436,10 @@ Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)
     for (int i = (CHAR_MIN - 1000); i < CHAR_MAX + 1000; ++i)
         compare_printfs("%c", i);
     compare_printfs("%c%c%c%c%c", 001, 0177, 0200, 0201, 0377);
-    compare_printfs("%0c %+c %-c % c %#c", 'A','B','C','D','E');
-    compare_printfs("%.c %.0c %.1c %.99c", 'A','B','C','D');
-    compare_printfs("%1c.%2c.%5c.%10.2c", 'A','B','C','D','E');
-    compare_printfs("%-1c.%-2c.%-10c", 'A','B','C');
+    compare_printfs("%0c %+c %-c % c %#c", 'A', 'B', 'C', 'D', 'E');
+    compare_printfs("%.c %.0c %.1c %.99c", 'A', 'B', 'C', 'D');
+    compare_printfs("%1c.%2c.%5c.%10.2c", 'A', 'B', 'C', 'D', 'E');
+    compare_printfs("%-1c.%-2c.%-10c", 'A', 'B', 'C');
     compare_printfs("%255c", 'F');
     compare_printfs("%-255c", 'G');
     compare_printfs("<%lc>", L'=');

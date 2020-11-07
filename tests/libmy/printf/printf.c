@@ -86,6 +86,8 @@ Test(my_printf, simple_string, .init = do_init, .fini = compare_all_libc_to_stdo
     compare_printfs("baz");
     compare_printfs("\012\001");
     compare_printfs("");
+    compare_printfs(".");
+    compare_printfs("aa");
 }
 
 Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -129,6 +131,10 @@ Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%-11C", L'1');
     compare_printfs("%d %s", 123, "456");
     compare_printfs("%010000d", 0);
+    compare_printfs("%d", 12345);
+    compare_printfs("%u", 54321);
+    compare_printfs("%x", 0xABCD);
+    compare_printfs("%o", 0123);
 }
 
 Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -317,6 +323,7 @@ Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_t
 {
     compare_printfs("%%");
     compare_printfs("%% %l% aaa");
+    compare_printfs("%%%% ");
 }
 
 Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -422,6 +429,13 @@ Test(my_printf, format_c, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("<%hc>", '=');
     for (int i = (CHAR_MIN - 1000); i < CHAR_MAX + 1000; ++i)
         compare_printfs("%c", i);
+    compare_printfs("%c%c%c%c%c", 001, 0177, 0200, 0201, 0377);
+    compare_printfs("%0c %+c %-c % c %#c", 'A','B','C','D','E');
+    compare_printfs("%.c %.0c %.1c %.99c", 'A','B','C','D');
+    compare_printfs("%1c.%2c.%5c.%10.2c", 'A','B','C','D','E');
+    compare_printfs("%-1c.%-2c.%-10c", 'A','B','C');
+    compare_printfs("%255c", 'F');
+    compare_printfs("%-255c", 'G');
     compare_printfs("<%lc>", L'=');
     compare_printfs("<%lc>", L'\t');
     compare_printfs("<%lc>", (wint_t)0x3C0);
@@ -766,6 +780,26 @@ Test(my_printf, through_long_long_checks, .init = do_init, .fini = compare_all_l
         compare_printfs("%-#10llx", values[i]);
         compare_printfs("%-#10llX", values[i]);
         compare_printfs("%-#10llo", values[i]);
+        compare_printfs("%Ld", values[i]);
+        compare_printfs("%Lx", values[i]);
+        compare_printfs("%LX", values[i]);
+        compare_printfs("%Lo", values[i]);
+        compare_printfs("%#Lx", values[i]);
+        compare_printfs("%#LX", values[i]);
+        compare_printfs("%10Ld", values[i]);
+        compare_printfs("%10Lx", values[i]);
+        compare_printfs("%10LX", values[i]);
+        compare_printfs("%10Lo", values[i]);
+        compare_printfs("%#10Lx", values[i]);
+        compare_printfs("%#10LX", values[i]);
+        compare_printfs("%#10Lo", values[i]);
+        compare_printfs("%-10Ld", values[i]);
+        compare_printfs("%-10Lx", values[i]);
+        compare_printfs("%-10LX", values[i]);
+        compare_printfs("%-10Lo", values[i]);
+        compare_printfs("%-#10Lx", values[i]);
+        compare_printfs("%-#10LX", values[i]);
+        compare_printfs("%-#10Lo", values[i]);
     }
 }
 
@@ -1117,6 +1151,7 @@ Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_
     compare_printfs("%Lf %d", 1234567.0L, 33, 44, 55);
     compare_printfs("%.4000f %d", 1.0, 99);
     compare_printfs("%.511f %d", 1.0, 99);
+    compare_printfs("e1=%f %% e2=%f", 1.25, -6.5);
 }
 
 Test(my_printf, through_float_checks, .init = do_init, .fini = compare_all_libc_to_stdout)

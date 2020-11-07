@@ -14,7 +14,7 @@
 bool my_find_digit_from_base(const char *digit_character_ptr, const char *base,
     unsigned char *digit_ptr)
 {
-    char character = *digit_character_ptr;
+    const char character = *digit_character_ptr;
     const char *strchr_result;
 
     if (character == '\0')

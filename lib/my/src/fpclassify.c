@@ -11,7 +11,7 @@
 
 int my_fpclassify_double(double x)
 {
-    union {
+    const union {
         double as_double;
         uint64_t as_int;
     } u = {.as_double = x};
@@ -26,7 +26,7 @@ int my_fpclassify_double(double x)
 
 int my_fpclassify_float(float x)
 {
-    union {
+    const union {
         float as_float;
         uint32_t as_int;
     } u = {.as_float = x};

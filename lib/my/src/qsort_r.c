@@ -42,8 +42,8 @@ void my_qsort_r(void *base, size_t num_elements, size_t element_size,
     int (*comparison_function)(const void *, const void *, void *),
     void *argument)
 {
-    char *first = (char *)base;
-    char *last = first + (num_elements * element_size);
+    char *const first = (char *)base;
+    char *const last = first + (num_elements * element_size);
 
     for (char *it = first; it != last; it += element_size) {
         char *smallest = find_smallest_element(

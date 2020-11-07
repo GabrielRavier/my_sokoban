@@ -12,7 +12,7 @@
 
 int my_dputs(const char *string, int fd)
 {
-    size_t string_len = my_strlen(string);
+    const size_t string_len = my_strlen(string);
 
     if (string_len == 0)
         return (0);

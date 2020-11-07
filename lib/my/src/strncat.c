@@ -10,7 +10,7 @@
 
 char *my_strncat(char *destination, const char *source, size_t n)
 {
-    char *result = destination;
+    char *const result = destination;
     char current_character;
 
     destination += my_strlen(destination);

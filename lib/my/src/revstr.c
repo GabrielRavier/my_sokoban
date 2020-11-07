@@ -11,7 +11,7 @@
 char *my_revstr(char *str)
 {
     char tmp;
-    size_t length = my_strlen(str);
+    const size_t length = my_strlen(str);
 
     for (size_t i = 0; i < (length / 2); ++i) {
         tmp = str[i];

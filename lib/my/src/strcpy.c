@@ -9,7 +9,7 @@
 
 char *my_strcpy(char *destination, const char *source)
 {
-    char *result = destination;
+    char *const result = destination;
     char tmp;
 
     do {

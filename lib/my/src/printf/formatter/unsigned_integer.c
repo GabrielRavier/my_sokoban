@@ -11,7 +11,7 @@
 // We assume size_t is the unsigned counterpart to ptrdiff_t, which seems
 // reasonable to me
 static uintmax_t get_arg(va_list arguments,
-    struct my_printf_conversion_info *format_info)
+    const struct my_printf_conversion_info *format_info)
 {
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR)
         return (unsigned char)va_arg(arguments, unsigned int);
@@ -33,7 +33,8 @@ static uintmax_t get_arg(va_list arguments,
 // The prefix->length == 1 check is for whether we are printing octal the 0
 // prefix, in which case we need to count it as part of the precision
 static void do_precision(struct my_string *destination, size_t pos_before,
-    struct my_printf_conversion_info *format_info, struct my_string *prefix)
+    struct my_printf_conversion_info *format_info,
+    const struct my_string *prefix)
 {
     format_info->precision -= (destination->length - pos_before);
     while (format_info->precision-- > (int)(0 + (prefix ? prefix->length == 1
@@ -73,11 +74,11 @@ struct my_string *asprintf_format_unsigned_integer(
     struct my_string *destination, va_list arguments,
     struct my_printf_conversion_info *format_info)
 {
-    uintmax_t argument = get_arg(arguments, format_info);
-    int base = base_from_specifier(format_info->conversion_specifier);
+    const uintmax_t argument = get_arg(arguments, format_info);
+    const int base = base_from_specifier(format_info->conversion_specifier);
     struct my_string *prefix = do_preprinting_stuff(format_info, base,
         argument);
-    size_t pos_before = destination->length;
+    const size_t pos_before = destination->length;
 
     if (argument)
         asprintf_append_number_base(destination, argument, base,

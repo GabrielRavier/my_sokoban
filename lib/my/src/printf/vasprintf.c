@@ -58,9 +58,9 @@ static const char *do_conversion_specification(struct my_string *destination,
     const char *conversion_specification, va_list arguments)
 {
     struct my_printf_conversion_info conversion_info = { 0 };
-    size_t destination_length_before_conversion = destination->length;
+    const size_t destination_length_before_conversion = destination->length;
     formatter_func_t formatter_function;
-    const char *original_conv_spec_ptr = conversion_specification;
+    const char *const original_conv_spec_ptr = conversion_specification;
 
     parse_format(&conversion_info, &conversion_specification, arguments);
     formatter_function = formatter_functions[

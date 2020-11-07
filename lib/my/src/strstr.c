@@ -14,7 +14,7 @@
 // needle when searching for it in haystack
 char *my_strstr(const char *haystack, const char *needle)
 {
-    char needle_first_character = *needle++;
+    const char needle_first_character = *needle++;
     char haystack_current_character;
     size_t needle_length;
 

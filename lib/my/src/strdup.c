@@ -11,8 +11,8 @@
 
 char *my_strdup(const char *string)
 {
-    size_t string_length = my_strlen(string) + 1;
-    void *duplicate_string = malloc(string_length);
+    const size_t string_length = my_strlen(string) + 1;
+    void *const duplicate_string = malloc(string_length);
 
     if (!duplicate_string)
         return (NULL);

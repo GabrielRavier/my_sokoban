@@ -12,7 +12,7 @@
 int my_vdprintf(int fd, const char *format, va_list arguments)
 {
     char *string_to_print;
-    int string_length = my_vasprintf(&string_to_print, format, arguments);
+    const int string_length = my_vasprintf(&string_to_print, format, arguments);
     int result;
 
     if (string_length < 0)

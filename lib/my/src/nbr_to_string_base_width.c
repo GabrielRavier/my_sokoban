@@ -30,7 +30,8 @@ static char *finish_conversion(const char *converted_number_ptr,
     const char *buffer_end, size_t width)
 {
     char *result;
-    size_t converted_number_size = (size_t)(buffer_end - converted_number_ptr);
+    const size_t converted_number_size =
+        (size_t)(buffer_end - converted_number_ptr);
 
     if (converted_number_size > width)
         width = converted_number_size;
@@ -57,9 +58,9 @@ static char *finish_conversion(const char *converted_number_ptr,
 char *my_nbr_to_string_base_width(int number, const char *base, size_t width)
 {
     char buffer[WORK_BUFFER_SIZE];
-    char *buffer_end = (buffer + WORK_BUFFER_SIZE);
+    char *const buffer_end = (buffer + WORK_BUFFER_SIZE);
     char *converted_number_ptr;
-    bool is_negative = (number < 0);
+    const bool is_negative = (number < 0);
 
     if (is_negative && number != INT_MIN)
         number = -number;

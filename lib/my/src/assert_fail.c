@@ -13,7 +13,7 @@
 
 MY_ATTR_NORETURN static void error_in_assert(void)
 {
-    int ok_yeah_just_ignore_this_return_value = my_dputs(
+    const int ok_yeah_just_ignore_this_return_value = my_dputs(
         "\n\nCouldn't fully print assert error message", STDERR_FILENO);
     (void)ok_yeah_just_ignore_this_return_value;
     __builtin_trap();
@@ -24,7 +24,7 @@ MY_ATTR_NORETURN static void error_in_assert(void)
 void my_assert_fail(const char *expression, const char *file_name,
     int line_number, const char *function_name)
 {
-    const char *line_number_as_str = my_nbr_to_string(line_number);
+    const char *const line_number_as_str = my_nbr_to_string(line_number);
     if (my_dputs(file_name, STDERR_FILENO) == EOF ||
         my_dputc(':', STDERR_FILENO) == EOF ||
         my_dputs(line_number_as_str, STDERR_FILENO) == EOF ||

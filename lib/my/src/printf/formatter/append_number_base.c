@@ -12,7 +12,7 @@
 void asprintf_append_number_base(struct my_string *destination,
     uintmax_t number, int base, bool is_uppercase)
 {
-    uintmax_t tmp = number / base;
+    const uintmax_t tmp = number / base;
     if (tmp != 0)
         asprintf_append_number_base(destination, tmp, base, is_uppercase);
     my_string_append_char(destination,

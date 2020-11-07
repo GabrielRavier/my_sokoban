@@ -12,7 +12,7 @@
 
 char *my_strncpy(char *destination, const char *source, size_t n)
 {
-    char *result = destination;
+    char *const result = destination;
     char current_character;
 
     for (size_t i = 0; i < n; ++i) {

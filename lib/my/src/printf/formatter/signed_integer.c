@@ -66,7 +66,7 @@ struct my_string *asprintf_format_signed_integer(struct my_string *destination,
 {
     intmax_t argument = get_arg(arguments, format_info);
     struct my_string *prefix = do_preprinting_stuff(format_info, &argument);
-    size_t pos_before = destination->length;
+    const size_t pos_before = destination->length;
 
     if (argument)
         asprintf_append_number_base(destination, (uintmax_t)argument, 10,

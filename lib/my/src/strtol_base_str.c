@@ -23,7 +23,7 @@
 // was found an even or odd amount of times before the number
 static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
 {
-    const char *number_ptr = *number_ptr_ptr;
+    const char *const number_ptr = *number_ptr_ptr;
     const char *first_digit = number_ptr + my_strspn(number_ptr, "\t\v\f\n\r ");
     first_digit += my_strspn(first_digit, "-+");
 
@@ -37,8 +37,8 @@ static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
 static bool is_about_to_overflow(long current_result,
     unsigned char current_digit, size_t base)
 {
-    long long_min_without_last_digit = LONG_MIN / (long)base;
-    long long_min_last_digit = -(LONG_MIN % (long)base);
+    const long long_min_without_last_digit = LONG_MIN / (long)base;
+    const long long_min_last_digit = -(LONG_MIN % (long)base);
 
     return (current_result < long_min_without_last_digit ||
         (current_result == long_min_without_last_digit &&
@@ -69,7 +69,7 @@ static long do_parse(const char *num_ptr, bool is_negative, const char *base,
 {
     long result = 0;
     unsigned char current_digit;
-    size_t base_width = my_strlen(base);
+    const size_t base_width = my_strlen(base);
 
     while (true) {
         if (!my_find_digit_from_base(num_ptr++, base, &current_digit)) {
@@ -92,7 +92,7 @@ long my_strtol_base_str(const char *num_ptr, char **end_num_ptr,
     const char *base)
 {
     bool is_negative;
-    const char *orig_ptr = num_ptr;
+    const char *const orig_ptr = num_ptr;
 
     find_number(&num_ptr, &is_negative);
     if (*num_ptr == '\0' || (my_strchr(base, *num_ptr) == NULL)) {

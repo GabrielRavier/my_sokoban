@@ -31,7 +31,7 @@ static unsigned internal_get_square_root_floor(unsigned nb)
 // iteration won't cost too long so that's good)
 bool my_is_prime(unsigned nb)
 {
-    unsigned square_root_floor = internal_get_square_root_floor(nb) + 1;
+    const unsigned square_root_floor = internal_get_square_root_floor(nb) + 1;
 
     if (nb <= 1)
         return (false);

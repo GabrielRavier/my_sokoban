@@ -23,7 +23,7 @@ static void do_padding_loop(struct my_string *destination,
 
 void asprintf_do_padding(const struct asprintf_do_padding_params *params)
 {
-    size_t converted_length = params->destination->length -
+    const size_t converted_length = params->destination->length -
         params->destination_length_before_conversion +
         (params->prefixed_string ? params->prefixed_string->length : 0);
 

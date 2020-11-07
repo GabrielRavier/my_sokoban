@@ -74,7 +74,8 @@ static bool parse_single_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse,
     const char *length_modifier_string, int length_modifier_value)
 {
-    size_t length_modifier_string_length = my_strlen(length_modifier_string);
+    const size_t length_modifier_string_length =
+        my_strlen(length_modifier_string);
 
     if (my_strncmp(length_modifier_string, *to_parse,
             length_modifier_string_length) == 0) {

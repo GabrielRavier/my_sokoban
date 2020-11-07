@@ -30,11 +30,14 @@ static uintmax_t get_arg(va_list arguments,
     return va_arg(arguments, unsigned int);
 }
 
+// The prefix->length == 1 check is for whether we are printing octal the 0
+// prefix, in which case we need to count it as part of the precision
 static void do_precision(struct my_string *destination, size_t pos_before,
-    struct my_printf_conversion_info *format_info)
+    struct my_printf_conversion_info *format_info, struct my_string *prefix)
 {
     format_info->precision -= (destination->length - pos_before);
-    while (format_info->precision-- > 0)
+    while (format_info->precision-- > (int)(0 + (prefix ? prefix->length == 1
+        : 0)))
         my_string_insert_char(destination, '0', pos_before);
 }
 
@@ -79,6 +82,6 @@ struct my_string *asprintf_format_unsigned_integer(
     if (argument)
         asprintf_append_number_base(destination, argument, base,
             format_info->conversion_specifier == 'X');
-    do_precision(destination, pos_before, format_info);
+    do_precision(destination, pos_before, format_info, prefix);
     return (prefix);
 }

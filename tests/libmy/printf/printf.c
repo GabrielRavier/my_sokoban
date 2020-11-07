@@ -21,6 +21,7 @@
 #include <limits.h>
 #include <assert.h>
 
+// Avoid getting shouted at 2000 times
 #ifdef __clang__
     #pragma clang diagnostic ignored "-Wformat"
 #elif __GNUC__
@@ -557,6 +558,42 @@ Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_std
     compare_printfs("%.0d\n", 0);
     compare_printfs("%.0d\n", 1);
     compare_printfs("%.0d\n", 123);
+
+    compare_printfs("%d", 0);
+    compare_printfs("%d", 12345);
+    compare_printfs("%d %d %d %d %d %d", (int)-32768, -32767, -1, 0, 1, 32767);
+    compare_printfs("%0d %0d %0d", 0, 1, -1);
+    compare_printfs("%+d %+d %+d", 0, 1, -1);
+    compare_printfs("%-d %-d %-d", 0, 1, -1);
+    compare_printfs("%#d %#d %#d", 0, 1, -1);
+    compare_printfs("% d % d % d", 0, 1, -1);
+    compare_printfs("%04d.%04d.%04d.%04d.%04d.%04d.%04d", 0, 1, -1, 1234, -123, 12345, -1234);
+    compare_printfs("%08.4d", 1);
+    compare_printfs("%08.0d", 1);
+    compare_printfs("%08.d", 1);
+    compare_printfs("%.0d", 0);
+    compare_printfs("%.0d %.0d", 1, -1);
+    compare_printfs("%.1d %.1d %.1d", 0, 1, -1);
+    compare_printfs("%.2d %.2d %.2d", 0, 1, -1);
+    compare_printfs("%.4d %.4d %.4d %.4d %.4d %.4d", 0, 1, 12, 123, 1234, 12345);
+    compare_printfs("%1d.%1d.%1d", 0, 1, -1);
+    compare_printfs("%2d.%2d.%2d", 1, 12, 123);
+    compare_printfs("%4d.%4d.%4d.%4d", -1, -12, -123, -1234);
+    compare_printfs("%#4d.%#4d", 12, -13);
+    compare_printfs("% 4d.% 4d", 14, -15);
+    compare_printfs("%+4d.%+4d", 16, -17);
+    compare_printfs("%-4d.%-4d", 18, -19);
+    compare_printfs("%8.4d.%8.4d.%8.4d.%8.4d", 1, -1, 1234, -1234);
+    compare_printfs("%08.4d.%#8.4d.% 8.4d.%+8.4d", 12, 13, 14, 15);
+    compare_printfs("%-8.4d.%-8.4d.%-8.4d.%-8.4d", 1, 123, 1234, 12345);
+    compare_printfs("%-8.4d.%-8.4d.%-8.4d.%-8.4d", -1, -123, -1234, -12345);
+    compare_printfs("%255d", 1);
+    compare_printfs("%-255d", 1);
+    compare_printfs("%.255d", 2);
+    compare_printfs("%ld %ld %ld %ld %ld %ld", 0L, 1L, -1L, 2147483647L, -2147483647L, 0x80000000L);
+    compare_printfs("%hd %hd %hd", 0, 2, -2);
+    compare_printfs("%i", -9);
+    compare_printfs("%u %u %u %u %u %u", 0, 1, 0x7fff, 0x8000, 0x8001, 0xffff);
 }
 
 Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -575,9 +612,42 @@ Test(my_printf, format_unsigned, .init = do_init, .fini = compare_all_libc_to_st
 
 Test(my_printf, format_octal, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
+    compare_printfs("%o", 0);
     compare_printfs("%o", 01123);
+    compare_printfs("%o", 0123456);
     compare_printfs("%o", 0x12345678);
     compare_printfs("%#.o", 0);
+    compare_printfs("%o %o %o %o %o", 1, 0x7fff, 0x8000, 0x8001, 0xffff);
+    compare_printfs("%0o %0o %0o", 0, 1, 0xffff);
+    compare_printfs("% o % o % o", 0, 1, 0xffff);
+    compare_printfs("%+o %+o %+o", 0, 1, 0xffff);
+    compare_printfs("%-o %-o %-o", 0, 1, 0xffff);
+    compare_printfs("%#o %#o %#o", 0, 1, 0xffff);
+    compare_printfs("%.0o", 0);
+    compare_printfs("%.0o %.0o", 1, 0xffff);
+    compare_printfs("%.1o %.1o %.1o", 0, 1, 0xffff);
+    compare_printfs("%.2o %.2o %.2o %.2o", 0, 1, 8, 0xffff);
+    compare_printfs("%.4o %.4o %.4o %.4o %.4o %.4o", 0, 1, 012, 0123, 01234, 012345);
+    compare_printfs("%1o.%1o.%1o", 0, 1, 0xffff);
+    compare_printfs("%2o.%2o.%2o", 1, 012, 0123);
+    compare_printfs("%4o.%4o.%4o.%4o.%4o", 1, 012, 0123, 01234, 012345);
+    compare_printfs("%#4o.%#4o.%#4o", 012, 0123, 01234);
+    compare_printfs("% 4o.% 4o", 014, 0xffff);
+    compare_printfs("%+4o.%+4o", 016, 0xffff);
+    compare_printfs("%-4o.%-4o", 017, 0xffff);
+    compare_printfs("%04o.%04o.%04o.%04o.%04o.%04o.%04o", 0, 1, 012, 0123, 01234, 012345, 0177777);
+    compare_printfs("%08.4o", 1);
+    compare_printfs("%08.0o", 1);
+    compare_printfs("%08.o", 1);
+    compare_printfs("%8.4o.%8.4o.%8.4o.%8.4o", 1, 0123, 01234, 0xffff);
+    compare_printfs("%08.4o.% 8.4o.%+8.4o", 012, 013, 014);
+    compare_printfs("%-8.4o.%-8.4o.%-8.4o.%-8.4o", 1, 0123, 01234, 012345);
+    compare_printfs("%#8.4o.%#8.4o.%#8.4o.%#8.4o.%#8.4o", 0, 1, 012, 0123, 01234);
+    compare_printfs("%255o", 1);
+    compare_printfs("%-255o", 1);
+    compare_printfs("%.255o", 2);
+    compare_printfs("%lo %lo %lo %lo %lo %lo %lo", 0L, 01234567L, 076543210L, 0x7fffffffL, 0x80000000L, 0x80000001L, 0xffffffffL);
+    compare_printfs("%ho %ho %ho", 0, 2, 0xfffe);
 }
 
 Test(my_printf, format_hex_lowercase, .init = do_init, .fini = compare_all_libc_to_stdout)

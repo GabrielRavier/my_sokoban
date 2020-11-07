@@ -46,18 +46,19 @@ static void do_init(void)
 MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *format, ...)
 {
     va_list arguments;
-    char *result_us = NULL, *result_libc = NULL;
 
     va_start(arguments, format);
-    int our_printf_retval = my_vprintf(format, arguments);
+    const int our_printf_retval = my_vprintf(format, arguments);
     va_end(arguments);
 
     va_start(arguments, format);
-    int our_length = my_vasprintf(&result_us, format, arguments);
+    char *result_us = NULL;
+    const int our_length = my_vasprintf(&result_us, format, arguments);
     va_end(arguments);
 
     va_start(arguments, format);
-    int libc_length = vasprintf(&result_libc, format, arguments);
+    char *result_libc = NULL;
+    const int libc_length = vasprintf(&result_libc, format, arguments);
     va_end(arguments);
 
     if (result_us != NULL || result_libc != NULL) {
@@ -136,6 +137,13 @@ Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%u", 54321);
     compare_printfs("%x", 0xABCD);
     compare_printfs("%o", 0123);
+    compare_printfs("%k");
+    compare_printfs("%lld", 1LL);
+    compare_printfs("%lc", L'c');
+    compare_printfs("%ls", L"foo");
+    compare_printfs("%*d", 10, 12345);
+    compare_printfs("%10.*d", 6, 12345);
+    compare_printfs("%*.*d", 10, 6, 12345);
 }
 
 Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -195,11 +203,54 @@ Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%zu-%zu", (size_t)0, (size_t)ULONG_MAX);
     compare_printfs("%zx-%zx", (size_t)0, (size_t)ULONG_MAX);
 
-    /* Test support of size specifiers as in C99.  */
-
+    //Test support of size specifiers as in C99.
     compare_printfs("%ju %d\n", (uintmax_t) 12345671, 33, 44, 55);
     compare_printfs("%zu %d\n", (size_t) 12345672, 33, 44, 55);
     compare_printfs("%tu %d\n", (ptrdiff_t) 12345673, 33, 44, 55);
+
+    compare_printfs("%i", -9);
+    compare_printfs("%u %u %u %u %u %u", 0, 1, 0x7fff, 0x8000, 0x8001, 0xffff);
+
+    compare_printfs("%d%d%d%d%d%d%d%d%d", 0, 1, 2, 3, 4, 5, 6, 7, 8);
+    compare_printfs("%d %d %d", 9, 10, 11);
+    compare_printfs("%d %d %d", 99, 100, 101);
+    compare_printfs("%d %d %d", 999, 1000, 1001);
+    compare_printfs("%d %d %d", 9999, 10000, 10001);
+    compare_printfs("%ld %ld %ld", 99999L, 100000L, 100001L);
+    compare_printfs("%ld %ld %ld", 999999L, 1000000L, 1000001L);
+    compare_printfs("%ld %ld %ld", 9999999L, 10000000L, 10000001L);
+    compare_printfs("%ld %ld %ld", 99999999L, 100000000L, 100000001L);
+    compare_printfs("%ld %ld %ld", 999999999L, 1000000000L, 1000000001L);
+    compare_printfs("%lu %lu %lu %lu", 2000000000ul, 3000000000ul, 4000000000ul, 0xffffffff);
+
+    for (unsigned long long b1 = 1; b1; b1 <<= 8) {
+        for (unsigned long long b2 = 1; b2; b2 <<= 4) {
+            unsigned long long x = b1 | b2;
+            compare_printfs("%lld", x);
+            compare_printfs("%llu", x);
+            compare_printfs("%#llo", x);
+            compare_printfs("%#llx", x);
+            compare_printfs("%#llX", x);
+            x -= 1;
+            compare_printfs("%lld", x);
+            compare_printfs("%llu", x);
+            compare_printfs("%#llo", x);
+            compare_printfs("%#llx", x);
+            compare_printfs("%#llX", x);
+            x = ~(b1 | b2);
+            compare_printfs("%lld", x);
+            compare_printfs("%llu", x);
+            compare_printfs("%#llo", x);
+            compare_printfs("%#llx", x);
+            compare_printfs("%#llX", x);
+            x += 1;
+            compare_printfs("%lld", x);
+            compare_printfs("%llu", x);
+            compare_printfs("%#llo", x);
+            compare_printfs("%#llx", x);
+            compare_printfs("%#llX", x);
+        }
+    }
 }
 
 Test(my_printf, hex, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -219,6 +270,7 @@ Test(my_printf, alt_and_sign, .init = do_init, .fini = compare_all_libc_to_stdou
     compare_printfs("unsigned int: %#x %#X", 0xabcdef, 0XABCDEF);
     compare_printfs("int: %+d %+d", 12345678, -12345678);
     compare_printfs("int: % d % d", 12345678, -12345678);
+    compare_printfs("% +d.%+ d", 10, 11);
 }
 
 Test(my_printf, formatting, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -599,8 +651,6 @@ Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_std
     compare_printfs("%.255d", 2);
     compare_printfs("%ld %ld %ld %ld %ld %ld", 0L, 1L, -1L, 2147483647L, -2147483647L, 0x80000000L);
     compare_printfs("%hd %hd %hd", 0, 2, -2);
-    compare_printfs("%i", -9);
-    compare_printfs("%u %u %u %u %u %u", 0, 1, 0x7fff, 0x8000, 0x8001, 0xffff);
     compare_printfs("%hhd", 123);
 }
 

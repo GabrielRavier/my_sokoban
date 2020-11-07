@@ -322,6 +322,9 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%.s", "123456");
     compare_printfs("%.s|%.0s|%.*s", "a", "b", 0, "c");
     compare_printfs("%-3.s|%-3.0s|%-3.*s", "a", "b", 0, "c");
+    compare_printfs("a%*sc", -3, "b");
+    compare_printfs("a%-*sc", 3, "b");
+    compare_printfs("a%-*sc", -3, "b");
     compare_printfs("<%s>", "text");
     compare_printfs("<%-s>", "text");
     compare_printfs("<%6s>", "text");

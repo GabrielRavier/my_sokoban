@@ -14,7 +14,7 @@ static intmax_t get_arg(va_list arguments,
     struct my_printf_conversion_info *format_info)
 {
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR)
-        return (char)va_arg(arguments, int);
+        return (signed char)va_arg(arguments, int);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SHORT)
         return (short)va_arg(arguments, int);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG)

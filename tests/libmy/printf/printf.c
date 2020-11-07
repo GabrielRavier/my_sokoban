@@ -7,6 +7,7 @@
 
 #define _GNU_SOURCE
 #include <criterion/criterion.h>
+#include <criterion/assert.h>
 #include <criterion/redirect.h>
 #include "my/my_string.h"
 #include "my/stdio.h"
@@ -793,6 +794,14 @@ Test(my_printf, through_string_checks, .init = do_init, .fini = compare_all_libc
     compare_printfs("%30s", "Here be a nice little string");
     compare_printfs("%-30s", "Here be a nice little string");
     compare_printfs("%1000s", "Here be a nice little string");
+}
+
+Test(my_printf, format_n, .init = do_init)
+{
+    int count = -1;
+    my_printf("%d %n", 123, &count);
+    cr_assert_eq(count, 4);
+    cr_assert_stdout_eq_str("123 ");
 }
 
 #ifdef LIBMY_FLOATING_POINT_CLUDGE

@@ -37,3 +37,5 @@ struct my_string *asprintf_format_percent_sign(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info);
 struct my_string *asprintf_format_pointer(struct my_string *destination,
     va_list arguments, struct my_printf_conversion_info *format_info);
+struct my_string *asprintf_format_n(struct my_string *destination,
+    va_list arguments, struct my_printf_conversion_info *format_info);

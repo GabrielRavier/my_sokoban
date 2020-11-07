@@ -37,6 +37,7 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['%'] = &asprintf_format_percent_sign,
     ['p'] = &asprintf_format_pointer,
     ['C'] = &asprintf_format_char,
+    ['n'] = &asprintf_format_n
 };
 
 static void parse_format(

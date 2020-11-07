@@ -324,6 +324,8 @@ Test(my_printf, formatting, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%03d - %03d", -1, -123);
     compare_printfs("%03d - %03d", 12, 1234);
     compare_printfs("%03d - %03d", -12, -1234);
+    compare_printfs("%.*s%c", 4, "hello world", '!');
+    compare_printfs("%.*s%c", INT_MAX/2, "hello world", '!');
 }
 
 Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -705,6 +707,24 @@ Test(my_printf, format_decimal, .init = do_init, .fini = compare_all_libc_to_std
     compare_printfs("%ld %ld %ld %ld %ld %ld", 0L, 1L, -1L, 2147483647L, -2147483647L, 0x80000000L);
     compare_printfs("%hd %hd %hd", 0, 2, -2);
     compare_printfs("%hhd", 123);
+    compare_printfs("%d", INT_MAX);
+    compare_printfs("%d", INT_MIN);
+    compare_printfs("%jd", INTMAX_MAX);
+    compare_printfs("%jd", INTMAX_MIN);
+    compare_printfs("%ju", UINTMAX_MAX);
+    compare_printfs("%ju", UINTMAX_MAX);
+    compare_printfs("%ld", LONG_MAX);
+    compare_printfs("%ld", LONG_MIN);
+    compare_printfs("%lld", LLONG_MAX);
+    compare_printfs("%lld", LLONG_MIN);
+    compare_printfs("%o", UINT_MAX);
+    compare_printfs("%u", UINT_MAX);
+    compare_printfs("%x", UINT_MAX);
+    compare_printfs("%X", UINT_MAX);
+    compare_printfs("%dx%d", 1, 2);
+    compare_printfs("%d\xc2\xa2%d", 1, 2);
+    compare_printfs("%d\xe2\x82\xac%d", 1, 2);
+    compare_printfs("%d\xf0\xa4\xad\xa2%d", 1, 2);
 }
 
 Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_stdout)

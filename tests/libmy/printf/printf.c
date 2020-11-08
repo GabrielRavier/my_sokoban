@@ -494,6 +494,7 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
 
     compare_printfs("<%ls>", L"text");
     compare_printfs("%ls\n", L"Hawaï");
+    compare_printfs("%.0ls", L"foo");
     compare_printfs("<%ls>", ws);
     compare_printfs("<%-ls>", L"text");
     compare_printfs("<%6ls>", L"text");
@@ -1139,6 +1140,46 @@ Test(my_printf, format_n, .init = do_init)
     cr_assert_eq(count_size_t, 4);
     cr_assert_eq(count_ptrdiff_t, 4);
     cr_assert_stdout_eq_str("123 123 123 123 123 123 123 123 ");
+}
+
+Test(my_printf, through_format, .init = do_init, .fini = compare_all_libc_to_stdout)
+{
+    char buffer[7];
+    char *prefix = buffer;
+    char format[20];
+
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+            for (int k = 0; k < 2; k++)
+                for (int l = 0; l < 2; l++) {
+                    strcpy(prefix, "%");
+                    if (i == 0)
+                        strcat(prefix, "-");
+                    if (j == 0)
+                        strcat(prefix, "+");
+                    if (k == 0)
+                        strcat(prefix, "#");
+                    if (l == 0)
+                        strcat(prefix, "0");
+                    compare_printfs("%5s |", prefix);
+                    strcpy(format, prefix);
+                    strcat(format, "6d |");
+                    compare_printfs(format, -123);
+                    strcpy(format, prefix);
+                    strcat(format, "6o |");
+                    compare_printfs(format, 255);
+                    strcpy(format, prefix);
+                    strcat(format, "6x |");
+                    compare_printfs(format, 255);
+                    strcpy(format, prefix);
+                    strcat(format, "6X |");
+                    compare_printfs(format, 255);
+                    strcpy(format, prefix);
+                    strcat(format, "6u |");
+                    compare_printfs(format, ~0);
+                }
+    compare_printfs("%-10s\n", (char *)NULL);
+    compare_printfs("%-10s\n", (char *)NULL);
 }
 
 #ifdef LIBMY_FLOATING_POINT_CLUDGE

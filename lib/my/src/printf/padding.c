@@ -42,4 +42,5 @@ void asprintf_do_padding(const struct asprintf_do_padding_params *params)
         my_string_insert(params->destination, params->prefixed_string->string,
             params->prefixed_string->length,
             params->destination_length_before_conversion);
+    my_string_free(params->prefixed_string);
 }

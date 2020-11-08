@@ -9,7 +9,6 @@
 #include <criterion/criterion.h>
 #include <criterion/assert.h>
 #include <criterion/redirect.h>
-#include "my/my_string.h"
 #include "my/stdio.h"
 #include "my/macros.h"
 #include <locale.h>
@@ -26,22 +25,19 @@
     #pragma GCC diagnostic ignored "-Wformat"
     #pragma GCC diagnostic ignored "-Wformat-extra-args"
     #pragma GCC diagnostic ignored "-Wformat-zero-length"
-#ifndef __clang__
+    #ifndef __clang__
         #pragma GCC diagnostic ignored "-Wformat-overflow"
-#endif
+    #endif
 #endif
 
 // Stores all the output that the libc has given us during the current test
-static struct my_string *combined_libc = NULL;
+static FILE *libc_string_file = NULL;
 
 // Compares the content of the combined libc output to stdout
 static void compare_all_libc_to_stdout(void)
 {
-    if (combined_libc) {
-        FILE *libc_output_as_FILE = fmemopen(combined_libc->string, combined_libc->length, "r");
-        cr_assert_stdout_eq(libc_output_as_FILE);
-        free(combined_libc);
-    }
+    cr_assert_stdout_eq(libc_string_file);
+    fclose(libc_string_file);
 }
 
 // Redirects stdout and sets the locale to a sane value (useful for wchar_t tests)
@@ -77,10 +73,9 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     }
 
     if (result_libc) {
-        if (combined_libc)
-            my_string_append(combined_libc, result_libc, libc_length);
-        else
-            combined_libc = my_string_new_from_string(result_libc, libc_length);
+        if (!libc_string_file)
+            libc_string_file = tmpfile();
+        fwrite(result_libc, libc_length, 1, libc_string_file);
     }
     else
         cr_assert(our_printf_retval < 0);
@@ -275,6 +270,20 @@ Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
             compare_printfs("%#llX", x);
         }
     }
+
+    compare_printfs("bad format:\t\"%w\"\n");
+    compare_printfs("nil pointer (padded):\t\"%10p\"\n", (void *) NULL);
+
+    compare_printfs("decimal negative:\t\"%d\"\n", -2345);
+    compare_printfs("octal negative:\t\"%o\"\n", -2345);
+    compare_printfs("hex negative:\t\"%x\"\n", -2345);
+    compare_printfs("long decimal number:\t\"%ld\"\n", -123456L);
+    compare_printfs("long octal negative:\t\"%lo\"\n", -2345L);
+    compare_printfs("long unsigned decimal number:\t\"%lu\"\n", -123456L);
+    compare_printfs("zero-padded LDN:\t\"%010ld\"\n", -123456L);
+    compare_printfs("left-adjusted ZLDN:\t\"%-010ld\"\n", -123456L);
+    compare_printfs("space-padded LDN:\t\"%10ld\"\n", -123456L);
+    compare_printfs("left-adjusted SLDN:\t\"%-10ld\"\n", -123456L);
 }
 
 Test(my_printf, hex, .init = do_init, .fini = compare_all_libc_to_stdout)

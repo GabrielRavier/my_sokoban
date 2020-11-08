@@ -153,6 +153,7 @@ Test(my_printf, basic, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%*d", 10, 12345);
     compare_printfs("%10.*d", 6, 12345);
     compare_printfs("%*.*d", 10, 6, 12345);
+    compare_printfs("%d + %d = %d", 13, 7, 20);
 }
 
 Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -416,6 +417,10 @@ Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%.2147483646s%c", "hello world", '!');
     compare_printfs("%.2147483647s%c", "hello world", '!');
     compare_printfs("%.2147483648s%c", "hello world", '!');
+    compare_printfs("%20.10d", 5);
+    compare_printfs("%-20.10d", 5);
+    compare_printfs("%-#20.10x", 0x1337);
+    compare_printfs("%#20.10x", 0x1337);
 }
 
 Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -436,6 +441,7 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("a%74sb", (char *)NULL);
     compare_printfs("a%.74sb", (char *)NULL);
     compare_printfs("a%1sb", (char *)NULL);
+    compare_printfs("Hello%.3sworld", (char *)NULL);
     compare_printfs("a%.1sb", (char *)NULL);
     compare_printfs("a%0sb", (char *)NULL);
     compare_printfs("a%.0sb", (char *)NULL);
@@ -487,6 +493,7 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     static const wchar_t ws[] = { 0x0421, 0x043e, 0x0444, 0x044f, 0 };
 
     compare_printfs("<%ls>", L"text");
+    compare_printfs("%ls\n", L"Hawaï");
     compare_printfs("<%ls>", ws);
     compare_printfs("<%-ls>", L"text");
     compare_printfs("<%6ls>", L"text");
@@ -799,6 +806,8 @@ Test(my_printf, format_octal, .init = do_init, .fini = compare_all_libc_to_stdou
     compare_printfs("%.255o", 2);
     compare_printfs("%lo %lo %lo %lo %lo %lo %lo", 0L, 01234567L, 076543210L, 0x7fffffffL, 0x80000000L, 0x80000001L, 0xffffffffL);
     compare_printfs("%ho %ho %ho", 0, 2, 0xfffe);
+    compare_printfs("%o", 1);
+    compare_printfs("%#o", 1);
 }
 
 Test(my_printf, format_hex_lowercase, .init = do_init, .fini = compare_all_libc_to_stdout)

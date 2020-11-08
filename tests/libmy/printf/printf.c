@@ -26,6 +26,9 @@
     #pragma GCC diagnostic ignored "-Wformat"
     #pragma GCC diagnostic ignored "-Wformat-extra-args"
     #pragma GCC diagnostic ignored "-Wformat-zero-length"
+#ifndef __clang__
+        #pragma GCC diagnostic ignored "-Wformat-overflow"
+#endif
 #endif
 
 // Stores all the output that the libc has given us during the current test
@@ -34,9 +37,11 @@ static struct my_string *combined_libc = NULL;
 // Compares the content of the combined libc output to stdout
 static void compare_all_libc_to_stdout(void)
 {
-    FILE *libc_output_as_FILE = fmemopen(combined_libc->string, combined_libc->length, "r");
-    cr_assert_stdout_eq(libc_output_as_FILE);
-    free(combined_libc);
+    if (combined_libc) {
+        FILE *libc_output_as_FILE = fmemopen(combined_libc->string, combined_libc->length, "r");
+        cr_assert_stdout_eq(libc_output_as_FILE);
+        free(combined_libc);
+    }
 }
 
 // Redirects stdout and sets the locale to a sane value (useful for wchar_t tests)
@@ -330,6 +335,9 @@ Test(my_printf, formatting, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%03d - %03d", -12, -1234);
     compare_printfs("%.*s%c", 4, "hello world", '!');
     compare_printfs("%.*s%c", INT_MAX/2, "hello world", '!');
+    compare_printfs("%.*s%c", INT_MAX-1, "hello world", '!');
+    compare_printfs("%.*s%c", INT_MAX, "hello world", '!');
+    compare_printfs("%.*s%c", -1, "hello world", '!');
 }
 
 Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -365,6 +373,7 @@ Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout
     compare_printfs("A%-11sZ", "abcdef");
     compare_printfs("A%s:%dZ", "hello", 1234);
     compare_printfs("a%03d:%d:%02dz", 5, 5, 5);
+    compare_printfs("%2147483648s%c", "hello world", '!');
 }
 
 Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -404,6 +413,9 @@ Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%.4000x %d", 1234567, 99);
     compare_printfs("%#.4000x %d", 1234567, 99);
     compare_printfs("%.4000s %d", input, 99);
+    compare_printfs("%.2147483646s%c", "hello world", '!');
+    compare_printfs("%.2147483647s%c", "hello world", '!');
+    compare_printfs("%.2147483648s%c", "hello world", '!');
 }
 
 Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_to_stdout)

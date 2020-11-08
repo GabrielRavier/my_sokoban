@@ -42,29 +42,33 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['n'] = &asprintf_format_n
 };
 
-static void parse_format(
+MY_ATTR_WARN_UNUSED_RESULT static bool parse_format(
     struct my_printf_conversion_info *conversion_info,
     const char **conversion_specification, va_list arguments)
 {
     parse_printf_flags(conversion_info, conversion_specification);
-    parse_printf_field_width(conversion_info, conversion_specification,
-        arguments);
-    parse_printf_precision(conversion_info, conversion_specification,
-        arguments);
+    if (!parse_printf_field_width(conversion_info, conversion_specification,
+        arguments))
+        return (false);
+    if (!parse_printf_precision(conversion_info, conversion_specification,
+        arguments))
+        return (false);
     parse_printf_length_modifier(conversion_info, conversion_specification);
     conversion_info->conversion_specifier = *((*conversion_specification)++);
+    return (true);
 }
 
 // Returns the next character after the conversion specifier.
-static const char *do_conversion_specification(struct my_string *destination,
-    const char *conversion_specification, va_list arguments,
-    bool *has_encountered_invalid)
+MY_ATTR_WARN_UNUSED_RESULT static const char *do_conversion_specification(
+    struct my_string *destination, const char *conversion_specification,
+    va_list arguments, bool *has_encountered_invalid)
 {
     struct my_printf_conversion_info conversion_info = { 0 };
     const size_t destination_length_before_conversion = destination->length;
     formatter_func_t formatter_function;
 
-    parse_format(&conversion_info, &conversion_specification, arguments);
+    if (!parse_format(&conversion_info, &conversion_specification, arguments))
+        return (NULL);
     formatter_function = formatter_functions[
         (unsigned char)conversion_info.conversion_specifier];
     if (formatter_function != NULL)

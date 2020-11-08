@@ -32,7 +32,7 @@ SOURCE_FILES += isprint isupper islower isdigit isalpha isalnum isspace toupper 
 SOURCE_FILES += fabsf fpclassify
 
 # Stuff related to stdio.h
-SOURCE_FILES += putchar dputc dputs puts printf/printf printf/vprintf printf/dprintf printf/vdprintf printf/asprintf printf/vasprintf printf/formatter/append_number_base printf/formatter/utf32_char_to_utf8 printf/formatter/char printf/formatter/cstring printf/formatter/signed_integer printf/formatter/unsigned_integer printf/formatter/decimal_float printf/formatter/percent_sign printf/formatter/n printf/formatter/pointer printf/parse_conversion_info printf/handle_invalid printf/padding
+SOURCE_FILES += putchar dputc dputs puts printf/printf printf/vprintf printf/dprintf printf/vdprintf printf/asprintf printf/vasprintf printf/formatter/append_number_base printf/formatter/utf32_char_to_utf8 printf/formatter/char printf/formatter/cstring printf/formatter/signed_integer printf/formatter/unsigned_integer printf/formatter/decimal_float printf/formatter/percent_sign printf/formatter/n printf/formatter/pointer printf/parse_conversion_info/parse_conversion_info printf/parse_conversion_info/parse_int printf/handle_invalid printf/padding
 
 # Stuff related to stdlib.h
 SOURCE_FILES += qsort qsort_r realloc_size strtol_base_str strtol_base_str_part2
@@ -76,6 +76,7 @@ obj/%.o: %.c
 	@mkdir --parents obj/src/bigint
 	@mkdir --parents obj/src/my_string
 	@mkdir --parents obj/src/printf/formatter
+	@mkdir --parents obj/src/printf/parse_conversion_info
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj/tests/%.o: ../../tests/libmy/%.c

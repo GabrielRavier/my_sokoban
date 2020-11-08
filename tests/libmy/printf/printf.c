@@ -443,6 +443,10 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("a%.6sb", (char *)NULL);
     compare_printfs("a%7sb", (char *)NULL);
     compare_printfs("a%.7sb", (char *)NULL);
+    compare_printfs("<%*.*s>", 2, 2, NULL);
+    compare_printfs("<%*.*s>", 2, 8, NULL);
+    compare_printfs("<%*.*s>", 8, 2, NULL);
+    compare_printfs("<%*.*s>", 8, 8, NULL);
     compare_printfs("%s %s", "string1", "string2");
     compare_printfs("%s%.0s", "", "123");
     compare_printfs("%s|%.3s|%.*s", "ABCD", "abcdef", 3, "123456");

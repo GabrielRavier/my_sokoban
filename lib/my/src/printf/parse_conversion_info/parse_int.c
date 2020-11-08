@@ -18,14 +18,11 @@ int asprintf_parse_int(const char **to_parse)
         if (result >= 0) {
             if (result > (INT_MAX / 10))
                 return -1;
-            else {
-                digit = **to_parse - '0';
-                result *= 10;
-                if (INT_MAX - digit < result)
-                    return -1;
-                else
-                    result += digit;
-            }
+            digit = **to_parse - '0';
+            result *= 10;
+            if (INT_MAX - digit < result)
+                return -1;
+            result += digit;
         }
     return result;
 }

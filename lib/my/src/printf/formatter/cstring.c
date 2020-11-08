@@ -17,11 +17,10 @@ static void do_wchar_string(struct my_string *destination,
     char buffer[4];
 
     if (!wide_string)
-        wide_string = (size_t)format_info->precision >= 6
-                ? L"(null)" : L"";
+        wide_string = (size_t)format_info->precision >= 6 ? L"(null)" : L"";
     while (*wide_string != L'\0') {
-        wide_character_length = asprintf_utf32_char_to_utf8(buffer,
-            *wide_string++);
+        wide_character_length =
+            asprintf_utf32_char_to_utf8(buffer, *wide_string++);
         if ((bytes_written + wide_character_length) >
             (size_t)format_info->precision)
             break;
@@ -54,9 +53,8 @@ struct my_string *asprintf_format_cstring(struct my_string *destination,
                 asprintf_append_number_base(destination,
                     (unsigned char)string_argument[i], 8, false);
             }
-    }
-    else
-        do_wchar_string(destination, format_info,
-             va_arg(arguments, const wchar_t *));
+    } else
+        do_wchar_string(destination, format_info, va_arg(arguments,
+                const wchar_t *));
     return (NULL);
 }

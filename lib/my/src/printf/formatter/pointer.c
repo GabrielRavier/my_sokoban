@@ -17,8 +17,7 @@ struct my_string *asprintf_format_pointer(struct my_string *destination,
     if (argument) {
         prefix = my_string_new_from_string("0x", 2);
         asprintf_append_number_base(destination, argument, 16, false);
-    }
-    else
+    } else
         my_string_append(destination, "(nil)", 5);
     return (prefix);
 }

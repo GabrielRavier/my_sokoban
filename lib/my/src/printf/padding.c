@@ -36,10 +36,10 @@ void asprintf_do_padding(const struct asprintf_do_padding_params *params)
             params->prefixed_string->length,
             params->destination_length_before_conversion);
     do_padding_loop(params->destination,
-        params->destination_length_before_conversion,
-        converted_length, params->conversion_info);
+        params->destination_length_before_conversion, converted_length,
+        params->conversion_info);
     if (params->conversion_info->flag_0 && params->prefixed_string)
         my_string_insert(params->destination, params->prefixed_string->string,
             params->prefixed_string->length,
-                params->destination_length_before_conversion);
+            params->destination_length_before_conversion);
 }

@@ -51,10 +51,9 @@ static struct my_string *do_preprinting_stuff(
         prefix = my_string_new_from_string("-", 1);
         if (*argument != INTMAX_MIN)
             *argument = -*argument;
-    }
-    else if (format_info->flag_plus || format_info->flag_space)
-        prefix = my_string_new_from_string(format_info->flag_plus ? "+" : " ",
-            1);
+    } else if (format_info->flag_plus || format_info->flag_space)
+        prefix =
+            my_string_new_from_string(format_info->flag_plus ? "+" : " ", 1);
     return prefix;
 }
 
@@ -74,5 +73,3 @@ struct my_string *asprintf_format_signed_integer(struct my_string *destination,
     do_precision(destination, pos_before, format_info);
     return (prefix);
 }
-
-

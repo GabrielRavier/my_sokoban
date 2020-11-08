@@ -42,8 +42,8 @@ bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
         }
         ++*to_parse;
     } else {
-        conversion_info->field_width = my_isdigit(**to_parse) ?
-            asprintf_parse_int(to_parse) : 0;
+        conversion_info->field_width =
+            my_isdigit(**to_parse) ? asprintf_parse_int(to_parse) : 0;
         return conversion_info->field_width >= 0;
     }
     return (true);
@@ -59,8 +59,8 @@ bool parse_printf_precision(struct my_printf_conversion_info *conversion_info,
             conversion_info->precision = va_arg(arguments, int);
             ++*to_parse;
         } else {
-            conversion_info->precision = my_isdigit(**to_parse) ?
-                asprintf_parse_int(to_parse) : 0;
+            conversion_info->precision =
+                my_isdigit(**to_parse) ? asprintf_parse_int(to_parse) : 0;
             return conversion_info->precision >= 0;
         }
         if (conversion_info->precision < 0)

@@ -183,6 +183,10 @@ Test(my_printf, random, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%-5d", 45);
     compare_printfs("%s\n%s\n%s", "one", "two", "three");
     compare_printfs("%s\41%s", "one", "two");
+    compare_printfs("%*s%*s%*s", -1, "one", -20, "two", -30, "three");
+    compare_printfs("%07Lo", 040000000000ll);
+    compare_printfs("printf (\"%%hhu\", %u) = %hhu\n", UCHAR_MAX + 2, UCHAR_MAX + 2);
+    compare_printfs("printf (\"%%hu\", %u) = %hu\n", USHRT_MAX + 2, USHRT_MAX + 2);
 }
 
 Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -284,6 +288,7 @@ Test(my_printf, numbers, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("left-adjusted ZLDN:\t\"%-010ld\"\n", -123456L);
     compare_printfs("space-padded LDN:\t\"%10ld\"\n", -123456L);
     compare_printfs("left-adjusted SLDN:\t\"%-10ld\"\n", -123456L);
+    compare_printfs("%#03x\n", 1);
 }
 
 Test(my_printf, hex, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -384,6 +389,7 @@ Test(my_printf, field_width, .init = do_init, .fini = compare_all_libc_to_stdout
     compare_printfs("A%s:%dZ", "hello", 1234);
     compare_printfs("a%03d:%d:%02dz", 5, 5, 5);
     compare_printfs("%2147483648s%c", "hello world", '!');
+    compare_printfs("%5.s", "xyz");
 }
 
 Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -430,6 +436,10 @@ Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%-20.10d", 5);
     compare_printfs("%-#20.10x", 0x1337);
     compare_printfs("%#20.10x", 0x1337);
+    compare_printfs("%04.*o", 3, 33);
+    compare_printfs("%09.*u", 7, 33);
+    compare_printfs("%04.*x", 3, 33);
+    compare_printfs("%04.*X", 3, 33);
 }
 
 Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -1148,7 +1158,13 @@ Test(my_printf, format_n, .init = do_init)
     cr_assert_eq(count_intmax_t, 4);
     cr_assert_eq(count_size_t, 4);
     cr_assert_eq(count_ptrdiff_t, 4);
-    cr_assert_stdout_eq_str("123 123 123 123 123 123 123 123 ");
+
+    char bytes[7];
+    memset(bytes, '\xff', sizeof bytes);
+    my_printf("foo %hhn", &bytes[3]);
+    cr_assert_not(bytes[0] != '\xff' || bytes[1] != '\xff' || bytes[2] != '\xff' || bytes[4] != '\xff' || bytes[5] != '\xff' || bytes[6] != '\xff');
+    cr_assert_eq(bytes[3], 4);
+    cr_assert_stdout_eq_str("123 123 123 123 123 123 123 123 foo ");
 }
 
 Test(my_printf, through_format, .init = do_init, .fini = compare_all_libc_to_stdout)

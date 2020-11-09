@@ -23,36 +23,36 @@ all: ../libmy.a $(HEADER_FILES)
 
 # The sources for libmy
 # Stuff related to assert.h
-SOURCE_FILES := assert_fail
+SOURCE_FILES := assert/assert_fail
 
 # Stuff related to ctype.h
-SOURCE_FILES += isprint isupper islower isdigit isalpha isalnum isspace toupper tolower
+SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/isalpha ctype/isalnum ctype/isspace ctype/toupper ctype/tolower
 
 # Stuff related to math.h
-SOURCE_FILES += fabsf fpclassify
+SOURCE_FILES += math/fabsf math/fpclassify
 
 # Stuff related to stdio.h
-SOURCE_FILES += putchar dputc dputs puts printf/printf printf/vprintf printf/dprintf printf/vdprintf printf/asprintf printf/vasprintf printf/formatter/append_number_base printf/formatter/utf32_char_to_utf8 printf/formatter/char printf/formatter/cstring printf/formatter/signed_integer printf/formatter/unsigned_integer printf/formatter/decimal_float printf/formatter/percent_sign printf/formatter/n printf/formatter/pointer printf/parse_conversion_info/parse_conversion_info printf/parse_conversion_info/parse_int printf/handle_invalid printf/padding
+SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/decimal_float stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
 
 # Stuff related to stdlib.h
-SOURCE_FILES += qsort qsort_r realloc_size strtol_base_str strtol_base_str_part2
+SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_base_str stdlib/strtol_base_str_part2
 
 # Stuff related to string.h
-SOURCE_FILES += strlen strcpy strncpy strstr strcmp strncmp strcat strncat strchr strspn strcspn strnlen strdup strndup memcpy memmove memchr memset
+SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memcpy string/memmove string/memchr string/memset
 
 # Stuff related to my_bigint
 SOURCE_FILES += bigint/new_from_int bigint/strtol_base_str bigint/assign bigint/add bigint/add_unsigned bigint/compare bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/mul bigint/div bigint/mod bigint/div_mod bigint/neg bigint/to_int bigint/to_string_base bigint/free
 
 # Stuff related to my_checked_multiply
-SOURCE_FILES += checked_multiply_int checked_multiply_unsigned
+SOURCE_FILES += checked_multiply/int checked_multiply/unsigned
 
 # Stuff related to my_string
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/insert my_string/erase my_string/resize my_string/free
 
 # Miscellaneous stuff
-SOURCE_FILES += putnbr putnbr_base putnbr_base_width nbr_to_string nbr_to_string_base nbr_to_string_base_width compute_power_rec compute_square_root is_prime find_prime_sup revstr strupcase strlowcase strcapitalize str_isalpha str_isnum str_islower str_isupper str_isprintable count_byte_occurences str_to_word_array show_word_array
+SOURCE_FILES += misc/compute_power_rec misc/compute_square_root misc/is_prime misc/find_prime_sup misc/revstr misc/strupcase misc/strlowcase misc/strcapitalize misc/str_isalpha misc/str_isnum misc/str_islower misc/str_isupper misc/str_isprintable misc/count_byte_occurences misc/str_to_word_array misc/show_word_array
 
-TESTS_SOURCE_FILES := strtol_base_str bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base printf/printf
+TESTS_SOURCE_FILES := stdlib/strtol_base_str bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base stdio/printf/printf
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))
@@ -73,15 +73,23 @@ tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 	cp $< $@
 
 obj/%.o: %.c
+	@mkdir --parents obj/src/assert
 	@mkdir --parents obj/src/bigint
+	@mkdir --parents obj/src/checked_multiply
+	@mkdir --parents obj/src/ctype
+	@mkdir --parents obj/src/math
+	@mkdir --parents obj/src/misc
 	@mkdir --parents obj/src/my_string
-	@mkdir --parents obj/src/printf/formatter
-	@mkdir --parents obj/src/printf/parse_conversion_info
+	@mkdir --parents obj/src/stdio/printf/formatter
+	@mkdir --parents obj/src/stdio/printf/parse_conversion_info
+	@mkdir --parents obj/src/stdlib
+	@mkdir --parents obj/src/string
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj/tests/%.o: ../../tests/libmy/%.c
 	@mkdir --parents obj/tests/bigint
-	@mkdir --parents obj/tests/printf
+	@mkdir --parents obj/tests/stdio/printf
+	@mkdir --parents obj/tests/stdlib
 	$(CC) -c $< -o $@ $(CFLAGS) --coverage
 
 # Include dependencies

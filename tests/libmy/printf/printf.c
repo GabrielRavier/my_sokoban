@@ -447,6 +447,7 @@ Test(my_printf, precision, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("%.2147483646s%c", "hello world", '!');
     compare_printfs("%.2147483647s%c", "hello world", '!');
     compare_printfs("%.2147483648s%c", "hello world", '!');
+    compare_printfs("%.2147483658s%c", "hello world", '!');
     compare_printfs("%20.10d", 5);
     compare_printfs("%-20.10d", 5);
     compare_printfs("%-#20.10x", 0x1337);

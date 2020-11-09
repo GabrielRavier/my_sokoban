@@ -6,11 +6,19 @@
 */
 
 #define _GNU_SOURCE
+//#define STANDALONE // Define if this doesn't have my/macros.h
+//#define NO_MY_VASPRINTF // Define if you don't have my_vasprintf
+//#define LIBMY_FLOATING_POINT_CLUDGE // Define if you have implemented floating point
 #include <criterion/criterion.h>
 #include <criterion/assert.h>
 #include <criterion/redirect.h>
-#include "my/stdio.h"
-#include "my/macros.h"
+#include "my/stdio.h" // Modify this is this isn't the header that declares my_printf and others
+#ifndef STANDALONE
+    #include "my/macros.h"
+#else
+    #define MY_ATTRIBUTE(attr) __attribute__(attr)
+    #define MY_ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
+#endif
 #include <locale.h>
 #include <stdio.h>
 #include <math.h>
@@ -56,21 +64,26 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     const int our_printf_retval = my_vprintf(format, arguments);
     va_end(arguments);
 
+#ifndef NO_MY_VASPRINTF
     va_start(arguments, format);
     char *result_us = NULL;
     const int our_length = my_vasprintf(&result_us, format, arguments);
     va_end(arguments);
+#endif
 
     va_start(arguments, format);
     char *result_libc = NULL;
     const int libc_length = vasprintf(&result_libc, format, arguments);
     va_end(arguments);
 
+#ifndef NO_MY_VASPRINTF
     if (result_us != NULL || result_libc != NULL) {
         cr_assert_str_eq(result_us, result_libc);
         cr_assert_eq(our_length, libc_length);
         cr_assert_eq(memcmp(result_us, result_libc, our_length), 0);
     }
+#endif
+    cr_assert_eq(our_printf_retval, libc_length);
 
     if (result_libc) {
         if (!libc_string_file)
@@ -80,7 +93,9 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     else
         cr_assert(our_printf_retval < 0);
 
+#ifndef NO_MY_VASPRINTF
     free(result_us);
+#endif
     free(result_libc);
 }
 

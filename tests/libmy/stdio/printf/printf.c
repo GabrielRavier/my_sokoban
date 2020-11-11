@@ -798,9 +798,9 @@ Test(my_printf, format_integer, .init = do_init, .fini = compare_all_libc_to_std
 Test(my_printf, format_unsigned, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%u", 1239);
-    for (unsigned i = -100; i < 100; ++i)
+    for (int i = -100; i < 100; ++i)
         compare_printfs("%u", i);
-    for (unsigned i = -100; i < 100; ++i)
+    for (int i = -100; i < 100; ++i)
         compare_printfs("%08u", i);
 }
 
@@ -852,7 +852,7 @@ Test(my_printf, format_hex_lowercase, .init = do_init, .fini = compare_all_libc_
     compare_printfs("%x", -1);
     compare_printfs("%04x", 255);
     compare_printfs("%08x", 65537);
-    for (unsigned i = -100; i < 100; ++i) {
+    for (int i = -100; i < 100; ++i) {
         compare_printfs("%x", i);
         compare_printfs("%04x", i);
         compare_printfs("%08x", i);
@@ -895,11 +895,11 @@ Test(my_printf, format_hex_uppercase, .init = do_init, .fini = compare_all_libc_
     compare_printfs("%X", -1);
     compare_printfs("%04X", 255);
     compare_printfs("%08X", 65537);
-    for (unsigned i = -100; i < 100; ++i)
+    for (int i = -100; i < 100; ++i)
         compare_printfs("%X", i);
-    for (unsigned i = -100; i < 100; ++i)
+    for (int i = -100; i < 100; ++i)
         compare_printfs("%04X", i);
-    for (unsigned i = -100; i < 100; ++i)
+    for (int i = -100; i < 100; ++i)
         compare_printfs("%08X", i);
     compare_printfs("%X %X %X %X %X", 0, 0x1234, 0x5678, 0x9abc, 0xdef0);
     compare_printfs("%#X %#X %#X %#X", 0xfedc, 0xba98, 0x7654, 0x3210);

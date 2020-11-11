@@ -24,15 +24,7 @@ MY_ATTR_NORETURN static void error_in_assert(void)
 void my_assert_fail(const char *expression, const char *file_name,
     int line_number, const char *function_name)
 {
-    const char *const line_number_as_str = my_nbr_to_string(line_number);
-    if (my_dputs(file_name, STDERR_FILENO) == EOF ||
-        my_dputc(':', STDERR_FILENO) == EOF ||
-        my_dputs(line_number_as_str, STDERR_FILENO) == EOF ||
-        my_dputs(": ", STDERR_FILENO) == EOF ||
-        my_dputs(function_name, STDERR_FILENO) == EOF ||
-        my_dputs(": Assertion '", STDERR_FILENO) == EOF ||
-        my_dputs(expression, STDERR_FILENO) == EOF ||
-        my_dputs("' failed.\n", STDERR_FILENO) == EOF)
+    if (my_printf("%s:%d: %s: Assertion '%s' failed.\n", file_name, line_number, function_name, expression) < 0)
         error_in_assert();
     __builtin_trap();
 }

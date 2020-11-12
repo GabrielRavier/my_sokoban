@@ -12,6 +12,9 @@ override CFLAGS += -MMD -MP -MF $@.d
 # We need to be able to include the libmy include files
 override CFLAGS += -Iinclude
 
+# We sometimes need GNU stuff (i.e. asprintf)
+override CFLAGS += -D_GNU_SOURCE
+
 .PHONY: all clean fclean
 
 .PREVIOUS: obj/%.o

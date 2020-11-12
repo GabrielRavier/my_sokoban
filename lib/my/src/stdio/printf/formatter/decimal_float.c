@@ -5,7 +5,6 @@
 ** Implements asprintf_format_decimal_float
 */
 
-#define _GNU_SOURCE
 #include "my/internal/printf/formatter.h"
 #include "my/my_string.h"
 #include "my/string.h"

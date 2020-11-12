@@ -463,6 +463,14 @@ Test(my_printf, format_percent_sign, .init = do_init, .fini = compare_all_libc_t
     compare_printfs("%%");
     compare_printfs("%% %l% aaa");
     compare_printfs("%%%% ");
+    compare_printfs("%10%");
+    compare_printfs("%.10%");
+    compare_printfs("%010%");
+    compare_printfs("%-10%");
+    compare_printfs("%#10%");
+    compare_printfs("%+10%");
+    compare_printfs("% 10%");
+    compare_printfs("% +-#010.10%");
 }
 
 Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
@@ -1619,8 +1627,8 @@ Test(my_printf, through_float_widths_checks, .init = do_init, .fini = compare_al
 Test(my_printf, format_epitech_extension_capital_s)
 {
     cr_redirect_stdout();
-    my_printf("%S", "a\002\377b");
-    cr_assert_stdout_eq_str("a\\2\\377b");
+    my_printf("%S", "a\002\377\012\100b");
+    cr_assert_stdout_eq_str("a\\002\\377\\012\\100b");
 }
 
 Test(my_printf, format_epitech_extension_b)

@@ -34,7 +34,7 @@ static void do_string_loop(struct my_string *destination,
     struct my_printf_conversion_info *format_info)
 {
     for (size_t i = 0; string_argument[i] != '\0' &&
-             i < (size_t)format_info->precision; ++i)
+            i < (size_t)format_info->precision; ++i)
         if ((format_info->conversion_specifier == 's') ||
             (my_isprint(string_argument[i])))
             my_string_append_char(destination, string_argument[i]);
@@ -61,7 +61,7 @@ struct my_string *asprintf_format_cstring(struct my_string *destination,
                 ? "(null)" : "";
         do_string_loop(destination, string_argument, format_info);
     } else
-        do_wchar_string(destination, format_info, va_arg(arguments,
-                const wchar_t *));
+        do_wchar_string(destination, format_info,
+            va_arg(arguments, const wchar_t *));
     return (NULL);
 }

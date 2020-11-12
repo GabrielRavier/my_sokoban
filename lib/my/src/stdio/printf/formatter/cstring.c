@@ -29,6 +29,22 @@ static void do_wchar_string(struct my_string *destination,
     }
 }
 
+static void do_string_loop(struct my_string *destination,
+    const char *string_argument,
+    struct my_printf_conversion_info *format_info)
+{
+    for (size_t i = 0; string_argument[i] != '\0' &&
+             i < (size_t)format_info->precision; ++i)
+        if ((format_info->conversion_specifier == 's') ||
+            (my_isprint(string_argument[i])))
+            my_string_append_char(destination, string_argument[i]);
+        else {
+            my_string_append_char(destination, '\\');
+            asprintf_append_number_base(destination,
+                                        (unsigned char)string_argument[i], 8, false);
+        }
+}
+
 // We treat LONG_LONG as if it was LONG for glibc compatibility
 // I would support the SUS S specifier, but the epitech mandates that we use it
 // for a different purpose
@@ -43,16 +59,7 @@ struct my_string *asprintf_format_cstring(struct my_string *destination,
         if (!string_argument)
             string_argument = (size_t)format_info->precision >= 6
                 ? "(null)" : "";
-        for (size_t i = 0; string_argument[i] != '\0' &&
-                 i < (size_t)format_info->precision; ++i)
-            if ((format_info->conversion_specifier == 's') ||
-                (my_isprint(string_argument[i])))
-                my_string_append_char(destination, string_argument[i]);
-            else {
-                my_string_append_char(destination, '\\');
-                asprintf_append_number_base(destination,
-                    (unsigned char)string_argument[i], 8, false);
-            }
+        do_string_loop(destination, string_argument, format_info);
     } else
         do_wchar_string(destination, format_info, va_arg(arguments,
                 const wchar_t *));

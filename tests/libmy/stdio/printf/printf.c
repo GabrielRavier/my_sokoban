@@ -1627,8 +1627,8 @@ Test(my_printf, through_float_widths_checks, .init = do_init, .fini = compare_al
 Test(my_printf, format_epitech_extension_capital_s)
 {
     cr_redirect_stdout();
-    my_printf("%S", "a\002\377\012\100b");
-    cr_assert_stdout_eq_str("a\\002\\377\\012\\100b");
+    my_printf("%S", "a\002\377\012\370b");
+    cr_assert_stdout_eq_str("a\\002\\377\\012\\370b");
 }
 
 Test(my_printf, format_epitech_extension_b)

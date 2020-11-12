@@ -40,8 +40,12 @@ static void do_string_loop(struct my_string *destination,
             my_string_append_char(destination, string_argument[i]);
         else {
             my_string_append_char(destination, '\\');
-            asprintf_append_number_base(destination,
-                                        (unsigned char)string_argument[i], 8, false);
+            my_string_append_char(destination, "01234567"
+                [(unsigned char)string_argument[i] / 64 % 4]);
+            my_string_append_char(destination, "01234567"
+                [(unsigned char)string_argument[i] / 8 % 8]);
+            my_string_append_char(destination, "01234567"
+                [(unsigned char)string_argument[i] % 8]);
         }
 }
 

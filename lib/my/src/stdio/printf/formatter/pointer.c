@@ -8,9 +8,9 @@
 #include "my/internal/printf/formatter.h"
 
 struct my_string *asprintf_format_pointer(struct my_string *destination,
-    va_list arguments, struct my_printf_conversion_info *format_info)
+    va_list *arguments, struct my_printf_conversion_info *format_info)
 {
-    const uintptr_t argument = (uintptr_t)va_arg(arguments, void *);
+    const uintptr_t argument = (uintptr_t)va_arg(*arguments, void *);
     struct my_string *prefix = NULL;
 
     (void)format_info;

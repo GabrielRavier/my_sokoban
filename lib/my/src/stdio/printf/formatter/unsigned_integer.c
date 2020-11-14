@@ -10,24 +10,24 @@
 
 // We assume size_t is the unsigned counterpart to ptrdiff_t, which seems
 // reasonable to me
-static uintmax_t get_arg(va_list arguments,
+static uintmax_t get_arg(va_list *arguments,
     const struct my_printf_conversion_info *format_info)
 {
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR)
-        return (unsigned char)va_arg(arguments, unsigned int);
+        return (unsigned char)va_arg(*arguments, unsigned int);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SHORT)
-        return (unsigned short)va_arg(arguments, unsigned int);
+        return (unsigned short)va_arg(*arguments, unsigned int);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG)
-        return va_arg(arguments, unsigned long);
+        return va_arg(*arguments, unsigned long);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_LONG_LONG)
-        return va_arg(arguments, unsigned long long);
+        return va_arg(*arguments, unsigned long long);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_INTMAX)
-        return va_arg(arguments, uintmax_t);
+        return va_arg(*arguments, uintmax_t);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_SIZE_T)
-        return va_arg(arguments, size_t);
+        return va_arg(*arguments, size_t);
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_PTRDIFF_T)
-        return va_arg(arguments, size_t);
-    return va_arg(arguments, unsigned int);
+        return va_arg(*arguments, size_t);
+    return va_arg(*arguments, unsigned int);
 }
 
 // The prefix->length == 1 check is for whether we are printing octal the 0
@@ -69,7 +69,7 @@ static struct my_string *do_preprinting_stuff(
 }
 
 struct my_string *asprintf_format_unsigned_integer(
-    struct my_string *destination, va_list arguments,
+    struct my_string *destination, va_list *arguments,
     struct my_printf_conversion_info *format_info)
 {
     const uintmax_t argument = get_arg(arguments, format_info);

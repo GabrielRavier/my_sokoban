@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef LIBMY_FLOATING_POINT_CLUDGE
 static struct my_string *make_format_string(
     struct my_printf_conversion_info *format_info)
 {
@@ -40,11 +39,11 @@ static struct my_string *make_format_string(
 }
 
 struct my_string *asprintf_format_decimal_float(struct my_string *destination,
-    va_list arguments, struct my_printf_conversion_info *format_info)
+    va_list *arguments, struct my_printf_conversion_info *format_info)
 {
     char *buffer;
     struct my_string *format_string = make_format_string(format_info);
-    const int length = vasprintf(&buffer, format_string->string, arguments);
+    const int length = vasprintf(&buffer, format_string->string, *arguments);
     if (buffer) {
         my_string_append(destination, buffer, length);
         free(buffer);
@@ -52,14 +51,3 @@ struct my_string *asprintf_format_decimal_float(struct my_string *destination,
     my_string_free(format_string);
     return (NULL);
 }
-#else
-
-struct my_string *asprintf_format_decimal_float(struct my_string *destination,
-    va_list arguments, struct my_printf_conversion_info *format_info)
-{
-    (void)destination;
-    (void)arguments;
-    (void)format_info;
-    return (NULL);
-}
-#endif

@@ -38,9 +38,9 @@ int asprintf_parse_int(const char **to_parse);
 void parse_printf_flags(struct my_printf_conversion_info *conversion_info,
     const char **to_parse);
 bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list arguments) MY_ATTR_WARN_UNUSED_RESULT;
+    const char **to_parse, va_list *arguments) MY_ATTR_WARN_UNUSED_RESULT;
 bool parse_printf_precision(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list arguments) MY_ATTR_WARN_UNUSED_RESULT;
+    const char **to_parse, va_list *arguments) MY_ATTR_WARN_UNUSED_RESULT;
 void parse_printf_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse);
 

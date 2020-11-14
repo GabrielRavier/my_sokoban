@@ -28,6 +28,7 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['c'] = &asprintf_format_char,
     ['s'] = &asprintf_format_cstring,
     ['S'] = &asprintf_format_cstring,
+#ifdef LIBMY_FLOATING_POINT_CLUDGE
     ['f'] = &asprintf_format_decimal_float,
     ['F'] = &asprintf_format_decimal_float,
     ['e'] = &asprintf_format_decimal_float,
@@ -36,6 +37,7 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['G'] = &asprintf_format_decimal_float,
     ['a'] = &asprintf_format_decimal_float,
     ['A'] = &asprintf_format_decimal_float,
+#endif
     ['%'] = &asprintf_format_percent_sign,
     ['p'] = &asprintf_format_pointer,
     ['C'] = &asprintf_format_char,
@@ -44,7 +46,7 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
 
 MY_ATTR_WARN_UNUSED_RESULT static bool parse_format(
     struct my_printf_conversion_info *conversion_info,
-    const char **conversion_specification, va_list arguments)
+    const char **conversion_specification, va_list *arguments)
 {
     parse_printf_flags(conversion_info, conversion_specification);
     if (!parse_printf_field_width(conversion_info, conversion_specification,
@@ -61,7 +63,7 @@ MY_ATTR_WARN_UNUSED_RESULT static bool parse_format(
 // Returns the next character after the conversion specifier.
 MY_ATTR_WARN_UNUSED_RESULT static const char *do_conversion_specification(
     struct my_string *destination, const char *conversion_specification,
-    va_list arguments, bool *has_encountered_invalid)
+    va_list *arguments, bool *has_encountered_invalid)
 {
     struct my_printf_conversion_info conversion_info = { 0 };
     const size_t destination_length_before_conversion = destination->length;
@@ -88,7 +90,7 @@ MY_ATTR_WARN_UNUSED_RESULT static const char *do_conversion_specification(
 // return, *unless* it had already encountered an erroneous conversion
 // specifier, in which case it will continue as normal
 static bool do_my_string_printf(struct my_string *destination,
-    const char *format, va_list arguments)
+    const char *format, va_list *arguments)
 {
     char current_char;
     bool has_encountered_invalid = false;
@@ -109,18 +111,25 @@ static bool do_my_string_printf(struct my_string *destination,
     }
 }
 
+// We use a local copy of the arguments list and va_copy due to the fact that
+// va_list may or may not be an array type, which fucks up the address-of
+// operator unless we use a local copy
 int my_vasprintf(char **result_string_ptr, const char *format,
     va_list arguments)
 {
     struct my_string *result = my_string_new();
     size_t resulting_length;
-
-    if (!do_my_string_printf(result, format, arguments)) {
+    va_list local_arguments_copy;
+    
+    va_copy(local_arguments_copy, arguments);
+    if (!do_my_string_printf(result, format, &local_arguments_copy)) {
         my_string_free(result);
+        va_end(local_arguments_copy);
         return (-1);
     }
     *result_string_ptr = result->string;
     resulting_length = result->length;
     free(result);
+    va_end(local_arguments_copy);
     return ((int)resulting_length);
 }

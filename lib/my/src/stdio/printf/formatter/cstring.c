@@ -53,19 +53,19 @@ static void do_string_loop(struct my_string *destination,
 // I would support the SUS S specifier, but the epitech mandates that we use it
 // for a different purpose
 struct my_string *asprintf_format_cstring(struct my_string *destination,
-    va_list arguments, struct my_printf_conversion_info *format_info)
+    va_list *arguments, struct my_printf_conversion_info *format_info)
 {
     const char *string_argument;
 
     if (format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG &&
         format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG_LONG) {
-        string_argument = va_arg(arguments, const char *);
+        string_argument = va_arg(*arguments, const char *);
         if (!string_argument)
             string_argument = (size_t)format_info->precision >= 6
                 ? "(null)" : "";
         do_string_loop(destination, string_argument, format_info);
     } else
         do_wchar_string(destination, format_info,
-            va_arg(arguments, const wchar_t *));
+            va_arg(*arguments, const wchar_t *));
     return (NULL);
 }

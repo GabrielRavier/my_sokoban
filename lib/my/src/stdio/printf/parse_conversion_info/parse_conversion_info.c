@@ -32,10 +32,10 @@ void parse_printf_flags(struct my_printf_conversion_info *conversion_info,
 }
 
 bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list arguments)
+    const char **to_parse, va_list *arguments)
 {
     if (**to_parse == '*') {
-        conversion_info->field_width = va_arg(arguments, int);
+        conversion_info->field_width = va_arg(*arguments, int);
         if (conversion_info->field_width < 0) {
             conversion_info->flag_minus = true;
             conversion_info->field_width = -conversion_info->field_width;
@@ -52,11 +52,11 @@ bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
 // We put the check for a negative precision from va_arg below the else to
 // respect the norm rule on having less than 3 nested branchings
 bool parse_printf_precision(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list arguments)
+    const char **to_parse, va_list *arguments)
 {
     if (**to_parse == '.') {
         if (*++*to_parse == '*') {
-            conversion_info->precision = va_arg(arguments, int);
+            conversion_info->precision = va_arg(*arguments, int);
             ++*to_parse;
         } else {
             conversion_info->precision =

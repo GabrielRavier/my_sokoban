@@ -120,7 +120,7 @@ int my_vasprintf(char **result_string_ptr, const char *format,
     struct my_string *result = my_string_new();
     size_t resulting_length;
     va_list local_arguments_copy;
-    
+
     va_copy(local_arguments_copy, arguments);
     if (!do_my_string_printf(result, format, &local_arguments_copy)) {
         my_string_free(result);

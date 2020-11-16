@@ -41,11 +41,11 @@ static void do_string_loop(struct my_string *destination,
         else {
             my_string_append_char(destination, '\\');
             my_string_append_char(destination, "01234567"
-                [(unsigned char)string_argument[i] / 64 % 4]);
+                [(unsigned char)string_argument[i] / 0100]);
             my_string_append_char(destination, "01234567"
-                [(unsigned char)string_argument[i] / 8 % 8]);
+                [(unsigned char)string_argument[i] / 010 % 010]);
             my_string_append_char(destination, "01234567"
-                [(unsigned char)string_argument[i] % 8]);
+                [(unsigned char)string_argument[i] % 010]);
         }
 }
 

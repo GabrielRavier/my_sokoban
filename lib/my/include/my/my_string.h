@@ -8,6 +8,8 @@
 #pragma once
 
 #include "my/config.h"
+#include <stdlib.h>
+#include <stdarg.h>
 #include <stddef.h>
 
 // This contains a null-terminated string (for easy usage with C APIs), but can
@@ -52,6 +54,23 @@ static inline struct my_string *my_string_append_char(struct my_string *self,
     return my_string_append(self, &character, 1);
 }
 
+// Appends a formatted string to self
+struct my_string *my_string_append_vprintf(struct my_string *self,
+    const char *format, va_list arguments) MY_ATTR_FORMAT(printf, 2, 0);
+
+// Same as above, but takes ... instead of va_list
+MY_ATTR_FORMAT(printf, 2, 3)
+static inline struct my_string *my_string_append_printf(struct my_string *self,
+    const char *format, ...)
+{
+    va_list arguments;
+
+    va_start(arguments, format);
+    my_string_append_vprintf(self, format, arguments);
+    va_end(arguments);
+    return self;
+}
+
 // Removes count characters starting at index
 struct my_string *my_string_erase(struct my_string *self, size_t index,
     size_t count);
@@ -63,5 +82,14 @@ struct my_string *my_string_erase(struct my_string *self, size_t index,
 struct my_string *my_string_resize(struct my_string *self, size_t count);
 
 // Destructs the passed string and the associated data. If you instead want to
-// free the my_string but gain ownership of self->string, just do free(self)
+// free the my_string but gain ownership of self->string, use my_string_move_buffer
 void my_string_free(struct my_string *self);
+
+// Destructs the passed my_string but returns the underlying buffer
+static inline char *my_string_move_buffer(struct my_string *self)
+{
+    char *result = self->string;
+
+    free(self);
+    return result;
+}

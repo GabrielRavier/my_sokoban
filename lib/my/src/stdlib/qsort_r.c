@@ -24,17 +24,14 @@ static char *find_smallest_element(char *first, char *last, size_t element_size,
     void *argument)
 {
     char *smallest;
+
     if (first == last)
         return (last);
-
     smallest = first;
     first += element_size;
-
-    for (; first != last; first += element_size) {
+    for (; first != last; first += element_size)
         if (comparison_function(first, smallest, argument) < 0)
             smallest = first;
-    }
-
     return (smallest);
 }
 
@@ -44,9 +41,10 @@ void my_qsort_r(void *base, size_t num_elements, size_t element_size,
 {
     char *const first = (char *)base;
     char *const last = first + (num_elements * element_size);
+    char *smallest;
 
     for (char *it = first; it != last; it += element_size) {
-        char *smallest = find_smallest_element(
+        smallest = find_smallest_element(
             it, last, element_size, comparison_function, argument);
         swap_elements(smallest, it, element_size);
     }

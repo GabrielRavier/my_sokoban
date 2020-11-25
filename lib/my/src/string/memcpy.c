@@ -10,5 +10,10 @@
 
 void *my_memcpy(void *destination, const void *source, size_t size)
 {
-    return my_memmove(destination, source, size);
+    unsigned char *char_destination = (unsigned char *)destination;
+    const unsigned char *char_source = (const unsigned char *)source;
+
+    while (size--)
+        *char_destination++ = *char_source++;
+    return (destination);
 }

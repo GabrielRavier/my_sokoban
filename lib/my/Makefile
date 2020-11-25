@@ -41,7 +41,7 @@ SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts stdio/printf/pr
 SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_base_str stdlib/strtol_base_str_part2
 
 # Stuff related to string.h
-SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memcpy string/memmove string/memchr string/memset
+SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memcpy string/memmove_asm string/memchr string/memset
 
 # Stuff related to strings.h
 SOURCE_FILES += strings/strcasecmp
@@ -77,6 +77,10 @@ tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 ../../include/%.h: include/%.h
 	@mkdir --parents ../../include/my/internal
 	cp $< $@
+
+obj/%_asm.o: %.s
+	@mkdir --parents obj/src/string
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj/%.o: %.c
 	@mkdir --parents obj/src/assert

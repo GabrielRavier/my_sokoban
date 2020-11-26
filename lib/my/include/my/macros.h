@@ -36,7 +36,7 @@
 
 // Only compares a and b once, to avoid side effects
 #define MY_MAKE_MIN_MAX_COMPARE_ONCE(a, b, unique_identifier_a, \
-    unique_identifier_b, operation) ({ \
+    unique_identifier_b, operation) __extension__ ({ \
         typeof(a) unique_identifier_a = (a); \
         typeof(b) unique_identifier_b = (b); \
         ((unique_identifier_a) operation (unique_identifier_b) ? \

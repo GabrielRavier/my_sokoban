@@ -33,8 +33,8 @@ static void do_string_loop(struct my_string *destination,
     const char *string_argument,
     struct my_printf_conversion_info *format_info)
 {
-    for (size_t i = 0; string_argument[i] != '\0' &&
-            i < (size_t)format_info->precision; ++i)
+    for (size_t i = 0; i < (size_t)format_info->precision &&
+        string_argument[i] != '\0'; ++i)
         if ((format_info->conversion_specifier == 's') ||
             (my_isprint(string_argument[i])))
             my_string_append_char(destination, string_argument[i]);

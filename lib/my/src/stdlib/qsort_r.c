@@ -7,47 +7,58 @@
 */
 
 #include "my/stdlib.h"
+#include "my/string.h"
+#include "my/macros.h"
 
 static void swap_elements(char *elem1, char *elem2, size_t element_size)
 {
-    char tmp;
+    char buffer[1000];
+    size_t copy_size;
 
-    do {
-        tmp = *elem1;
-        *elem1++ = *elem2;
-        *elem2++ = tmp;
-    } while (--element_size != 0);
+    while (element_size) {
+        copy_size = MY_MIN(sizeof(buffer), element_size);
+        my_memcpy(buffer, elem1, copy_size);
+        my_memcpy(elem1, elem2, copy_size);
+        my_memcpy(elem2, buffer, copy_size);
+        elem1 += copy_size;
+        elem2 += copy_size;
+        element_size -= copy_size;
+    }
 }
 
-static char *find_smallest_element(char *first, char *last, size_t element_size,
+static void qsort_fix(char *base, size_t start, size_t num, size_t element_size,
     int (*comparison_function)(const void *, const void *, void *),
     void *argument)
 {
-    char *smallest;
-    if (first == last)
-        return (last);
+    size_t max;
 
-    smallest = first;
-    first += element_size;
-
-    for (; first != last; first += element_size) {
-        if (comparison_function(first, smallest, argument) < 0)
-            smallest = first;
+    while (start * 2 <= num) {
+        max = start * 2;
+        if (max < num && comparison_function(base + max * element_size,
+            base + (max + 1) * element_size, argument) < 0)
+            ++max;
+        if (max && comparison_function(base + start * element_size,
+            base + max * element_size, argument) < 0) {
+            swap_elements(base + start * element_size,
+                base + max * element_size, element_size);
+            start = max;
+        }
+        else
+            break;
     }
-
-    return (smallest);
 }
 
 void my_qsort_r(void *base, size_t num_elements, size_t element_size,
     int (*comparison_function)(const void *, const void *, void *),
     void *argument)
 {
-    char *const first = (char *)base;
-    char *const last = first + (num_elements * element_size);
-
-    for (char *it = first; it != last; it += element_size) {
-        char *smallest = find_smallest_element(
-            it, last, element_size, comparison_function, argument);
-        swap_elements(smallest, it, element_size);
+    if (num_elements <= 1)
+        return;
+    for (size_t i = (num_elements + 1) >> 1; i != 0; --i)
+        qsort_fix(base, i - 1, num_elements - 1, element_size,
+             comparison_function, argument);
+    for (size_t i = num_elements - 1; i != 0; --i) {
+        swap_elements(base, (char *)base + i * element_size, element_size);
+        qsort_fix(base, 0, i - 1, element_size, comparison_function, argument);
     }
 }

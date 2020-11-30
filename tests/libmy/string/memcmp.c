@@ -7,6 +7,8 @@
 
 #include "my/string.h"
 #include <criterion/criterion.h>
+#include <time.h>
+#include <sys/mman.h>
 
 Test(my_memcmp, very_simple)
 {
@@ -76,4 +78,94 @@ Test(my_memcmp, really_more_fuzz)
         cr_assert_eq(my_memcmp(data1 + 129 - i, data2 + 129 - i, i * 2), -2);
         cr_assert_eq(my_memcmp(data2 + 129 - i, data1 + 129 - i, i * 2), 2);
     }
+}
+
+static void test_one_linux_kernel_selftests(char *s1, char *s2, size_t max_offset, size_t size_start, size_t max_size)
+{
+    for (size_t offset = 0; offset < max_offset; ++offset)
+        for (size_t size = size_start; size < (max_size - offset); ++size) {
+            int good_result = memcmp(s1 + offset, s2 + offset, size);
+            int our_result = my_memcmp(s1 + offset, s2 + offset, size);
+            cr_assert((our_result < 0 && good_result < 0) || (our_result == good_result) || (our_result > 0 && good_result > 0));
+        }
+}
+
+static void do_linux_kernel_selftests(bool is_large)
+{
+    static const size_t SIZE = 256;
+    static const size_t ITERATIONS = 250;
+    static const size_t LARGE_SIZE = 5 * 1024;
+    static const size_t LARGE_ITERATIONS = 50;
+    static const size_t LARGE_MAX_OFFSET = 32;
+    static const size_t LARGE_SIZE_START = 4096;
+    static const size_t MAP_SIZE = 64 * 1024;
+    static const size_t MAX_OFFSET_DIFF_S1_S2 = 48;
+    size_t comp_size = (is_large) ? LARGE_SIZE : SIZE;
+    size_t alloc_size = comp_size + MAX_OFFSET_DIFF_S1_S2;
+    size_t iterations = is_large ? LARGE_ITERATIONS : ITERATIONS;
+    char *p = mmap(NULL, 4 * MAP_SIZE, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    cr_assert_neq(p, MAP_FAILED);
+
+    // s1/s2 are at the end of a page
+    char *s1 = p + MAP_SIZE - alloc_size;
+    char *s2 = p + 3 * MAP_SIZE - alloc_size;
+
+    // Unmap the pages right after them to force a fault if we overread
+    munmap(p + MAP_SIZE, MAP_SIZE);
+    munmap(p + 3 * MAP_SIZE, MAP_SIZE);
+
+    srandom(time(NULL));
+
+    for (size_t i = 0; i < iterations; ++i) {
+        for (size_t j = 0; j < alloc_size; ++j)
+            s1[j] = random();
+        char *rand_s1 = s1 + (random() % MAX_OFFSET_DIFF_S1_S2);
+        char *rand_s2 = s2 + (random() % MAX_OFFSET_DIFF_S1_S2);
+        my_memcpy(rand_s2, rand_s1, comp_size);
+
+        size_t changed_byte = random() % comp_size;
+        rand_s2[changed_byte] = random() & 0xFF;
+
+        if (is_large)
+            test_one_linux_kernel_selftests(rand_s1, rand_s2, LARGE_MAX_OFFSET, LARGE_SIZE_START, comp_size);
+        else
+            test_one_linux_kernel_selftests(rand_s1, rand_s2, SIZE, 0, comp_size);
+    }
+
+    srandom(time(NULL));
+
+    for (size_t i = 0; i < iterations; ++i) {
+        for (size_t j = 0; j < alloc_size; ++j)
+            s1[j] = random();
+        char *rand_s1 = s1 + (random() % MAX_OFFSET_DIFF_S1_S2);
+        char *rand_s2 = s2 + (random() % MAX_OFFSET_DIFF_S1_S2);
+        my_memcpy(rand_s2, rand_s1, comp_size);
+
+        // Change 1/8th of the bytes, randomly
+        for (size_t j = 0; j < (comp_size / 8); ++j) {
+            size_t changed_byte = random() % comp_size;
+            rand_s2[changed_byte] = random() & 0xFF;
+        }
+
+        if (is_large)
+            test_one_linux_kernel_selftests(rand_s1, rand_s2, LARGE_MAX_OFFSET, LARGE_SIZE_START, comp_size);
+        else
+            test_one_linux_kernel_selftests(rand_s1, rand_s2, SIZE, 0, comp_size);
+    }
+}
+
+Test(my_memcmp, pretty_through)
+{
+    do_linux_kernel_selftests(false);
+    do_linux_kernel_selftests(true);
+}
+
+Test(my_memcmp, specific_fails)
+{
+    __attribute__((aligned(0x100))) char buffer1[0x100];
+    my_strcpy(buffer1 + 0x81, "\325\230\370_\022c\256\066\250\212\321\363\364\071\320g\202\261\204eK\257\024\326\rf\212\340\266\022ꋫ\343\353\275F\231\363\356#\305\342\030\376\262\177\200c\003宲\372\205\277`\017\237\027!\212\242");
+    __attribute__((aligned(0x100))) char buffer2[0x100];
+    my_strcpy(buffer2 + 0xA2, "\325\230\370_\022c\256\066\250\212\321\363\364\071\320g\202\261\204eK\257\024\326\rf\212\340\266\022\352\213\345\343\353\275F\231\363\356#\305\342\030\376\262\177\200c\003宲\372\205\277`\017\237\027!\212\242");
+
+    cr_assert_lt(my_memcmp(buffer1 + 0x81, buffer2 + 0xA2, 63), 0);
 }

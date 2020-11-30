@@ -13,6 +13,8 @@ static void do_test(const char *string, const char *base)
     struct my_bigint *as_bigint = my_bigint_strtol_base_str(string, NULL, base);
     struct my_string *as_string = my_bigint_to_string_base(as_bigint, base);
     cr_assert_str_eq(as_string->string, string);
+    my_string_free(as_string);
+    my_bigint_free(as_bigint);
 }
 
 Test(my_bigint_to_string_base, simple_test)

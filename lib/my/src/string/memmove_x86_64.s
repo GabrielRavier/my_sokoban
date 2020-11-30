@@ -292,7 +292,7 @@ my_memmove:
 
     sfence
     jmp .Lfinish_xmm_backwards
-    
+
     .size my_memmove, . - my_memmove
     
     # Just make my_memcpy an alias for my_memmove

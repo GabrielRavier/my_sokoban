@@ -59,3 +59,6 @@
 
 // Returns a value, clamped to be between low and high
 #define MY_CLAMP(value, low, high) MY_MIN((typeof(value))MY_MAX(value, low), high)
+
+// Returns 1 if a > b, 0 if a == b and -1 if a < b
+#define MY_THREE_WAY_CMP(a, b) (((a) > (b)) - ((a) < (b)))

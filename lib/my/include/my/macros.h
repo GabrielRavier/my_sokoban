@@ -45,7 +45,7 @@
 
 #define MY_SWAP(a, b) \
     do { \
-        typeof(a) swap_tmp = (a); \
+        __extension__ __typeof__(a) swap_tmp = (a); \
         (a) = (b); \
         (b) = swap_tmp; } while (0)
 

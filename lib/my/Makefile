@@ -41,11 +41,11 @@ SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts stdio/printf/pr
 SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_base_str stdlib/strtol_base_str_part2
 
 # Stuff related to string.h
-SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memchr string/memset string/memcmp string/memmem
+SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memchr string/memset string/memmem
 ifeq ($(shell uname -p), x86_64)
-	SOURCE_FILES += string/memcpy_x86_64 string/memmove_x86_64
+	SOURCE_FILES += string/memcpy_x86_64 string/memmove_x86_64 string/memcmp_x86_64
 else
-	SOURCE_FILES += string/memcpy string/memmove
+	SOURCE_FILES += string/memcpy string/memmove string/memcmp
 endif
 
 # Stuff related to strings.h

@@ -1,6 +1,5 @@
     .intel_syntax noprefix
     .text
-    .p2align 4
     .globl my_memmove
     .type my_memmove, @function
 
@@ -8,6 +7,7 @@
     # When the size is less than 2 KiB, we just use SSE2 (available on all x86-64 processors)
     # When the size is between 2 KiB and 375 KiB, we use rep movsb, which has better performance than SSE2 for those sizes on modern processors
     # When the size is higher than 375 KiB, we are starting to hit cache limits (Note: 375 KiB is 3/4ths of the smaller cache sizes on modern processors). Use non-temporal stores in that case.
+    .p2align 4
 my_memmove:
     mov rax, rdi
     mov rcx, rdx

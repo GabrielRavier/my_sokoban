@@ -41,8 +41,7 @@ Test(my_memcpy, buffers)
     for (size_t sa = 0; sa <= MAX_OFFSET; ++sa)
         for (size_t da = 0; da <= MAX_OFFSET; ++da)
             for (size_t n = 1; n < MAX_BLOCK_SIZE; ++n) {
-                for (size_t j = 0; j < BUFFER_SIZE; ++j)
-                    destination[j] = 0x5B;
+                my_memset(destination, 0x5B, BUFFER_SIZE);
 
                 cr_assert_eq(my_memcpy(destination + START_COPY + da, source + sa, n), (destination + START_COPY + da));
                 for (size_t j = 0; j < BUFFER_SIZE; ++j)

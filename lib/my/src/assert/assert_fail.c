@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-MY_ATTR_NORETURN static void error_in_assert(void)
+_Noreturn static void error_in_assert(void)
 {
     const int ok_yeah_just_ignore_this_return_value = my_dputs(
         "\n\nCouldn't fully print assert error message", STDERR_FILENO);

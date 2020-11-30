@@ -47,3 +47,5 @@ void *my_memset(void *destination, int character, size_t length) MY_ATTR_NOTHROW
     MY_ATTR_NONNULL((1));
 void *my_memchr(const void *ptr, int character, size_t length) MY_ATTR_NOTHROW
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE MY_ATTR_NONNULL((1));
+int my_memcmp(const void *s1, const void *s2, size_t length) MY_ATTR_NOTHROW
+    MY_ATTR_PURE MY_ATTR_NONNULL((1, 2));

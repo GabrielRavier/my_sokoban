@@ -20,7 +20,8 @@ void *my_memmem(const void *haystack, size_t haystack_length,
         return (my_memchr(haystack, *char_needle, haystack_length));
     for (const char *it = char_haystack; it <=
         (char_haystack + haystack_length - needle_length); ++it)
-        if (my_memcmp(it, needle, needle_length) == 0)
+        if (it[0] == char_needle[0] &&
+            my_memcmp(it, needle, needle_length) == 0)
             return (void *)(it);
     return (NULL);
 }

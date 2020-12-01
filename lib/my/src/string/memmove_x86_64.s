@@ -9,6 +9,7 @@
     # When the size is higher than 375 KiB, we are starting to hit cache limits (Note: 375 KiB is 3/4ths of the smaller cache sizes on modern processors). Use non-temporal stores in that case.
     .p2align 4
 my_memmove:
+    .cfi_startproc
     mov rax, rdi
     mov rcx, rdx
     cmp rdx, 0xF
@@ -293,6 +294,7 @@ my_memmove:
     sfence
     jmp .Lfinish_xmm_backwards
 
+    .cfi_endproc
     .size my_memmove, . - my_memmove
     
     # Just make my_memcpy an alias for my_memmove

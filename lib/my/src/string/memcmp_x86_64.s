@@ -6,6 +6,7 @@
     .p2align 4
 
 my_memcmp:
+    .cfi_startproc
     xor eax, eax
     test rdx, rdx
     je .Lreturn
@@ -421,4 +422,5 @@ my_memcmp:
     mov rdi, r10
     jmp .Lfound_xmm
 
+    .cfi_endproc
     .size my_memcmp, . - my_memcmp

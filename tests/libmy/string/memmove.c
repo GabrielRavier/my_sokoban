@@ -208,5 +208,4 @@ Test(my_memmove, osv_tests)
         }
         memmove_test(destOffset, srcOffset, n);
     }
-
 }

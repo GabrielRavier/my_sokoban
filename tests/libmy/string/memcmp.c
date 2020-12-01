@@ -9,6 +9,16 @@
 #include <criterion/criterion.h>
 #include <time.h>
 #include <sys/mman.h>
+#include <unistd.h>
+
+static void *zero_size_ptr()
+{
+    int page_size = getpagesize();
+    char *two_pages = (char *)mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    if (two_pages != (char *)(-1) && mprotect(two_pages + page_size, page_size, PROT_NONE) == 0)
+        return two_pages + page_size;
+    return NULL;
+}
 
 Test(my_memcmp, very_simple)
 {
@@ -168,4 +178,37 @@ Test(my_memcmp, specific_fails)
     my_strcpy(buffer2 + 0xA2, "\325\230\370_\022c\256\066\250\212\321\363\364\071\320g\202\261\204eK\257\024\326\rf\212\340\266\022\352\213\345\343\353\275F\231\363\356#\305\342\030\376\262\177\200c\003宲\372\205\277`\017\237\027!\212\242");
 
     cr_assert_lt(my_memcmp(buffer1 + 0x81, buffer2 + 0xA2, 63), 0);
+}
+
+Test(my_memcmp, gnulib)
+{
+    char foo[21];
+    char bar[21];
+    for (size_t i = 0; i < 4; ++i) {
+        char *a = foo + i;
+        char *b = bar + i;
+        my_strcpy(a, "--------01111111");
+        my_strcpy(b, "--------10000000");
+        cr_assert_lt(my_memcmp(a, b, 0x10), 0);
+    }
+
+    char *page_boundary1 = zero_size_ptr(), *page_boundary2 = zero_size_ptr();
+    if (page_boundary1 && page_boundary2)
+        cr_assert_eq(my_memcmp(page_boundary1, page_boundary2, 0), 0);
+
+    cr_assert(my_memcmp("foo", "foobar", 2) == 0);
+    cr_assert(my_memcmp("foo", "foobar", 3) == 0);
+    cr_assert(my_memcmp("foo", "foobar", 4) != 0);
+    cr_assert(my_memcmp("foo", "bar", 1) != 0);
+    cr_assert(my_memcmp("foo", "bar", 3) != 0);
+    cr_assert(my_memcmp("foo", "moo", 4) < 0);
+    cr_assert(my_memcmp("moo", "foo", 4) > 0);
+    cr_assert(my_memcmp("oomph", "oops", 3) < 0);
+    cr_assert(my_memcmp("oops", "oomph", 3) > 0);
+    cr_assert(my_memcmp("foo", "foobar", 4) < 0);
+    cr_assert(my_memcmp("foobar", "foo", 4) > 0);
+    cr_assert(my_memcmp("\100", "\201", 1) < 0);
+    cr_assert(my_memcmp("\201", "\100", 1) > 0);
+    cr_assert(my_memcmp("\200", "\201", 1) < 0);
+    cr_assert(my_memcmp("\201", "\200", 1) > 0);
 }

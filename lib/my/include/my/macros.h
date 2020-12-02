@@ -36,12 +36,12 @@
 
 // Only compares a and b once, to avoid side effects
 #define MY_MAKE_MIN_MAX_COMPARE_ONCE(a, b, unique_identifier_a, \
-    unique_identifier_b, operation) __extension__ ({ \
+    unique_identifier_b, operation) (__extension__ ({ \
         typeof(a) unique_identifier_a = (a); \
         typeof(b) unique_identifier_b = (b); \
         ((unique_identifier_a) operation (unique_identifier_b) ? \
             (unique_identifier_a) : \
-            (unique_identifier_b)); })
+            (unique_identifier_b)); }))
 
 #define MY_SWAP(a, b) \
     do { \
@@ -58,7 +58,8 @@
     MY_MAKE_UNIQUE_IDENTIFIER(_a), MY_MAKE_UNIQUE_IDENTIFIER(_b), >)
 
 // Returns a value, clamped to be between low and high
-#define MY_CLAMP(value, low, high) MY_MIN((typeof(value))MY_MAX(value, low), high)
+#define MY_CLAMP(value, low, high) (__extension__ \
+    MY_MIN((typeof(value))MY_MAX(value, low), high))
 
 // Returns 1 if a > b, 0 if a == b and -1 if a < b
 #define MY_THREE_WAY_CMP(a, b) (((a) > (b)) - ((a) < (b)))

@@ -32,7 +32,8 @@
 // Determines the amount of elements in an array. Will fail to compile on things
 // that aren't arrays
 #define MY_ARRAY_SIZE(array) \
-    (sizeof(array) / sizeof((array)[0]) + MY_BUILD_BUG_ON_NON_ARRAY(array))
+    (__extension__ (sizeof(array) / sizeof((array)[0]) + \
+        MY_BUILD_BUG_ON_NON_ARRAY(array)))
 
 // Only compares a and b once, to avoid side effects
 #define MY_MAKE_MIN_MAX_COMPARE_ONCE(a, b, unique_identifier_a, \

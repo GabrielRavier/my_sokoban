@@ -53,3 +53,27 @@ Test(my_memmem, netbsd_oob)
     munmap(guard, pg);
     munmap(src, pg);
 }
+
+Test(my_memmem, gnulib)
+{
+    do_one_test("foo", 3, "", 0);
+    do_one_test("foo", 3, "o", 1);
+    do_one_test("ABC ABCDAB ABCDABCDABDE", my_strlen("ABC ABCDAB ABCDABCDABDE"), "ABCDABD", 7);
+    do_one_test("ABC ABCDAB ABCDABCDABDE", my_strlen("ABC ABCDAB ABCDABCDABDE"), "ABCDABE", 7);
+    do_one_test("ABC ABCDAB ABCDABCDABDE", my_strlen("ABC ABCDAB ABCDABCDABDE"), "ABCDABCD", 8);
+    {
+        const char *input = "F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+                         "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+            "_C3_A7_20_EF_BF_BD";
+        const char *need = "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
+        do_one_test(input, my_strlen(input), need, my_strlen(need));
+    }
+    {
+        const char *input = "F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+                         "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+                         "_C3_A7_20_EF_BF_BD_DA_B5_C2_A6_20"
+                         "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
+        const char *need = "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
+        do_one_test(input, my_strlen(input), need, my_strlen(need));
+    }
+}

@@ -13,8 +13,9 @@ void *my_memmem(const void *haystack, size_t haystack_length,
     const char *char_haystack = haystack;
     const char *char_needle = needle;
 
-    if (haystack_length == 0 || needle_length == 0 ||
-        haystack_length < needle_length)
+    if (needle_length == 0)
+        return (void *)haystack;
+    if (haystack_length < needle_length)
         return (NULL);
     if (needle_length == 1)
         return (my_memchr(haystack, *char_needle, haystack_length));

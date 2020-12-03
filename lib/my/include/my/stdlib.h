@@ -23,3 +23,6 @@ void *my_realloc_size(void *ptr, size_t new_length, size_t original_length)
 // does not set errno
 long my_strtol_base_str(const char *num_ptr, char **end_num_ptr,
     const char *base) MY_ATTR_NONNULL((1, 3)) MY_ATTR_NOTHROW;
+// This is the actual strtol
+long my_strtol(const char *num_ptr, char **end_num_ptr, int base)
+    MY_ATTR_NONNULL((1)) MY_ATTR_NOTHROW;

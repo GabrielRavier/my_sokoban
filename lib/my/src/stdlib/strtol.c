@@ -32,8 +32,7 @@ static void do_preparsing(struct strtol_parse_state *state)
     } while (my_isspace(state->current_character));
     if (state->current_character == '-')
         state->is_negative = true;
-    if (state->current_character == '-' ||
-        state->current_character == '+')
+    if (state->current_character == '-' || state->current_character == '+')
         state->current_character = *state->num_ptr++;
     if ((state->base == 0 || state->base == 16) &&
         state->current_character == '0' &&
@@ -59,12 +58,12 @@ static bool do_base_char(struct strtol_parse_state *state)
 }
 
 static bool would_overflow(unsigned long current_result,
-    struct strtol_parse_state *state,
-    unsigned long min_val_without_last_digit, int min_val_last_digit)
+    struct strtol_parse_state *state, unsigned long min_val_without_last_digit,
+    int min_val_last_digit)
 {
     return (current_result > min_val_without_last_digit ||
-           (current_result == min_val_without_last_digit &&
-           state->current_character > min_val_last_digit));
+        (current_result == min_val_without_last_digit &&
+            state->current_character > min_val_last_digit));
 }
 
 static unsigned long do_parsing_loop(struct strtol_parse_state *state)
@@ -98,7 +97,7 @@ long my_strtol(const char *num_ptr, char **end_num_ptr, int base)
     unsigned long result;
 
     if (state.base < 0 || state.base == 1 || state.base > 36) {
-        errno = EINVAL; 
+        errno = EINVAL;
         return (0);
     }
     do_preparsing(&state);
@@ -106,8 +105,7 @@ long my_strtol(const char *num_ptr, char **end_num_ptr, int base)
     if (state.num_type == STRTOL_NUM_TYPE_INVALID) {
         result = state.is_negative ? LONG_MIN : LONG_MAX;
         errno = ERANGE;
-    }
-    else if (state.is_negative)
+    } else if (state.is_negative)
         result = -result;
     if (end_num_ptr)
         *end_num_ptr = (state.num_type != STRTOL_NUM_TYPE_NONE) ?

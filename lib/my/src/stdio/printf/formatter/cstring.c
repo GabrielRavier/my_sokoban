@@ -30,22 +30,21 @@ static void do_wchar_string(struct my_string *destination,
 }
 
 static void do_string_loop(struct my_string *destination,
-    const char *string_argument,
-    struct my_printf_conversion_info *format_info)
+    const char *string_argument, struct my_printf_conversion_info *format_info)
 {
-    for (size_t i = 0; i < (size_t)format_info->precision &&
-        string_argument[i] != '\0'; ++i)
+    for (size_t i = 0;
+        i < (size_t)format_info->precision && string_argument[i] != '\0'; ++i)
         if ((format_info->conversion_specifier == 's') ||
             (my_isprint(string_argument[i])))
             my_string_append_char(destination, string_argument[i]);
         else {
             my_string_append_char(destination, '\\');
-            my_string_append_char(destination, "01234567"
-                [(unsigned char)string_argument[i] / 0100]);
-            my_string_append_char(destination, "01234567"
-                [(unsigned char)string_argument[i] / 010 % 010]);
-            my_string_append_char(destination, "01234567"
-                [(unsigned char)string_argument[i] % 010]);
+            my_string_append_char(destination,
+                "01234567"[(unsigned char)string_argument[i] / 0100]);
+            my_string_append_char(destination,
+                "01234567"[(unsigned char)string_argument[i] / 010 % 010]);
+            my_string_append_char(destination,
+                "01234567"[(unsigned char)string_argument[i] % 010]);
         }
 }
 
@@ -61,8 +60,8 @@ struct my_string *asprintf_format_cstring(struct my_string *destination,
         format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG_LONG) {
         string_argument = va_arg(*arguments, const char *);
         if (!string_argument)
-            string_argument = (size_t)format_info->precision >= 6
-                ? "(null)" : "";
+            string_argument = (size_t)format_info->precision >= 6 ? "(null)" :
+                "";
         do_string_loop(destination, string_argument, format_info);
     } else
         do_wchar_string(destination, format_info,

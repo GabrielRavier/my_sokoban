@@ -11,8 +11,7 @@
 #include <stdbool.h>
 
 _Noreturn void my_assert_fail(const char *expression, const char *file_name,
-    int line_number, const char *function_name)
-    MY_ATTR_NOTHROW;
+    int line_number, const char *function_name) MY_ATTR_NOTHROW;
 
 #define MY_ASSERT(expression)                           \
     ((bool)(expression) ? (void)0 :                     \

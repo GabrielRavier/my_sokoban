@@ -10,12 +10,13 @@
 #include <string.h>
 #include <stdint.h>
 
-inline static uint32_t msws() {
+inline static uint32_t msws()
+{
     static const uint64_t s = 0xb5ad4eceda1ce2a9;
     static uint64_t x = 0, w = 0;
-    x *= x; 
-    x += (w += s); 
-    return x = (x>>32) | (x<<32);
+    x *= x;
+    x += (w += s);
+    return x = (x >> 32) | (x << 32);
 }
 
 Test(my_memcpy, buffers)
@@ -44,8 +45,7 @@ Test(my_memcpy, buffers)
                     else if (j < START_COPY + da + n) {
                         i = j - START_COPY - da;
                         cr_assert_eq(destination[j], (source + sa)[i]);
-                    }
-                    else
+                    } else
                         cr_assert_eq(destination[j], 0x5B);
 
                 for (size_t j = 0; j < BUFFER_SIZE; ++j)

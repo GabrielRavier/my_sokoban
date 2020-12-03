@@ -42,8 +42,7 @@ static void qsort_fix(char *base, size_t start, size_t num, size_t element_size,
             swap_elements(base + start * element_size,
                 base + max * element_size, element_size);
             start = max;
-        }
-        else
+        } else
             break;
     }
 }
@@ -52,11 +51,11 @@ void my_qsort_r(void *base, size_t num_elements, size_t element_size,
     int (*comparison_function)(const void *, const void *, void *),
     void *argument)
 {
-    if (num_elements <= 1)
+    if(num_elements <= 1)
         return;
     for (size_t i = (num_elements + 1) >> 1; i != 0; --i)
         qsort_fix(base, i - 1, num_elements - 1, element_size,
-             comparison_function, argument);
+            comparison_function, argument);
     for (size_t i = num_elements - 1; i != 0; --i) {
         swap_elements(base, (char *)base + i * element_size, element_size);
         qsort_fix(base, 0, i - 1, element_size, comparison_function, argument);

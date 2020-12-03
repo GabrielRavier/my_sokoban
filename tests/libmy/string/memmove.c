@@ -70,7 +70,7 @@ Test(my_memmove, overlap_from_after)
         for (size_t j = 0; j < i; ++j) {
             fill(to_test);
             retval_test_memmove(to_test + MAX, to_test + MAX + j, i);
-      
+
             fill(to_known);
             memmove(to_known + MAX, to_known + MAX + j, i);
 

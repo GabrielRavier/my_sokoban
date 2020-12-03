@@ -23,7 +23,7 @@ static void do_one_test_with_endptr_choice(const char *num, int base, bool endpt
 
     long libc_result = strtol(num, &end_num_ptr_libc, base);
     int libc_errno = errno;
-    
+
     cr_assert_eq(our_errno, libc_errno);
     cr_assert_eq(our_result, libc_result);
     if (endptr_unchanged)

@@ -16,7 +16,7 @@ struct my_string *my_string_append_vprintf(struct my_string *self,
 {
     int asprintf_length;
     char *asprintf_result;
-    
+
     if (self == NULL || format == NULL)
         return NULL;
     asprintf_length = my_vasprintf(&asprintf_result, format, arguments);

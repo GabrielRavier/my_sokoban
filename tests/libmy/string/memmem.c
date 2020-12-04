@@ -76,4 +76,5 @@ Test(my_memmem, gnulib)
         const char *need = "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
         do_one_test(input, my_strlen(input), need, my_strlen(need));
     }
+    // NOTE: Not all the tests from gnulib are here. I might want to add more at some point
 }

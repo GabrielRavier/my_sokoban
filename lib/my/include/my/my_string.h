@@ -82,7 +82,8 @@ struct my_string *my_string_erase(struct my_string *self, size_t index,
 struct my_string *my_string_resize(struct my_string *self, size_t count);
 
 // Destructs the passed string and the associated data. If you instead want to
-// free the my_string but gain ownership of self->string, use my_string_move_buffer
+// free the my_string but gain ownership of self->string, use
+// my_string_move_buffer
 void my_string_free(struct my_string *self);
 
 // Destructs the passed my_string but returns the underlying buffer

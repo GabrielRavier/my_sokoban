@@ -43,7 +43,7 @@ my_memmem:
     mov rdi, r13
     mov rdx, rbp
     mov esi, ebx
-    call memchr
+    call my_memchr
     mov r14, rax
     cmp r15, 1
     je .Lreturn_r14

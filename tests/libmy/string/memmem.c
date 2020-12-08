@@ -8,8 +8,18 @@
 #include "my/string.h"
 #include <criterion/criterion.h>
 #include <string.h>
+#include <signal.h>
 #include <unistd.h>
 #include <sys/mman.h>
+
+static void *zero_size_ptr(void)
+{
+    int page_size = getpagesize();
+    char *two_pages = (char *)mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    if (two_pages != (char *)(-1) && mprotect(two_pages + page_size, page_size, PROT_NONE) == 0)
+        return two_pages + page_size;
+    return NULL;
+}
 
 static void do_one_test(const void *haystack, size_t haystack_length, const void *needle, size_t needle_length)
 {
@@ -56,6 +66,11 @@ Test(my_memmem, netbsd_oob)
 
 Test(my_memmem, gnulib)
 {
+    /* Declare failure if test takes too long, by using default abort
+       caused by SIGALRM. Timeout might be too little, possible revise this in the future */
+    signal(SIGALRM, SIG_DFL);
+    alarm(5);
+
     do_one_test("foo", 3, "", 0);
     do_one_test("foo", 3, "o", 1);
     do_one_test("ABC ABCDAB ABCDABCDABDE", my_strlen("ABC ABCDAB ABCDABCDABDE"), "ABCDABD", 7);
@@ -69,12 +84,153 @@ Test(my_memmem, gnulib)
         do_one_test(input, my_strlen(input), need, my_strlen(need));
     }
     {
-        const char *input = "F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
-                         "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
-                         "_C3_A7_20_EF_BF_BD_DA_B5_C2_A6_20"
-                         "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
+        const char *input = "F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD_C3_A7_20_EF_BF_BD_DA_B5_C2_A6_20_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
         const char *need = "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
         do_one_test(input, my_strlen(input), need, my_strlen(need));
     }
-    // NOTE: Not all the tests from gnulib are here. I might want to add more at some point
+    /* Check that length 0 does not dereference the pointer.  */
+    void *page_boundary = zero_size_ptr();
+    if (page_boundary)
+    {
+        do_one_test(page_boundary, 0, "foo", 3);
+
+        const char input[] = "foo";
+        do_one_test(input, strlen (input), page_boundary, 0);
+    }
+
+    /* Check that a very long haystack is handled quickly if the needle is
+     short and occurs near the beginning.  */
+    {
+        size_t repeat = 10000;
+        size_t m = 1000000;
+        const char *needle =
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        size_t n = strlen(needle);
+        char *haystack = (char *)malloc(m + 1);
+        if (haystack != NULL)
+        {
+            memset(haystack, 'A', m);
+            haystack[0] = 'B';
+
+            for (; repeat > 0; repeat--)
+                do_one_test(haystack, m, needle, n);
+            free(haystack);
+        }
+    }
+
+    /* Check that a very long needle is discarded quickly if the haystack is
+       short.  */
+    {
+        size_t repeat = 10000;
+        size_t m = 1000000;
+        const char *haystack =
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB";
+        size_t n = strlen(haystack);
+        char *needle = (char *)malloc(m + 1);
+        if (needle != NULL)
+        {
+            memset(needle, 'A', m);
+            for (; repeat > 0; repeat--)
+                do_one_test(haystack, n, needle, m);
+            free(needle);
+        }
+    }
+
+    /* Check that the asymptotic worst-case complexity is not quadratic.  */
+    {
+        size_t m = 1000000;
+        char *haystack = (char *)malloc(2 * m + 1);
+        char *needle = (char *)malloc(m + 1);
+        if (haystack != NULL && needle != NULL)
+        {
+            memset(haystack, 'A', 2 * m);
+            haystack[2 * m] = 'B';
+
+            memset(needle, 'A', m);
+            needle[m] = 'B';
+
+            do_one_test(haystack, 2 * m + 1, needle, m + 1);
+        }
+        free(needle);
+        free(haystack);
+    }
+
+    /* Check that long needles not present in a haystack can be handled
+       with sublinear speed.  */
+    {
+        size_t repeat = 10000;
+        size_t m = 1000000;
+        size_t n = 1000;
+        char *haystack = (char *)malloc(m);
+        char *needle = (char *)malloc(n);
+        if (haystack != NULL && needle != NULL)
+        {
+            memset(haystack, 'A', m);
+            memset(needle, 'B', n);
+            for (; repeat > 0; repeat--)
+                do_one_test(haystack, m, needle, n);
+        }
+        free(haystack);
+        free(needle);
+    }
+
+    {
+        const char *haystack = "..wi.d.";
+        const char *needle = ".d.";
+        do_one_test(haystack, strlen(haystack), needle, strlen(needle));
+    }
+
+    {
+        /* Like the above, but trigger the flaw in two_way_long_needle
+           by using a needle of length LONG_NEEDLE_THRESHOLD (32) or greater.
+           Rather than trying to find the right alignment manually, I've
+           arbitrarily chosen the following needle and template for the
+           haystack, and ensure that for each placement of the needle in
+           that haystack, memmem finds it.  */
+        const char *needle = "\nwith_gnu_ld-extend-to-len-32-b\n";
+        const char *h =
+            "\n"
+            "with_build_libsubdir\n"
+            "with_local_prefix\n"
+            "with_gxx_include_dir\n"
+            "with_cpp_install_dir\n"
+            "with_e_\n"
+            "..............................\n"
+            "with_FGHIJKLMNOPQRSTUVWXYZ\n"
+            "with_567890123456789\n"
+            "with_multilib_list\n";
+        size_t h_len = strlen(h);
+        char *haystack = malloc(h_len + 1);
+        size_t i;
+        cr_assert(haystack);
+        for (i = 0; i < h_len - strlen(needle); i++)
+        {
+            const char *p;
+            memcpy(haystack, h, h_len + 1);
+            memcpy(haystack + i, needle, strlen(needle) + 1);
+            do_one_test(haystack, strlen(haystack), needle, strlen(needle));
+        }
+        free (haystack);
+    }
+
+    /* Test long needles.  */
+    {
+        size_t m = 1024;
+        char *haystack = (char *)malloc(2 * m + 1);
+        char *needle = (char *)malloc(m + 1);
+        if (haystack != NULL && needle != NULL)
+        {
+            haystack[0] = 'x';
+            memset(haystack + 1, ' ', m - 1);
+            memset(haystack + m, 'x', m);
+            haystack[2 * m] = '\0';
+            memset(needle, 'x', m);
+            needle[m] = '\0';
+            do_one_test(haystack, strlen(haystack), needle, strlen(needle));
+        }
+        free(needle);
+        free(haystack);
+    }
 }

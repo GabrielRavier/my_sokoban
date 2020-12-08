@@ -424,3 +424,7 @@ my_memcmp:
 
     .cfi_endproc
     .size my_memcmp, . - my_memcmp
+
+    # Just make my_bcmp an alias for my_memcmp. See memcmp.c for more details
+    .globl my_bcmp
+    .set my_bcmp, my_memcmp

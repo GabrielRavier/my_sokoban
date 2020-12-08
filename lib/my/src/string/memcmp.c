@@ -6,6 +6,7 @@
 */
 
 #include "my/string.h"
+#include "my/strings.h"
 
 int my_memcmp(const void *s1, const void *s2, size_t length)
 {
@@ -17,3 +18,10 @@ int my_memcmp(const void *s1, const void *s2, size_t length)
             return (char_s1[i] - char_s2[i]);
     return (0);
 }
+
+// Declare bcmp as an alias for memcmp, since a valid memcmp will also be a
+// valid bcmp (though the inverse is not true). We do this here, as this
+// would error if we didn't do it in the same TU as the one where memcmp is
+// defined
+int my_bcmp(const void *, const void *, size_t)
+    MY_ATTRIBUTE((alias("my_memcmp")));

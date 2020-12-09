@@ -6,24 +6,21 @@
     .p2align 4
 my_memchr:
     .cfi_startproc
-    test rdx, rdx
-    je .Lreturn_0
 
-    mov rax, rdi
+    test rdx, rdx
+    jz .Lreturn_0
+
+    mov rcx, rdx
+    mov al, sil
+    repne scasb
+    jne .Lreturn_0
+
+    lea rax, [rdi - 1]
+    ret
 
     .p2align 4
-.Lloop:
-    cmp [rax], sil
-    je .Lreturn
-
-    inc rax
-    dec rdx
-    jne .Lloop
-
 .Lreturn_0:
     xor eax, eax
-
-.Lreturn:
     ret
 
     .cfi_endproc

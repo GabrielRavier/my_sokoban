@@ -41,11 +41,11 @@ SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts stdio/printf/pr
 SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_base_str stdlib/strtol_base_str_part2 stdlib/strtol
 
 # Stuff related to string.h
-SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memchr string/memset
+SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memset
 ifeq ($(shell uname -p), x86_64)
-	SOURCE_FILES += string/memcpy_x86_64 string/memmove_x86_64 string/memcmp_x86_64 string/memmem_x86_64
+	SOURCE_FILES += string/memcpy_x86_64 string/memmove_x86_64 string/memcmp_x86_64 string/memmem_x86_64 string/memchr_x86_64
 else
-	SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem
+	SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem string/memchr
 endif
 
 # Stuff related to strings.h
@@ -63,7 +63,7 @@ SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_stri
 # Miscellaneous stuff
 SOURCE_FILES += misc/compute_power_rec misc/compute_square_root misc/is_prime misc/find_prime_sup misc/revstr misc/strupcase misc/strlowcase misc/strcapitalize misc/str_isalpha misc/str_isnum misc/str_islower misc/str_isupper misc/str_isprintable misc/count_byte_occurences misc/str_to_word_array misc/show_word_array
 
-TESTS_SOURCE_FILES := stdlib/strtol_base_str stdlib/strtol string/memcpy string/memmove string/memcmp string/memmem bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base stdio/printf/printf
+TESTS_SOURCE_FILES := stdlib/strtol_base_str stdlib/strtol string/memcpy string/memmove string/memcmp string/memmem string/memchr bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base stdio/printf/printf
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))

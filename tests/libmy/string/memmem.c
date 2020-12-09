@@ -95,7 +95,7 @@ Test(my_memmem, gnulib)
         do_one_test(page_boundary, 0, "foo", 3);
 
         const char input[] = "foo";
-        do_one_test(input, strlen (input), page_boundary, 0);
+        do_one_test(input, my_strlen(input), page_boundary, 0);
     }
 
     /* Check that a very long haystack is handled quickly if the needle is
@@ -106,11 +106,11 @@ Test(my_memmem, gnulib)
         const char *needle =
             "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-        size_t n = strlen(needle);
+        size_t n = my_strlen(needle);
         char *haystack = (char *)malloc(m + 1);
         if (haystack != NULL)
         {
-            memset(haystack, 'A', m);
+            my_memset(haystack, 'A', m);
             haystack[0] = 'B';
 
             for (; repeat > 0; repeat--)
@@ -127,11 +127,11 @@ Test(my_memmem, gnulib)
         const char *haystack =
             "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB";
-        size_t n = strlen(haystack);
+        size_t n = my_strlen(haystack);
         char *needle = (char *)malloc(m + 1);
         if (needle != NULL)
         {
-            memset(needle, 'A', m);
+            my_memset(needle, 'A', m);
             for (; repeat > 0; repeat--)
                 do_one_test(haystack, n, needle, m);
             free(needle);
@@ -145,10 +145,10 @@ Test(my_memmem, gnulib)
         char *needle = (char *)malloc(m + 1);
         if (haystack != NULL && needle != NULL)
         {
-            memset(haystack, 'A', 2 * m);
+            my_memset(haystack, 'A', 2 * m);
             haystack[2 * m] = 'B';
 
-            memset(needle, 'A', m);
+            my_memset(needle, 'A', m);
             needle[m] = 'B';
 
             do_one_test(haystack, 2 * m + 1, needle, m + 1);
@@ -167,8 +167,8 @@ Test(my_memmem, gnulib)
         char *needle = (char *)malloc(n);
         if (haystack != NULL && needle != NULL)
         {
-            memset(haystack, 'A', m);
-            memset(needle, 'B', n);
+            my_memset(haystack, 'A', m);
+            my_memset(needle, 'B', n);
             for (; repeat > 0; repeat--)
                 do_one_test(haystack, m, needle, n);
         }
@@ -179,7 +179,7 @@ Test(my_memmem, gnulib)
     {
         const char *haystack = "..wi.d.";
         const char *needle = ".d.";
-        do_one_test(haystack, strlen(haystack), needle, strlen(needle));
+        do_one_test(haystack, my_strlen(haystack), needle, my_strlen(needle));
     }
 
     {
@@ -201,16 +201,16 @@ Test(my_memmem, gnulib)
             "with_FGHIJKLMNOPQRSTUVWXYZ\n"
             "with_567890123456789\n"
             "with_multilib_list\n";
-        size_t h_len = strlen(h);
+        size_t h_len = my_strlen(h);
         char *haystack = malloc(h_len + 1);
         size_t i;
         cr_assert(haystack);
-        for (i = 0; i < h_len - strlen(needle); i++)
+        for (i = 0; i < h_len - my_strlen(needle); i++)
         {
             const char *p;
-            memcpy(haystack, h, h_len + 1);
-            memcpy(haystack + i, needle, strlen(needle) + 1);
-            do_one_test(haystack, strlen(haystack), needle, strlen(needle));
+            my_memcpy(haystack, h, h_len + 1);
+            my_memcpy(haystack + i, needle, my_strlen(needle) + 1);
+            do_one_test(haystack, my_strlen(haystack), needle, my_strlen(needle));
         }
         free (haystack);
     }
@@ -223,12 +223,12 @@ Test(my_memmem, gnulib)
         if (haystack != NULL && needle != NULL)
         {
             haystack[0] = 'x';
-            memset(haystack + 1, ' ', m - 1);
-            memset(haystack + m, 'x', m);
+            my_memset(haystack + 1, ' ', m - 1);
+            my_memset(haystack + m, 'x', m);
             haystack[2 * m] = '\0';
-            memset(needle, 'x', m);
+            my_memset(needle, 'x', m);
             needle[m] = '\0';
-            do_one_test(haystack, strlen(haystack), needle, strlen(needle));
+            do_one_test(haystack, my_strlen(haystack), needle, my_strlen(needle));
         }
         free(needle);
         free(haystack);

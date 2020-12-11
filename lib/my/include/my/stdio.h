@@ -8,6 +8,7 @@
 #pragma once
 
 #include "my/config.h"
+#include <stdio.h>
 #include <stdarg.h>
 
 int my_putchar(int character);
@@ -24,3 +25,11 @@ int my_asprintf(char **result_string_ptr, const char *format, ...)
     MY_ATTR_FORMAT(printf, 2, 3) MY_ATTR_WARN_UNUSED_RESULT;
 int my_vasprintf(char **result_string_ptr, const char *format,
     va_list arguments) MY_ATTR_FORMAT(printf, 2, 0) MY_ATTR_WARN_UNUSED_RESULT;
+
+static inline void my_fclose_ptr(FILE **ptr)
+{
+    if (*ptr)
+        fclose(*ptr);
+}
+
+#define MY_CLEANUP_FCLOSE __attribute__((cleanup(my_fclose_ptr)))

@@ -8,6 +8,7 @@
 #pragma once
 
 #include "my/config.h"
+#include <stdlib.h>
 #include <stddef.h>
 
 void my_qsort(void *base, size_t num_elements, size_t element_size,
@@ -27,3 +28,10 @@ long my_strtol_base_str(const char *num_ptr, char **end_num_ptr,
 long my_strtol(const char *num_ptr, char **end_num_ptr, int base)
     MY_ATTR_NONNULL((1)) MY_ATTR_NOTHROW;
 int my_abs(int x) MY_ATTR_NOTHROW MY_ATTR_CONST MY_ATTR_WARN_UNUSED_RESULT;
+
+static inline void my_free_ptr(void *ptr)
+{
+    free(*(void **)ptr);
+}
+
+#define MY_CLEANUP_FREE __attribute__((cleanup(my_free_ptr)))

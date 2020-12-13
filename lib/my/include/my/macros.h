@@ -46,9 +46,9 @@
 
 #define MY_SWAP(a, b) \
     do { \
-        __auto_type swap_tmp = (a); \
+        __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp) = (a); \
         (a) = (b); \
-        (b) = swap_tmp; } while (0)
+        (b) = MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp); } while (0)
 
 // Returns the minimum of a and b
 #define MY_MIN(a, b) MY_MAKE_MIN_MAX_COMPARE_ONCE(a, b, \

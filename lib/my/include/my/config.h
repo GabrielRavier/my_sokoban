@@ -28,6 +28,7 @@
 #define MY_ATTR_FALLTHROUGH MY_ATTRIBUTE((fallthrough))
 #define MY_ATTR_FORMAT(archetype, string_index, first_to_check) \
     MY_ATTRIBUTE((format(archetype, string_index, first_to_check)))
+#define MY_ATTR_UNUSED MY_ATTRIBUTE((unused))
 #if MY_GCC_AT_LEAST_VER(10, 0)
     #define MY_ATTR_ACCESS(parameters) MY_ATTRIBUTE((access parameters))
 #else

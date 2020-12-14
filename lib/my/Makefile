@@ -19,7 +19,7 @@ override CFLAGS += -D_GNU_SOURCE
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/algorithm my/assert my/bigint my/checked_multiply my/config my/ctype my/macros my/math my/misc my/my_string my/stdio my/stdlib my/string my/strings
+HEADER_FILES := my my/algorithm my/assert my/bigint my/checked_multiply my/config my/ctype my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -33,6 +33,9 @@ SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/is
 
 # Stuff related to math.h
 SOURCE_FILES += math/fabsf math/fpclassify
+
+# Stuff related to signal.h
+SOURCE_FILES += signal/sigaddset
 
 # Stuff related to stdio.h
 SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/decimal_float stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
@@ -95,6 +98,7 @@ obj/%.o: %.c
 	@mkdir --parents obj/src/math
 	@mkdir --parents obj/src/misc
 	@mkdir --parents obj/src/my_string
+	@mkdir --parents obj/src/signal
 	@mkdir --parents obj/src/stdio/printf/formatter
 	@mkdir --parents obj/src/stdio/printf/parse_conversion_info
 	@mkdir --parents obj/src/stdlib

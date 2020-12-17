@@ -36,7 +36,7 @@ static void do_precision(struct my_string *destination, size_t pos_before,
     struct my_printf_conversion_info *format_info,
     const struct my_string *prefix)
 {
-    format_info->precision -= (destination->length - pos_before);
+    format_info->precision -= (int)(destination->length - pos_before);
     while (format_info->precision-- >
         (int)(0 + (prefix ? prefix->length == 1 : 0)))
         my_string_insert_char(destination, '0', pos_before);

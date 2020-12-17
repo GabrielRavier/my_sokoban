@@ -17,9 +17,10 @@ struct my_string *asprintf_format_char(struct my_string *destination,
     if (format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG &&
         format_info->length_modifier != PRINTF_LENGTH_MODIFIER_LONG_LONG &&
         format_info->conversion_specifier != 'C')
-        my_string_append_char(destination, va_arg(*arguments, int));
+        my_string_append_char(destination, (char)va_arg(*arguments, int));
     else
         my_string_append(destination, buffer,
-            asprintf_utf32_char_to_utf8(buffer, va_arg(*arguments, wint_t)));
+            asprintf_utf32_char_to_utf8(buffer,
+                (wchar_t)va_arg(*arguments, wint_t)));
     return (NULL);
 }

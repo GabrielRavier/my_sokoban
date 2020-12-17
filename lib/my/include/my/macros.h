@@ -44,6 +44,7 @@
             (unique_identifier_a) : \
             (unique_identifier_b)); }))
 
+// Exchanges the given values
 #define MY_SWAP(a, b) \
     do { \
         __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp) = (a); \

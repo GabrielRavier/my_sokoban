@@ -7,4 +7,4 @@
 
 #pragma once
 
-#error "idk if I will make this include everything else later, but for now, no"
+#error "This header is now removed, use the headers from the my/ subdirectory"

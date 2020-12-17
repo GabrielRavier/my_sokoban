@@ -9,4 +9,5 @@
 
 #include <signal.h>
 
+// Add signal signum to set
 int my_sigaddset(sigset_t *set, int signum);

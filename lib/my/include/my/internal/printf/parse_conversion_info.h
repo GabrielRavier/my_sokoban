@@ -11,6 +11,17 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+enum my_printf_length_modifier {
+    PRINTF_LENGTH_MODIFIER_NONE,
+    PRINTF_LENGTH_MODIFIER_CHAR,
+    PRINTF_LENGTH_MODIFIER_SHORT,
+    PRINTF_LENGTH_MODIFIER_LONG,
+    PRINTF_LENGTH_MODIFIER_LONG_LONG,
+    PRINTF_LENGTH_MODIFIER_INTMAX,
+    PRINTF_LENGTH_MODIFIER_SIZE_T,
+    PRINTF_LENGTH_MODIFIER_PTRDIFF_T,
+};
+
 // We reuse PRINTF_LENGTH_MODIFIER_LONG_LONG for long double, for glibc
 // compatibility
 struct my_printf_conversion_info {
@@ -21,16 +32,7 @@ struct my_printf_conversion_info {
     bool flag_0;
     int field_width;
     int precision;
-    enum {
-        PRINTF_LENGTH_MODIFIER_NONE,
-        PRINTF_LENGTH_MODIFIER_CHAR,
-        PRINTF_LENGTH_MODIFIER_SHORT,
-        PRINTF_LENGTH_MODIFIER_LONG,
-        PRINTF_LENGTH_MODIFIER_LONG_LONG,
-        PRINTF_LENGTH_MODIFIER_INTMAX,
-        PRINTF_LENGTH_MODIFIER_SIZE_T,
-        PRINTF_LENGTH_MODIFIER_PTRDIFF_T,
-    } length_modifier;
+    enum my_printf_length_modifier length_modifier;
     char conversion_specifier;
 };
 

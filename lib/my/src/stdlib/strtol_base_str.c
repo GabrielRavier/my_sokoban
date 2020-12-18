@@ -13,6 +13,8 @@
 #include <stdbool.h>
 #include <limits.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 // "digits" is defined as being anything from base
 // the base is the length of the base string
 

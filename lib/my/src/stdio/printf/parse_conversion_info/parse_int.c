@@ -25,11 +25,11 @@ static void do_loop_iter(int *result, char digit)
 
 int asprintf_parse_int(const char **to_parse)
 {
-    int result = **to_parse - '0';
+    int result = **to_parse - (char)'0';
 
     while (my_isdigit(*++*to_parse)) {
         if (result >= 0)
-            do_loop_iter(&result, **to_parse - '0');
+            do_loop_iter(&result, (char)(**to_parse - '0'));
         if (result < 0)
             break;
     }

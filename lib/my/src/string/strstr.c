@@ -8,6 +8,8 @@
 #include "my/string.h"
 #include <stddef.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 // Does strstr, with some basic optimizations such as starting with a search for
 // the first character of needle in haystack
 // Note: we use strncmp so that we don't need to match the null terminator of

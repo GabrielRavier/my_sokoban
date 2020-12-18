@@ -13,7 +13,7 @@ char *my_strupcase(char *str)
     char *const result = str;
 
     while (*str != '\0') {
-        *str = my_toupper(*str);
+        *str = (char)my_toupper(*str);
         ++str;
     }
     return (result);

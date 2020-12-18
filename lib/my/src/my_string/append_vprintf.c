@@ -21,7 +21,7 @@ struct my_string *my_string_append_vprintf(struct my_string *self,
         return NULL;
     asprintf_length = my_vasprintf(&asprintf_result, format, arguments);
     if (asprintf_length >= 0) {
-        my_string_append(self, asprintf_result, asprintf_length);
+        my_string_append(self, asprintf_result, (unsigned)asprintf_length);
         free(asprintf_result);
     }
     return self;

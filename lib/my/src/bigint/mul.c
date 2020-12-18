@@ -34,11 +34,12 @@ static void my_bigint_mul_internal_loop(
         if ((i + j) == args->step_add->number->length)
             my_string_append_char(args->step_add->number, 0);
         if (j < args->result->number->length)
-            multiplied_digit = (args->result->number->string[j] *
-                args->operand2->number->string[i]) + *carry;
+            multiplied_digit = (unsigned char)(
+                (args->result->number->string[j] *
+                args->operand2->number->string[i]) + *carry);
         else
             multiplied_digit = *carry;
-        args->step_add->number->string[i + j] = multiplied_digit % 10;
+        args->step_add->number->string[i + j] = (char)(multiplied_digit % 10);
         *carry = multiplied_digit / 10;
     }
     remove_trailing_zeros(args->step_add);

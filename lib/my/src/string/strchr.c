@@ -8,6 +8,8 @@
 #include "my/string.h"
 #include <stddef.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 char *my_strchr(const char *str, int character)
 {
     do {

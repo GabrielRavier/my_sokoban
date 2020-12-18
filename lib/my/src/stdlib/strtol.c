@@ -11,6 +11,12 @@
 #include <limits.h>
 #include <stdbool.h>
 
+#ifndef __clang__
+    #pragma GCC diagnostic ignored "-Warith-conversion"
+#endif
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 enum strtol_num_type {
     STRTOL_NUM_TYPE_NONE,
     STRTOL_NUM_TYPE_NORMAL,
@@ -71,9 +77,9 @@ static unsigned long do_parsing_loop(struct strtol_parse_state *state)
     unsigned long result = 0;
     unsigned long min_val = state->is_negative ? -(unsigned long)LONG_MIN :
         LONG_MAX;
-    const int min_val_last_digit = min_val % state->base;
+    const int min_val_last_digit = (int)(min_val % (unsigned long)state->base);
 
-    min_val /= state->base;
+    min_val /= (unsigned long)state->base;
     while (1) {
         if (!do_base_char(state))
             break;
@@ -82,8 +88,8 @@ static unsigned long do_parsing_loop(struct strtol_parse_state *state)
             state->num_type = STRTOL_NUM_TYPE_INVALID;
         else {
             state->num_type = STRTOL_NUM_TYPE_NORMAL;
-            result *= state->base;
-            result += state->current_character;
+            result *= (unsigned long)state->base;
+            result += (unsigned long)state->current_character;
         }
         state->current_character = *state->num_ptr++;
     }
@@ -103,12 +109,12 @@ long my_strtol(const char *num_ptr, char **end_num_ptr, int base)
     do_preparsing(&state);
     result = do_parsing_loop(&state);
     if (state.num_type == STRTOL_NUM_TYPE_INVALID) {
-        result = state.is_negative ? LONG_MIN : LONG_MAX;
+        result = state.is_negative ? (unsigned long)LONG_MIN : LONG_MAX;
         errno = ERANGE;
     } else if (state.is_negative)
         result = -result;
     if (end_num_ptr)
         *end_num_ptr = (state.num_type != STRTOL_NUM_TYPE_NONE) ?
             (char *)(state.num_ptr - 1) : (char *)num_ptr;
-    return (result);
+    return (long)(result);
 }

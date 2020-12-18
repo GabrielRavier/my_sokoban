@@ -9,6 +9,8 @@
 #include "my/internal/strtol_base_str_part2.h"
 #include "my/string.h"
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 static void set_end_num_ptr(char **end_num_ptr, char *value)
 {
     if (end_num_ptr != NULL)

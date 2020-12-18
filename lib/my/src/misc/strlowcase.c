@@ -13,7 +13,7 @@ char *my_strlowcase(char *str)
     char *const result = str;
 
     while (*str != '\0') {
-        *str = my_tolower(*str);
+        *str = (char)my_tolower(*str);
         ++str;
     }
     return (result);

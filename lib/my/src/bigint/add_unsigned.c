@@ -19,10 +19,10 @@ struct my_bigint *my_bigint_add_unsigned(struct my_bigint *result,
             my_string_append_char(result->number, 0);
             result->number->string[i] = 0;
         }
-        total = result->number->string[i] +
+        total = (unsigned char)(result->number->string[i] +
             (i < operand2->number->length ? operand2->number->string[i] : 0) +
-            carry;
-        result->number->string[i] = total % 10;
+            carry);
+        result->number->string[i] = (char)(total % 10);
         carry = (total >= 10);
     }
     return (result);

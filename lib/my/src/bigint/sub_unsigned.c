@@ -8,13 +8,17 @@
 #include "my/bigint.h"
 #include "my/macros.h"
 
+#ifndef __clang__
+    #pragma GCC diagnostic ignored "-Warith-conversion"
+#endif
+
 static signed char get_digit(const struct my_bigint *smaller_greater_num[2],
     size_t i, bool carry)
 {
     if (i < smaller_greater_num[0]->number->length)
-        return (smaller_greater_num[1]->number->string[i] -
-            smaller_greater_num[0]->number->string[i] - carry);
-    return (smaller_greater_num[1]->number->string[i] - carry);
+        return ((signed char)(smaller_greater_num[1]->number->string[i] -
+            smaller_greater_num[0]->number->string[i] - carry));
+    return ((signed char)(smaller_greater_num[1]->number->string[i] - carry));
 }
 
 static size_t do_sub_loop(struct my_bigint *result,
@@ -31,7 +35,7 @@ static size_t do_sub_loop(struct my_bigint *result,
             digit += 10;
         } else
             carry = false;
-        result->number->string[i] = (unsigned char)digit;
+        result->number->string[i] = (char)digit;
         if (digit != 0)
             end_size = (i + 1);
     }

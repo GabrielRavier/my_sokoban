@@ -15,7 +15,8 @@ char *my_strcapitalize(char *str)
 
     for (int i = 0; str[i] != '\0'; ++i) {
         if (my_isalnum(str[i])) {
-            str[i] = is_in_word ? my_tolower(str[i]) : my_toupper(str[i]);
+            str[i] = (char)(is_in_word ? my_tolower(str[i]) :
+                my_toupper(str[i]));
             is_in_word = true;
         } else
             is_in_word = false;

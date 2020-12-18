@@ -36,11 +36,11 @@ bool asprintf_handle_invalid(struct my_string *destination,
     my_string_append_char(destination, '%');
     stringisize_flags(destination, conversion_info);
     if (conversion_info->field_width != 0)
-        asprintf_append_number_base(destination, conversion_info->field_width,
-            10, false);
+        asprintf_append_number_base(destination,
+            (uintmax_t)conversion_info->field_width, 10, false);
     if (conversion_info->precision != -1)
         asprintf_append_number_base(my_string_append_char(destination, '.'),
-            conversion_info->precision, 10, false);
+            (uintmax_t)conversion_info->precision, 10, false);
     if (conversion_info->conversion_specifier != '\0')
         my_string_append_char(destination,
             conversion_info->conversion_specifier);

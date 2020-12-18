@@ -17,7 +17,7 @@ int my_vdprintf(int fd, const char *format, va_list arguments)
 
     if (string_length < 0)
         return (-1);
-    result = write(fd, string_to_print, string_length);
+    result = (int)write(fd, string_to_print, (size_t)string_length);
     free(string_to_print);
     return (result);
 }

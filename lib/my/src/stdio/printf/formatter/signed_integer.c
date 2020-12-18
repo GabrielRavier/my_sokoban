@@ -33,7 +33,7 @@ static intmax_t get_arg(va_list *arguments,
 static void do_precision(struct my_string *destination, size_t pos_before,
     struct my_printf_conversion_info *format_info)
 {
-    format_info->precision -= (destination->length - pos_before);
+    format_info->precision -= (int)(destination->length - pos_before);
     while (format_info->precision-- > 0)
         my_string_insert_char(destination, '0', pos_before);
 }

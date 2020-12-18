@@ -30,7 +30,7 @@ int my_fpclassify_float(float x)
         float as_float;
         uint32_t as_int;
     } u = {.as_float = x};
-    int32_t int_x = u.as_int;
+    int32_t int_x = (int32_t)u.as_int;
 
     int_x &= 0x7FFFFFFF;
     return (int_x == 0) ? FP_ZERO :
@@ -53,7 +53,7 @@ int my_fpclassify_long_double(long double x)
     } u = {.as_long_double = x};
 
     u.sign_exponent &= 0x7FFF;
-    if ((u.sign_exponent | u.lsw | u.msw) == 0)
+    if (((uint32_t)u.sign_exponent | u.lsw | u.msw) == 0)
         return FP_ZERO;
     else if (u.sign_exponent == 0 && (u.lsw & 0x80000000) == 0)
         return FP_SUBNORMAL;

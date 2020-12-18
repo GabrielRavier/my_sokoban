@@ -44,9 +44,9 @@ size_t asprintf_utf32_char_to_utf8(char *destination, wchar_t wide_char)
     if (length == 0)
         return (0);
     for (size_t i = length - 1; i > 0; --i) {
-        destination[i] = (wide_char & 0x3F) | 0x80;
+        destination[i] = (char)((wide_char & 0x3F) | 0x80);
         wide_char >>= 6;
     }
-    *destination = (wide_char & 0xFF) | lead;
+    *destination = (char)((wide_char & 0xFF) | lead);
     return (length);
 }

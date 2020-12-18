@@ -28,16 +28,6 @@ static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['c'] = &asprintf_format_char,
     ['s'] = &asprintf_format_cstring,
     ['S'] = &asprintf_format_cstring,
-#ifdef LIBMY_FLOATING_POINT_CLUDGE
-    ['f'] = &asprintf_format_decimal_float,
-    ['F'] = &asprintf_format_decimal_float,
-    ['e'] = &asprintf_format_decimal_float,
-    ['E'] = &asprintf_format_decimal_float,
-    ['g'] = &asprintf_format_decimal_float,
-    ['G'] = &asprintf_format_decimal_float,
-    ['a'] = &asprintf_format_decimal_float,
-    ['A'] = &asprintf_format_decimal_float,
-#endif
     ['%'] = &asprintf_format_percent_sign,
     ['p'] = &asprintf_format_pointer,
     ['C'] = &asprintf_format_char,

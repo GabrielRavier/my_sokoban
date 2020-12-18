@@ -8,7 +8,6 @@
 #define _GNU_SOURCE
 //#define STANDALONE // Define if this doesn't have my/macros.h
 //#define NO_MY_VASPRINTF // Define if you don't have my_vasprintf
-//#define LIBMY_FLOATING_POINT_CLUDGE // Define if you have implemented floating point
 #include <criterion/criterion.h>
 #include <criterion/assert.h>
 #include <criterion/redirect.h>
@@ -1231,7 +1230,8 @@ Test(my_printf, through_format, .init = do_init, .fini = compare_all_libc_to_std
     compare_printfs("%-10s\n", (char *)NULL);
 }
 
-#ifdef LIBMY_FLOATING_POINT_CLUDGE
+// Floating-point support TODO later, I guess
+#if 0
 
 Test(my_printf, some_float_checks, .init = do_init, .fini = compare_all_libc_to_stdout)
 {

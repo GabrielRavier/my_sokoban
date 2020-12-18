@@ -11,7 +11,8 @@
 
 struct my_bigint *my_bigint_new_from_int(int x)
 {
-    struct my_bigint *result = malloc(sizeof(struct my_bigint));
+    struct my_bigint *result =
+        (struct my_bigint *)malloc(sizeof(struct my_bigint));
 
     MY_ASSERT(result != NULL);
     result->is_negative = (x < 0);

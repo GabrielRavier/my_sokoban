@@ -10,8 +10,10 @@
 #include <criterion/criterion.h>
 #include <string.h>
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 // Are tested overlapping moves of 0...MAX bytes
-#define MAX 128
+#define MAX 130
 
 static void retval_test_memmove(unsigned char *destination, const unsigned char *source, size_t n)
 {
@@ -125,7 +127,7 @@ Test(my_memmove, osv_tests)
     my_memmove(&buf8[2], buf8, 9);
     cr_assert_eq(my_strncmp("121234567897654321", buf8, 18), 0);
 
-    char loop_buf[17] = "1234567890000000";
+    char loop_buf[18] = "1234567890000000";
     for (size_t i = 0; i < 8; ++i) {
         char buf_tmp[18];
 
@@ -145,7 +147,7 @@ Test(my_memmove, osv_tests)
         cr_assert_eq(my_strncmp(loop_results[i], buf_tmp, 16), 0);
     }
 
-    char loop_buf2[17] = "0000000012345678";
+    char loop_buf2[18] = "0000000012345678";
     for (size_t i = 0; i < 8; ++i) {
         char buf_tmp[18];
 

@@ -5,7 +5,9 @@
 ** Tests printf
 */
 
-#define _GNU_SOURCE
+#ifndef _GNU_SOURCE
+    #define _GNU_SOURCE
+#endif
 //#define STANDALONE // Define if this doesn't have my/macros.h
 //#define NO_MY_VASPRINTF // Define if you don't have my_vasprintf
 #include <criterion/criterion.h>
@@ -29,7 +31,10 @@
 
 // Avoid getting shouted at 2000 times
 #ifdef __GNUC__
+    #pragma GCC diagnostic ignored "-Wcast-qual"
+    #pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
     #pragma GCC diagnostic ignored "-Wformat"
+    #pragma GCC diagnostic ignored "-Wformat-nonliteral"
     #pragma GCC diagnostic ignored "-Wformat-extra-args"
     #pragma GCC diagnostic ignored "-Wformat-zero-length"
     #ifndef __clang__

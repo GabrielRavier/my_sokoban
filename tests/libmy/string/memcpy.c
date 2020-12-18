@@ -10,7 +10,9 @@
 #include <string.h>
 #include <stdint.h>
 
-inline static uint32_t msws()
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
+inline static uint32_t msws(void)
 {
     static const uint64_t s = 0xb5ad4eceda1ce2a9;
     static uint64_t x = 0, w = 0;
@@ -21,7 +23,8 @@ inline static uint32_t msws()
 
 Test(my_memcpy, buffers)
 {
-    static const size_t BUFFER_SIZE = 10240, START_COPY = 2560, MAX_BLOCK_SIZE = 256, MAX_OFFSET = 3;
+#define BUFFER_SIZE 10240
+    static const size_t START_COPY = 2560, MAX_BLOCK_SIZE = 256, MAX_OFFSET = 3;
     char source[BUFFER_SIZE];
     char destination[BUFFER_SIZE];
     char backup_source[BUFFER_SIZE];
@@ -51,4 +54,5 @@ Test(my_memcpy, buffers)
                 for (size_t j = 0; j < BUFFER_SIZE; ++j)
                     cr_assert_eq(source[j], backup_source[j]);
             }
+#undef BUFFER_SIZE
 }

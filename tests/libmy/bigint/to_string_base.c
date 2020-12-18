@@ -8,6 +8,8 @@
 #include "my/bigint.h"
 #include <criterion/criterion.h>
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 static void do_test(const char *string, const char *base)
 {
     struct my_bigint *as_bigint = my_bigint_strtol_base_str(string, NULL, base);

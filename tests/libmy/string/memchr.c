@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 static void *zero_size_ptr(void)
 {
     int page_size = getpagesize();
@@ -114,8 +116,10 @@ Test(my_memchr, netsbd_simple)
 Test(my_memchr, gnulib)
 {
     size_t n = 0x100000;
-    char *input = malloc(n);
+    char *input = (char *)malloc(n);
     cr_assert(input);
+    if (!input)
+        abort();
 
     input[0] = 'a';
     input[1] = 'b';
@@ -179,21 +183,21 @@ Test(my_memchr, gnulib)
 
         if (page_boundary != NULL)
         {
-            for (size_t n = 1; n <= limit; n++)
+            for (size_t i = 1; i <= limit; i++)
             {
-                char *mem = page_boundary - n;
-                my_memset(mem, 'X', n);
-                do_one_test(mem, 'U', n);
-                do_one_test(mem, 0, n);
-                for (size_t i = 0; i < n; i++)
+                char *mem = page_boundary - i;
+                my_memset(mem, 'X', i);
+                do_one_test(mem, 'U', i);
+                do_one_test(mem, 0, i);
+                for (size_t j = 0; j < i; j++)
                 {
-                    mem[i] = 'U';
-                    for (size_t k = i + 1; k < n + limit; k++)
+                    mem[j] = 'U';
+                    for (size_t k = j + 1; k < i + limit; k++)
                         do_one_test(mem, 'U', k);
-                    mem[i] = 0;
-                    for (size_t k = i + 1; k < n + limit; k++)
+                    mem[j] = 0;
+                    for (size_t k = j + 1; k < i + limit; k++)
                         do_one_test(mem, 0, k);
-                    mem[i] = 'X';
+                    mem[j] = 'X';
                 }
             }
         }

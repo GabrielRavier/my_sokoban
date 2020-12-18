@@ -11,7 +11,9 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-static void *zero_size_ptr()
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
+static void *zero_size_ptr(void)
 {
     int page_size = getpagesize();
     char *two_pages = (char *)mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
@@ -113,7 +115,7 @@ static void do_linux_kernel_selftests(bool is_large)
     size_t comp_size = (is_large) ? LARGE_SIZE : SIZE;
     size_t alloc_size = comp_size + MAX_OFFSET_DIFF_S1_S2;
     size_t iterations = is_large ? LARGE_ITERATIONS : ITERATIONS;
-    char *p = mmap(NULL, 4 * MAP_SIZE, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    char *p = (char *)mmap(NULL, 4 * MAP_SIZE, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     cr_assert_neq(p, MAP_FAILED);
 
     // s1/s2 are at the end of a page
@@ -192,7 +194,7 @@ Test(my_memcmp, gnulib)
         cr_assert_lt(my_memcmp(a, b, 0x10), 0);
     }
 
-    char *page_boundary1 = zero_size_ptr(), *page_boundary2 = zero_size_ptr();
+    char *page_boundary1 = (char *)zero_size_ptr(), *page_boundary2 = (char *)zero_size_ptr();
     if (page_boundary1 && page_boundary2)
         cr_assert_eq(my_memcmp(page_boundary1, page_boundary2, 0), 0);
 

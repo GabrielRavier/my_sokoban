@@ -9,6 +9,8 @@
 #include <criterion/criterion.h>
 #include <limits.h>
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 static void do_test(int a, int b)
 {
     struct my_bigint *bigint_a = my_bigint_new_from_int(a);

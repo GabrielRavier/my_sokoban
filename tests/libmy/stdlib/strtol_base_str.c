@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <limits.h>
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 static void test_strtol(const char *string, const char *base,
     long expected_result, ssize_t length)
 {
@@ -44,25 +46,25 @@ Test(my_strtol_base_str, simple_tests)
     for (long i = 0; i <= 100; ++i) {
         sprintf(buffer, "%ld", i);
         test_strtol_base10(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%lx", i);
+        sprintf(buffer, "%lx", (unsigned long)i);
         test_strtol_base16(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%lo", i);
+        sprintf(buffer, "%lo", (unsigned long)i);
         test_strtol_base8(buffer, i, my_strlen(buffer));
     }
     for (long i = 0; i >= -100; --i) {
         sprintf(buffer, "%ld", i);
         test_strtol_base10(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "-%lx", -i);
+        sprintf(buffer, "-%lx", (unsigned long)-i);
         test_strtol_base16(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "-%lo", -i);
+        sprintf(buffer, "-%lo", (unsigned long)-i);
         test_strtol_base8(buffer, i, my_strlen(buffer));
     }
     for (long i = LONG_MAX; i >= (LONG_MAX - 100); --i) {
         sprintf(buffer, "%ld", i);
         test_strtol_base10(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%lx", i);
+        sprintf(buffer, "%lx", (unsigned long)i);
         test_strtol_base16(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%lo", i);
+        sprintf(buffer, "%lo", (unsigned long)i);
         test_strtol_base8(buffer, i, my_strlen(buffer));
     }
     for (long i = LONG_MIN; i <= (LONG_MIN + 100); ++i) {

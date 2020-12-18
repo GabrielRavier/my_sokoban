@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 static void *zero_size_ptr(void)
 {
     int page_size = getpagesize();
@@ -46,10 +48,10 @@ Test(my_memmem, netbsd_oob)
 {
     static const char str[] = "abcde";
     size_t pg = getpagesize();
-    char *src = mmap(NULL, pg * 2, PROT_READ|PROT_WRITE,
+    char *src = (char *)mmap(NULL, pg * 2, PROT_READ|PROT_WRITE,
                      MAP_ANON|MAP_PRIVATE, -1, (off_t)0);
     cr_assert_neq(src, MAP_FAILED); 
-    char *guard = mmap(src + pg, pg,
+    char *guard = (char *)mmap(src + pg, pg,
                        PROT_NONE, MAP_ANON|MAP_PRIVATE|MAP_FIXED, -1, (off_t)0);
     for (size_t i = 2; i < 5; i++) {
         char *search = src + pg - i;
@@ -202,12 +204,11 @@ Test(my_memmem, gnulib)
             "with_567890123456789\n"
             "with_multilib_list\n";
         size_t h_len = my_strlen(h);
-        char *haystack = malloc(h_len + 1);
+        char *haystack = (char *)malloc(h_len + 1);
         size_t i;
         cr_assert(haystack);
         for (i = 0; i < h_len - my_strlen(needle); i++)
         {
-            const char *p;
             my_memcpy(haystack, h, h_len + 1);
             my_memcpy(haystack + i, needle, my_strlen(needle) + 1);
             do_one_test(haystack, my_strlen(haystack), needle, my_strlen(needle));

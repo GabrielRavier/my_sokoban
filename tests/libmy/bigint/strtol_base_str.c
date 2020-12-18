@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <limits.h>
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 static void test_strtol(const char *string, const char *base,
     long expected_result, ssize_t length)
 {
@@ -47,17 +49,17 @@ Test(my_bigint_strtol_base_str, simple_tests)
     for (int i = 0; i <= 100; ++i) {
         sprintf(buffer, "%d", i);
         test_strtol_base10(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%x", i);
+        sprintf(buffer, "%x", (unsigned)i);
         test_strtol_base16(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%o", i);
+        sprintf(buffer, "%o", (unsigned)i);
         test_strtol_base8(buffer, i, my_strlen(buffer));
     }
     for (int i = INT_MAX; i >= (INT_MAX - 100); --i) {
         sprintf(buffer, "%d", i);
         test_strtol_base10(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%x", i);
+        sprintf(buffer, "%x", (unsigned)i);
         test_strtol_base16(buffer, i, my_strlen(buffer));
-        sprintf(buffer, "%o", i);
+        sprintf(buffer, "%o", (unsigned)i);
         test_strtol_base8(buffer, i, my_strlen(buffer));
     }
     test_strtol_base10("", 0, 0);

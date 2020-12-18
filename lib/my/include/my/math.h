@@ -14,9 +14,10 @@
 // Absolute value of
 float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 
-int my_fpclassify_double(double x);
-int my_fpclassify_float(float x);
-int my_fpclassify_long_double(long double x);
+int my_fpclassify_double(double x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_fpclassify_float(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+int my_fpclassify_long_double(long double x) MY_ATTR_WARN_UNUSED_RESULT
+    MY_ATTR_CONST;
 
 // Get the classification of x
 #define my_fpclassify(x) _Generic((x),          \

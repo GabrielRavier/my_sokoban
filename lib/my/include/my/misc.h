@@ -11,9 +11,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-bool my_putnbr(int number);
-bool my_putnbr_base(int number, const char *base);
-bool my_putnbr_base_width(int number, const char *base, size_t width);
 int my_compute_power_rec(int number, int power) MY_ATTR_WARN_UNUSED_RESULT;
 int my_compute_square_root(int number) MY_ATTR_WARN_UNUSED_RESULT;
 bool my_is_prime(unsigned number) MY_ATTR_WARN_UNUSED_RESULT;

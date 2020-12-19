@@ -29,16 +29,19 @@
 #include <limits.h>
 #include <assert.h>
 
-// Avoid getting shouted at 2000 times
+// Avoid getting shouted at 2000 times because this code does some things that trigger otherwise good warnings but that we want to test here
 #ifdef __GNUC__
     #pragma GCC diagnostic ignored "-Wcast-qual"
     #pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+    #pragma GCC diagnostic ignored "-Wmissing-variable-declarations"
     #pragma GCC diagnostic ignored "-Wformat"
     #pragma GCC diagnostic ignored "-Wformat-nonliteral"
     #pragma GCC diagnostic ignored "-Wformat-extra-args"
     #pragma GCC diagnostic ignored "-Wformat-zero-length"
     #ifndef __clang__
         #pragma GCC diagnostic ignored "-Wformat-overflow"
+    #else
+        #pragma GCC diagnostic ignored "-Wformat-non-iso"
     #endif
 #endif
 
@@ -84,7 +87,7 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     if (result_us != NULL || result_libc != NULL) {
         cr_assert_str_eq(result_us, result_libc);
         cr_assert_eq(our_length, libc_length);
-        cr_assert_eq(memcmp(result_us, result_libc, our_length), 0);
+        cr_assert_eq(memcmp(result_us, result_libc, (size_t)our_length), 0);
     }
 #endif
     cr_assert_eq(our_printf_retval, libc_length);
@@ -92,7 +95,7 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
     if (result_libc) {
         if (!libc_string_file)
             libc_string_file = tmpfile();
-        fwrite(result_libc, libc_length, 1, libc_string_file);
+        fwrite(result_libc, (size_t)libc_length, 1, libc_string_file);
     }
     else
         cr_assert(our_printf_retval < 0);

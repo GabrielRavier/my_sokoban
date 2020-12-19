@@ -13,29 +13,29 @@
 #include <limits.h>
 
 static void test_strtol(const char *string, const char *base,
-    long expected_result, ssize_t length)
+    int expected_result, size_t length)
 {
     char *end_pointer;
     struct my_bigint *converted_number =
         my_bigint_strtol_base_str(string, &end_pointer, base);
     cr_assert_eq(my_bigint_compare_int(converted_number, expected_result), 0);
-    cr_assert_eq(end_pointer - string, length);
+    cr_assert_eq(end_pointer - string, (intptr_t)length);
     my_bigint_free(converted_number);
 }
 
-static void test_strtol_base10(const char *string, long expected_result,
+static void test_strtol_base10(const char *string, int expected_result,
     size_t length)
 {
     test_strtol(string, "0123456789", expected_result, length);
 }
 
-static void test_strtol_base16(const char *string, long expected_result,
+static void test_strtol_base16(const char *string, int expected_result,
     size_t length)
 {
     test_strtol(string, "0123456789abcdef", expected_result, length);
 }
 
-static void test_strtol_base8(const char *string, long expected_result,
+static void test_strtol_base8(const char *string, int expected_result,
     size_t length)
 {
     test_strtol(string, "01234567", expected_result, length);

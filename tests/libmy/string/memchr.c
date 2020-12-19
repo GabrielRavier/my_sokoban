@@ -13,7 +13,7 @@
 
 static void *zero_size_ptr(void)
 {
-    int page_size = getpagesize();
+    size_t page_size = (size_t)getpagesize();
     char *two_pages = (char *)mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     if (two_pages != (char *)(-1) && mprotect(two_pages + page_size, page_size, PROT_NONE) == 0)
         return two_pages + page_size;
@@ -28,7 +28,7 @@ static void do_one_test(const void *s, int c, size_t n)
 static void do_one_test_slash(const void *s, size_t n)
 {
     do_one_test(s, '/', n);
-    do_one_test(s, 0xFFFFFF00 | '/', n);
+    do_one_test(s, (int)(0xFFFFFF00 | '/'), n);
 }
 
 Test(my_memchr, netbsd_basic)
@@ -100,7 +100,7 @@ Test(my_memchr, netsbd_simple)
     do_one_test("", 'x', 0);
     do_one_test("", 'x', 1);
 
-    for (int i = 0; i < 2000; ++i) {
+    for (size_t i = 0; i < 2000; ++i) {
         do_one_test(buf, 'a', i);
         do_one_test(buf, 'b', i);
         do_one_test(buf, 'c', i);
@@ -162,8 +162,8 @@ Test(my_memchr, gnulib)
     for (size_t i = 0; i < 32; i++)
     {
         for (size_t j = 0; j < 256; j++)
-            input[i + j] = j;
-        for (size_t j = 0; j < 256; j++)
+            input[i + j] = (char)j;
+        for (int j = 0; j < 256; j++)
             do_one_test(input + i, j, 256);
     }
 

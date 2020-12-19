@@ -14,7 +14,7 @@
 
 static void *zero_size_ptr(void)
 {
-    int page_size = getpagesize();
+    size_t page_size = (size_t)getpagesize();
     char *two_pages = (char *)mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     if (two_pages != (char *)(-1) && mprotect(two_pages + page_size, page_size, PROT_NONE) == 0)
         return two_pages + page_size;
@@ -45,7 +45,7 @@ Test(my_memmem, netbsd_basic)
 Test(my_memmem, netbsd_oob)
 {
     static const char str[] = "abcde";
-    size_t pg = getpagesize();
+    size_t pg = (size_t)getpagesize();
     char *src = (char *)mmap(NULL, pg * 2, PROT_READ|PROT_WRITE,
                      MAP_ANON|MAP_PRIVATE, -1, (off_t)0);
     cr_assert_neq(src, MAP_FAILED); 

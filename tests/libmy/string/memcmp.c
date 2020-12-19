@@ -5,17 +5,15 @@
 ** Tests my_memcmp
 */
 
+#include "../tests_header.h"
 #include "my/string.h"
-#include <criterion/criterion.h>
 #include <time.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
-#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
-
 static void *zero_size_ptr(void)
 {
-    int page_size = getpagesize();
+    size_t page_size = (size_t)getpagesize();
     char *two_pages = (char *)mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     if (two_pages != (char *)(-1) && mprotect(two_pages + page_size, page_size, PROT_NONE) == 0)
         return two_pages + page_size;
@@ -33,7 +31,7 @@ Test(my_memcmp, basic_fuzz)
     unsigned char data1[256], data2[256];
 
     for (size_t i = 0; i < 256; ++i)
-        data1[i] = data2[i] = i ^ 0x55;
+        data1[i] = data2[i] = (unsigned char)(i ^ 0x55);
     for (size_t i = 1; i < 256; ++i)
         cr_assert_eq(my_memcmp(data1, data2, i), 0);
     for (size_t i = 1; i < 256; ++i)
@@ -45,8 +43,8 @@ Test(my_memcmp, more_fuzz)
     unsigned char data1[256], data2[256];
 
     for (size_t i = 0; i < 256; ++i) {
-        data1[i] = i;
-        data2[i] = i ^ 0x55;
+        data1[i] = (unsigned char)i;
+        data2[i] = (unsigned char)(i ^ 0x55);
     }
     for (size_t i = 1; i < 256; ++i)
         cr_assert_neq(my_memcmp(data1, data2, i), 0);

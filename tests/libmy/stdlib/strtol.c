@@ -5,11 +5,9 @@
 ** Tests my_strtol
 */
 
+#include "../tests_header.h"
 #include "my/stdlib.h"
-#include <criterion/criterion.h>
 #include <errno.h>
-
-#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
 
 static void do_one_test_with_endptr_choice(const char *num, int base, bool endptr_unchanged)
 {

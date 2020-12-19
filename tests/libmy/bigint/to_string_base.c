@@ -5,10 +5,8 @@
 ** Tests to_string_base
 */
 
+#include "../tests_header.h"
 #include "my/bigint.h"
-#include <criterion/criterion.h>
-
-#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
 
 static void do_test(const char *string, const char *base)
 {

@@ -5,21 +5,20 @@
 ** Tests my_strtol_base_str
 */
 
-#include <criterion/criterion.h>
+#include "../tests_header.h"
 #include "my/stdlib.h"
 #include "my/string.h"
 #include <stdio.h>
+#include <stdint.h>
 #include <limits.h>
 
-#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
-
 static void test_strtol(const char *string, const char *base,
-    long expected_result, ssize_t length)
+    long expected_result, size_t length)
 {
     char *end_pointer;
     cr_assert_eq(my_strtol_base_str(string, &end_pointer, base),
         expected_result);
-    cr_assert_eq(end_pointer - string, length);
+    cr_assert_eq(end_pointer - string, (intptr_t)length);
 }
 
 static void test_strtol_base10(const char *string, long expected_result,

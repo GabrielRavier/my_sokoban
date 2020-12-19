@@ -5,14 +5,12 @@
 ** Tests my_strtol_base_str
 */
 
+#include "../tests_header.h"
 #include "my/bigint.h"
-#include <criterion/criterion.h>
 #include "my/stdlib.h"
 #include "my/string.h"
 #include <stdio.h>
 #include <limits.h>
-
-#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
 
 static void test_strtol(const char *string, const char *base,
     long expected_result, ssize_t length)

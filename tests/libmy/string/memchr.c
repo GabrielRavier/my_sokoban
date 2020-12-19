@@ -5,13 +5,11 @@
 ** Tests my_memchr
 */
 
+#include "../tests_header.h"
 #include "my/string.h"
-#include <criterion/criterion.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/mman.h>
-
-#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
 
 static void *zero_size_ptr(void)
 {

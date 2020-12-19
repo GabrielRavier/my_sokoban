@@ -5,12 +5,10 @@
 ** Tests my_memmove
 */
 
+#include "../tests_header.h"
 #include "my/string.h"
 #include "my/macros.h"
-#include <criterion/criterion.h>
 #include <string.h>
-
-#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
 
 // Are tested overlapping moves of 0...MAX bytes
 #define MAX 130
@@ -80,13 +78,13 @@ Test(my_memmove, overlap_from_after)
         }
 }
 
-static void memmove_test(int dest_offset, int src_offset, size_t n)
+static void memmove_test(size_t dest_offset, size_t src_offset, size_t n)
 {
     char buffer1[0x4000];
     char buffer2[0x4000];
 
     for (size_t i = 0; i < 0x4000; ++i)
-        buffer1[i] = buffer2[i] = i % 0x100;
+        buffer1[i] = buffer2[i] = (char)(i % 0x100);
 
     memmove(buffer1 + dest_offset, buffer1 + src_offset, n);
     my_memmove(buffer2 + dest_offset, buffer2 + src_offset, n);
@@ -197,9 +195,9 @@ Test(my_memmove, osv_tests)
     memmove_test(10318, 10328, 138);
 
     for (int i = 0; i < 1000; i++) {
-        int n;
-        int destOffset = rand() % 0x4000;
-        int srcOffset = rand() % 0x4000;
+        size_t n;
+        size_t destOffset = rand() % 0x4000;
+        size_t srcOffset = rand() % 0x4000;
         // Calculate number of bytes so that source and dest overlap
         if (destOffset < srcOffset) {
             n = MY_MIN(srcOffset - destOffset + 128, 0x4000 - srcOffset);

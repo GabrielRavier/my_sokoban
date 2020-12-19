@@ -124,17 +124,17 @@ static void do_linux_kernel_selftests(bool is_large)
     munmap(p + MAP_SIZE, MAP_SIZE);
     munmap(p + 3 * MAP_SIZE, MAP_SIZE);
 
-    srandom(time(NULL));
+    srandom((unsigned)time(NULL));
 
     for (size_t i = 0; i < iterations; ++i) {
         for (size_t j = 0; j < alloc_size; ++j)
-            s1[j] = random();
-        char *rand_s1 = s1 + (random() % MAX_OFFSET_DIFF_S1_S2);
-        char *rand_s2 = s2 + (random() % MAX_OFFSET_DIFF_S1_S2);
+            s1[j] = (char)random();
+        char *rand_s1 = s1 + ((size_t)random() % MAX_OFFSET_DIFF_S1_S2);
+        char *rand_s2 = s2 + ((size_t)random() % MAX_OFFSET_DIFF_S1_S2);
         my_memcpy(rand_s2, rand_s1, comp_size);
 
-        size_t changed_byte = random() % comp_size;
-        rand_s2[changed_byte] = random() & 0xFF;
+        size_t changed_byte = (size_t)random() % comp_size;
+        rand_s2[changed_byte] = (char)(random() & 0xFF);
 
         if (is_large)
             test_one_linux_kernel_selftests(rand_s1, rand_s2, LARGE_MAX_OFFSET, LARGE_SIZE_START, comp_size);
@@ -142,19 +142,19 @@ static void do_linux_kernel_selftests(bool is_large)
             test_one_linux_kernel_selftests(rand_s1, rand_s2, SIZE, 0, comp_size);
     }
 
-    srandom(time(NULL));
+    srandom((unsigned)time(NULL));
 
     for (size_t i = 0; i < iterations; ++i) {
         for (size_t j = 0; j < alloc_size; ++j)
-            s1[j] = random();
-        char *rand_s1 = s1 + (random() % MAX_OFFSET_DIFF_S1_S2);
-        char *rand_s2 = s2 + (random() % MAX_OFFSET_DIFF_S1_S2);
+            s1[j] = (char)random();
+        char *rand_s1 = s1 + ((size_t)random() % MAX_OFFSET_DIFF_S1_S2);
+        char *rand_s2 = s2 + ((size_t)random() % MAX_OFFSET_DIFF_S1_S2);
         my_memcpy(rand_s2, rand_s1, comp_size);
 
         // Change 1/8th of the bytes, randomly
         for (size_t j = 0; j < (comp_size / 8); ++j) {
-            size_t changed_byte = random() % comp_size;
-            rand_s2[changed_byte] = random() & 0xFF;
+            size_t changed_byte = (size_t)random() % comp_size;
+            rand_s2[changed_byte] = (char)(random() & 0xFF);
         }
 
         if (is_large)

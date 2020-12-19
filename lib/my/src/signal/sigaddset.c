@@ -15,6 +15,7 @@ int my_sigaddset(sigset_t *set, int signum)
         errno = EINVAL;
         return (-1);
     }
-    set->__val[(signum - 1) / ULONG_WIDTH] |= (1ULL << ((signum - 1) % ULONG_WIDTH));
+    set->__val[(signum - 1) / ULONG_WIDTH] |=
+        (1ULL << ((signum - 1) % ULONG_WIDTH));
     return (0);
 }

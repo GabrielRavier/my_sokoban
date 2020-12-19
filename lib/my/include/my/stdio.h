@@ -26,14 +26,16 @@ int my_puts(const char *string);
 // Writes formatted output to stdout
 int my_printf(const char *format, ...) MY_ATTR_FORMAT(printf, 1, 2);
 
-// Like my_printf, except it takes a va_list instead of a variables amount of arguments
+// Like my_printf, except it takes a va_list instead of a variables amount of
+// arguments
 int my_vprintf(const char *format, va_list arguments)
     MY_ATTR_FORMAT(printf, 1, 0);
 
 // Writes formatted output to the given file descriptor
 int my_dprintf(int fd, const char *format, ...) MY_ATTR_FORMAT(printf, 2, 3);
 
-// Like my_dprintf, except it takes a va_list instead of a variables amount of arguments
+// Like my_dprintf, except it takes a va_list instead of a variables amount of
+// arguments
 int my_vdprintf(int fd, const char *format, va_list arguments)
     MY_ATTR_FORMAT(printf, 2, 0);
 
@@ -43,7 +45,8 @@ int my_vdprintf(int fd, const char *format, va_list arguments)
 int my_asprintf(char **result_string_ptr, const char *format, ...)
     MY_ATTR_FORMAT(printf, 2, 3) MY_ATTR_WARN_UNUSED_RESULT;
 
-// Like my_asprintf, except it takes a va_list instead of a variables amount of arguments
+// Like my_asprintf, except it takes a va_list instead of a variables amount of
+// arguments
 int my_vasprintf(char **result_string_ptr, const char *format,
     va_list arguments) MY_ATTR_FORMAT(printf, 2, 0) MY_ATTR_WARN_UNUSED_RESULT;
 

@@ -71,7 +71,7 @@ my_memmem:
     mov ecx, ebx
     xorps xmm0, xmm0
     mov r13d, 1
-    mov qword ptr [rsp + 8], rdi # 8-byte Spill
+    mov qword ptr [rsp + 8], rdi
     mov qword ptr [rsp + 8*rax + 48], 1
     shl rdx, cl
     shr rax, 6

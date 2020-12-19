@@ -33,8 +33,8 @@ my_memchr:
     jb .Lstart_trailing_bytes_loop
 
     movzx ecx, sil
-    movabs r8, -9187201950435737472
-    movabs r9, -72340172838076673
+    movabs r8, 0x7F7F7F7F7F7F7F80
+    movabs r9, -0x101010101010101
     mov edi, ecx
     shl edi, 8
     or edi, ecx

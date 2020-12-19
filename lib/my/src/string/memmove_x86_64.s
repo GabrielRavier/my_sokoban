@@ -296,7 +296,7 @@ my_memmove:
 
     .cfi_endproc
     .size my_memmove, . - my_memmove
-    
+
     # Just make my_memcpy an alias for my_memmove
     .globl my_memcpy
     .set my_memcpy, my_memmove

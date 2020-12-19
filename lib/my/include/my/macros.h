@@ -31,9 +31,17 @@
 
 // Determines the amount of elements in an array. Will fail to compile on things
 // that aren't arrays
-#define MY_ARRAY_SIZE(array) \
-    (__extension__ (sizeof(array) / sizeof((array)[0]) + \
-        MY_BUILD_BUG_ON_NON_ARRAY(array)))
+#ifndef __cplusplus
+// Ignore the C++ compatibility warning here, we aren't even enabling this in
+// C++ (use std::size instead)
+#define MY_ARRAY_SIZE(array) (__extension__({    \
+    _Pragma("GCC diagnostic push"); \
+    _Pragma("GCC diagnostic ignored \"-Wc++-compat\"") \
+    size_t result = (sizeof(array) / sizeof((array)[0]) + \
+                     MY_BUILD_BUG_ON_NON_ARRAY(array)); \
+    _Pragma("GCC diagnostic pop"); \
+    result;}))
+#endif
 
 // Only compares a and b once, to avoid side effects
 #define MY_MAKE_MIN_MAX_COMPARE_ONCE(a, b, unique_identifier_a, \

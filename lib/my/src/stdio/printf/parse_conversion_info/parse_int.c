@@ -9,7 +9,7 @@
 #include "my/ctype.h"
 #include <limits.h>
 
-static void do_loop_iter(int *result, char digit)
+static void do_loop_iter(int *result, unsigned char digit)
 {
     if (*result > (INT_MAX / 10)) {
         *result = -1;
@@ -29,7 +29,7 @@ int asprintf_parse_int(const char **to_parse)
 
     while (my_isdigit(*++*to_parse)) {
         if (result >= 0)
-            do_loop_iter(&result, (char)(**to_parse - '0'));
+            do_loop_iter(&result, (unsigned char)(**to_parse - '0'));
         if (result < 0)
             break;
     }

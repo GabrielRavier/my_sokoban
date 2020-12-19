@@ -27,7 +27,8 @@ void my_qsort_r(void *base, size_t num_elements, size_t element_size,
 // Changes the size of the memory block pointed to by ptr of original_length
 // bytes to new_length bytes.
 void *my_realloc_size(void *ptr, size_t new_length, size_t original_length)
-    MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_NOTHROW MY_ATTR_ALLOC_SIZE((2));
+    MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_NOTHROW MY_ATTR_ALLOC_SIZE((2))
+    MY_ATTR_MALLOC;
 
 // This allows an arbitrary amount of signs before the number, and handles them
 // appropriately, so this doesn't behave exactly identically to strtol. It also

@@ -238,11 +238,6 @@ Test(my_memchr, avr_libc)
            '*', 320);
 }
 
-Test(my_memchr, cloudlibc_null)
-{
-    do_one_test(NULL, 'A', 0);
-}
-
 Test(my_memchr, cloudlibc_match)
 {
     char buf[] = "Foo bar baz";
@@ -259,7 +254,6 @@ Test(my_memchr, dietlibc)
 {
     const char* test="blubber";
     do_one_test("aaaa", 'x', 4);
-    do_one_test(0, 'x', 0);
     do_one_test(test, 'u', 2);
     do_one_test(test, 'u', 7);
     do_one_test(test, 'b', 7);

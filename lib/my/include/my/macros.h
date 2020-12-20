@@ -39,7 +39,7 @@
     _Pragma("GCC diagnostic push"); \
     _Pragma("GCC diagnostic ignored \"-Wc++-compat\"") \
     result = (sizeof(array) / sizeof((array)[0]) + \
-                     MY_BUILD_BUG_ON_NON_ARRAY(array)); \
+        MY_BUILD_BUG_ON_NON_ARRAY(array)); \
     _Pragma("GCC diagnostic pop"); \
     result;}))
 #endif

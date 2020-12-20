@@ -33,7 +33,6 @@
 #ifdef __GNUC__
     #pragma GCC diagnostic ignored "-Wcast-qual"
     #pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
-    #pragma GCC diagnostic ignored "-Wmissing-variable-declarations"
     #pragma GCC diagnostic ignored "-Wformat"
     #pragma GCC diagnostic ignored "-Wformat-nonliteral"
     #pragma GCC diagnostic ignored "-Wformat-extra-args"
@@ -42,6 +41,7 @@
         #pragma GCC diagnostic ignored "-Wformat-overflow"
     #else
         #pragma GCC diagnostic ignored "-Wformat-non-iso"
+        #pragma GCC diagnostic ignored "-Wmissing-variable-declarations"
     #endif
 #endif
 

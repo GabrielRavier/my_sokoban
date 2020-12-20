@@ -15,4 +15,4 @@
     for (; first != (last); ++first) \
         if (*first == (old_value)) \
             *first = (new_value); \
-    } while(0)
+    } while (0)

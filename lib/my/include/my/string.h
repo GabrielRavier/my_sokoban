@@ -48,7 +48,8 @@ char *my_strncat(char *destination, const char *source, size_t n)
     MY_ATTR_NOTHROW MY_ATTR_NONNULL((1, 2)) MY_ATTR_ACCESS((read_write, 1))
     MY_ATTR_ACCESS((read_only, 2, 3));
 
-// Returns a pointer to the first occurence of the given character in the given string
+// Returns a pointer to the first occurence of the given character in the given
+// string
 char *my_strchr(const char *str, int character) MY_ATTR_NOTHROW
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE MY_ATTR_NONNULL((1))
     MY_ATTR_ACCESS((read_only, 1));

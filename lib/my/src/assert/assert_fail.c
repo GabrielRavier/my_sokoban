@@ -14,7 +14,7 @@
 _Noreturn static void error_in_assert(void)
 {
     const int ok_yeah_just_ignore_this_return_value = my_dputs(
-        "\n\nCouldn't fully print assert error message", STDERR_FILENO);
+        "\n\nCouldn't fully print assert error message\n", STDERR_FILENO);
     (void)ok_yeah_just_ignore_this_return_value;
     __builtin_trap();
 }

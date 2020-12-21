@@ -19,7 +19,7 @@ override CFLAGS += -D_GNU_SOURCE
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/algorithm my/assert my/bigint my/checked_multiply my/config my/ctype my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
+HEADER_FILES := my my/algorithm my/assert my/bigint my/config my/ctype my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -56,9 +56,6 @@ SOURCE_FILES += strings/strcasecmp
 
 # Stuff related to my_bigint
 SOURCE_FILES += bigint/new_from_int bigint/strtol_base_str bigint/assign bigint/add bigint/add_unsigned bigint/compare bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/mul bigint/div bigint/mod bigint/div_mod bigint/neg bigint/to_int bigint/to_string_base bigint/free
-
-# Stuff related to my_checked_multiply
-SOURCE_FILES += checked_multiply/int checked_multiply/unsigned
 
 # Stuff related to my_string
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free

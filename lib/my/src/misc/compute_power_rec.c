@@ -6,7 +6,6 @@
 */
 
 #include "my/misc.h"
-#include "my/checked_multiply.h"
 
 int my_compute_power_rec(int number, int power)
 {
@@ -18,9 +17,9 @@ int my_compute_power_rec(int number, int power)
         return (1);
     if (power % 2 == 0) {
         result = my_compute_power_rec(number, power / 2);
-        if (!my_checked_multiply_int(result, result, &result))
+        if (__builtin_mul_overflow(result, result, &result))
             return (0);
-    } else if (!my_checked_multiply_int(
+    } else if (__builtin_mul_overflow(
             number, my_compute_power_rec(number, power - 1), &result))
         return (0);
     return (result);

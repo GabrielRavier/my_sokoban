@@ -6,7 +6,6 @@
 */
 
 #include "my/misc.h"
-#include "my/checked_multiply.h"
 #include <stdbool.h>
 
 // From my_compute_square_root.c
@@ -20,7 +19,7 @@ static unsigned internal_get_square_root_floor(unsigned nb)
         return (nb);
     small_candidate = internal_get_square_root_floor(nb >> 2u) << 1u;
     large_candidate = small_candidate + 1;
-    if (!my_checked_multiply_unsigned(large_candidate, large_candidate,
+    if (__builtin_mul_overflow(large_candidate, large_candidate,
             &multiply_result) || (multiply_result > nb))
         return (small_candidate);
     return (large_candidate);

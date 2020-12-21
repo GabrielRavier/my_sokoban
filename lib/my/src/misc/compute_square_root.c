@@ -6,7 +6,6 @@
 */
 
 #include "my/misc.h"
-#include "my/checked_multiply.h"
 #include <limits.h>
 
 // Returns 0 if the result we have is not the correct square root for nb,
@@ -14,7 +13,7 @@
 static int check_result(int result, int number)
 {
     int mul_result;
-    if (my_checked_multiply_int(result, result, &mul_result) &&
+    if (!__builtin_mul_overflow(result, result, &mul_result) &&
         mul_result == number)
         return (result);
     return (0);
@@ -30,7 +29,7 @@ static int try_find_square_root(int number)
         return (number);
     small_candidate = try_find_square_root(number >> 2) << 1;
     large_candidate = small_candidate + 1;
-    if (!my_checked_multiply_int(large_candidate, large_candidate,
+    if (__builtin_mul_overflow(large_candidate, large_candidate,
             &multiply_result) || (multiply_result > number))
         return (small_candidate);
     return (large_candidate);

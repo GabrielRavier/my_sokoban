@@ -41,7 +41,7 @@ SOURCE_FILES += signal/sigaddset
 SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
 
 # Stuff related to stdlib.h
-SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_base_str stdlib/strtol_base_str_part2 stdlib/strtol stdlib/abs
+SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_base_str stdlib/strtol_base_str_part2 stdlib/strtol stdlib/abs stdlib/abort
 
 # Stuff related to string.h
 SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memset
@@ -76,8 +76,8 @@ TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FIL
 
 tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 	rm -rf obj/src
-	$(MAKE) ../libmy.a CFLAGS="$(CFLAGS) --coverage"
-	$(CC) -o $@ $(CFLAGS) -L.. $(TESTS_OBJECT_FILES) -lcriterion -lmy --coverage
+	$(MAKE) ../libmy.a CFLAGS="$(CFLAGS) --coverage -DLIBMY_COVERAGE"
+	$(CC) -o $@ $(CFLAGS) -L.. $(TESTS_OBJECT_FILES) -lcriterion -lmy --coverage -DLIBMY_COVERAGE
 
 ../../include/%.h: include/%.h
 	@mkdir --parents ../../include/my/internal
@@ -108,7 +108,7 @@ obj/tests/%.o: ../../tests/libmy/%.c
 	@mkdir --parents obj/tests/stdio/printf
 	@mkdir --parents obj/tests/stdlib
 	@mkdir --parents obj/tests/string
-	$(CC) -c $< -o $@ $(CFLAGS) --coverage
+	$(CC) -c $< -o $@ $(CFLAGS) --coverage -DLIBMY_COVERAGE
 
 # Include dependencies
 include $(shell [ -d obj ] && find obj/ -type f -name '*.d')

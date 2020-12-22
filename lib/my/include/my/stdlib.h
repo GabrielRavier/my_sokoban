@@ -43,6 +43,9 @@ long my_strtol(const char *num_ptr, char **end_num_ptr, int base)
 // Computes the absolute value of an integer
 int my_abs(int x) MY_ATTR_NOTHROW MY_ATTR_CONST MY_ATTR_WARN_UNUSED_RESULT;
 
+// Causes abnormal process termination
+void my_abort(void) MY_ATTR_NOTHROW MY_ATTR_NORETURN;
+
 static inline void my_free_ptr(void *ptr)
 {
     free(*(void **)ptr);

@@ -8,6 +8,7 @@
 #include "my/assert.h"
 #include "my/misc.h"
 #include "my/stdio.h"
+#include "my/stdlib.h"
 #include <stdio.h>
 #include <unistd.h>
 
@@ -27,5 +28,5 @@ void my_assert_fail(const char *expression, const char *file_name,
     if (my_printf("%s:%d: %s: Assertion '%s' failed.\n",
         file_name, line_number, function_name, expression) < 0)
         error_in_assert();
-    __builtin_trap();
+    my_abort();
 }

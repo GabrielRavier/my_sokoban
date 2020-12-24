@@ -13,7 +13,6 @@ void __gcov_flush(void);
     #define __gcov_flush()
 #endif
 
-
 void my_abort(void)
 {
     __builtin_trap();

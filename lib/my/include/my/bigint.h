@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "my/config.h"
-#include "my/my_string.h"
+#include "config.h"
+#include "my_string.h"
 #include <unistd.h>
 #include <stdbool.h>
 

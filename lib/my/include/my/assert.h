@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "my/config.h"
+#include "config.h"
 #include <stdbool.h>
 
 _Noreturn void my_assert_fail(const char *expression, const char *file_name,

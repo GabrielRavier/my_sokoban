@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "my/config.h"
+#include "../config.h"
 #include <stdbool.h>
 
 bool my_find_digit_from_base(const char *digit_character_ptr, const char *base,

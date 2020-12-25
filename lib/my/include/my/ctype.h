@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "my/config.h"
+#include "config.h"
 #include <ctype.h>
 
 // Checks for any printable character (including space)

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "my/config.h"
+#include "config.h"
 #include <stdio.h>
 #include <stdarg.h>
 

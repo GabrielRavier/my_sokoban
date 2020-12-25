@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "my/internal/printf/parse_conversion_info.h"
-#include "my/my_string.h"
+#include "parse_conversion_info.h"
+#include "../../my_string.h"
 #include <stdbool.h>
 
 // Returns whether we should just stop

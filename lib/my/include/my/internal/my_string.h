@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "my/my_string.h"
+#include "../my_string.h"
 #include <stddef.h>
 
 // Guarantees that at least self->length + length + 1 bytes are allocated in

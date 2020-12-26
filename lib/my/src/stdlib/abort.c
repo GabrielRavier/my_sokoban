@@ -15,5 +15,6 @@ void __gcov_flush(void);
 
 void my_abort(void)
 {
+    __gcov_flush();
     __builtin_trap();
 }

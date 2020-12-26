@@ -31,8 +31,8 @@ static bool do_option_with_arg(const struct do_option_args *args)
         if (args->argv[optind + 1] == NULL) {
             if (opterr && *args->optstring != ':')
                 my_dprintf(STDERR_FILENO,
-                           "%s: option requires an argument: %c\n", args->argv[0],
-                           optopt);
+                    "%s: option requires an argument: %c\n", args->argv[0],
+                    optopt);
             return (false);
         }
         *args->optposition = 1;

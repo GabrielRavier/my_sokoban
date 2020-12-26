@@ -19,7 +19,7 @@ override CFLAGS += -D_GNU_SOURCE
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/algorithm my/assert my/bigint my/config my/ctype my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
+HEADER_FILES := my my/algorithm my/assert my/bigint my/config my/ctype my/getopt my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -30,6 +30,9 @@ SOURCE_FILES := assert/assert_fail
 
 # Stuff related to ctype.h
 SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/isalpha ctype/isalnum ctype/isspace ctype/toupper ctype/tolower
+
+# Stuff related to getopt.h
+SOURCE_FILES += getopt/getopt
 
 # Stuff related to math.h
 SOURCE_FILES += math/fabsf math/fpclassify
@@ -92,6 +95,7 @@ obj/%.o: %.c
 	@mkdir --parents obj/src/bigint
 	@mkdir --parents obj/src/checked_multiply
 	@mkdir --parents obj/src/ctype
+	@mkdir --parents obj/src/getopt
 	@mkdir --parents obj/src/math
 	@mkdir --parents obj/src/misc
 	@mkdir --parents obj/src/my_string

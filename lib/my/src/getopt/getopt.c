@@ -44,8 +44,9 @@ static bool do_option_with_arg(const struct do_option_args *args)
 
 static int do_option(const struct do_option_args *args)
 {
-    if (args->option[1] == ':' && !do_option_with_arg(args))
-        return (*args->optstring == ':' ? ':' : '?');
+    if (args->option[1] == ':')
+        return (do_option_with_arg(args) ? (optopt) : (*args->optstring == ':' ?
+            ':' : '?'));
     if (args->argument[++*args->optposition] == '\0') {
         *args->optposition = 1;
         ++optind;

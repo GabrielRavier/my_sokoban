@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../../config.h"
+#include "../../features.h"
 #include <stdbool.h>
 #include <stdarg.h>
 

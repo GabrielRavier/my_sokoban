@@ -19,7 +19,7 @@ override CFLAGS += -D_GNU_SOURCE
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/algorithm my/assert my/bigint my/config my/ctype my/getopt my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
+HEADER_FILES := my my/algorithm my/assert my/bigint my/ctype my/features my/getopt my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)

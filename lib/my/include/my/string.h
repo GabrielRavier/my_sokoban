@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "config.h"
+#include "features.h"
 #include <stddef.h>
 
 // Calcualtes the length of the given string

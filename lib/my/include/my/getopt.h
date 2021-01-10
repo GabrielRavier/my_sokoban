@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "config.h"
+#include "features.h"
 #include <getopt.h>
 
 int my_getopt(int argc, char **argv, const char *optstring)

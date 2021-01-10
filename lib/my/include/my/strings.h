@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "config.h"
+#include "features.h"
 #include <stddef.h>
 
 // Compares two strings, ignoring case

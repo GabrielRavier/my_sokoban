@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <stdbool.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 struct do_option_args {
     char **argv;
     const char *optstring;

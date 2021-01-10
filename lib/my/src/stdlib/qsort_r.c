@@ -9,8 +9,11 @@
 #include "my/stdlib.h"
 #include "my/string.h"
 #include "my/macros.h"
+#include "my/features.h"
 
-static void swap_elements(char *elem1, char *elem2, size_t element_size)
+MY_ATTR_ACCESS((read_write, 1, 3)) MY_ATTR_ACCESS((read_write, 2, 3))
+MY_ATTR_NONNULL((1, 2)) static void swap_elements(char *elem1, char *elem2,
+    size_t element_size)
 {
     char buffer[1000];
     size_t copy_size;

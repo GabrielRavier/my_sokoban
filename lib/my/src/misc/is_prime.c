@@ -6,10 +6,11 @@
 */
 
 #include "my/misc.h"
+#include "my/features.h"
 #include <stdbool.h>
 
 // From my_compute_square_root.c
-static unsigned internal_get_square_root_floor(unsigned nb)
+MY_ATTR_CONST static unsigned internal_get_square_root_floor(unsigned nb)
 {
     unsigned small_candidate;
     unsigned large_candidate;

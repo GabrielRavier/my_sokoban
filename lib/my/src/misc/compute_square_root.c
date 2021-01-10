@@ -6,6 +6,7 @@
 */
 
 #include "my/misc.h"
+#include "my/features.h"
 #include <limits.h>
 
 // Returns 0 if the result we have is not the correct square root for nb,
@@ -19,7 +20,7 @@ static int check_result(int result, int number)
     return (0);
 }
 
-static int try_find_square_root(int number)
+MY_ATTR_CONST static int try_find_square_root(int number)
 {
     int small_candidate;
     int large_candidate;

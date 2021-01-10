@@ -13,7 +13,7 @@
 
 int my_compute_power_rec(int number, int power) MY_ATTR_WARN_UNUSED_RESULT
     MY_ATTR_CONST;
-int my_compute_square_root(int number) MY_ATTR_WARN_UNUSED_RESULT;
+int my_compute_square_root(int number) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 bool my_is_prime(unsigned number) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 int my_find_prime_sup(int number) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 char *my_revstr(char *string);

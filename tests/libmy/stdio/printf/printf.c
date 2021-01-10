@@ -96,8 +96,7 @@ MY_ATTRIBUTE((format(printf, 1, 2))) static void compare_printfs(const char *for
         if (!libc_string_file)
             libc_string_file = tmpfile();
         fwrite(result_libc, (size_t)libc_length, 1, libc_string_file);
-    }
-    else
+    } else
         cr_assert(our_printf_retval < 0);
 
 #ifndef NO_MY_VASPRINTF

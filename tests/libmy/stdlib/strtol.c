@@ -9,7 +9,8 @@
 #include "my/stdlib.h"
 #include <errno.h>
 
-static void do_one_test_with_endptr_choice(const char *num, int base, bool endptr_unchanged)
+static void do_one_test_with_endptr_choice(const char *num, int base,
+    bool endptr_unchanged)
 {
     char *end_num_ptr_us = (char *)0xDEADBEEF;
     char *end_num_ptr_libc;

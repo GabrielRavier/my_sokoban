@@ -21,9 +21,12 @@ static void *zero_size_ptr(void)
     return NULL;
 }
 
-static void do_one_test(const void *haystack, size_t haystack_length, const void *needle, size_t needle_length)
+static void do_one_test(const void *haystack, size_t haystack_length,
+    const void *needle, size_t needle_length)
 {
-    cr_assert_eq(my_memmem(haystack, haystack_length, needle, needle_length), memmem(haystack, haystack_length, needle, needle_length));
+    cr_assert_eq(
+        my_memmem(haystack, haystack_length, needle, needle_length),
+        memmem(haystack, haystack_length, needle, needle_length));
 }
 
 Test(my_memmem, netbsd_basic)
@@ -90,8 +93,7 @@ Test(my_memmem, gnulib)
     }
     /* Check that length 0 does not dereference the pointer.  */
     void *page_boundary = zero_size_ptr();
-    if (page_boundary)
-    {
+    if (page_boundary) {
         do_one_test(page_boundary, 0, "foo", 3);
 
         const char input[] = "foo";
@@ -99,7 +101,7 @@ Test(my_memmem, gnulib)
     }
 
     /* Check that a very long haystack is handled quickly if the needle is
-     short and occurs near the beginning.  */
+       short and occurs near the beginning.  */
     {
         size_t repeat = 10000;
         size_t m = 1000000;
@@ -108,8 +110,7 @@ Test(my_memmem, gnulib)
             "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         size_t n = my_strlen(needle);
         char *haystack = (char *)malloc(m + 1);
-        if (haystack != NULL)
-        {
+        if (haystack != NULL) {
             my_memset(haystack, 'A', m);
             haystack[0] = 'B';
 
@@ -129,8 +130,7 @@ Test(my_memmem, gnulib)
             "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB";
         size_t n = my_strlen(haystack);
         char *needle = (char *)malloc(m + 1);
-        if (needle != NULL)
-        {
+        if (needle != NULL) {
             my_memset(needle, 'A', m);
             for (; repeat > 0; repeat--)
                 do_one_test(haystack, n, needle, m);
@@ -143,8 +143,7 @@ Test(my_memmem, gnulib)
         size_t m = 1000000;
         char *haystack = (char *)malloc(2 * m + 1);
         char *needle = (char *)malloc(m + 1);
-        if (haystack != NULL && needle != NULL)
-        {
+        if (haystack != NULL && needle != NULL) {
             my_memset(haystack, 'A', 2 * m);
             haystack[2 * m] = 'B';
 
@@ -165,8 +164,7 @@ Test(my_memmem, gnulib)
         size_t n = 1000;
         char *haystack = (char *)malloc(m);
         char *needle = (char *)malloc(n);
-        if (haystack != NULL && needle != NULL)
-        {
+        if (haystack != NULL && needle != NULL) {
             my_memset(haystack, 'A', m);
             my_memset(needle, 'B', n);
             for (; repeat > 0; repeat--)
@@ -205,13 +203,12 @@ Test(my_memmem, gnulib)
         char *haystack = (char *)malloc(h_len + 1);
         size_t i;
         cr_assert(haystack);
-        for (i = 0; i < h_len - my_strlen(needle); i++)
-        {
+        for (i = 0; i < h_len - my_strlen(needle); i++) {
             my_memcpy(haystack, h, h_len + 1);
             my_memcpy(haystack + i, needle, my_strlen(needle) + 1);
             do_one_test(haystack, my_strlen(haystack), needle, my_strlen(needle));
         }
-        free (haystack);
+        free(haystack);
     }
 
     /* Test long needles.  */
@@ -219,8 +216,7 @@ Test(my_memmem, gnulib)
         size_t m = 1024;
         char *haystack = (char *)malloc(2 * m + 1);
         char *needle = (char *)malloc(m + 1);
-        if (haystack != NULL && needle != NULL)
-        {
+        if (haystack != NULL && needle != NULL) {
             haystack[0] = 'x';
             my_memset(haystack + 1, ' ', m - 1);
             my_memset(haystack + m, 'x', m);

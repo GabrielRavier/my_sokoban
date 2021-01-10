@@ -51,7 +51,7 @@ void my_qsort_r(void *base, size_t num_elements, size_t element_size,
     int (*comparison_function)(const void *, const void *, void *),
     void *argument)
 {
-    if(num_elements <= 1)
+    if (num_elements <= 1)
         return;
     for (size_t i = (num_elements + 1) >> 1; i != 0; --i)
         qsort_fix((char *)base, i - 1, num_elements - 1, element_size,

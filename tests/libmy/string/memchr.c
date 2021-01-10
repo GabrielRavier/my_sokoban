@@ -149,7 +149,7 @@ Test(my_memchr, gnulib)
     do_one_test(input + 1, 'a', n - 1);
     do_one_test(input + 1, 'e', n - 1);
     do_one_test(input + 1, 0x789ABC00 | 'e', n - 1);
-    
+
     /* Check that a very long haystack is handled quickly if the byte is
        found near the beginning.  */
     {
@@ -157,10 +157,9 @@ Test(my_memchr, gnulib)
         for (; repeat > 0; repeat--)
             do_one_test(input, 'c', n);
     }
-    
+
     /* Alignment tests.  */
-    for (size_t i = 0; i < 32; i++)
-    {
+    for (size_t i = 0; i < 32; i++) {
         for (size_t j = 0; j < 256; j++)
             input[i + j] = (char)j;
         for (int j = 0; j < 256; j++)
@@ -179,16 +178,13 @@ Test(my_memchr, gnulib)
            and the test takes cubically longer to complete.  */
         size_t limit = 257;
 
-        if (page_boundary != NULL)
-        {
-            for (size_t i = 1; i <= limit; i++)
-            {
+        if (page_boundary != NULL) {
+            for (size_t i = 1; i <= limit; i++) {
                 char *mem = page_boundary - i;
                 my_memset(mem, 'X', i);
                 do_one_test(mem, 'U', i);
                 do_one_test(mem, 0, i);
-                for (size_t j = 0; j < i; j++)
-                {
+                for (size_t j = 0; j < i; j++) {
                     mem[j] = 'U';
                     for (size_t k = j + 1; k < i + limit; k++)
                         do_one_test(mem, 'U', k);
@@ -209,7 +205,7 @@ Test(my_memchr, avr_libc)
     do_one_test("", 0, 0);
     do_one_test("", 255, 0);
     do_one_test("ABCDEF", 'a', 6);
-    
+
     /* Found    */
     do_one_test("\000", 0, 1);
     do_one_test("\001", 1, 1);
@@ -224,11 +220,11 @@ Test(my_memchr, avr_libc)
     /* First occurance  */
     do_one_test("abcdabcd", 'b', 8);
     do_one_test("........", '.', 8);
-    
+
     /* 'c' converted to a char  */
-    do_one_test("ABCDEF", 'A'+0x100, 6);
+    do_one_test("ABCDEF", 'A' + 0x100, 6);
     do_one_test("ABCDE\377", ~0, 6);
-    
+
     /* Very long string */
     do_one_test("................................................................"
            "................................................................"
@@ -252,11 +248,11 @@ Test(my_memchr, cloudlibc_nomatch)
 
 Test(my_memchr, dietlibc)
 {
-    const char* test="blubber";
+    const char *test = "blubber";
     do_one_test("aaaa", 'x', 4);
     do_one_test(test, 'u', 2);
     do_one_test(test, 'u', 7);
     do_one_test(test, 'b', 7);
-    do_one_test(test+6, 'r', 1);
-    do_one_test(test+7, 0, 100);
+    do_one_test(test + 6, 'r', 1);
+    do_one_test(test + 7, 0, 100);
 }

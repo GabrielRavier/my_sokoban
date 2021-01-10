@@ -36,8 +36,7 @@ int my_fpclassify_float(float x)
     return (int_x == 0) ? FP_ZERO :
         (int_x < 0x800000) ? FP_SUBNORMAL :
         (int_x >= 0x7F800000) ?
-            ((int_x > 0x7F800000) ? FP_NAN : FP_INFINITE) :
-            FP_NORMAL;
+        ((int_x > 0x7F800000) ? FP_NAN : FP_INFINITE) : FP_NORMAL;
 }
 
 // Assumes x86 80-bit long double format

@@ -10,8 +10,8 @@
 #ifdef __GNUC__
     #define MY_ATTRIBUTE(attr) __attribute__(attr)
     #define MY_PRETTY_FUNCTION __extension__ __PRETTY_FUNCTION__
-    #define MY_GCC_AT_LEAST_VER(major, minor) ((__GNUC__ << 16) + \
-        __GNUC_MINOR__ >= ((major) << 16) + (minor))
+    #define MY_GCC_AT_LEAST_VER(major, minor) \
+        ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((major) << 16) + (minor))
 #else
     #define MY_ATTRIBUTE(attr)
     #define MY_PRETTY_FUNCTION __func__

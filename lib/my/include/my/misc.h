@@ -19,13 +19,10 @@ char *my_revstr(char *string);
 char *my_strupcase(char *string);
 char *my_strlowcase(char *string);
 char *my_strcapitalize(char *string);
-bool my_str_isalpha(const char *string) MY_ATTR_WARN_UNUSED_RESULT
-    MY_ATTR_PURE;
+bool my_str_isalpha(const char *string) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
 bool my_str_isnum(const char *string) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
-bool my_str_islower(const char *string) MY_ATTR_WARN_UNUSED_RESULT
-    MY_ATTR_PURE;
-bool my_str_isupper(const char *string) MY_ATTR_WARN_UNUSED_RESULT
-    MY_ATTR_PURE;
+bool my_str_islower(const char *string) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
+bool my_str_isupper(const char *string) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
 bool my_str_isprintable(const char *string) MY_ATTR_WARN_UNUSED_RESULT
     MY_ATTR_PURE;
 size_t my_count_byte_occurences(const char *first, const char *last,

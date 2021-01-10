@@ -54,7 +54,7 @@ int my_fpclassify_long_double(long double x)
     u.sign_exponent &= 0x7FFF;
     if (((uint32_t)u.sign_exponent | u.lsw | u.msw) == 0)
         return FP_ZERO;
-    else if (u.sign_exponent == 0 && (u.lsw & 0x80000000) == 0)
+    if (u.sign_exponent == 0 && (u.lsw & 0x80000000) == 0)
         return FP_SUBNORMAL;
     if (u.sign_exponent == 0x7FFF)
         return ((u.msw & 0x7FFFFFFF) | u.lsw) != 0 ? FP_NAN : FP_INFINITE;

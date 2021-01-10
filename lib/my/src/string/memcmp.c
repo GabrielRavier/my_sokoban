@@ -23,5 +23,5 @@ int my_memcmp(const void *s1, const void *s2, size_t length)
 // valid bcmp (though the inverse is not true). We do this here, as this
 // would error if we didn't do it in the same TU as the one where memcmp is
 // defined
-int my_bcmp(const void *, const void *, size_t)
+int my_bcmp(const void *s1, const void *s2, size_t n)
     MY_ATTRIBUTE((alias("my_memcmp")));

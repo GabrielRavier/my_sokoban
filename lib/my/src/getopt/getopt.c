@@ -79,7 +79,7 @@ int my_getopt(int argc, char **argv, const char *optstring)
     argument = argv[optind];
     if (check_ret_min_1(argument))
         return (-1);
-    optopt = argument[optposition];
+    optopt = (int)argument[optposition];
     option = my_strchr(optstring, optopt);
     if (option)
         return (do_option(&((const struct do_option_args){argv, optstring,

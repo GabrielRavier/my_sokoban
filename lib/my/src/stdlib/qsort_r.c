@@ -7,7 +7,7 @@
 
 #include "my/stdlib.h"
 #include "my/string.h"
-#include "my/macros.h"
+#include "my/cpp-like/algorithm.h"
 #include "my/features.h"
 
 MY_ATTR_ACCESS((read_write, 1, 3)) MY_ATTR_ACCESS((read_write, 2, 3))

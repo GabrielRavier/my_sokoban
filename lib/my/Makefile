@@ -19,7 +19,7 @@ override CFLAGS += -D_GNU_SOURCE
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/algorithm my/assert my/bigint my/ctype my/features my/getopt my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings
+HEADER_FILES := my my/assert my/bigint my/ctype my/features my/getopt my/macros my/math my/misc my/my_string my/signal my/stdio my/stdlib my/string my/strings my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -105,7 +105,7 @@ tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 	$(CC) -o $@ $(CFLAGS) -L.. $(TESTS_OBJECT_FILES) -lcriterion -lmy --coverage -DLIBMY_COVERAGE
 
 ../../include/%.h: include/%.h
-	@mkdir --parents ../../include/my/internal
+	@mkdir --parents ../../include/my/cpp-like
 	cp $< $@
 
 obj/%.o: %.s

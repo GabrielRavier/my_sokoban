@@ -15,7 +15,7 @@
 #include <criterion/redirect.h>
 #include "my/stdio.h" // Modify this is this isn't the header that declares my_printf and others
 #ifndef STANDALONE
-    #include "my/macros.h"
+    #include "my/cpp-like/iterator.h"
 #else
     #define MY_ATTRIBUTE(attr) __attribute__(attr)
     #define MY_ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))

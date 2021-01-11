@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <limits.h>
 
+// Assumes glibc's sigset_t is used
 int my_sigaddset(sigset_t *set, int signum)
 {
     if (signum <= 0 || signum >= NSIG) {

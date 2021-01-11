@@ -7,7 +7,7 @@
 
 #include "../tests_header.h"
 #include "my/string.h"
-#include "my/macros.h"
+#include "my/cpp-like/algorithm.h"
 #include <string.h>
 
 // Are tested overlapping moves of 0...MAX bytes

@@ -7,7 +7,7 @@
 
 #include "my/internal/my_string.h"
 #include "my/stdlib.h"
-#include "my/macros.h"
+#include "my/cpp-like/algorithm.h"
 #include "my/assert.h"
 
 // We allocate some extra bytes to reduce the amount of calls to realloc when

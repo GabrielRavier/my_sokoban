@@ -45,9 +45,9 @@ my_memmove:
 
 .Lreturn:
     ret
+
     .p2align 4,,10
     .p2align 3
-
 .Lmore_than_2_xmm:
     cmp rdx, 0x800
     ja .Lrep_movsb
@@ -78,9 +78,9 @@ my_memmove:
     movups [rax + rcx - 0x30], xmm5
     movups [rax + rcx - 0x40], xmm4
     ret
+
     .p2align 4,,10
     .p2align 3
-
 .Lbetween_8_and_15:
     mov rdi, [rsi - 8 + rdx]
     mov rdx, [rsi]

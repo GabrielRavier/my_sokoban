@@ -46,7 +46,6 @@ my_memchr:
     ret
 
     .p2align 4
-
 .Lreturn_0:
     xor eax, eax
     ret

@@ -1,8 +1,13 @@
 faster memchr
 search.h
 bsearch
+strtouq
+strtoumax
+strtoull
+strtoul
+strtoimax
+strtoq
 atof
 ldexp
 frexp
 copysign
-signbit

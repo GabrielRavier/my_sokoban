@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements strings.h
+** Declares strings-related entities
 */
 
 #pragma once

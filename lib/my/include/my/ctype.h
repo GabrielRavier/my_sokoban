@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares ctype-related functions from libmy
+** Declares ctype-related entities
 */
 
 #pragma once

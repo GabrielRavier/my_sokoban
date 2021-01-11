@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares miscellaneous functions from libmy
+** Declares miscellaneous entities
 */
 
 #pragma once

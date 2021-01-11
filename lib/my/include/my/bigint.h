@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares bigint-related functions
+** Declares bigint-related entities
 */
 
 #pragma once

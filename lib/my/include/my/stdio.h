@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares stdio-related functions from libmy
+** Declares stdio-related entities
 */
 
 #pragma once

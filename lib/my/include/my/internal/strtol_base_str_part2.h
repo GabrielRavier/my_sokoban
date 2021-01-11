@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares functions from getnbr_part2
+** Declares getnbr_part2-related entities
 */
 
 #pragma once

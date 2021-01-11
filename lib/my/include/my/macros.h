@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares macros from libmy
+** Declares some useful macros
 */
 
 #pragma once

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares internal bigint functions
+** Declares internal bigint entities
 */
 
 #include "../bigint.h"

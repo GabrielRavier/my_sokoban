@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares getopt stuff
+** Declares getopt-related entities
 */
 
 #pragma once

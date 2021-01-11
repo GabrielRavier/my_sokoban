@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2020
-** navy
+** libmy
 ** File description:
-** Declares algorithm macros
+** Declares algorithm-related entities
 */
 
 #pragma once

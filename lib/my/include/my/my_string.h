@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares my_string-related functions
+** Declares my_string-related entities
 */
 
 #pragma once

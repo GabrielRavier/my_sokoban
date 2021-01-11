@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares signal-related entities from libmy
+** Declares signal-related entities
 */
 
 #pragma once

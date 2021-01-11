@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares assert-related entities from libmy
+** Declares assert-related entities
 */
 
 #pragma once

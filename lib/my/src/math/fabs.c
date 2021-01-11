@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2021
 ** libmy
 ** File description:
-** Defines my_fabs
+** Defines fabs
 */
 
 #include "my/math.h"

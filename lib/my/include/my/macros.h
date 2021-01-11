@@ -30,8 +30,10 @@
     MY_BUILD_BUG_ON_ZERO(MY_IS_SAME_TYPE((array), &(array)[0]))
 
 /// Returns 1 if a > b, 0 if a == b and -1 if a < b
-#define MY_THREE_WAY_CMP(a, b) (__extension__ ({ \
-    __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_a) = (a); \
-    __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_b) = (b); \
-    (MY_MAKE_UNIQUE_IDENTIFIER(_a) > MY_MAKE_UNIQUE_IDENTIFIER(_b)) - \
-    (MY_MAKE_UNIQUE_IDENTIFIER(_a) < MY_MAKE_UNIQUE_IDENTIFIER(_b)); }))
+#define MY_THREE_WAY_CMP(a, b) \
+    (__extension__ ({ \
+        __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_a) = (a); \
+        __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_b) = (b); \
+        (MY_MAKE_UNIQUE_IDENTIFIER(_a) > MY_MAKE_UNIQUE_IDENTIFIER(_b)) - \
+            (MY_MAKE_UNIQUE_IDENTIFIER(_a) < MY_MAKE_UNIQUE_IDENTIFIER(_b)); \
+    }))

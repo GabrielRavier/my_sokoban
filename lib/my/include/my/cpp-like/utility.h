@@ -12,4 +12,5 @@
     do { \
         __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp) = (a); \
         (a) = (b); \
-        (b) = MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp); } while (0)
+        (b) = MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp); \
+    } while (0)

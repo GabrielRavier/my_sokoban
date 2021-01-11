@@ -6,7 +6,7 @@
 */
 
 #include "my/stdlib.h"
-#include "my/misc.h"
+#include "my/cpp-like/algorithm.h"
 #include "my/ctype.h"
 #include "my/internal/strtol_base_str_part2.h"
 #include "my/string.h"
@@ -25,12 +25,12 @@
 // was found an even or odd amount of times before the number
 static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
 {
-    const char *const number_ptr = *number_ptr_ptr;
+    const char *number_ptr = *number_ptr_ptr;
     const char *first_digit = number_ptr + my_strspn(number_ptr, "\t\v\f\n\r ");
     first_digit += my_strspn(first_digit, "-+");
 
     *is_negative_ptr =
-        ((my_count_byte_occurences(number_ptr, first_digit, '-') % 2));
+        ((MY_COUNT(number_ptr, first_digit, '-') % 2));
     *number_ptr_ptr = first_digit;
 }
 

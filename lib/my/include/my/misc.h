@@ -52,10 +52,6 @@ bool my_str_isupper(const char *string) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
 bool my_str_isprintable(const char *string) MY_ATTR_WARN_UNUSED_RESULT
     MY_ATTR_PURE;
 
-/// Counts the amount of times a byte appears in a range
-size_t my_count_byte_occurences(const char *first, const char *last,
-    char character) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_PURE;
-
 /// Displays the contents of an array of words
 bool my_show_word_array(char *const *table) MY_ATTR_WARN_UNUSED_RESULT;
 

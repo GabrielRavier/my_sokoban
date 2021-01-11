@@ -19,14 +19,27 @@
                 *first = (new_value); \
     } while (0)
 
+/// Returns the number of elements in the range [first, last) equal to value
+#define MY_COUNT(first_param, last, value) \
+    (__extension__({ \
+        size_t result = 0; \
+        __auto_type first = (first_param); \
+        for (; first != (last); ++first) \
+            if (*first == (value)) \
+                ++result; \
+        result; \
+    }))
+
 /// Only compares a and b once, to avoid side effects
 #define MY_MAKE_MIN_MAX_COMPARE_ONCE(a, b, unique_identifier_a, \
-    unique_identifier_b, operation) (__extension__ ({ \
-    __auto_type (unique_identifier_a) = (a);        \
-    __auto_type (unique_identifier_b) = (b);        \
-    ((unique_identifier_a) operation (unique_identifier_b) ? \
-        (unique_identifier_a) : \
-        (unique_identifier_b)); }))
+    unique_identifier_b, operation) \
+    (__extension__ ({                                   \
+        __auto_type (unique_identifier_a) = (a);        \
+        __auto_type (unique_identifier_b) = (b);        \
+        ((unique_identifier_a) operation (unique_identifier_b) ? \
+            (unique_identifier_a) : \
+            (unique_identifier_b)); \
+    }))
 
 /// Returns the minimum of a and b
 #define MY_MIN(a, b) MY_MAKE_MIN_MAX_COMPARE_ONCE(a, b, \

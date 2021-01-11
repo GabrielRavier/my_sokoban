@@ -5,9 +5,10 @@
 ** Defines my_strtol
 */
 
-#define TYPE long
-#define TYPE_MIN LONG_MIN
-#define TYPE_MAX LONG_MAX
-#define FUNC_NAME my_strtol
+#include "strtol.h"
 
-#include "strto_generic.h"
+TYPE my_strtol(const char *num_ptr, char **end_num_ptr, int base)
+{
+    return my_strtol_internal(num_ptr, end_num_ptr, base);
+}
+

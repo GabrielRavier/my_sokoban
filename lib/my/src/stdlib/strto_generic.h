@@ -113,7 +113,8 @@ static unsigned TYPE do_parsing_loop(struct strtol_parse_state *state)
     return (result);
 }
 
-TYPE FUNC_NAME(const char *num_ptr, char **end_num_ptr, int base)
+static TYPE INTERNAL_FUNC_NAME(const char *num_ptr, char **end_num_ptr,
+    int base)
 {
     struct strtol_parse_state state = {STRTOL_NUM_TYPE_NONE, num_ptr, 0, base,
         false};

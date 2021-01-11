@@ -5,9 +5,10 @@
 ** Defines my_strtoll
 */
 
-#define TYPE long long
-#define TYPE_MIN LLONG_MIN
-#define TYPE_MAX LLONG_MAX
-#define FUNC_NAME my_strtoll
+#include "strtoll.h"
 
-#include "strto_generic.h"
+TYPE my_strtoll(const char *num_ptr, char **end_num_ptr, int base)
+{
+    return my_strtoll_internal(num_ptr, end_num_ptr, base);
+}
+

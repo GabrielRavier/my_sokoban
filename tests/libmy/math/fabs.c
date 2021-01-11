@@ -8,37 +8,45 @@
 #include "../tests_header.h"
 #include "random_floats.h"
 #include "my/math.h"
+#include "my/string.h"
 #include "my/macros.h"
 #include <math.h>
-#include <stdint.h>
 #include <float.h>
+#include <stdint.h>
 
-static void test_fabs(double x)
+static void do_test(long double x)
 {
-    union {
-        uint64_t as_u64;
-        double as_double;
-    } result_us = {.as_double = my_fabs(x)}, result_libc = {.as_double = fabs(x)};
-    cr_assert_eq(result_us.as_u64, result_libc.as_u64);;
+    double x_double = x;
+    float x_float = x;
+    long double result_us = my_fabsl(x);
+    long double result_them = fabsl(x);
+    double result_us_double = my_fabs(x_double);
+    double result_them_double = fabs(x_double);
+    float result_us_float = my_fabsf(x_float);
+    float result_them_float = fabsf(x_float);
+
+    cr_assert_eq(my_memcmp(&result_us, &result_them, sizeof(long double)), 0);
+    cr_assert_eq(my_memcmp(&result_us_double, &result_them_double, sizeof(double)), 0);
+    cr_assert_eq(my_memcmp(&result_us_float, &result_them_float, sizeof(float)), 0);
 }
 
 Test(my_fabs, gnulib)
 {
-    test_fabs(0.6);
-    test_fabs(-0.6);
-    test_fabs(NAN);
-    test_fabs(.0);
-    test_fabs(-.0);
-    test_fabs(INFINITY);
-    test_fabs(-INFINITY);
+    do_test(0.6l);
+    do_test(-0.6l);
+    do_test(NAN);
+    do_test(.0l);
+    do_test(-.0l);
+    do_test(INFINITY);
+    do_test(-INFINITY);
     for (size_t i = 0; i < MY_ARRAY_SIZE(random_floats); ++i) {
-        float x = random_floats[i] * 10;
-        test_fabs(x);
-        test_fabs(-x);
+        long double x = random_floats[i] * 10;
+        do_test(x);
+        do_test(-x);
     }
 }
 
-static const double BIONIC_INTEL_DATA[] = {
+static const long double BIONIC_INTEL_DATA[] = {
     0x1.p-10,
     0x1.p-1074,
     0.0,
@@ -273,28 +281,60 @@ static const double BIONIC_INTEL_DATA[] = {
 Test(my_fabs, bionic_intel_data)
 {
     for (size_t i = 0; i < MY_ARRAY_SIZE(BIONIC_INTEL_DATA); ++i)
-        test_fabs(BIONIC_INTEL_DATA[i]);
+        do_test(BIONIC_INTEL_DATA[i]);
 }
 
 Test(my_fabs, glibc)
 {
-    test_fabs(-NAN);
-    test_fabs(SNAN);
-    test_fabs(-SNAN);
-    test_fabs(4.9406564584124654e-324);
-    test_fabs(DBL_MIN);
-    test_fabs(DBL_MAX);
-    test_fabs(-4.9406564584124654e-324);
-    test_fabs(-DBL_MIN);
-    test_fabs(-DBL_MAX);
-    test_fabs(38.);
+    do_test(-NAN);
+    do_test(SNANL);
+    do_test(-SNANL);
+    do_test(4.9406564584124654e-324l);
+    do_test(DBL_MIN);
+    do_test(DBL_MAX);
+    do_test(LDBL_MIN);
+    do_test(LDBL_MAX);
+    do_test(-4.9406564584124654e-324l);
+    do_test(-DBL_MIN);
+    do_test(-DBL_MAX);
+    do_test(-LDBL_MIN);
+    do_test(-LDBL_MAX);
+    do_test(38.l);
 }
 
 Test(my_fabs, nlibc)
 {
-    test_fabs(-5.);
-    test_fabs(-.0);
-    test_fabs(100.);
-    test_fabs(-100.);
-    test_fabs(-100.5);
+    do_test(-5.l);
+    do_test(-.0l);
+    do_test(100.l);
+    do_test(-100.l);
+    do_test(-100.5l);
+}
+
+Test(my_fabs, limits)
+{
+    do_test(FLT_MIN);
+    do_test(DBL_MIN);
+    do_test(LDBL_MIN);
+    do_test(FLT_TRUE_MIN);
+    do_test(DBL_TRUE_MIN);
+    do_test(LDBL_TRUE_MIN);
+    do_test(FLT_MAX);
+    do_test(DBL_MAX);
+    do_test(LDBL_MAX);
+    do_test(FLT_EPSILON);
+    do_test(DBL_EPSILON);
+    do_test(LDBL_EPSILON);
+    do_test(-FLT_MIN);
+    do_test(-DBL_MIN);
+    do_test(-LDBL_MIN);
+    do_test(-FLT_TRUE_MIN);
+    do_test(-DBL_TRUE_MIN);
+    do_test(-LDBL_TRUE_MIN);
+    do_test(-FLT_MAX);
+    do_test(-DBL_MAX);
+    do_test(-LDBL_MAX);
+    do_test(-FLT_EPSILON);
+    do_test(-DBL_EPSILON);
+    do_test(-LDBL_EPSILON);
 }

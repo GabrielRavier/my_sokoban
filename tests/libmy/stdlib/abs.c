@@ -9,60 +9,60 @@
 #include "my/stdlib.h"
 #include <limits.h>
 
-static void test_abs(int x)
+static void do_test(int x)
 {
     cr_assert_eq(my_abs(x), abs(x));
 }
 
 Test(my_abs, freebsd_basic)
 {
-    test_abs(0);
-    test_abs(+0);
-    test_abs(-0);
-    test_abs(-0x1010);
-    test_abs(INT_MAX);
-    test_abs(-INT_MAX);
+    do_test(0);
+    do_test(+0);
+    do_test(-0);
+    do_test(-0x1010);
+    do_test(INT_MAX);
+    do_test(-INT_MAX);
 }
 
 Test(my_abs, llvm_basic)
 {
-    test_abs(1);
-    test_abs(2);
-    test_abs(0x7FFFFFFE);
-    test_abs(0x7FFFFFFF);
-    test_abs(0x80000001);
-    test_abs(0x80000002);
-    test_abs(0xFFFFFFFE);
-    test_abs(0xFFFFFFFF);
+    do_test(1);
+    do_test(2);
+    do_test(0x7FFFFFFE);
+    do_test(0x7FFFFFFF);
+    do_test(0x80000001);
+    do_test(0x80000002);
+    do_test(0xFFFFFFFE);
+    do_test(0xFFFFFFFF);
 }
 
 Test(my_abs, gcc_testsuite)
 {
-    test_abs(12);
-    test_abs(-1);
-    test_abs(INT_MIN + 1);
-    test_abs(SCHAR_MIN + 1);
-    test_abs(SCHAR_MAX);
-    test_abs(SHRT_MAX);
-    test_abs(SHRT_MIN + 1);
+    do_test(12);
+    do_test(-1);
+    do_test(INT_MIN + 1);
+    do_test(SCHAR_MIN + 1);
+    do_test(SCHAR_MAX);
+    do_test(SHRT_MAX);
+    do_test(SHRT_MIN + 1);
 }
 
 Test(my_abs, cloudlibc_example)
 {
-    test_abs(42);
-    test_abs(-42);
+    do_test(42);
+    do_test(-42);
 }
 
 Test(my_abs, qemu_cris)
 {
-    test_abs(0xFFFF);
-    test_abs(-31);
+    do_test(0xFFFF);
+    do_test(-31);
 }
 
 Test(my_abs, z88dk)
 {
-    test_abs(-30000);
-    test_abs(-456);
-    test_abs(133);
-    test_abs(30000);
+    do_test(-30000);
+    do_test(-456);
+    do_test(133);
+    do_test(30000);
 }

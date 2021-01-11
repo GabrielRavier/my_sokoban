@@ -6,57 +6,43 @@
 */
 
 #include "my/math.h"
+#include "my/internal/math.h"
 #include <math.h>
 #include <stdint.h>
 
 int my_fpclassify_double(double x)
 {
-    const union {
-        double as_double;
-        uint64_t as_int;
-    } u = {.as_double = x};
-    int32_t exponent = u.as_int >> 52 & 0x7FF;
+    const union my_ieee754_double_parts u = {.as_double = x};
 
-    if (exponent == 0)
-        return u.as_int << 1 ? FP_SUBNORMAL : FP_ZERO;
-    if (exponent == 0x7FF)
-        return u.as_int << 12 ? FP_NAN : FP_INFINITE;
-    return FP_NORMAL;
+    if (u.exponent == 0)
+        return ((u.mantissa || u.exponent) ? FP_SUBNORMAL : FP_ZERO);
+    if (u.exponent == 0x7FF)
+        return (u.mantissa ? FP_NAN : FP_INFINITE);
+    return (FP_NORMAL);
 }
 
 int my_fpclassify_float(float x)
 {
-    const union {
-        float as_float;
-        uint32_t as_int;
-    } u = {.as_float = x};
-    int32_t int_x = (int32_t)u.as_int;
+    const union my_ieee754_float_parts u = {.as_float = x};
+    int32_t int_x = (int32_t)u.as_u32;
 
     int_x &= 0x7FFFFFFF;
-    return (int_x == 0) ? FP_ZERO :
+    return ((int_x == 0) ? FP_ZERO :
         (int_x < 0x800000) ? FP_SUBNORMAL :
         (int_x >= 0x7F800000) ?
-        ((int_x > 0x7F800000) ? FP_NAN : FP_INFINITE) : FP_NORMAL;
+        ((int_x > 0x7F800000) ? FP_NAN : FP_INFINITE) : FP_NORMAL);
 }
 
 // Assumes x86 80-bit long double format
 int my_fpclassify_long_double(long double x)
 {
-    union {
-        long double as_long_double;
-        struct {
-            uint32_t lsw;
-            uint32_t msw;
-            int32_t sign_exponent:16;
-        };
-    } u = {.as_long_double = x};
+    const union my_ieee754_long_double_parts u = {.as_long_double = x};
 
-    u.sign_exponent &= 0x7FFF;
-    if (((uint32_t)u.sign_exponent | u.lsw | u.msw) == 0)
-        return FP_ZERO;
-    if (u.sign_exponent == 0 && (u.lsw & 0x80000000) == 0)
-        return FP_SUBNORMAL;
-    if (u.sign_exponent == 0x7FFF)
-        return ((u.msw & 0x7FFFFFFF) | u.lsw) != 0 ? FP_NAN : FP_INFINITE;
-    return FP_NORMAL;
+    if (((uint32_t)u.exponent | u.mantissa) == 0)
+        return (FP_ZERO);
+    if (u.exponent == 0 && (u.mantissa & 0x80000000) == 0)
+        return (FP_SUBNORMAL);
+    if (u.exponent == 0x7FFF)
+        return ((u.mantissa & 0x7FFFFFFFFFFFFFFF) != 0 ? FP_NAN : FP_INFINITE);
+    return (FP_NORMAL);
 }

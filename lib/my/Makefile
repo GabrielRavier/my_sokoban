@@ -35,13 +35,16 @@ SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/is
 SOURCE_FILES += getopt/getopt
 
 # Stuff related to math.h
-SOURCE_FILES += math/fabsf math/fabs math/fpclassify
+SOURCE_FILES += math/fabs math/fpclassify math/signbit
 
 # Stuff related to signal.h
 SOURCE_FILES += signal/sigaddset
 
 # Stuff related to stdio.h
-SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
+SOURCE_FILES += stdio/putchar stdio/dputc stdio/dputs stdio/puts
+
+# Stuff related to printf
+SOURCE_FILES += stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
 
 # Stuff related to stdlib.h
 SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_base_str stdlib/strtol_base_str_part2 stdlib/strtol stdlib/strtoll stdlib/abs stdlib/abort
@@ -85,7 +88,7 @@ TESTS_SOURCE_FILES += bigint/add bigint/sub bigint/mul bigint/div bigint/mod big
 TESTS_SOURCE_FILES += stdio/printf/printf
 
 # Tests related to math.h
-TESTS_SOURCE_FILES += math/fabs
+TESTS_SOURCE_FILES += math/fabs math/signbit
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))

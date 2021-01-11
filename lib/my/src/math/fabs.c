@@ -6,15 +6,29 @@
 */
 
 #include "my/math.h"
+#include "my/internal/math.h"
 #include <stdint.h>
 
 double my_fabs(double x)
 {
-    union {
-        double as_double;
-        uint64_t as_u64;
-    } u = {.as_double = x};
+    union my_ieee754_double_parts u = {.as_double = x};
 
-    u.as_u64 &= 0x7FFFFFFFFFFFFFFFull;
+    u.sign = false;
     return u.as_double;
+}
+
+float my_fabsf(float x)
+{
+    union my_ieee754_float_parts u = {.as_float = x};
+
+    u.sign = false;
+    return u.as_float;
+}
+
+long double my_fabsl(long double x)
+{
+    union my_ieee754_long_double_parts u = {.as_long_double = x};
+
+    u.sign = false;
+    return u.as_long_double;
 }

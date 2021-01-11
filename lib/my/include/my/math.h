@@ -15,7 +15,7 @@
 float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 
 /// Absolute value of double
-float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
+double my_fabs(double x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 
 /// Individual versions of my_fpclassify for each floating point type
 int my_fpclassify_double(double x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;

@@ -35,7 +35,7 @@ SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/is
 SOURCE_FILES += getopt/getopt
 
 # Stuff related to math.h
-SOURCE_FILES += math/fabsf math/fpclassify
+SOURCE_FILES += math/fabsf math/fabs math/fpclassify
 
 # Stuff related to signal.h
 SOURCE_FILES += signal/sigaddset
@@ -66,7 +66,26 @@ SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_stri
 # Miscellaneous stuff
 SOURCE_FILES += misc/compute_power_rec misc/compute_square_root misc/is_prime misc/find_prime_sup misc/revstr misc/strupcase misc/strlowcase misc/strcapitalize misc/str_isalpha misc/str_isnum misc/str_islower misc/str_isupper misc/str_isprintable misc/count_byte_occurences misc/str_to_word_array misc/show_word_array
 
-TESTS_SOURCE_FILES := assert stdlib/strtol_base_str stdlib/strtol stdlib/abs string/memcpy string/memmove string/memcmp string/memmem string/memchr strings/bcopy bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base stdio/printf/printf
+# Tests related to assert.h
+TESTS_SOURCE_FILES := assert
+
+# Tests related to stdlib.h
+TESTS_SOURCE_FILES += stdlib/strtol_base_str stdlib/strtol stdlib/abs
+
+# Tests related to string.h
+TESTS_SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem string/memchr
+
+# Tests related to strings.h
+TESTS_SOURCE_FILES += strings/bcopy
+
+# Tests related to my_bigint
+TESTS_SOURCE_FILES += bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base
+
+# Tests related to stdio.h
+TESTS_SOURCE_FILES += stdio/printf/printf
+
+# Tests related to math.h
+TESTS_SOURCE_FILES += math/fabs
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))
@@ -109,6 +128,7 @@ obj/%.o: %.c
 
 obj/tests/%.o: ../../tests/libmy/%.c
 	@mkdir --parents obj/tests/bigint
+	@mkdir --parents obj/tests/math
 	@mkdir --parents obj/tests/stdio/printf
 	@mkdir --parents obj/tests/stdlib
 	@mkdir --parents obj/tests/string

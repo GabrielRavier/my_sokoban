@@ -55,7 +55,7 @@ else
 endif
 
 # Stuff related to strings.h
-SOURCE_FILES += strings/strcasecmp
+SOURCE_FILES += strings/strcasecmp strings/bcopy
 
 # Stuff related to my_bigint
 SOURCE_FILES += bigint/new_from_int bigint/strtol_base_str bigint/assign bigint/add bigint/add_unsigned bigint/compare bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/mul bigint/div bigint/mod bigint/div_mod bigint/neg bigint/to_int bigint/to_string_base bigint/free

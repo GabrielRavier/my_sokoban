@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_bcmp
+** Defines bcmp
 */
 
 #include "my/strings.h"

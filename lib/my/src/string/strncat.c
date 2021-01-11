@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Appends src to dest, using at most n bytes from src
+** Defines strncat
 */
 
 #include "my/string.h"

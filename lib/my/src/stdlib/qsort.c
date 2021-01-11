@@ -2,8 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Sorts an array with num_elements of element_size size, according to
-** comparison_function
+** Defines qsort
 */
 
 #include "my/stdlib.h"

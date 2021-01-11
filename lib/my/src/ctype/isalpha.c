@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Check for an alphabetic character
+** Defines isalpha
 */
 
 #include "my/ctype.h"

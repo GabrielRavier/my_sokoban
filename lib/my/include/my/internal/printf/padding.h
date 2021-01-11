@@ -19,4 +19,4 @@ struct asprintf_do_padding_params {
     formatter_func_t formatting_func;
 };
 
-void asprintf_do_padding(const struct asprintf_do_padding_params *params);
+void my_asprintf_do_padding(const struct asprintf_do_padding_params *params);

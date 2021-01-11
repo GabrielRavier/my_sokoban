@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Writes the string s to fd (without its null terminator)
+** Defines dputs
 */
 
 #include "my/stdio.h"

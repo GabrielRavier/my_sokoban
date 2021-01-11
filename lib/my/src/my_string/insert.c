@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements insert
+** Defines insert
 */
 
 #include "my/internal/my_string.h"

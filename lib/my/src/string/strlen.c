@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Calculates the length of a string (excluding the terminating null byte)
+** Defines strlen
 */
 
 #include "my/string.h"

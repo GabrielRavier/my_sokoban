@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Finds the smallest prime number that is >= to nb
+** Defines find_prime_sup
 */
 
 #include "my/misc.h"

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements n conversion specifier
+** Defines asprintf_format_n
 */
 
 #include "my/internal/printf/formatter.h"
@@ -28,7 +28,7 @@ static struct my_string *do_other(struct my_string *destination,
     return NULL;
 }
 
-struct my_string *asprintf_format_n(struct my_string *destination,
+struct my_string *my_asprintf_format_n(struct my_string *destination,
     va_list *arguments, struct my_printf_conversion_info *format_info)
 {
     if (format_info->length_modifier == PRINTF_LENGTH_MODIFIER_CHAR) {

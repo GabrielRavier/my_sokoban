@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements asprintf_parse_int
+** Defines asprintf_parse_int
 */
 
 #include "my/internal/printf/parse_conversion_info.h"
@@ -23,7 +23,7 @@ static void do_loop_iter(int *result, unsigned char digit)
     *result += digit;
 }
 
-int asprintf_parse_int(const char **to_parse)
+int my_asprintf_parse_int(const char **to_parse)
 {
     int result = **to_parse - (char)'0';
 

@@ -36,14 +36,16 @@ struct my_printf_conversion_info {
     char conversion_specifier;
 };
 
-int asprintf_parse_int(const char **to_parse);
-void parse_printf_flags(struct my_printf_conversion_info *conversion_info,
+int my_asprintf_parse_int(const char **to_parse);
+void my_parse_printf_flags(struct my_printf_conversion_info *conversion_info,
     const char **to_parse);
-bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list *arguments) MY_ATTR_WARN_UNUSED_RESULT;
-bool parse_printf_precision(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list *arguments) MY_ATTR_WARN_UNUSED_RESULT;
-void parse_printf_length_modifier(
+bool my_parse_printf_field_width(
+    struct my_printf_conversion_info *conversion_info, const char **to_parse,
+    va_list *arguments) MY_ATTR_WARN_UNUSED_RESULT;
+bool my_parse_printf_precision(
+    struct my_printf_conversion_info *conversion_info, const char **to_parse,
+    va_list *arguments) MY_ATTR_WARN_UNUSED_RESULT;
+void my_parse_printf_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse);
 
 #define INTERNAL_MAKE_FLAG_CASE(character, info_field_to_set) \

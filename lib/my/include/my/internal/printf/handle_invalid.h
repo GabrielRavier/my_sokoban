@@ -13,6 +13,6 @@
 
 // Returns whether we should just stop
 // Exists because of glibc bullshit
-bool asprintf_handle_invalid(struct my_string *destination,
+bool my_asprintf_handle_invalid(struct my_string *destination,
     struct my_printf_conversion_info *conversion_info,
     bool *has_encountered_invalid);

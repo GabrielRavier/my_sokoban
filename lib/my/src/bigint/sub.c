@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Subtracts two bigints
+** Defines sub
 */
 
 #include "my/bigint.h"

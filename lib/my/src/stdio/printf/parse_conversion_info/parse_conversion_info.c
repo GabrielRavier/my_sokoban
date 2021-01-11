@@ -2,14 +2,14 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements parse_conversion_info
+** Defines parse_conversion_info
 */
 
 #include "my/internal/printf/parse_conversion_info.h"
 #include "my/string.h"
 #include "my/ctype.h"
 
-void parse_printf_flags(struct my_printf_conversion_info *conversion_info,
+void my_parse_printf_flags(struct my_printf_conversion_info *conversion_info,
     const char **to_parse)
 {
     while (1) {
@@ -31,8 +31,9 @@ void parse_printf_flags(struct my_printf_conversion_info *conversion_info,
     }
 }
 
-bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list *arguments)
+bool my_parse_printf_field_width(
+    struct my_printf_conversion_info *conversion_info, const char **to_parse,
+    va_list *arguments)
 {
     if (**to_parse == '*') {
         conversion_info->field_width = va_arg(*arguments, int);
@@ -43,7 +44,7 @@ bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
         ++*to_parse;
     } else {
         conversion_info->field_width =
-            my_isdigit(**to_parse) ? asprintf_parse_int(to_parse) : 0;
+            my_isdigit(**to_parse) ? my_asprintf_parse_int(to_parse) : 0;
         return conversion_info->field_width >= 0;
     }
     return (true);
@@ -51,8 +52,9 @@ bool parse_printf_field_width(struct my_printf_conversion_info *conversion_info,
 
 // We put the check for a negative precision from va_arg below the else to
 // respect the norm rule on having less than 3 nested branchings
-bool parse_printf_precision(struct my_printf_conversion_info *conversion_info,
-    const char **to_parse, va_list *arguments)
+bool my_parse_printf_precision(
+    struct my_printf_conversion_info *conversion_info, const char **to_parse,
+    va_list *arguments)
 {
     if (**to_parse == '.') {
         if (*++*to_parse == '*') {
@@ -60,7 +62,7 @@ bool parse_printf_precision(struct my_printf_conversion_info *conversion_info,
             ++*to_parse;
         } else {
             conversion_info->precision =
-                my_isdigit(**to_parse) ? asprintf_parse_int(to_parse) : 0;
+                my_isdigit(**to_parse) ? my_asprintf_parse_int(to_parse) : 0;
             return conversion_info->precision >= 0;
         }
         if (conversion_info->precision < 0)
@@ -89,7 +91,7 @@ static bool parse_single_length_modifier(
 
 // We place hh before h and ll before l because otherwise the
 // smaller substrings would match
-void parse_printf_length_modifier(
+void my_parse_printf_length_modifier(
     struct my_printf_conversion_info *conversion_info, const char **to_parse)
 {
     INTERNAL_DO_MODIFIER("hh", PRINTF_LENGTH_MODIFIER_CHAR);

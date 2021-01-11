@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Converts and returns a number in a given base
+** Defines strtol_base_str
 */
 
 #include "my/stdlib.h"

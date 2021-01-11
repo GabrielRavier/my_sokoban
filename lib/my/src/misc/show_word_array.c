@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Displays the contents of an array of words
+** Defines show_word_array
 */
 
 #include "my/misc.h"

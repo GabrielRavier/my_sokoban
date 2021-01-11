@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Check if the passed string only contains lowercase characters
+** Defines str_islower
 */
 
 #include "my/misc.h"

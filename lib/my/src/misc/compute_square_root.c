@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Calculates a square root (if it is a whole number)
+** Defines compute_square_root
 */
 
 #include "my/misc.h"

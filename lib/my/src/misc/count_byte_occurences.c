@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Counts the amount of times a byte appears between two pointers
+** Defines count_byte_occurences
 */
 
 #include "my/misc.h"

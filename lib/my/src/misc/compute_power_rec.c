@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Recursively calculates nb to the power of p
+** Defines compute_power_rec
 */
 
 #include "my/misc.h"

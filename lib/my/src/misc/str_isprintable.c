@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Check if the passed string only contains printable characters
+** Defines str_isprintable
 */
 
 #include "my/misc.h"

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements asprintf_format_signed_integer
+** Defines asprintf_format_signed_integer
 */
 
 #include "my/internal/printf/formatter.h"
@@ -68,7 +68,7 @@ static struct my_string *do_preprinting_stuff(
     return (prefix);
 }
 
-struct my_string *asprintf_format_unsigned_integer(
+struct my_string *my_asprintf_format_unsigned_integer(
     struct my_string *destination, va_list *arguments,
     struct my_printf_conversion_info *format_info)
 {
@@ -79,7 +79,7 @@ struct my_string *asprintf_format_unsigned_integer(
     const size_t pos_before = destination->length;
 
     if (argument)
-        asprintf_append_number_base(destination, argument, base,
+        my_asprintf_append_number_base(destination, argument, base,
             format_info->conversion_specifier == 'X');
     do_precision(destination, pos_before, format_info, prefix);
     return (prefix);

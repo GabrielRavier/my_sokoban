@@ -10,6 +10,7 @@
 #include "features.h"
 #include <stdbool.h>
 
+/// Prints an error message for a failed assertion and exits
 _Noreturn void my_assert_fail(const char *expression, const char *file_name,
     int line_number, const char *function_name) MY_ATTR_NOTHROW;
 

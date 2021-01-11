@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Check for an uppercase letter
+** Defines isupper
 */
 
 #include "my/ctype.h"

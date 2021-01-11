@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2020
-** Unix and C Lab Seminar - Day 08
+** libmy
 ** File description:
-** Copes size bytes from source to destination
+** Defines memcpy
 */
 
 #include "my/string.h"

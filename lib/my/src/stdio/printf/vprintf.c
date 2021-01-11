@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_vprintf
+** Defines my_vprintf
 */
 
 #include "my/stdio.h"

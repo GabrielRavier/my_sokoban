@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements vasprintf_format_cstring
+** Defines vasprintf_format_cstring
 */
 
 #include "my/internal/printf/formatter.h"
@@ -20,7 +20,7 @@ static void do_wchar_string(struct my_string *destination,
         wide_string = (size_t)format_info->precision >= 6 ? L"(null)" : L"";
     while (*wide_string != L'\0') {
         wide_character_length =
-            asprintf_utf32_char_to_utf8(buffer, *wide_string++);
+            my_asprintf_utf32_char_to_utf8(buffer, *wide_string++);
         if ((bytes_written + wide_character_length) >
             (size_t)format_info->precision)
             break;
@@ -51,7 +51,7 @@ static void do_string_loop(struct my_string *destination,
 // We treat LONG_LONG as if it was LONG for glibc compatibility
 // I would support the SUS S specifier, but the epitech mandates that we use it
 // for a different purpose
-struct my_string *asprintf_format_cstring(struct my_string *destination,
+struct my_string *my_asprintf_format_cstring(struct my_string *destination,
     va_list *arguments, struct my_printf_conversion_info *format_info)
 {
     const char *string_argument;

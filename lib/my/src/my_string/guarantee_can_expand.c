@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements guarantee_can_expand
+** Defines guarantee_can_expand
 */
 
 #include "my/internal/my_string.h"

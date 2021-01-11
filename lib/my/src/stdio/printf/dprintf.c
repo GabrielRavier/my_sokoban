@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_dprintf
+** Defines my_dprintf
 */
 
 #include "my/stdio.h"

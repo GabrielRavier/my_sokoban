@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Puts every letter in uppercase
+** Defines strupcase
 */
 
 #include "my/misc.h"

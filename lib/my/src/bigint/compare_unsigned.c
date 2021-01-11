@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Compares two bigints without the sign
+** Defines compare_unsigned
 */
 
 #include "my/bigint.h"

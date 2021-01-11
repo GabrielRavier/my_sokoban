@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2021
 ** libmy
 ** File description:
-** Implements the strto family generically
+** Defines a function of the strto family generically
 */
 
 #pragma once

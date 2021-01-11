@@ -2,8 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Calculate the length of the initial segment of the string not including any
-** bytes from reject
+** Defines strcspn
 */
 
 #include "my/string.h"

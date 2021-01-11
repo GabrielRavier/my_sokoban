@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Prints an error message for a failed assertion and exits
+** Defines assert_fail
 */
 
 #include "my/assert.h"

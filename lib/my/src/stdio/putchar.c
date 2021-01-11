@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Writes c to stdout
+** Defines putchar
 */
 
 #include "my/stdio.h"

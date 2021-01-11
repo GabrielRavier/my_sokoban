@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_strtol
+** Defines my_strtol
 */
 
 #define TYPE long

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Checks if the passed string only contains alphabetical characters
+** Defines str_isalpha
 */
 
 #include "my/misc.h"

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Fill memory with a byte
+** Defines memset
 */
 
 #include "my/string.h"

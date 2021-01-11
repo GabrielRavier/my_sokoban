@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Check for a digit (0 through 9)
+** Defines isdigit
 */
 
 #include "my/ctype.h"

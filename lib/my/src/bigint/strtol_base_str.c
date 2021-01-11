@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements strtol_base_str for bigint
+** Defines strtol_base_str
 */
 
 #include "my/bigint.h"

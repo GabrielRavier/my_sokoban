@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Puts every letter of a string into lowercase
+** Defines strlowcase
 */
 
 #include "my/misc.h"

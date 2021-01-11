@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Converts a bigint to an int
+** Defines to_int
 */
 
 #include "my/bigint.h"

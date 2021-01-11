@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Negates a bigint
+** Defines neg
 */
 
 #include "my/bigint.h"

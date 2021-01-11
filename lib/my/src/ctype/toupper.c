@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** If lowercase, returns uppercase equivalent
+** Defines toupper
 */
 
 #include "my/ctype.h"

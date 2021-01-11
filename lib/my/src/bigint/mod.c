@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements bigint modulo
+** Defines mod
 */
 
 #include "my/bigint.h"

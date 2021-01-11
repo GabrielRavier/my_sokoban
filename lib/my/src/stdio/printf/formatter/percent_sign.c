@@ -2,14 +2,14 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements vasprintf_format_percent_sign
+** Defines vasprintf_format_percent_sign
 */
 
 #include "my/internal/printf/formatter.h"
 
 // We set the field width to 0 to conform to glibc behaviour and not respect the
 // field width on percent signs
-struct my_string *asprintf_format_percent_sign(struct my_string *destination,
+struct my_string *my_asprintf_format_percent_sign(struct my_string *destination,
     va_list *arguments, struct my_printf_conversion_info *format_info)
 {
     (void)arguments;

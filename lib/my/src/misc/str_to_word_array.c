@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Splits a string into words
+** Defines str_to_word_array
 */
 
 #include "my/misc.h"

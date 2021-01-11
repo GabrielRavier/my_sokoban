@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Frees a bigint
+** Defines free
 */
 
 #include "my/bigint.h"

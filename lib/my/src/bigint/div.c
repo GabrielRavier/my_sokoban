@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements bigint division
+** Defines div
 */
 
 #include "my/bigint.h"

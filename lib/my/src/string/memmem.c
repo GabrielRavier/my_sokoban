@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_memmem
+** Defines my_memmem
 */
 
 #include "my/string.h"

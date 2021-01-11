@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Absolute value of float
+** Defines fabsf
 */
 
 #include "my/math.h"

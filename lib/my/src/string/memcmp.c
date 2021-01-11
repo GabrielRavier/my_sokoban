@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_memcmp
+** Defines my_memcmp
 */
 
 #include "my/string.h"

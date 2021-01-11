@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2020
-** InfinAdd
+** libmy
 ** File description:
-** Adds together two bigints
+** Defines add
 */
 
 #include "my/bigint.h"

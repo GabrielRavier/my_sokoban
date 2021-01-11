@@ -11,7 +11,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-// Absolute value of
+// Absolute value of float
 float my_fabsf(float x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;
 
 int my_fpclassify_double(double x) MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST;

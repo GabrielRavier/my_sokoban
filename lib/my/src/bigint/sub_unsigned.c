@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Does an unsigned subtraction of two bigints
+** Defines sub_unsigned
 */
 
 #include "my/bigint.h"

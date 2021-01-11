@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Compares two bigints
+** Define compare
 */
 
 #include "my/bigint.h"

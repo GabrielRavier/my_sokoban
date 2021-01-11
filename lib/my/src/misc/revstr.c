@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Reverses a string
+** Defines revstr
 */
 
 #include "my/misc.h"

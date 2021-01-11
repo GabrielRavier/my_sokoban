@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements division and modulo for libmy
+** Defines div_mod
 */
 
 #include "my/internal/bigint.h"

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Appends a formatted string to a my_string
+** Defines append_vprintf
 */
 
 #include "my/my_string.h"

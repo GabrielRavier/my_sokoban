@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements assigning a bigint into another one
+** Defines assign
 */
 
 #include "my/bigint.h"

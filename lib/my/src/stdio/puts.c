@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Writes the strings and a trailing newline to stdout
+** Defines puts
 */
 
 #include "my/stdio.h"

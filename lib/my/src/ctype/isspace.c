@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Checks for white-space characters
+** Defines isspace
 */
 
 #include "my/ctype.h"

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Adds two unsigned bigints
+** Defines add_unsigned
 */
 
 #include "my/internal/bigint.h"

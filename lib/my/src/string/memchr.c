@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Scans memory for a character
+** Defines memchr
 */
 
 #include "my/string.h"

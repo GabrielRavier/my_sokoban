@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Check if the passed string only contains uppercase characters
+** Defines str_isupper
 */
 
 #include "my/misc.h"

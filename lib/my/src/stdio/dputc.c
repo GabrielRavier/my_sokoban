@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Prints a character on the specified file descriptor
+** Defines dputc
 */
 
 #include "my/stdio.h"

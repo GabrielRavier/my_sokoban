@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Checks for a printable character
+** Defines isprint
 */
 
 #include "my/ctype.h"

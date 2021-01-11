@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Converts a bigint to a string of a given base
+** Defines to_string_base
 */
 
 #include "my/bigint.h"

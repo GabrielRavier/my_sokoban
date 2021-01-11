@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Find the first occurence of needle in haystack
+** Defines strstr
 */
 
 #include "my/string.h"

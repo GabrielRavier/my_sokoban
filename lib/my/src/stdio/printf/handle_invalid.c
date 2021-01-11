@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements asprintf_handle_invalid
+** Defines asprintf_handle_invalid
 */
 
 #include "my/internal/printf/handle_invalid.h"
@@ -25,7 +25,7 @@ static void stringisize_flags(struct my_string *destination,
         my_string_append_char(destination, '0');
 }
 
-bool asprintf_handle_invalid(struct my_string *destination,
+bool my_asprintf_handle_invalid(struct my_string *destination,
     struct my_printf_conversion_info *conversion_info,
     bool *has_encountered_invalid)
 {
@@ -36,10 +36,10 @@ bool asprintf_handle_invalid(struct my_string *destination,
     my_string_append_char(destination, '%');
     stringisize_flags(destination, conversion_info);
     if (conversion_info->field_width != 0)
-        asprintf_append_number_base(destination,
+        my_asprintf_append_number_base(destination,
             (uintmax_t)conversion_info->field_width, 10, false);
     if (conversion_info->precision != -1)
-        asprintf_append_number_base(my_string_append_char(destination, '.'),
+        my_asprintf_append_number_base(my_string_append_char(destination, '.'),
             (uintmax_t)conversion_info->precision, 10, false);
     if (conversion_info->conversion_specifier != '\0')
         my_string_append_char(destination,

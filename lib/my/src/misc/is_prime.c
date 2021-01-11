@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Returns whether the number is prime
+** Defines is_prime
 */
 
 #include "my/misc.h"

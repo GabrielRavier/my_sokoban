@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Duplicates a string, but only at most length bytes
+** Defines strndup
 */
 
 #include "my/string.h"

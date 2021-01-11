@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements strcasecmp
+** Defines strcasecmp
 */
 
 #include "my/strings.h"

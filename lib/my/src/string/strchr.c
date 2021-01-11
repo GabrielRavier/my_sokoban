@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Return a pointer to the find occurence of the character in the passed string
+** Defines strchr
 */
 
 #include "my/string.h"

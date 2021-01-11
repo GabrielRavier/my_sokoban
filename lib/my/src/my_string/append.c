@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements append
+** Defines append
 */
 
 #include "my/my_string.h"

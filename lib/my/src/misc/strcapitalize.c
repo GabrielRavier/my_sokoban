@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Capitalizes the first letter of each word
+** Defines strcapitalize
 */
 
 #include "my/misc.h"

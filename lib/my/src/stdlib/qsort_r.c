@@ -2,8 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Sorts num_elements of size element_size in ascending order as decided by
-** comparison_function, with the possibility of passing extra data to it
+** Defines qsort_r
 */
 
 #include "my/stdlib.h"

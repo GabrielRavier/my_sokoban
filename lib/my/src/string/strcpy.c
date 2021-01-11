@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Copies the string pointed to by src to the buffer pointed to by dest
+** Defines strcpy
 */
 
 #include "my/string.h"

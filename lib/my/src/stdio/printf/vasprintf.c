@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_vasprintf
+** Defines my_vasprintf
 */
 
 #include "my/stdio.h"
@@ -18,34 +18,34 @@
 #include <assert.h>
 
 static const formatter_func_t formatter_functions[UCHAR_MAX] = {
-    ['d'] = &asprintf_format_signed_integer,
-    ['i'] = &asprintf_format_signed_integer,
-    ['b'] = &asprintf_format_unsigned_integer,
-    ['o'] = &asprintf_format_unsigned_integer,
-    ['u'] = &asprintf_format_unsigned_integer,
-    ['x'] = &asprintf_format_unsigned_integer,
-    ['X'] = &asprintf_format_unsigned_integer,
-    ['c'] = &asprintf_format_char,
-    ['s'] = &asprintf_format_cstring,
-    ['S'] = &asprintf_format_cstring,
-    ['%'] = &asprintf_format_percent_sign,
-    ['p'] = &asprintf_format_pointer,
-    ['C'] = &asprintf_format_char,
-    ['n'] = &asprintf_format_n
+    ['d'] = &my_asprintf_format_signed_integer,
+    ['i'] = &my_asprintf_format_signed_integer,
+    ['b'] = &my_asprintf_format_unsigned_integer,
+    ['o'] = &my_asprintf_format_unsigned_integer,
+    ['u'] = &my_asprintf_format_unsigned_integer,
+    ['x'] = &my_asprintf_format_unsigned_integer,
+    ['X'] = &my_asprintf_format_unsigned_integer,
+    ['c'] = &my_asprintf_format_char,
+    ['s'] = &my_asprintf_format_cstring,
+    ['S'] = &my_asprintf_format_cstring,
+    ['%'] = &my_asprintf_format_percent_sign,
+    ['p'] = &my_asprintf_format_pointer,
+    ['C'] = &my_asprintf_format_char,
+    ['n'] = &my_asprintf_format_n
 };
 
 MY_ATTR_WARN_UNUSED_RESULT static bool parse_format(
     struct my_printf_conversion_info *conversion_info,
     const char **conversion_specification, va_list *arguments)
 {
-    parse_printf_flags(conversion_info, conversion_specification);
-    if (!parse_printf_field_width(conversion_info, conversion_specification,
+    my_parse_printf_flags(conversion_info, conversion_specification);
+    if (!my_parse_printf_field_width(conversion_info, conversion_specification,
         arguments))
         return (false);
-    if (!parse_printf_precision(conversion_info, conversion_specification,
+    if (!my_parse_printf_precision(conversion_info, conversion_specification,
         arguments))
         return (false);
-    parse_printf_length_modifier(conversion_info, conversion_specification);
+    my_parse_printf_length_modifier(conversion_info, conversion_specification);
     conversion_info->conversion_specifier = *((*conversion_specification)++);
     return (true);
 }
@@ -64,12 +64,12 @@ MY_ATTR_WARN_UNUSED_RESULT static const char *do_conversion_specification(
     formatter_function = formatter_functions[
         (unsigned char)conversion_info.conversion_specifier];
     if (formatter_function != NULL)
-        asprintf_do_padding(&((struct asprintf_do_padding_params){destination,
-            destination_length_before_conversion, formatter_function(
-                destination, arguments, &conversion_info),
+        my_asprintf_do_padding(&((struct asprintf_do_padding_params){
+            destination, destination_length_before_conversion,
+            formatter_function(destination, arguments, &conversion_info),
             &conversion_info, formatter_function}));
     else
-        return (asprintf_handle_invalid(destination, &conversion_info,
+        return (my_asprintf_handle_invalid(destination, &conversion_info,
             has_encountered_invalid) ? (conversion_specification -
             (conversion_info.conversion_specifier == '\0')) : NULL);
     return (conversion_specification);

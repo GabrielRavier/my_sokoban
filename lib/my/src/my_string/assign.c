@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Copies source into self
+** Defines assign
 */
 
 #include "my/my_string.h"

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Compare two strings
+** Defines strcmp
 */
 
 #include "my/string.h"

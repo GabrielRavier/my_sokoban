@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements my_fpclassify. We assume IEEE-754, but ¯\_(ツ)_/¯
+** Defines fpclassify. We assume IEEE-754, but ¯\_(ツ)_/¯
 */
 
 #include "my/math.h"

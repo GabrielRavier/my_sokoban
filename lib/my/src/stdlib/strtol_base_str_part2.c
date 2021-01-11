@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2020
-** Unix and C Lab Seminar - Day 06
+** libmy
 ** File description:
-** Does part 2 of getnbr
+** Defines part 2 of strtol_base_str
 */
 
 #include "my/internal/strtol_base_str_part2.h"

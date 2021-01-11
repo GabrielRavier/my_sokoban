@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Handles padding for vasprintf
+** Defines asprintf_do_padding
 */
 
 #include "my/internal/printf/padding.h"
@@ -21,15 +21,15 @@ static void do_padding_loop(struct my_string *destination,
                 destination_length_before_conversion);
 }
 
-void asprintf_do_padding(const struct asprintf_do_padding_params *params)
+void my_asprintf_do_padding(const struct asprintf_do_padding_params *params)
 {
     const size_t converted_length = params->destination->length -
         params->destination_length_before_conversion +
         (params->prefixed_string ? params->prefixed_string->length : 0);
 
-    if (params->formatting_func != &asprintf_format_unsigned_integer &&
-        params->formatting_func != &asprintf_format_signed_integer &&
-        params->formatting_func != &asprintf_format_pointer)
+    if (params->formatting_func != &my_asprintf_format_unsigned_integer &&
+        params->formatting_func != &my_asprintf_format_signed_integer &&
+        params->formatting_func != &my_asprintf_format_pointer)
         params->conversion_info->flag_0 = false;
     if (!params->conversion_info->flag_0 && params->prefixed_string)
         my_string_insert(params->destination, params->prefixed_string->string,

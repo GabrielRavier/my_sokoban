@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Declares getnbr_part2-related entities
+** Declares strtol_base_str_part2-related entities
 */
 
 #pragma once

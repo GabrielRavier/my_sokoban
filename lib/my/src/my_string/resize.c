@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Resizes a my_string
+** Defines resize
 */
 
 #include "my/my_string.h"

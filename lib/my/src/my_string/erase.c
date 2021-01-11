@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements erase
+** Defines erase
 */
 
 #include "my/my_string.h"

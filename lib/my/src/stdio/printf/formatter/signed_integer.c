@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements asprintf_format_signed_integer
+** Defines asprintf_format_signed_integer
 */
 
 #include "my/internal/printf/formatter.h"
@@ -60,15 +60,16 @@ static struct my_string *do_preprinting_stuff(
 // Note: The cast to uintptr_t (done explicitly here for clarity) will handle
 // the issue of INTMAX_MIN, since casting that to uintptr_t on 2s complement
 // (now mandatory in C2x) will result in the corresponding unsigned value
-struct my_string *asprintf_format_signed_integer(struct my_string *destination,
-    va_list *arguments, struct my_printf_conversion_info *format_info)
+struct my_string *my_asprintf_format_signed_integer(
+    struct my_string *destination, va_list *arguments,
+    struct my_printf_conversion_info *format_info)
 {
     intmax_t argument = get_arg(arguments, format_info);
     struct my_string *prefix = do_preprinting_stuff(format_info, &argument);
     const size_t pos_before = destination->length;
 
     if (argument)
-        asprintf_append_number_base(destination, (uintmax_t)argument, 10,
+        my_asprintf_append_number_base(destination, (uintmax_t)argument, 10,
             false);
     do_precision(destination, pos_before, format_info);
     return (prefix);

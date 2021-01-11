@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements creating a bigint from an integer
+** Defines new_frmo_int
 */
 
 #include "my/bigint.h"

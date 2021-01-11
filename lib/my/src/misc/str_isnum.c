@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Check if the passed string only contains digits
+** Defines str_isnum
 */
 
 #include "my/misc.h"

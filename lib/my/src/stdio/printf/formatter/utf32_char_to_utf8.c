@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements asprintf_utf32_char_to_utf8
+** Defines asprintf_utf32_char_to_utf8
 */
 
 #include "my/internal/printf/formatter.h"
@@ -31,7 +31,7 @@ static size_t do_lead_and_length(wchar_t wide_char, unsigned char *lead)
     return (0);
 }
 
-size_t asprintf_utf32_char_to_utf8(char *destination, wchar_t wide_char)
+size_t my_asprintf_utf32_char_to_utf8(char *destination, wchar_t wide_char)
 {
     size_t length;
     unsigned char lead;

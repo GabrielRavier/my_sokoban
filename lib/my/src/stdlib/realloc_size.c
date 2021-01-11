@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Changes the size of the memory block pointed to by ptr to size bytes
+** Defines realloc_size
 */
 
 #include "my/stdlib.h"

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Implements new_from_string
+** Defines new_from_string
 */
 
 #include "my/my_string.h"

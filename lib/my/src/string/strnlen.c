@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Determines the length of a fixed-size string
+** Defines strnlen
 */
 
 #include "my/string.h"

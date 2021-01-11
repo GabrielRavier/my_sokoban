@@ -7,8 +7,8 @@
 
 #pragma once
 
-// Replaces all elements that are equal to old_value with new_value in the range
-// [first, last]
+/// Replaces all elements that are equal to old_value with new_value in the
+/// range
 #define MY_REPLACE(first_param, last, old_value, new_value) \
     do { \
         __auto_type first = (first_param); \

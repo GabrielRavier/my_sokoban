@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Tests my_memmem
+** Tests memmem
 */
 
 #include "../tests_header.h"

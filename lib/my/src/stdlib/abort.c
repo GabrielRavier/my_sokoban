@@ -13,6 +13,8 @@ void __gcov_flush(void);
     #define __gcov_flush()
 #endif
 
+// This uses __builtin_trap to avoid problems with restrictions (say, being
+// forbidden from using abort(3))
 void my_abort(void)
 {
     __gcov_flush();

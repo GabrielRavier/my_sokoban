@@ -17,11 +17,9 @@ _Noreturn static void error_in_assert(void)
     const int ok_yeah_just_ignore_this_return_value = my_dputs(
         "\n\nCouldn't fully print assert error message\n", STDERR_FILENO);
     (void)ok_yeah_just_ignore_this_return_value;
-    __builtin_trap();
+    my_abort();
 }
 
-// This uses __builtin_trap to avoid problems with restrictions (say, being
-// forbidden from using abort(3))
 void my_assert_fail(const char *expression, const char *file_name,
     int line_number, const char *function_name)
 {

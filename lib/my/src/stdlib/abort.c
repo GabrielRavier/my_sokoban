@@ -6,17 +6,12 @@
 */
 
 #include "my/stdlib.h"
-
-void __gcov_flush(void);
-
-#ifndef LIBMY_COVERAGE
-    #define __gcov_flush()
-#endif
+#include "my/internal/coverage_flush.h"
 
 // This uses __builtin_trap to avoid problems with restrictions (say, being
 // forbidden from using abort(3))
 void my_abort(void)
 {
-    __gcov_flush();
+    MY_COVERAGE_FLUSH();
     __builtin_trap();
 }

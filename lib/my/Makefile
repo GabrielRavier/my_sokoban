@@ -52,7 +52,7 @@ SOURCE_FILES += stdlib/qsort stdlib/qsort_r stdlib/realloc_size stdlib/strtol_ba
 # Stuff related to string.h
 SOURCE_FILES += string/strlen string/strcpy string/strncpy string/strstr string/strcmp string/strncmp string/strcat string/strncat string/strchr string/strspn string/strcspn string/strnlen string/strdup string/strndup string/memset
 ifeq ($(shell uname -p), x86_64)
-	SOURCE_FILES += string/memcpy_x86_64 string/memmove_x86_64 string/memcmp_x86_64 string/memmem_x86_64 string/memchr
+	SOURCE_FILES += string/memcpy_x86_64 string/memmove_x86_64 string/memcmp_x86_64 string/memmem_x86_64 string/memchr_x86_64
 else
 	SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem string/memchr
 endif
@@ -68,6 +68,11 @@ SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_stri
 
 # Miscellaneous stuff
 SOURCE_FILES += misc/compute_power_rec misc/compute_square_root misc/is_prime misc/find_prime_sup misc/revstr misc/strupcase misc/strlowcase misc/strcapitalize misc/str_isalpha misc/str_isnum misc/str_islower misc/str_isupper misc/str_isprintable misc/str_to_word_array misc/show_word_array
+
+# x86-64-specific stuff
+ifeq ($(shell uname -p), x86_64)
+	SOURCE_FILES += sysdeps/is_running_under_valgrind_x86_64
+endif
 
 # Tests related to assert.h
 TESTS_SOURCE_FILES := assert
@@ -110,6 +115,7 @@ tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 
 obj/%.o: %.s
 	@mkdir --parents obj/src/string
+	@mkdir --parents obj/src/sysdeps
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj/%.o: %.c

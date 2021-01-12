@@ -1,18 +1,37 @@
+FILE subsystem
+Reach 100% coverage in tests
 faster memchr
+assembly memset
 search.h
 bsearch
+calloc
+atan
+atoi
+atof
+ldexp
+frexp
+copysign
+
+sqrt
+sin
+rand
+putw
+putc
+pow
+nlist
+log
+hypot
+getw
+getc
+fopen
+exp
+ecvt
+ctime
+crypt
+atan
 strtouq
 strtoumax
 strtoull
 strtoul
 strtoimax
 strtoq
-calloc
-atan
-ctime
-atoi
-atof
-ldexp
-frexp
-copysign
-Fix all assembly stuff so it runs fine under valgrind

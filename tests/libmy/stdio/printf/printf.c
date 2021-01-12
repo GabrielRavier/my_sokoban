@@ -191,7 +191,7 @@ Test(my_printf, invalid, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("% w");
 }
 
-Test(my_prinf, mismatch_length_conversion, .init = do_init, .fini = compare_all_libc_to_stdout)
+Test(my_printf, mismatch_length_conversion, .init = do_init, .fini = compare_all_libc_to_stdout)
 {
     compare_printfs("%hhc", 'a');
     compare_printfs("%hc", 'b');

@@ -6,7 +6,9 @@
 */
 
 #include "../tests_header.h"
+#include "random_floats.h"
 #include "my/math.h"
+#include "my/cpp-like/iterator.h"
 #include <math.h>
 #include <float.h>
 #include <stdbool.h>
@@ -20,49 +22,19 @@ static void do_test(long double x)
     cr_assert_eq((bool)my_signbit(x_float), (bool)signbit(x_float));
 }
 
-Test(my_signbit, gnulib)
+Test(my_signbit, random_floats)
 {
-    do_test(3.141l);
-    do_test(3.141e30l);
-    do_test(3.141e-30l);
-    do_test(-2.718l);
-    do_test(-2.718e30l);
-    do_test(-2.718e-30l);
-    do_test(0.0l);
-    do_test(-0.0l);
-    do_test(1.l);
-    do_test(-1.l);
-    do_test(INFINITY);
-    do_test(-INFINITY);
-    do_test(NAN);
-    do_test(SNANL);
+    for (size_t i = 0; i < MY_ARRAY_SIZE(RANDOM_FLOATS); ++i) {
+        do_test(RANDOM_FLOATS[i]);
+        do_test(-RANDOM_FLOATS[i]);
+    }
+    for (size_t i = 0; i < 100000; ++i) {
+        union {
+            long double val;
+            unsigned char bytes[sizeof(long double)];
+        } u;
+        for (size_t i = 0; i < sizeof(u.bytes); ++i)
+            u.bytes[i] = rand();
+        do_test(u.val);
+    }
 }
-
-Test(my_signbit, limits)
-{
-    do_test(FLT_MIN);
-    do_test(DBL_MIN);
-    do_test(LDBL_MIN);
-    do_test(FLT_TRUE_MIN);
-    do_test(DBL_TRUE_MIN);
-    do_test(LDBL_TRUE_MIN);
-    do_test(FLT_MAX);
-    do_test(DBL_MAX);
-    do_test(LDBL_MAX);
-    do_test(FLT_EPSILON);
-    do_test(DBL_EPSILON);
-    do_test(LDBL_EPSILON);
-    do_test(-FLT_MIN);
-    do_test(-DBL_MIN);
-    do_test(-LDBL_MIN);
-    do_test(-FLT_TRUE_MIN);
-    do_test(-DBL_TRUE_MIN);
-    do_test(-LDBL_TRUE_MIN);
-    do_test(-FLT_MAX);
-    do_test(-DBL_MAX);
-    do_test(-LDBL_MAX);
-    do_test(-FLT_EPSILON);
-    do_test(-DBL_EPSILON);
-    do_test(-LDBL_EPSILON);
-}
-

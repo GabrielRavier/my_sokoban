@@ -7,8 +7,8 @@
 
 #include "../macros.h"
 
-/// Determines the amount of elements in an array. Will fail to compile on things
-/// that aren't arrays
+/// Determines the amount of elements in an array. Will fail to compile on
+/// things that aren't arrays
 #ifndef __cplusplus
 /// Ignore the C++ compatibility warning here, we aren't even enabling this in
 /// C++ (use std::size instead)

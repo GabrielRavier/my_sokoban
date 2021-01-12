@@ -66,9 +66,6 @@ SOURCE_FILES += bigint/new_from_int bigint/strtol_base_str bigint/assign bigint/
 # Stuff related to my_string
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free
 
-# Miscellaneous stuff
-SOURCE_FILES += misc/compute_power_rec misc/compute_square_root misc/is_prime misc/find_prime_sup misc/revstr misc/strupcase misc/strlowcase misc/strcapitalize misc/str_isalpha misc/str_isnum misc/str_islower misc/str_isupper misc/str_isprintable misc/str_to_word_array misc/show_word_array
-
 # x86-64-specific stuff
 ifeq ($(shell uname -p), x86_64)
 	SOURCE_FILES += sysdeps/is_running_under_valgrind_x86_64

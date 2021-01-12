@@ -67,3 +67,4 @@ strtoull
 strtoul
 strtoimax
 strtoq
+Add tests for getopt, qsort_r, fpclassify

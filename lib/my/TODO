@@ -1,6 +1,7 @@
 FILE subsystem
 Reach 100% coverage in tests
 faster memchr
+faster memmem (that passes tests lol)
 assembly memset
 search.h
 bsearch

@@ -31,6 +31,17 @@ ctime
 crypt
 atan
 
+perror
+div, ldiv, lldiv, imaxdiv
+getpw
+sleep
+signal
+setgid
+mknod
+getgid
+_Exit
+_exit
+exit
 write
 wait
 unlink

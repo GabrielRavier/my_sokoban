@@ -30,14 +30,13 @@ int my_fpclassify_float(float x)
         float as_float;
         uint32_t as_int;
     } u = {.as_float = x};
-    int32_t int_x = u.as_int;
+    int32_t exponent = u.as_int >> 23 & 0xFF;
 
-    int_x &= 0x7FFFFFFF;
-    return (int_x == 0) ? FP_ZERO :
-        (int_x < 0x800000) ? FP_SUBNORMAL :
-        (int_x >= 0x7F800000) ?
-            ((int_x > 0x7F800000) ? FP_NAN : FP_INFINITE) :
-            FP_NORMAL;
+    if (exponent == 0)
+        return u.as_int << 1 ? FP_SUBNORMAL : FP_ZERO;
+    if (exponent == 0x7FF)
+        return u.as_int << 9 ? FP_NAN : FP_INFINITE;
+    return FP_NORMAL;
 }
 
 // Assumes x86 80-bit long double format

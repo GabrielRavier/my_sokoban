@@ -33,14 +33,6 @@ obj/%.o: src/%.c
 	@mkdir --parents obj
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-obj/my_strcat.o: ../../my_strcat.c
-	@mkdir --parents obj
-	$(CC) -c $< -o $@ $(CFLAGS)
-
-obj/my_strncat.o: ../../my_strncat.c
-	@mkdir --parents obj
-	$(CC) -c $< -o $@ $(CFLAGS)
-
 # Include dependencies
 include $(wildcard obj/*.d)
 

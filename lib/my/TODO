@@ -7,6 +7,10 @@ strtoull
 strtoul
 strtoimax
 strtoq
+calloc
+atan
+ctime
+atoi
 atof
 ldexp
 frexp

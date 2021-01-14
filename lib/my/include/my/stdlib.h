@@ -27,8 +27,7 @@ void my_qsort_r(void *base, size_t num_elements, size_t element_size,
 /// Changes the size of the memory block pointed to by ptr of original_length
 /// bytes to new_length bytes.
 void *my_realloc_size(void *ptr, size_t new_length, size_t original_length)
-    MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_NOTHROW MY_ATTR_ALLOC_SIZE((2))
-    MY_ATTR_MALLOC;
+    MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_NOTHROW MY_ATTR_ALLOC_SIZE((2));
 
 /// This allows an arbitrary amount of signs before the number, and handles them
 /// appropriately, so this doesn't behave exactly identically to strtol. It also
@@ -37,12 +36,13 @@ long my_strtol_base_str(const char *num_ptr, char **end_num_ptr,
     const char *base) MY_ATTR_NONNULL((1, 3)) MY_ATTR_NOTHROW;
 
 /// This is the actual strtol. Converts a string to a long integer.
-long my_strtol(const char *num_ptr, char **end_num_ptr, int base)
-    MY_ATTR_NONNULL((1)) MY_ATTR_NOTHROW;
+long my_strtol(const char *MY_RESTRICT num_ptr, char **MY_RESTRICT end_num_ptr,
+    int base) MY_ATTR_NONNULL((1)) MY_ATTR_NOTHROW;
 
 /// Converts a string to a long long integer.
-long long my_strtoll(const char *num_ptr, char **end_num_ptr, int base)
-    MY_ATTR_NONNULL((1)) MY_ATTR_NOTHROW;
+long long my_strtoll(const char *MY_RESTRICT num_ptr,
+    char **MY_RESTRICT end_num_ptr, int base) MY_ATTR_NONNULL((1))
+    MY_ATTR_NOTHROW;
 
 /// Computes the absolute value of an integer
 int my_abs(int x) MY_ATTR_NOTHROW MY_ATTR_CONST MY_ATTR_WARN_UNUSED_RESULT;

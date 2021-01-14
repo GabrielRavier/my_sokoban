@@ -7,5 +7,4 @@
 
 # Ignore files produced during compilation
 obj/
-../libmy.a
 tests_binary

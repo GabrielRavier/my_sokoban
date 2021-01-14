@@ -9,6 +9,12 @@
 #include "my/internal/strtol_base_str_part2.h"
 #include "my/string.h"
 
+static void set_end_num_ptr(char **end_num_ptr, char *value)
+{
+    if (end_num_ptr != NULL)
+        *end_num_ptr = value;
+}
+
 struct my_bigint *my_bigint_strtol_base_str(const char *num_ptr,
     char **end_num_ptr, const char *base)
 {
@@ -18,8 +24,7 @@ struct my_bigint *my_bigint_strtol_base_str(const char *num_ptr,
 
     while (true) {
         if (!my_find_digit_from_base(num_ptr++, base, &current_digit)) {
-            if (end_num_ptr != NULL)
-                *end_num_ptr = (char *)(num_ptr - 1);
+            set_end_num_ptr(end_num_ptr, (char *)(num_ptr - 1));
             break;
         }
         my_bigint_mul_int(result, base_width);

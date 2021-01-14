@@ -10,12 +10,23 @@
 #ifdef __GNUC__
     #define MY_ATTRIBUTE(attr) __attribute__(attr)
     #define MY_PRETTY_FUNCTION __extension__ __PRETTY_FUNCTION__
-    #define MY_GCC_AT_LEAST_VER(major, minor) \
-        ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((major) << 16) + (minor))
 #else
     #define MY_ATTRIBUTE(attr)
     #define MY_PRETTY_FUNCTION __func__
-    #define MY_GNUC_PREREQ(major, minor) 0
+#endif
+
+#if defined(__GNUC__) && defined(__GNUC_MINOR__)
+    #define MY_GCC_AT_LEAST_VER(major, minor) \
+        ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((major) << 16) + (minor))
+#else
+    #define MY_GCC_AT_LEAST_VER(major, minor) 0
+#endif
+
+#if defined(__clang_major__) && defined(__clang_minor__)
+    #define MY_CLANG_AT_LEAST_VER(major, minor) \
+        ((__clang_major__ << 16) + __clang_minor__ >= ((major) << 16) + (minor))
+#else
+    #define MY_CLANG_AT_LEAST_VER(major, minor) 0
 #endif
 
 #define MY_ATTR_WARN_UNUSED_RESULT MY_ATTRIBUTE((warn_unused_result))
@@ -34,4 +45,14 @@
     #define MY_ATTR_ACCESS(parameters) MY_ATTRIBUTE((access parameters))
 #else
     #define MY_ATTR_ACCESS(parameters)
+#endif
+
+#if !MY_GCC_AT_LEAST_VER(2, 92)
+    #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+        #define MY_RESTRICT restrict
+    #else
+        #define MY_RESTRICT
+    #endif
+#else
+    #define MY_RESTRICT __restrict
 #endif

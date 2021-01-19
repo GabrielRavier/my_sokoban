@@ -5,7 +5,7 @@
 ** Tests assert
 */
 
-#include "tests_header.h"
+#include "../tests_header.h"
 #include "my/assert.h"
 #include "my/string.h"
 #include <stdlib.h>

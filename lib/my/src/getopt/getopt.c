@@ -12,81 +12,85 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#pragma GCC diagnostic ignored "-Wcast-qual"
-
-struct do_option_args {
+struct getopt_state {
+    int argc;
     char **argv;
     const char *optstring;
-    const char *option;
-    const char *argument;
-    int *optposition;
+    char argument_character;
+    const char *optstring_argument_position;
+    int *ptr_optposition;
 };
 
-// Returns whether we should return early
-static bool do_option_with_arg(const struct do_option_args *args)
+static int do_found_option(struct getopt_state *state)
 {
-    if (args->argument[*args->optposition + 1] != '\0') {
+    if (state->optstring_argument_position[1] == ':') {
+        if (state->argv[optind][*state->ptr_optposition + 1] != '\0')
+            optarg = &state->argv[optind++][*state->ptr_optposition + 1];
+        else if (++optind >= state->argc) {
+            my_dprintf(STDERR_FILENO, "%s: option requires an argument -- %c\n",
+                state->argv[0], state->argument_character);
+            *state->ptr_optposition = 1;
+            return '?';
+        } else
+            optarg = state->argv[optind++];
+        *state->ptr_optposition = 1;
+    } else if (state->argv[optind][++*state->ptr_optposition] == '\0') {
+        *state->ptr_optposition = 1;
         ++optind;
-        optarg = (char *)&args->argument[*args->optposition + 1];
-        *args->optposition = 1;
-    } else {
-        if (args->argv[optind + 1] == NULL) {
-            if (opterr && *args->optstring != ':')
-                my_dprintf(STDERR_FILENO,
-                    "%s: option requires an argument: %c\n", args->argv[0],
-                    optopt);
-            return (false);
-        }
-        *args->optposition = 1;
-        optind += 2;
-        optarg = args->argv[optind - 1];
     }
-    return (true);
+    return (state->argument_character);
 }
 
-static int do_option(const struct do_option_args *args)
+static int do_illegal_option(struct getopt_state *state)
 {
-    if (args->option[1] == ':')
-        return (do_option_with_arg(args) ? (optopt) : (*args->optstring == ':' ?
-            ':' : '?'));
-    if (args->argument[++*args->optposition] == '\0') {
-        *args->optposition = 1;
+    my_dprintf(STDERR_FILENO, "%s: invalid option -- '%c'\n", state->argv[0],
+        state->argument_character);
+    if (state->argv[optind][++*state->ptr_optposition] == '\0') {
         ++optind;
+        *state->ptr_optposition = 1;
     }
-    return (optopt);
+    return ('?');
 }
 
-static bool check_ret_min_1(const char *argument)
+static int do_option(struct getopt_state *state)
 {
-    if (argument && (my_strcmp(argument, "--") == 0)) {
-        ++optind;
-        return (true);
+    state->argument_character = state->argv[optind][*state->ptr_optposition];
+    if (state->argument_character != ':') {
+        state->optstring_argument_position = my_strchr(state->optstring,
+            state->argument_character);
+        if (state->optstring_argument_position != NULL)
+            return (do_found_option(state));
     }
-    if (argument == NULL || argument[0] != '-' || !my_isalnum(argument[1]))
-        return (true);
-    return (false);
+    return do_illegal_option(state);
+}
+
+static void do_reset(struct getopt_state *state)
+{
+    if (optind == 0) {
+        optind = 1;
+        *state->ptr_optposition = 1;
+    }
 }
 
 int my_getopt(int argc, char **argv, const char *optstring)
 {
     static int optposition = 1;
-    const char *argument;
-    const char *option;
+    struct getopt_state state = {.argc = argc, .argv = argv,
+        .optstring = optstring, .ptr_optposition = &optposition};
 
-    (void)argc;
-    if (optind == 0) {
-        optind = 1;
-        optposition = 1;
+    optarg = NULL;
+    do_reset(&state);
+    if (*state.ptr_optposition == 1) {
+        if (optind >= state.argc ||
+            state.argv[optind][0] != '-' || state.argv[optind][1] == '\0')
+            return (-1);
+        else if (my_strcmp(state.argv[optind], "-?") == 0) {
+            ++optind;
+            return ('?');
+        } else if (my_strcmp(state.argv[optind], "--") == 0) {
+            ++optind;
+            return (-1);
+        }
     }
-    argument = argv[optind];
-    if (check_ret_min_1(argument))
-        return (-1);
-    optopt = (int)argument[optposition];
-    option = my_strchr(optstring, optopt);
-    if (option)
-        return (do_option(&((const struct do_option_args){argv, optstring,
-            option, argument, &optposition})));
-    if (opterr && *optstring != ':')
-        my_dprintf(STDERR_FILENO, "%s: illegal option: %c\n", argv[0], optopt);
-    return ('?');
+    return (do_option(&state));
 }

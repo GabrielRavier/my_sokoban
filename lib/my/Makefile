@@ -19,7 +19,7 @@ override CFLAGS += -D_GNU_SOURCE
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/assert my/bigint my/ctype my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
+HEADER_FILES := my my/assert my/ctype my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -60,9 +60,6 @@ endif
 # Stuff related to strings.h
 SOURCE_FILES += strings/strcasecmp strings/bcopy
 
-# Stuff related to my_bigint
-SOURCE_FILES += bigint/new_from_int bigint/strtol_base_str bigint/assign bigint/add bigint/add_unsigned bigint/compare bigint/compare_unsigned bigint/sub bigint/sub_unsigned bigint/mul bigint/div bigint/mod bigint/div_mod bigint/neg bigint/to_int bigint/to_string_base bigint/free
-
 # Stuff related to my_string
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free
 
@@ -72,7 +69,10 @@ ifeq ($(shell uname -p), x86_64)
 endif
 
 # Tests related to assert.h
-TESTS_SOURCE_FILES := assert
+TESTS_SOURCE_FILES := assert/assert
+
+# Tests related to getopt.h
+TESTS_SOURCE_FILES += getopt/getopt
 
 # Tests related to stdlib.h
 TESTS_SOURCE_FILES += stdlib/strtol_base_str stdlib/strtol stdlib/abs
@@ -82,9 +82,6 @@ TESTS_SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem s
 
 # Tests related to strings.h
 TESTS_SOURCE_FILES += strings/bcopy
-
-# Tests related to my_bigint
-TESTS_SOURCE_FILES += bigint/add bigint/sub bigint/mul bigint/div bigint/mod bigint/strtol_base_str bigint/to_string_base
 
 # Tests related to stdio.h
 TESTS_SOURCE_FILES += stdio/printf/printf
@@ -117,7 +114,6 @@ obj/%.o: %.s
 
 obj/%.o: %.c
 	@mkdir --parents obj/src/assert
-	@mkdir --parents obj/src/bigint
 	@mkdir --parents obj/src/checked_multiply
 	@mkdir --parents obj/src/ctype
 	@mkdir --parents obj/src/getopt
@@ -133,7 +129,8 @@ obj/%.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj/tests/%.o: ../../tests/libmy/%.c
-	@mkdir --parents obj/tests/bigint
+	@mkdir --parents obj/tests/assert
+	@mkdir --parents obj/tests/getopt
 	@mkdir --parents obj/tests/math
 	@mkdir --parents obj/tests/stdio/printf
 	@mkdir --parents obj/tests/stdlib

@@ -5,6 +5,9 @@ faster memmem (that passes tests lol)
 assembly memset
 search.h
 bsearch
+getopt - Beyond POSIX compliance (next tests should be kernels/MidnightBSD/contrib/diff/gnulib-tests/test-getopt.h)
+
+V7 stuff ? incomplete iirc
 calloc
 atan
 atoi
@@ -12,8 +15,8 @@ atof
 ldexp
 frexp
 copysign
-Revise getopt and qsort when they come up
 
+Section 3 stuff iirc (up to and including V4)
 sqrt
 sin
 rand
@@ -32,6 +35,7 @@ ctime
 crypt
 atan
 
+Section 2 stuff iirc (up to and including V4)
 perror
 div, ldiv, lldiv, imaxdiv
 getpw
@@ -73,6 +77,8 @@ chown
 chmod
 chdir
 break
+
+Stuff to do before UNIX stuff
 strtouq
 strtoumax
 strtoull
@@ -82,4 +88,3 @@ strtoq
 Instead of using write, use some my_full_write wrapper that will try to progressively write the entire buffer
 Add tests for fpclassify
 Add tests for qsort_r
-Add tests for getopt

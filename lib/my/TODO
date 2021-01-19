@@ -12,6 +12,7 @@ atof
 ldexp
 frexp
 copysign
+Revise getopt and qsort when they come up
 
 sqrt
 sin

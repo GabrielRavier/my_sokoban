@@ -7,78 +7,9 @@ search.h
 bsearch
 getopt - Beyond POSIX compliance (next tests should be kernels/MidnightBSD/contrib/diff/gnulib-tests/test-getopt.h)
 
-V7 stuff ? incomplete iirc
-calloc
-atan
-atoi
-atof
-ldexp
-frexp
-copysign
+Search in historical stuff - Start with PDP7 (up to some limit idk)
 
-Section 3 stuff iirc (up to and including V4)
-sqrt
-sin
-rand
-putw
-putc
-pow
-nlist
-log
-hypot
-getw
-getc
-fopen
-exp
-ecvt
-ctime
-crypt
-atan
-
-Section 2 stuff iirc (up to and including V4)
-perror
-div, ldiv, lldiv, imaxdiv
-getpw
-sleep
-signal
-setgid
-mknod
-getgid
-_Exit
-_exit
-exit
-write
-wait
-unlink
-umount
-times
-time
-sync
-break
-stty
-gtty
-stime
-stat
-setuid
-read
-pipe
-open
-nice
-mount
-link
-kill
-getuid
-fstat
-fork
-dup
-creat
-close
-chown
-chmod
-chdir
-break
-
-Stuff to do before UNIX stuff
+Stuff to do before historical stuff
 strtouq
 strtoumax
 strtoull

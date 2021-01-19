@@ -17,7 +17,7 @@ do
     do_test_process "$i"&
 done
 
-# Do printf tests without the actual printf being checked (in case ASAN in running, it might fuck up tests related to invalidity, considering it doesn't like some of the behaviour we test (that glibc accepts, but is invalid
+# Do printf tests without the actual printf being checked (in case ASAN in running, it might fuck up tests related to invalidity, considering it doesn't like some of the behaviour we test (that glibc accepts, but is invalid)
 ASAN_OPTIONS=check_printf=0 do_test_process my_printf&
 
 # Wait for all tests to be over before exiting

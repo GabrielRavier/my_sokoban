@@ -17,6 +17,9 @@ int my_putchar(int character);
 /// Writes the given character to the given file descriptor
 int my_dputc(int character, int fd);
 
+/// Reads the next character from the given file descriptor
+int my_dgetc(int fd);
+
 /// Writes the given string to the given file descriptor
 int my_dputs(const char *string, int fd);
 

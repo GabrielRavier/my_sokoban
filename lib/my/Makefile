@@ -105,7 +105,7 @@ tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 
 ../../include/%.h: include/%.h
 	@mkdir --parents ../../include/my/cpp-like
-	cp -f $< $@
+	cp $< $@
 
 obj/%.o: %.s
 	@mkdir --parents obj/src/string

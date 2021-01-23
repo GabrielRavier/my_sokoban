@@ -6,6 +6,7 @@ assembly memset
 search.h
 bsearch
 getopt - Beyond POSIX compliance (next tests should be kernels/MidnightBSD/contrib/diff/gnulib-tests/test-getopt.h)
+make full proper printf that handles floating point stuff and uses some kind of FILE subsystem (try to avoid malloc too if possible)
 
 Search in historical stuff - Start with PDP7 (up to some limit idk)
 

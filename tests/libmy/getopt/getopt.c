@@ -43,7 +43,7 @@ Test(my_getopt, escape_options_without_arguments, .init = cr_redirect_stderr)
     if (expected_stderr)
         fprintf(expected_stderr, "my_getopt_test: invalid option -- 'e'\n");
     do_test(argc, (char **)argv, optstring, -1, 8, NULL);
-    
+
     if (expected_stderr) {
         cr_assert_stderr_eq(expected_stderr);
         fclose(expected_stderr);

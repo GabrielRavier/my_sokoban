@@ -579,8 +579,8 @@ Test(my_printf, format_s, .init = do_init, .fini = compare_all_libc_to_stdout)
     compare_printfs("|%13.15ls|\n", &wstr[2]);
     compare_printfs("|%13lc|\n", (wint_t)wstr[5]);
 
-    wchar_t wz [3] = L"@@";
-    wchar_t wn [4] = L"@@@";
+    wchar_t wz[3] = L"@@";
+    wchar_t wn[4] = L"@@@";
     compare_printfs("%ls", wz);
     compare_printfs("%4ls", wz);
     compare_printfs("%4ls", wn);

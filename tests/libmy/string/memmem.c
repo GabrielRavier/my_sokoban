@@ -24,8 +24,7 @@ static void *zero_size_ptr(void)
 static void do_one_test(const void *haystack, size_t haystack_length,
     const void *needle, size_t needle_length)
 {
-    cr_assert_eq(
-        my_memmem(haystack, haystack_length, needle, needle_length),
+    cr_assert_eq(my_memmem(haystack, haystack_length, needle, needle_length),
         memmem(haystack, haystack_length, needle, needle_length));
 }
 

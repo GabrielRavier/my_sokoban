@@ -29,8 +29,7 @@ static void find_number(const char **number_ptr_ptr, bool *is_negative_ptr)
     const char *first_digit = number_ptr + my_strspn(number_ptr, "\t\v\f\n\r ");
     first_digit += my_strspn(first_digit, "-+");
 
-    *is_negative_ptr =
-        ((MY_COUNT(number_ptr, first_digit, '-') % 2));
+    *is_negative_ptr = ((MY_COUNT(number_ptr, first_digit, '-') % 2));
     *number_ptr_ptr = first_digit;
 }
 

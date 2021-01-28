@@ -41,7 +41,7 @@ struct my_string *my_string_insert(struct my_string *self, const char *string,
 static inline struct my_string *my_string_insert_char(struct my_string *self,
     char character, size_t position)
 {
-    return my_string_insert(self, &character, 1, position);
+    return (my_string_insert(self, &character, 1, position));
 }
 
 /// Appends length bytes from string to self
@@ -52,7 +52,7 @@ struct my_string *my_string_append(struct my_string *self, const char *string,
 static inline struct my_string *my_string_append_char(struct my_string *self,
     char character)
 {
-    return my_string_append(self, &character, 1);
+    return (my_string_append(self, &character, 1));
 }
 
 /// Appends a formatted string to self
@@ -69,7 +69,7 @@ static inline struct my_string *my_string_append_printf(struct my_string *self,
     va_start(arguments, format);
     my_string_append_vprintf(self, format, arguments);
     va_end(arguments);
-    return self;
+    return (self);
 }
 
 /// Removes count characters starting at index
@@ -81,6 +81,13 @@ struct my_string *my_string_erase(struct my_string *self, size_t index,
 /// current size. If the current size is greater than count, the string is
 /// reduced to its first count elements
 struct my_string *my_string_resize(struct my_string *self, size_t count);
+
+/// Removes all the characters from the string, as if by executing
+/// my_string_resize(self, 0)
+static inline struct my_string *my_string_clear(struct my_string *self)
+{
+    return (my_string_resize(self, 0));
+}
 
 /// Destructs the passed string and the associated data. If you instead want to
 /// free the my_string but gain ownership of self->string, use

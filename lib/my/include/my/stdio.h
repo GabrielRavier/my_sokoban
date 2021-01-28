@@ -21,10 +21,10 @@ int my_dputc(int character, int fd);
 int my_dgetc(int fd);
 
 /// Writes the given string to the given file descriptor
-int my_dputs(const char *string, int fd);
+int my_dputs(const char *string, int fd) MY_ATTR_NONNULL((1));
 
 /// Write the given string and a trailing newline to stdout
-int my_puts(const char *string);
+int my_puts(const char *string) MY_ATTR_NONNULL((1));
 
 /// Writes formatted output to stdout
 int my_printf(const char *MY_RESTRICT format, ...) MY_ATTR_FORMAT(printf, 1, 2);

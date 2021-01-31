@@ -20,6 +20,6 @@ Test(my_putenv, freebsd_putenv_basic)
     cr_assert_str_eq(my_getenv("clap"), "true");
     cr_assert_eq(my_getenv("crap"), NULL);
     string[1] = 'r';
-    cr_assert_eq(unsetenv("crap"), 0);
+    cr_assert_eq(my_unsetenv("crap"), 0);
     cr_assert_eq(my_getenv("crap"), NULL);
 }

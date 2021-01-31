@@ -48,9 +48,9 @@ Test(my_setenv, freebsd_setenv_basic)
     offset = lrand48();
     for (size_t i = 0; i < NUM_VARS; ++i) {
         snprintf(name, sizeof(name), "var%zu", (i * 11 + offset) % NUM_VARS);
-        cr_assert_eq(unsetenv(name), 0);
+        cr_assert_eq(my_unsetenv(name), 0);
         cr_assert_eq(my_getenv(name), NULL);
-        cr_assert_eq(unsetenv(name), 0);
+        cr_assert_eq(my_unsetenv(name), 0);
     }
 
     errno = 0;
@@ -75,14 +75,14 @@ Test(my_setenv, freebsd_setenv_mixed)
     cr_assert_str_eq(my_getenv("mixedcrap"), "setenv");
     cr_assert_eq(putenv(string), 0);
     cr_assert_str_eq(my_getenv("mixedcrap"), "putenv");
-    cr_assert_eq(unsetenv("mixedcrap"), 0);
+    cr_assert_eq(my_unsetenv("mixedcrap"), 0);
     cr_assert_eq(my_getenv("mixedcrap"), NULL);
 
     cr_assert_eq(putenv(string), 0);
     cr_assert_str_eq(my_getenv("mixedcrap"), "putenv");
     cr_assert_eq(my_setenv("mixedcrap", "setenv", 1), 0);
     cr_assert_str_eq(my_getenv("mixedcrap"), "setenv");
-    cr_assert_eq(unsetenv("mixedcrap"), 0);
+    cr_assert_eq(my_unsetenv("mixedcrap"), 0);
     cr_assert_eq(my_getenv("mixedcrap"), NULL);
 }
 
@@ -103,8 +103,8 @@ Test(my_setenv, klibc)
     cr_assert_str_eq(my_getenv("SETENV"), "setenv_good");
     cr_assert_str_eq(my_getenv("NEWENV"), "newenv_good");
 
-    cr_assert_eq(unsetenv("SETENV"), 0);
-    cr_assert_eq(unsetenv("NEWENV"), 0);
+    cr_assert_eq(my_unsetenv("SETENV"), 0);
+    cr_assert_eq(my_unsetenv("NEWENV"), 0);
     cr_assert_eq(my_getenv("SETENV"), NULL);
     cr_assert_eq(my_getenv("NEWENV"), NULL);
 }

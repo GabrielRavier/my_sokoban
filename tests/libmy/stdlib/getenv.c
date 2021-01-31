@@ -35,7 +35,7 @@ Test(my_getenv, freebsd_basic)
     cr_assert_eq(my_setenv("EVIL", "very=bad", 1), 0);
     cr_assert_str_eq(my_getenv("EVIL"), "very=bad");
     cr_assert_str_eq(my_getenv("EVIL=very"), "bad");
-    cr_assert_eq(unsetenv("EVIL"), 0);
+    cr_assert_eq(my_unsetenv("EVIL"), 0);
 }
 
 Test(my_getenv, dietlibc)

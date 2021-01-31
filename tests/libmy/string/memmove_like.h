@@ -48,7 +48,7 @@ Test(MEMMOVE_LIKE_FUNC_TEST_NAME, overlap_from_before)
         for (size_t j = 0; j < i; ++j) {
             fill(to_test);
             MEMMOVE_LIKE_FUNC(to_test + MAX * 2 - i, to_test + MAX * 2 - i - j, i);
-      
+
             fill(to_known);
             memmove(to_known + MAX * 2 - i, to_known + MAX * 2 - i - j, i);
 

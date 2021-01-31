@@ -24,7 +24,7 @@ my_memmove:
     movups [rdi], xmm1
     movups [rdi + rdx - 0x10], xmm0
     ret
-    
+
     .p2align 4,,10
     .p2align 3
 .Lless_than_xmm:
@@ -192,7 +192,7 @@ my_memmove:
     movups xmm6, [rsi + 0x20]
     movups xmm5, [rsi + 0x30]
     movups xmm4, [rsi + rcx - 0x10]
-    
+
     lea r9, [rax + rcx - 0x10]
     lea edx, [rax + rcx]
     and edx, 0xF

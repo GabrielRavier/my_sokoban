@@ -25,7 +25,7 @@ static const char *make_exec_pathname(const char *path_string, const char *file,
 static bool handle_enoexec(const char *file, char *const argv[])
 {
     char *new_arguments[2560];
-    
+
     new_arguments[0] = "sh";
     new_arguments[1] = (char *)file;
     for (size_t i = 1; argv[i] != NULL; ++i) {

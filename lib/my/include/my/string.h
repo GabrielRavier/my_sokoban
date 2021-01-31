@@ -41,7 +41,7 @@ char *my_strndup(const char *string, size_t length) MY_ATTR_NOTHROW
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_MALLOC MY_ATTR_NONNULL((1))
     MY_ATTR_ACCESS((read_only, 1, 2));
 
-/// Appends source onto destination 
+/// Appends source onto destination
 char *my_strcat(char *MY_RESTRICT destination, const char *MY_RESTRICT source)
     MY_ATTR_NOTHROW MY_ATTR_NONNULL((1, 2)) MY_ATTR_ACCESS((read_write, 1))
     MY_ATTR_ACCESS((read_only, 2));

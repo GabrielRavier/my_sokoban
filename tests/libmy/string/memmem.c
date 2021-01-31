@@ -50,7 +50,7 @@ Test(my_memmem, netbsd_oob)
     size_t pg = (size_t)getpagesize();
     char *src = (char *)mmap(NULL, pg * 2, PROT_READ|PROT_WRITE,
                      MAP_ANON|MAP_PRIVATE, -1, (off_t)0);
-    cr_assert_neq(src, MAP_FAILED); 
+    cr_assert_neq(src, MAP_FAILED);
     char *guard = (char *)mmap(src + pg, pg,
                        PROT_NONE, MAP_ANON|MAP_PRIVATE|MAP_FIXED, -1, (off_t)0);
     for (size_t i = 2; i < 5; i++) {

@@ -9,7 +9,7 @@
 
 int my_strcmp(const char *string1, const char *string2)
 {
-    int i = 0;
+    size_t i = 0;
 
     do {
         if (string1[i] != string2[i])

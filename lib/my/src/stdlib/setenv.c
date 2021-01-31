@@ -6,31 +6,13 @@
 */
 
 #include "my/stdlib.h"
+#include "my/internal/stdlib.h"
 #include "my/string.h"
 #include "my/strings.h"
 #include <errno.h>
 #include <stdbool.h>
 
 extern char **environ;
-
-// Similar to getenv, but outputs the offset of the found variable
-static char *getenv_offset(const char *name, int *offset)
-{
-    const char *name_it = name;
-    size_t name_len = my_strlen(name);
-    char *const *environ_it = environ;
-
-    if (environ == NULL)
-        return (NULL);
-    for (; *environ_it != NULL; ++environ_it) {
-        if (my_strncmp(*environ_it, name, name_len) == 0 &&
-            (*environ_it)[name_len] == '=') {
-            *offset = environ_it - environ;
-            return (&(*environ_it)[name_len + 1]);
-        }
-    }
-    return (NULL);
-}
 
 static bool grow_environ(size_t environ_entry_count)
 {
@@ -49,7 +31,7 @@ static bool grow_environ(size_t environ_entry_count)
     return (true);
 }
 
-static bool make_new_entry(int *value_offset)
+static bool make_new_entry(size_t *value_offset)
 {
     size_t environ_entry_count = 0;
     char **environ_it = environ;
@@ -66,7 +48,7 @@ static bool make_new_entry(int *value_offset)
 }
 
 static int set_new_value(const char *name, const char *value, size_t len_value,
-    int value_offset)
+    size_t value_offset)
 {
     size_t len_name = my_strlen(name);
 
@@ -85,13 +67,13 @@ int my_setenv(const char *name, const char *value, int overwrite)
 {
     size_t len_value = my_strlen(value);
     char *old_value;
-    int value_offset;
+    size_t value_offset;
 
     if (name == NULL || *name == '\0' || my_strchr(name, '=') != NULL) {
         errno = EINVAL;
         return (-1);
     }
-    old_value = getenv_offset(name, &value_offset);
+    old_value = my_getenv_offset(name, &value_offset);
     if (old_value) {
         if (overwrite == 0)
             return (0);

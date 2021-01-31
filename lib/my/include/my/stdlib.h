@@ -59,6 +59,10 @@ char *my_getenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1))
 int my_setenv(const char *name, const char *value, int overwrite) MY_ATTR_NOTHROW
     MY_ATTR_NONNULL((2));
 
+// Remove the given name from the environment. It is not an error if name does
+// not exist in the environment
+int my_unsetenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1));
+
 static inline void my_free_ptr(void *ptr)
 {
     free(*(void **)ptr);

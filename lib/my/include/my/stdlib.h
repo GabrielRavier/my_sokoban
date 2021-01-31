@@ -54,6 +54,8 @@ void my_abort(void) MY_ATTR_NOTHROW MY_ATTR_NORETURN;
 char *my_getenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1))
     MY_ATTR_WARN_UNUSED_RESULT;
 
+// Change or add name in the environment, setting it to value unless it already
+// exists and overwrite is non-zero
 int my_setenv(const char *name, const char *value, int overwrite) MY_ATTR_NOTHROW
     MY_ATTR_NONNULL((2));
 

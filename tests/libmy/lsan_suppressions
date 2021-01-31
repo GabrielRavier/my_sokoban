@@ -1,0 +1,3 @@
+# When running a program that uses libmy with -fsanitize, use LSAN_OPTIONS=suppressions=tests/libmy/lsan_suppressions:print_suppressions=0 to avoid having non-useful memory leaks logged
+# This is a known leak that simply cannot be avoided. This is caused by how environ is implemented, not through any fault of the code
+leak:my_setenv

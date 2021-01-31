@@ -3,11 +3,12 @@
 # Execute tests from the directory that which contains the script
 cd "$(dirname "$0")"
 
-TESTS_BINARY=../../lib/my/tests_binary
+TESTS_BINARY=$(realpath ../../lib/my/tests_binary)
+TESTS_SUPPRESSIONS=$(realpath lsan_suppressions)
 
 do_test_process()
 {
-    $TESTS_BINARY --filter="$1*"
+    LSAN_OPTIONS=suppressions=${TESTS_SUPPRESSIONS}:print_suppressions=0 $TESTS_BINARY --filter="$1*"
     echo "$1 done"
 }
 

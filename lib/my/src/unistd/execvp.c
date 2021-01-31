@@ -41,7 +41,8 @@ static bool handle_enoexec(const char *file, char *const argv[])
 
 int my_execvp(const char *file, char *const argv[])
 {
-    const char *path_string = my_strchr(file, '/') ? "" : my_getenv("PATH") ?:
+    const char *env_path = my_getenv("PATH");
+    const char *path_string = my_strchr(file, '/') ? "" : env_path ? env_path :
         "/bin:/usr/bin";
     char *exec_pathname;
 

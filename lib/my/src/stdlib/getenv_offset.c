@@ -14,7 +14,6 @@ extern char **environ;
 // Similar to getenv, but outputs the offset of the found variable
 char *my_getenv_offset(const char *name, size_t *offset)
 {
-    const char *name_it = name;
     size_t name_len = my_strlen(name);
     char *const *environ_it = environ;
 

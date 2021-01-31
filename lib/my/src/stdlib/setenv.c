@@ -35,7 +35,6 @@ static bool make_new_entry(size_t *value_offset)
 {
     size_t environ_entry_count = 0;
     char **environ_it = environ;
-    char **new_environ;
 
     if (environ)
         for (; *environ_it; ++environ_it)

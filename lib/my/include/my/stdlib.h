@@ -56,8 +56,8 @@ char *my_getenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1))
 
 // Change or add name in the environment, setting it to value unless it already
 // exists and overwrite is non-zero
-int my_setenv(const char *name, const char *value, int overwrite) MY_ATTR_NOTHROW
-    MY_ATTR_NONNULL((2));
+int my_setenv(const char *name, const char *value, int overwrite)
+    MY_ATTR_NOTHROW MY_ATTR_NONNULL((2));
 
 // Remove the given name from the environment. It is not an error if name does
 // not exist in the environment

@@ -54,6 +54,9 @@ void my_abort(void) MY_ATTR_NOTHROW MY_ATTR_NORETURN;
 char *my_getenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1))
     MY_ATTR_WARN_UNUSED_RESULT;
 
+int my_setenv(const char *name, const char *value, int overwrite) MY_ATTR_NOTHROW
+    MY_ATTR_NONNULL((2));
+
 static inline void my_free_ptr(void *ptr)
 {
     free(*(void **)ptr);

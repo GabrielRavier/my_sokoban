@@ -50,6 +50,10 @@ int my_abs(int x) MY_ATTR_NOTHROW MY_ATTR_CONST MY_ATTR_WARN_UNUSED_RESULT;
 /// Causes abnormal process termination
 void my_abort(void) MY_ATTR_NOTHROW MY_ATTR_NORETURN;
 
+/// Return the value of an environment variable, or NULL if it doesn't exist
+char *my_getenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1))
+    MY_ATTR_WARN_UNUSED_RESULT;
+
 static inline void my_free_ptr(void *ptr)
 {
     free(*(void **)ptr);

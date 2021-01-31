@@ -19,7 +19,7 @@ override CFLAGS += -D_GNU_SOURCE
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/assert my/ctype my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
+HEADER_FILES := my my/assert my/ctype my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/unistd my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -62,6 +62,9 @@ SOURCE_FILES += strings/strcasecmp strings/bcopy
 
 # Stuff related to my_string
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free
+
+# Stuff releated to unistd.h
+SOURCE_FILES += unistd/execvp unistd/execv
 
 # x86-64-specific stuff
 ifeq ($(shell uname -p), x86_64)
@@ -126,6 +129,7 @@ obj/%.o: %.c
 	@mkdir --parents obj/src/stdlib
 	@mkdir --parents obj/src/string
 	@mkdir --parents obj/src/strings
+	@mkdir --parents obj/src/unistd
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj/tests/%.o: ../../tests/libmy/%.c

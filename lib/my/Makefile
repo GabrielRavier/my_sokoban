@@ -89,6 +89,9 @@ TESTS_SOURCE_FILES += stdio/printf/printf
 # Tests related to math.h
 TESTS_SOURCE_FILES += math/fabs math/signbit
 
+# Tests relatesd to unistd.h
+TESTS_SOURCE_FILES += unistd/execvp
+
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FILES)))
 
@@ -137,6 +140,7 @@ obj/tests/%.o: ../../tests/libmy/%.c
 	@mkdir --parents obj/tests/stdlib
 	@mkdir --parents obj/tests/string
 	@mkdir --parents obj/tests/strings
+	@mkdir --parents obj/tests/unistd
 	$(CC) -c $< -o $@ $(CFLAGS) --coverage -DLIBMY_COVERAGE -D_GNU_SOURCE # We sometimes need _GNU_SOURCE for tests, such as for memmem, get_current_dir_name or SNANL
 
 # Include dependencies

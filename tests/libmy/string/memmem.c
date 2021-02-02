@@ -6,20 +6,12 @@
 */
 
 #include "../tests_header.h"
+#include "zero_size_ptr.h"
 #include "my/string.h"
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
 #include <sys/mman.h>
-
-static void *zero_size_ptr(void)
-{
-    size_t page_size = (size_t)getpagesize();
-    char *two_pages = (char *)mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-    if (two_pages != (char *)(-1) && mprotect(two_pages + page_size, page_size, PROT_NONE) == 0)
-        return two_pages + page_size;
-    return NULL;
-}
 
 static void do_one_test(const void *haystack, size_t haystack_length,
     const void *needle, size_t needle_length)

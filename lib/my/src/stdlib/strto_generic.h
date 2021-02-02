@@ -18,6 +18,11 @@
     #error "This is only here to make it easier to edit this!"
 #endif
 
+#ifndef TYPE_UNSIGNED
+    #define TYPE_UNSIGNED unsigned long
+    #error "This is only here to make it easier to edit this!"
+#endif
+
 #ifndef TYPE_MIN
     #define TYPE_MIN LONG_MIN
     #error "This is only here to make it easier to edit this!"
@@ -80,8 +85,8 @@ static bool do_base_char(struct strtol_parse_state *state)
     return (state->current_character < state->base);
 }
 
-static bool would_overflow(unsigned TYPE current_result,
-    struct strtol_parse_state *state, unsigned TYPE min_val_without_last_digit,
+static bool would_overflow(TYPE_UNSIGNED current_result,
+    struct strtol_parse_state *state, TYPE_UNSIGNED min_val_without_last_digit,
     int min_val_last_digit)
 {
     return (current_result > min_val_without_last_digit ||
@@ -89,14 +94,14 @@ static bool would_overflow(unsigned TYPE current_result,
             state->current_character > min_val_last_digit));
 }
 
-static unsigned TYPE do_parsing_loop(struct strtol_parse_state *state)
+static TYPE_UNSIGNED do_parsing_loop(struct strtol_parse_state *state)
 {
-    unsigned TYPE result = 0;
-    unsigned TYPE min_val = state->is_negative ? -(unsigned TYPE)TYPE_MIN :
+    TYPE_UNSIGNED result = 0;
+    TYPE_UNSIGNED min_val = state->is_negative ? -(TYPE_UNSIGNED)TYPE_MIN :
         TYPE_MAX;
-    const int min_val_last_digit = (int)(min_val % (unsigned TYPE)state->base);
+    const int min_val_last_digit = (int)(min_val % (TYPE_UNSIGNED)state->base);
 
-    min_val /= (unsigned TYPE)state->base;
+    min_val /= (TYPE_UNSIGNED)state->base;
     while (1) {
         if (!do_base_char(state))
             break;
@@ -105,8 +110,8 @@ static unsigned TYPE do_parsing_loop(struct strtol_parse_state *state)
             state->num_type = STRTOL_NUM_TYPE_INVALID;
         else {
             state->num_type = STRTOL_NUM_TYPE_NORMAL;
-            result *= (unsigned TYPE)state->base;
-            result += (unsigned TYPE)state->current_character;
+            result *= (TYPE_UNSIGNED)state->base;
+            result += (TYPE_UNSIGNED)state->current_character;
         }
         state->current_character = *state->num_ptr++;
     }
@@ -118,7 +123,7 @@ static TYPE INTERNAL_FUNC_NAME(const char *num_ptr, char **end_num_ptr,
 {
     struct strtol_parse_state state = {STRTOL_NUM_TYPE_NONE, num_ptr, 0, base,
         false};
-    unsigned TYPE result;
+    TYPE_UNSIGNED result;
 
     if (state.base < 0 || state.base == 1 || state.base > 36) {
         errno = EINVAL;
@@ -127,7 +132,7 @@ static TYPE INTERNAL_FUNC_NAME(const char *num_ptr, char **end_num_ptr,
     do_preparsing(&state);
     result = do_parsing_loop(&state);
     if (state.num_type == STRTOL_NUM_TYPE_INVALID) {
-        result = state.is_negative ? (unsigned TYPE)TYPE_MIN : TYPE_MAX;
+        result = state.is_negative ? (TYPE_UNSIGNED)TYPE_MIN : TYPE_MAX;
         errno = ERANGE;
     } else if (state.is_negative)
         result = -result;

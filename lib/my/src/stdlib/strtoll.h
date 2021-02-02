@@ -8,6 +8,7 @@
 #pragma once
 
 #define TYPE long long
+#define TYPE_UNSIGNED unsigned long long
 #define TYPE_MIN LLONG_MIN
 #define TYPE_MAX LLONG_MAX
 #define INTERNAL_FUNC_NAME my_strtoll_internal

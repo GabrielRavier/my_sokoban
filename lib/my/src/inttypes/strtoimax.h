@@ -15,4 +15,4 @@
 #define TYPE_MAX INTMAX_MAX
 #define INTERNAL_FUNC_NAME my_strtoimax_internal
 
-#include "strto_generic.h"
+#include "../stdlib/strto_generic.h"

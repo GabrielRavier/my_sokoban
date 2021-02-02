@@ -26,6 +26,10 @@ int my_isalnum(int character)
 int my_isdigit(int character)
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST MY_ATTR_NOTHROW;
 
+/// Checks for a hexadecimal digit
+int my_isxdigit(int character)
+    MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST MY_ATTR_NOTHROW;
+
 /// Checks for an alphabetic character
 int my_isalpha(int character)
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_CONST MY_ATTR_NOTHROW;

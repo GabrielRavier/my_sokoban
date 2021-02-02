@@ -26,7 +26,7 @@ all: ../libmy.a $(HEADER_FILES)
 SOURCE_FILES := assert/assert_fail
 
 # Stuff related to ctype.h
-SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/isalpha ctype/isalnum ctype/isspace ctype/toupper ctype/tolower
+SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/isxdigit ctype/isalpha ctype/isalnum ctype/isspace ctype/toupper ctype/tolower
 
 # Stuff related to getopt.h
 SOURCE_FILES += getopt/getopt

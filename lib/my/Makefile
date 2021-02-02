@@ -87,7 +87,7 @@ TESTS_SOURCE_FILES += strings/bcopy
 TESTS_SOURCE_FILES += stdio/printf/printf
 
 # Tests related to math.h
-TESTS_SOURCE_FILES += math/fabs math/signbit
+TESTS_SOURCE_FILES += math/fabs math/signbit math/fpclassify
 
 # Tests relatesd to unistd.h
 TESTS_SOURCE_FILES += unistd/execvp

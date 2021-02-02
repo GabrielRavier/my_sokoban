@@ -20,4 +20,3 @@ strtoul
 strtoimax
 strtoq
 Instead of using write, use some my_full_write wrapper that will try to progressively write the entire buffer
-Add tests for fpclassify (23 lines)

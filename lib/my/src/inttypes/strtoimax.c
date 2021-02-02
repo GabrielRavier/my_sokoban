@@ -5,6 +5,7 @@
 ** Defines my_strtoimax
 */
 
+#include "my/inttypes.h"
 #include "strtoimax.h"
 
 intmax_t my_strtoimax(const char *num_ptr, char **end_num_ptr, int base)

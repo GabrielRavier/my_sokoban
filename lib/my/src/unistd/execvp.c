@@ -15,11 +15,12 @@
 static const char *make_exec_pathname(const char *path_string, const char *file,
     char **exec_pathname)
 {
-    return ((my_asprintf(exec_pathname, "%.*s%s%s",
-        my_strchr(path_string, ':') ? (int)(my_strchr(path_string, ':') -
-        path_string) : -1, path_string, *path_string != '\0' ? "/" : "", file)
-        < 0) ? NULL : my_strchr(path_string, ':') ? my_strchr(path_string,
-        ':') + 1 : NULL);
+    if ((my_asprintf(exec_pathname, "%.*s%s%s", my_strchr(path_string, ':') ?
+        (int)(my_strchr(path_string, ':') - path_string) : -1, path_string,
+        *path_string != '\0' ? "/" : "", file) < 0) ||
+        (my_strchr(path_string, ':') == NULL))
+        return (NULL);
+    return (my_strchr(path_string, ':') + 1);
 }
 
 static bool handle_enoexec(const char *file, char *const argv[])

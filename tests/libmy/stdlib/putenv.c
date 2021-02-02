@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2021
 ** libmy
 ** File description:
-** Defines putenv
+** Tests putenv
 */
 
 #include "../tests_header.h"

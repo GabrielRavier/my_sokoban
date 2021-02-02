@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** libmy
 ** File description:
-** Tests my_strtol_base_str
+** Tests strtol_base_str
 */
 
 #include "../tests_header.h"

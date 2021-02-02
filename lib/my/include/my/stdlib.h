@@ -44,6 +44,11 @@ long long my_strtoll(const char *MY_RESTRICT num_ptr,
     char **MY_RESTRICT end_num_ptr, int base) MY_ATTR_NONNULL((1))
     MY_ATTR_NOTHROW;
 
+/// Converts a string to an unsigned long integer.
+unsigned long my_strtoul(const char *MY_RESTRICT num_ptr,
+    char **MY_RESTRICT end_num_ptr, int base) MY_ATTR_NONNULL((1))
+    MY_ATTR_NOTHROW;
+
 /// Computes the absolute value of an integer
 int my_abs(int x) MY_ATTR_NOTHROW MY_ATTR_CONST MY_ATTR_WARN_UNUSED_RESULT;
 

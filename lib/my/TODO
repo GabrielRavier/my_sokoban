@@ -15,4 +15,3 @@ Better performanec for my_qsort: Then uncomment the bottom part of the data in t
 Better performance for my_getenv: Then increase NUM_VARS in setenv tests back to 8192
 strtoumax
 strtoull
-strtoul

@@ -123,6 +123,7 @@ obj/%.o: %.c
 	@mkdir --parents obj/src/checked_multiply
 	@mkdir --parents obj/src/ctype
 	@mkdir --parents obj/src/getopt
+	@mkdir --parents obj/src/inttypes
 	@mkdir --parents obj/src/math
 	@mkdir --parents obj/src/misc
 	@mkdir --parents obj/src/my_string

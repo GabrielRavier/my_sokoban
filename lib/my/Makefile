@@ -60,7 +60,7 @@ SOURCE_FILES += strings/strcasecmp strings/bcopy
 # Stuff related to my_string
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free
 
-# Stuff releated to unistd.h
+# Stuff related to unistd.h
 SOURCE_FILES += unistd/execvp unistd/execv
 
 # x86-64-specific stuff

@@ -18,8 +18,8 @@ static bool grow_environ(size_t environ_entry_count)
 {
     static bool has_alloced_environ_before = false;
     char **new_environ = my_realloc_size(has_alloced_environ_before ? environ :
-       NULL, sizeof(char *) * (environ_entry_count + 2), sizeof(char *) *
-       (environ_entry_count + 1));
+        NULL, sizeof(char *) * (environ_entry_count + 2), sizeof(char *) *
+        (environ_entry_count + 1));
 
     if (new_environ == NULL) {
         errno = ENOMEM;

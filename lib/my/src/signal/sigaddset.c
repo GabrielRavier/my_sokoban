@@ -9,6 +9,8 @@
 #include <errno.h>
 #include <limits.h>
 
+static const size_t ULONG_WIDTH = sizeof(unsigned long) * CHAR_BIT;
+
 // Assumes glibc's sigset_t is used
 int my_sigaddset(sigset_t *set, int signum)
 {

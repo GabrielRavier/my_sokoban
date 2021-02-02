@@ -12,9 +12,6 @@ override CFLAGS += -MMD -MP -MF $@.d
 # We need to be able to include the libmy include files
 override CFLAGS += -Iinclude
 
-# We sometimes need GNU stuff (i.e. asprintf)
-override CFLAGS += -D_GNU_SOURCE
-
 .PHONY: all clean fclean
 
 .PREVIOUS: obj/%.o
@@ -140,7 +137,7 @@ obj/tests/%.o: ../../tests/libmy/%.c
 	@mkdir --parents obj/tests/stdlib
 	@mkdir --parents obj/tests/string
 	@mkdir --parents obj/tests/strings
-	$(CC) -c $< -o $@ $(CFLAGS) --coverage -DLIBMY_COVERAGE
+	$(CC) -c $< -o $@ $(CFLAGS) --coverage -DLIBMY_COVERAGE -D_GNU_SOURCE # We sometimes need _GNU_SOURCE for tests, such as for memmem, get_current_dir_name or SNANL
 
 # Include dependencies
 include $(shell [ -d obj ] && find obj/ -type f -name '*.d')

@@ -11,6 +11,7 @@ make full proper printf that handles floating point stuff and uses some kind of 
 Search in historical stuff - Start with PDP7 (up to some limit idk)
 
 Stuff to do before historical stuff
+Better performanec for my_qsort: Then uncomment the bottom part of the data in the qsort tests
 Better performance for my_getenv: Then increase NUM_VARS in setenv tests back to 8192
 strtouq
 strtoumax
@@ -20,4 +21,3 @@ strtoimax
 strtoq
 Instead of using write, use some my_full_write wrapper that will try to progressively write the entire buffer
 Add tests for fpclassify (23 lines)
-Add tests for qsort_r (29 lines)

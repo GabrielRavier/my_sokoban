@@ -18,7 +18,7 @@
 
 /// Produces a build error if expression is non-zero, but still allows usage in
 /// constant expressions
-#define MY_BUILD_BUG_ON_ZERO(expression) \
+#define MY_BUILD_BUG_ON_NON_ZERO(expression) \
     ((int)(__extension__ sizeof(struct { int : (-!!(expression)); })))
 
 /// Determines whether two expressions have the same type, though it does not
@@ -27,7 +27,7 @@
 
 /// Fails to compile if the passed expression is not an array
 #define MY_BUILD_BUG_ON_NON_ARRAY(array) \
-    MY_BUILD_BUG_ON_ZERO(MY_IS_SAME_TYPE((array), &(array)[0]))
+    MY_BUILD_BUG_ON_NON_ZERO(MY_IS_SAME_TYPE((array), &(array)[0]))
 
 /// Returns 1 if a > b, 0 if a == b and -1 if a < b
 #define MY_THREE_WAY_CMP(a, b) \

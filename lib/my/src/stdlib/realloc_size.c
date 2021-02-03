@@ -17,7 +17,7 @@ static void *handle_other_cases(void *ptr, size_t new_length,
     if (new_length <= original_length)
         return (ptr);
     new_ptr = malloc(new_length);
-    if (new_ptr) {
+    if (new_ptr != NULL) {
         my_memcpy(new_ptr, ptr, original_length);
         free(ptr);
     }

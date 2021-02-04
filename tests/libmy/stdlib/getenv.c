@@ -25,21 +25,21 @@ Test(my_getenv, freebsd_clearenv_basic)
     snprintf(value, sizeof(name), "0");
     cr_assert_eq(my_setenv(name, value, 1), 0);
 
-    cr_assert_str_eq(my_getenv("crap0"), "0");
-    cr_assert_eq(my_getenv("crap1"), NULL);
-    cr_assert_eq(my_getenv("crap2"), NULL);
+    cr_assert_eq(my_getenv("crap0"), getenv("crap0"));
+    cr_assert_eq(my_getenv("crap1"), getenv("crap1"));
+    cr_assert_eq(my_getenv("crap2"), getenv("crap2"));
 }
 
 Test(my_getenv, freebsd_basic)
 {
     cr_assert_eq(my_setenv("EVIL", "very=bad", 1), 0);
-    cr_assert_str_eq(my_getenv("EVIL"), "very=bad");
-    cr_assert_str_eq(my_getenv("EVIL=very"), "bad");
+    cr_assert_eq(my_getenv("EVIL"), getenv("EVIL"));
+    cr_assert_eq(my_getenv("EVIL=very"), getenv("EVIL=very"));
     cr_assert_eq(my_unsetenv("EVIL"), 0);
 }
 
 Test(my_getenv, dietlibc)
 {
     cr_assert_eq(putenv("foo=bar"), 0);
-    cr_assert_str_eq(my_getenv("foo"), "bar");
+    cr_assert_eq(my_getenv("foo"), getenv("foo"));
 }

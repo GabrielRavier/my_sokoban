@@ -15,11 +15,11 @@ Test(my_putenv, freebsd_putenv_basic)
 
     my_strcpy(string, "crap=true");
     cr_assert_eq(putenv(string), 0);
-    cr_assert_str_eq(my_getenv("crap"), "true");
+    cr_assert_eq(my_getenv("crap"), getenv("crap"));
     string[1] = 'l';
-    cr_assert_str_eq(my_getenv("clap"), "true");
-    cr_assert_eq(my_getenv("crap"), NULL);
+    cr_assert_eq(my_getenv("clap"), getenv("clap"));
+    cr_assert_eq(my_getenv("crap"), getenv("crap"));
     string[1] = 'r';
     cr_assert_eq(my_unsetenv("crap"), 0);
-    cr_assert_eq(my_getenv("crap"), NULL);
+    cr_assert_eq(my_getenv("crap"), getenv("crap"));
 }

@@ -9,7 +9,7 @@
 
 int my_strncmp(const char *string1, const char *string2, size_t n)
 {
-    int i = 0;
+    size_t i = 0;
 
     do {
         if (n == 0)

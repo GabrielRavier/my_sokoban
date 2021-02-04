@@ -5,6 +5,7 @@
 ** Defines my_strtoul
 */
 
+#include "my/stdlib.h"
 #include "strtoul.h"
 
 unsigned long my_strtoul(const char *num_ptr, char **end_num_ptr, int base)

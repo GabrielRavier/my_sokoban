@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2021
 ** libmy
 ** File description:
-** Helper for strtol to get past norm
+** Helper for strtoimax to get past norm
 */
 
 #pragma once

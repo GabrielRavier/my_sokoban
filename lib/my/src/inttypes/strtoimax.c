@@ -10,5 +10,5 @@
 
 intmax_t my_strtoimax(const char *num_ptr, char **end_num_ptr, int base)
 {
-    return my_strtoimax_internal(num_ptr, end_num_ptr, base);
+    return (my_strtoimax_internal(num_ptr, end_num_ptr, base));
 }

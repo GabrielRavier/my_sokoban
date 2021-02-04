@@ -13,5 +13,3 @@ Search in historical stuff - Start with PDP7 (up to some limit idk)
 Stuff to do before historical stuff
 Better performanec for my_qsort: Then uncomment the bottom part of the data in the qsort tests
 Better performance for my_getenv: Then increase NUM_VARS in setenv tests back to 8192
-strtoumax
-strtoull

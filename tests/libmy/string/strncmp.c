@@ -295,7 +295,7 @@ Test(my_strncmp, glibc)
             len1 = pos + (random() & 7);
         if (len1 + j >= 0x200)
             len1 = 0x1FF - j - (random() & 7);
-        size_t len2 = (pos >= len1) ? len1 : (len1 + (len1 != 511 - j ? random() % (511 - j - len1) : 0));
+        size_t len2 = (pos >= len1) ? len1 : (len1 + (len1 == 511 - j ? 0 : random() % (511 - j - len1)));
         j = MY_MIN(MY_MAX(pos, len2) + align1 + 0x40, 0x200);
         for (size_t i = 0; i < j; ++i) {
             p1[i] = random() & 0xFF;
@@ -322,7 +322,7 @@ Test(my_strncmp, glibc)
     }
 }
 
-Test(my_strncmp, specific_tests)
+Test(my_strncmp, specific_fails)
 {
     do_one_test("abcd\177fghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrs", "abcd\200fghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijkLMNOPQRSTUV", 5);
 }

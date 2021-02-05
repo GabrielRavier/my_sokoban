@@ -51,7 +51,7 @@ static int set_new_value(const char *name, const char *value, size_t len_value,
 {
     size_t len_name = my_strlen(name);
 
-    environ[value_offset] = malloc(len_name + len_value + 2);
+    environ[value_offset] = my_malloc(len_name + len_value + 2);
     if (environ[value_offset] == NULL) {
         errno = ENOMEM;
         return (-1);

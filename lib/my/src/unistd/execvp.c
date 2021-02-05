@@ -52,7 +52,7 @@ int my_execvp(const char *file, char *const argv[])
         if (!exec_pathname)
             return (-1);
         my_execv(exec_pathname, argv);
-        free(exec_pathname);
+        my_free(exec_pathname);
         if (errno == ENOEXEC && !handle_enoexec(file, argv))
             return (-1);
     } while (path_string != NULL);

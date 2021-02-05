@@ -33,3 +33,6 @@ ssize_t my_read(int fd, void *buffer, size_t num_bytes)
 // for error)
 ssize_t my_write(int fd, const void *buffer, size_t num_bytes)
     MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_ACCESS((read_only, 2, 3));
+
+// Returns whether fd is a valid fd associated with a terminal
+int my_isatty(int fd) MY_ATTR_NOTHROW;

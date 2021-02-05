@@ -32,6 +32,10 @@ ifdef HAS_LIBC_EXECVE
 override CFLAGS += -DLIBMY_HAS_LIBC_EXECVE=1
 endif
 
+ifdef HAS_LIBC_ISATTY
+override CFLAGS += -DLIBMY_HAS_LIBC_ISATTY=1
+endif
+
 .PHONY: all clean fclean
 
 .PREVIOUS: obj/%.o
@@ -84,7 +88,7 @@ SOURCE_FILES += strings/strcasecmp strings/bcopy
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free
 
 # Stuff related to unistd.h
-SOURCE_FILES += unistd/execv unistd/execve unistd/execvp unistd/read unistd/write
+SOURCE_FILES += unistd/execv unistd/execve unistd/execvp unistd/read unistd/write unistd/isatty
 
 # x86-64-specific stuff
 ifeq ($(shell uname -p), x86_64)

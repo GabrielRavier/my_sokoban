@@ -40,4 +40,3 @@ ferror
 putc
 flush buffer (_flsbuf)
 FILE
-isatty

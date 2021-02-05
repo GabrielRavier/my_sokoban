@@ -6,11 +6,10 @@
 */
 
 #include "my/unistd.h"
-#include <unistd.h>
 
 extern char **environ;
 
 int my_execv(const char *pathname, char *const argv[])
 {
-    return (execve(pathname, argv, environ));
+    return (my_execve(pathname, argv, environ));
 }

@@ -6,6 +6,7 @@
 */
 
 #include "my/stdio.h"
+#include <errno.h>
 
 #if USE_LIBC_STDIO
 
@@ -18,6 +19,7 @@ int my_fclose(MY_FILE *stream)
 
 int my_fclose(MY_FILE *stream)
 {
+    errno = ENOSYS;
     return (EOF);
 }
 

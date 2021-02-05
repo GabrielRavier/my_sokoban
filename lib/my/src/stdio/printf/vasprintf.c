@@ -116,9 +116,8 @@ int my_vasprintf(char **result_string_ptr, const char *format,
         va_end(local_arguments_copy);
         return (-1);
     }
-    *result_string_ptr = result->string;
     resulting_length = result->length;
-    my_free(result);
+    *result_string_ptr = my_string_move_buffer(result);
     va_end(local_arguments_copy);
     return ((int)resulting_length);
 }

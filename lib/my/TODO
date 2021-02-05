@@ -10,8 +10,34 @@ make full proper printf that handles floating point stuff and uses some kind of 
 
 Search in historical stuff - After PDP7
 Better performance for my_getenv: Then increase NUM_VARS in setenv tests back to 8192
-Search in historical stuff - Start with Research-PDP7
-Do putc right after FILE subsystem base (buffer flush function (_flsbuf))
-Do putw right after fwrite/putc
-
-Clean up any usage of system functions (such as `malloc`) and replace them with configurable `my_FUNC` (for "FUNC" a function like malloc) equivalents that can be disabled when needed
+Search in historical stuff - Last done: Research-PDP7
+sleep
+access
+getchar (actual implementation based on stdio)
+putchar (actual implementation based on stdio)
+halt
+exit
+fork
+write
+read
+close
+creat
+open
+chdir
+time
+rename
+setuid
+unlink
+link
+getuid
+chown
+chmod
+getc
+_filbuf
+putw
+fwrite
+ferror
+putc
+flush buffer (_flsbuf)
+FILE
+isatty

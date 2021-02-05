@@ -8,7 +8,6 @@
 #include "my/assert.h"
 #include "my/stdio.h"
 #include "my/stdlib.h"
-#include <stdio.h>
 #include <unistd.h>
 
 _Noreturn static void error_in_assert(void)

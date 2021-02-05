@@ -7,7 +7,6 @@
 
 #include "my/math.h"
 #include "my/internal/math.h"
-#include <math.h>
 #include <stdint.h>
 
 int my_fpclassify_double(double x)

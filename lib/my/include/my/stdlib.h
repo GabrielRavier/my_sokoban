@@ -8,7 +8,6 @@
 #pragma once
 
 #include "features.h"
-#include <stdlib.h>
 #include <stddef.h>
 
 /// Sort an array of num_elements elements of size element_size, pointed to by

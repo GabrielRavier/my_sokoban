@@ -6,7 +6,6 @@
 */
 
 #include "my/internal/printf/formatter.h"
-#include <assert.h>
 #include <limits.h>
 
 void my_asprintf_append_number_base(struct my_string *destination,

@@ -11,11 +11,10 @@
 #include "my/internal/printf/padding.h"
 #include "my/internal/printf/handle_invalid.h"
 #include "my/my_string.h"
+#include "my/stdlib.h"
 #include "my/string.h"
 #include "my/ctype.h"
-#include <stdlib.h>
 #include <limits.h>
-#include <assert.h>
 
 static const formatter_func_t formatter_functions[UCHAR_MAX] = {
     ['d'] = &my_asprintf_format_signed_integer,

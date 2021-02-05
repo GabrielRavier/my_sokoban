@@ -8,7 +8,6 @@
 #pragma once
 
 #include "features.h"
-#include <ctype.h>
 
 /// Checks for any printable character (including space)
 int my_isprint(int character)

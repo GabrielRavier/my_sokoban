@@ -7,7 +7,6 @@
 
 #include "my/stdlib.h"
 #include "my/string.h"
-#include <stdlib.h>
 
 static void *handle_other_cases(void *ptr, size_t new_length,
     size_t original_length)

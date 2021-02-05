@@ -6,62 +6,58 @@
 */
 
 #include "my/stdlib.h"
-#include "my/string.h"
-#include "my/cpp-like/algorithm.h"
-#include "my/features.h"
+#include "qsort_r_do_quick.h"
 
-MY_ATTR_ACCESS((read_write, 1, 3)) MY_ATTR_ACCESS((read_write, 2, 3))
-MY_ATTR_NONNULL((1, 2)) static void swap_elements(char *elem1, char *elem2,
-    size_t element_size)
+static char *med3(char *a, char *b, char *c,
+    int (*compare)(const void *, const void *, void *), void *argument)
 {
-    char buffer[1000];
-    size_t copy_size;
-
-    while (element_size) {
-        copy_size = MY_MIN(sizeof(buffer), element_size);
-        my_memcpy(buffer, elem1, copy_size);
-        my_memcpy(elem1, elem2, copy_size);
-        my_memcpy(elem2, buffer, copy_size);
-        elem1 += copy_size;
-        elem2 += copy_size;
-        element_size -= copy_size;
-    }
+    return (compare(a, b, argument) < 0 ? (compare(b, c, argument) < 0 ? b :
+        compare(a, c, argument) < 0 ? c : a) :
+        compare(b, c, argument) > 0 ? b : compare(a, c, argument) < 0 ? c : a);
 }
 
-static void qsort_fix(char *base, size_t start, size_t num, size_t element_size,
-    int (*comparison_function)(const void *, const void *, void *),
-    void *argument)
+// Get pseudo-median from 3 elements, or from 9 if the array is big enough
+static char *get_median(char *base, size_t num_elements, size_t element_size,
+    int (*compare)(const void *, const void *, void *), void *argument)
 {
-    size_t max;
+    char *result = base + (num_elements >> 1) * element_size;
+    char *result2 = base;
+    char *result3 = base + (num_elements - 1) * element_size;
+    size_t distance;
 
-    while (start * 2 <= num) {
-        max = start * 2;
-        if (max < num && comparison_function(base + max * element_size,
-            base + (max + 1) * element_size, argument) < 0)
-            ++max;
-        if (max && comparison_function(base + start * element_size,
-            base + max * element_size, argument) < 0) {
-            swap_elements(base + start * element_size,
-                base + max * element_size, element_size);
-            start = max;
-        } else
-            break;
-    }
-}
-
-void my_qsort_r(void *base, size_t num_elements, size_t element_size,
-    int (*comparison_function)(const void *, const void *, void *),
-    void *argument)
-{
-    if (num_elements <= 1)
-        return;
-    for (size_t i = (num_elements + 1) >> 1; i != 0; --i)
-        qsort_fix((char *)base, i - 1, num_elements - 1, element_size,
-            comparison_function, argument);
-    for (size_t i = num_elements - 1; i != 0; --i) {
-        swap_elements((char *)base, (char *)base + i * element_size,
-            element_size);
-        qsort_fix((char *)base, 0, i - 1, element_size, comparison_function,
+    if (num_elements > 40) {
+        distance = (num_elements >> 3) * element_size;
+        result = med3(result - distance, result, result + distance, compare,
             argument);
+        result2 = med3(result2, result2 + distance, result2 + distance * 2,
+            compare, argument);
+        result3 = med3(result3 - distance * 2, result3 - distance, result3,
+            compare, argument);
     }
+    return (med3(result, result2, result3, compare, argument));
+}
+
+// Insertion sort is used on arrays with <7 elements. Otherwise, just a straight
+// quick sort
+void my_qsort_r(void *base_param, size_t num_elements, size_t element_size,
+    int (*compare)(const void *, const void *, void *), void *argument)
+{
+    char *base = (char *)base_param;
+    struct qsort_state state;
+
+    if (num_elements < 7) {
+        for (char *i = base + element_size; i < base + num_elements *
+            element_size; i += element_size)
+            for (char *j = i; j > base &&
+                compare(j - element_size, j, argument) > 0; j -= element_size)
+                swap_elements(j, j - element_size, element_size);
+        return;
+    }
+    state.p_median = get_median(base, num_elements, element_size, compare,
+        argument);
+    state.pa = base;
+    state.pb = base;
+    state.pc = base + (num_elements - 1) * element_size;
+    state.pd = state.pc;
+    do_quick(&state, base, num_elements, element_size, compare, argument);
 }

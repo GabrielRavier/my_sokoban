@@ -8,8 +8,8 @@
 #include "my/my_string.h"
 #include "my/internal/my_string.h"
 #include "my/stdio.h"
+#include "my/stdlib.h"
 #include "my/string.h"
-#include <stdlib.h>
 
 struct my_string *my_string_append_vprintf(struct my_string *self,
     const char *format, va_list arguments)
@@ -22,7 +22,7 @@ struct my_string *my_string_append_vprintf(struct my_string *self,
     asprintf_length = my_vasprintf(&asprintf_result, format, arguments);
     if (asprintf_length >= 0) {
         my_string_append(self, asprintf_result, (unsigned)asprintf_length);
-        free(asprintf_result);
+        my_free(asprintf_result);
     }
     return self;
 }

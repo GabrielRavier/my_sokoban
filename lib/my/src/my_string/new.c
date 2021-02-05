@@ -8,12 +8,12 @@
 #include "my/my_string.h"
 #include "my/internal/my_string.h"
 #include "my/assert.h"
-#include <stdlib.h>
+#include "my/stdlib.h"
 
 struct my_string *my_string_new(void)
 {
     struct my_string *self =
-        (struct my_string *)malloc(sizeof(struct my_string));
+        (struct my_string *)my_malloc(sizeof(struct my_string));
 
     MY_ASSERT(self != NULL);
     self->length = 0;

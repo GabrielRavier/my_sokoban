@@ -7,7 +7,7 @@
 
 #include "my/stdio.h"
 #include "my/string.h"
-#include <unistd.h>
+#include "my/unistd.h"
 #include <stdio.h>
 
 int my_dputs(const char *string, int fd)
@@ -16,7 +16,7 @@ int my_dputs(const char *string, int fd)
 
     if (string_len == 0)
         return (0);
-    if ((size_t)write(fd, string, string_len) != string_len)
+    if ((size_t)my_write(fd, string, string_len) != string_len)
         return (EOF);
     return (0);
 }

@@ -6,14 +6,14 @@
 */
 
 #include "my/stdio.h"
-#include <unistd.h>
+#include "my/unistd.h"
 #include <stdio.h>
 
 int my_dputc(int character, int fd)
 {
     const unsigned char character_as_char = (unsigned char)character;
 
-    if (write(fd, &character_as_char, sizeof(character_as_char)) !=
+    if (my_write(fd, &character_as_char, sizeof(character_as_char)) !=
         sizeof(character_as_char))
         return (EOF);
     return ((int)character_as_char);

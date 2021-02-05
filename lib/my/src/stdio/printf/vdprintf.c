@@ -6,8 +6,8 @@
 */
 
 #include "my/stdio.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "my/stdlib.h"
+#include "my/unistd.h"
 
 int my_vdprintf(int fd, const char *format, va_list arguments)
 {
@@ -17,7 +17,7 @@ int my_vdprintf(int fd, const char *format, va_list arguments)
 
     if (string_length < 0)
         return (-1);
-    result = (int)write(fd, string_to_print, (size_t)string_length);
-    free(string_to_print);
+    result = (int)my_write(fd, string_to_print, (size_t)string_length);
+    my_free(string_to_print);
     return (result);
 }

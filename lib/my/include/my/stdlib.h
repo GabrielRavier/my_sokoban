@@ -73,9 +73,15 @@ int my_setenv(const char *name, const char *value, int overwrite)
 // not exist in the environment
 int my_unsetenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1));
 
+void *my_malloc(size_t size) MY_ATTR_NOTHROW MY_ATTR_MALLOC
+    MY_ATTR_ALLOC_SIZE((1)) MY_ATTR_WARN_UNUSED_RESULT;
+
+// Free a block allocated by my_malloc
+void my_free(void *ptr) MY_ATTR_NOTHROW;
+
 static inline void my_free_ptr(void *ptr)
 {
-    free(*(void **)ptr);
+    my_free(*(void **)ptr);
 }
 
 #define MY_CLEANUP_FREE __attribute__((cleanup(my_free_ptr)))

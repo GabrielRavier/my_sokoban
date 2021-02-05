@@ -6,12 +6,12 @@
 */
 
 #include "my/my_string.h"
-#include <stdlib.h>
+#include "my/stdlib.h"
 
 void my_string_free(struct my_string *self)
 {
     if (self == NULL)
         return;
-    free(self->string);
-    free(self);
+    my_free(self->string);
+    my_free(self);
 }

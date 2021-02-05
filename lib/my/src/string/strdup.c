@@ -6,13 +6,13 @@
 */
 
 #include "my/string.h"
-#include <stdlib.h>
+#include "my/stdlib.h"
 #include <stddef.h>
 
 char *my_strdup(const char *string)
 {
     const size_t string_length = my_strlen(string) + 1;
-    void *const duplicate_string = malloc(string_length);
+    void *const duplicate_string = my_malloc(string_length);
 
     if (!duplicate_string)
         return (NULL);

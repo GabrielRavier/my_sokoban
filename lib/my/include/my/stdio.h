@@ -11,6 +11,13 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#if LIBMY_USE_LIBC_STDIO
+    #define MY_FILE FILE
+#else
+typedef struct my_file_type my_file_t;
+    #define MY_FILE my_file_t
+#endif
+
 /// Writes the given character to stdout
 int my_putchar(int character);
 
@@ -56,10 +63,13 @@ int my_vasprintf(char **MY_RESTRICT result_string_ptr,
     const char *MY_RESTRICT format, va_list arguments)
     MY_ATTR_FORMAT(printf, 2, 0) MY_ATTR_WARN_UNUSED_RESULT;
 
-static inline void my_fclose_ptr(FILE **ptr)
+// Close stream
+int my_fclose(MY_FILE *stream);
+
+static inline void my_fclose_ptr(MY_FILE **ptr)
 {
     if (*ptr)
-        fclose(*ptr);
+        my_fclose(*ptr);
 }
 
 #define MY_CLEANUP_FCLOSE __attribute__((cleanup(my_fclose_ptr)))

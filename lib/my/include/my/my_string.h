@@ -8,7 +8,7 @@
 #pragma once
 
 #include "features.h"
-#include <stdlib.h>
+#include "my/stdlib.h"
 #include <stdarg.h>
 #include <stddef.h>
 
@@ -99,6 +99,6 @@ static inline char *my_string_move_buffer(struct my_string *self)
 {
     char *result = self->string;
 
-    free(self);
+    my_free(self);
     return result;
 }

@@ -119,7 +119,7 @@ int my_vasprintf(char **result_string_ptr, const char *format,
     }
     *result_string_ptr = result->string;
     resulting_length = result->length;
-    free(result);
+    my_free(result);
     va_end(local_arguments_copy);
     return ((int)resulting_length);
 }

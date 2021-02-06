@@ -8,7 +8,7 @@
 #pragma once
 
 #include "features.h"
-#include "sys/types.h"
+#include <sys/types.h>
 
 // Duplicates the actions of the shell in searching for an executable file
 // (using PATH) if the given filename doesn't contain a /
@@ -36,3 +36,9 @@ ssize_t my_write(int fd, const void *buffer, size_t num_bytes)
 
 // Returns whether fd is a valid fd associated with a terminal
 int my_isatty(int fd) MY_ATTR_NOTHROW;
+
+// Close fd
+int my_close(int fd) MY_ATTR_NOTHROW;
+
+// Move fd's file position depending on offset and whence
+off_t my_lseek(int fd, off_t offset, int whence) MY_ATTR_NOTHROW;

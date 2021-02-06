@@ -10,12 +10,31 @@
 #include "features.h"
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdint.h>
 
-#if LIBMY_USE_LIBC_STDIO
+#if LIBMY_USE_LIBC_FILE
     #define MY_FILE FILE
+    #define my_stdout stdout
 #else
-typedef struct my_file_type my_file_t;
-    #define MY_FILE my_file_t
+
+extern struct my_file_type {
+    char *buffer_ptr;
+    char *buffer_base;
+    ssize_t buffer_count;
+    int fd;
+    enum {
+        MY_FILE_FLAG_READ = 1,
+        MY_FILE_FLAG_WRITE = 2,
+        MY_FILE_FLAG_READ_WRITE = 4,
+        MY_FILE_FLAG_EOF = 8,
+        MY_FILE_FLAG_NOT_BUFFERED = 16,
+        MY_FILE_FLAG_BUFFER_MALLOCED = 32,
+        MY_FILE_FLAG_ERROR = 64,
+    } flag;
+} g_my_files[1024];
+typedef struct my_file_type MY_FILE;
+#define my_stdout (&g_my_files[1])
+
 #endif
 
 /// Writes the given character to stdout
@@ -63,8 +82,19 @@ int my_vasprintf(char **MY_RESTRICT result_string_ptr,
     const char *MY_RESTRICT format, va_list arguments)
     MY_ATTR_FORMAT(printf, 2, 0) MY_ATTR_WARN_UNUSED_RESULT;
 
+// Open a file and create a new stream for it
+MY_FILE *my_fopen(const char *MY_RESTRICT filename,
+    const char *MY_RESTRICT mode) MY_ATTR_WARN_UNUSED_RESULT;
+
+// Write a character to stream
+int my_fputc(int c, MY_FILE *stream);
+int my_putc(int c, MY_FILE *stream);
+
 // Close stream
 int my_fclose(MY_FILE *stream);
+
+// Flush the passed stream
+int my_fflush(MY_FILE *stream);
 
 static inline void my_fclose_ptr(MY_FILE **ptr)
 {

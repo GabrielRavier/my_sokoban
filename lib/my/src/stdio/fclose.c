@@ -6,21 +6,43 @@
 */
 
 #include "my/stdio.h"
+#include "my/cpp-like/iterator.h"
+#include "my/stdlib.h"
+#include "my/unistd.h"
 #include <errno.h>
 
-#if USE_LIBC_STDIO
+#if LIBMY_USE_LIBC_FILE
 
-int my_fclose(MY_FILE *stream)
+int my_fclose(MY_FILE *file)
 {
-    return (fclose(stream));
+    return (fclose(file));
 }
 
 #else
 
-int my_fclose(MY_FILE *stream)
+int my_fclose(MY_FILE *file)
 {
-    errno = ENOSYS;
-    return (EOF);
+    int result = EOF;
+
+    if (file->flag & (MY_FILE_FLAG_READ | MY_FILE_FLAG_WRITE |
+        MY_FILE_FLAG_READ_WRITE)) {
+        result = my_fflush(file);
+        if (my_close(file->fd) < 0)
+            result = EOF;
+        if (file->flag & MY_FILE_FLAG_BUFFER_MALLOCED)
+            my_free(file->buffer_base);
+        if (file->flag & MY_FILE_FLAG_NOT_BUFFERED)
+            file->buffer_base = NULL;
+    }
+    file->flag = 0;
+    file->buffer_count = 0;
+    return (result);
+}
+
+static __attribute__((destructor)) void cleanup_all_files(void)
+{
+    for (size_t i = 0; i < MY_ARRAY_SIZE(g_my_files); ++i)
+        my_fclose(&g_my_files[i]);
 }
 
 #endif

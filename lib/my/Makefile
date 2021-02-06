@@ -12,35 +12,43 @@ override CFLAGS += -MMD -MP -MF $@.d
 # We need to be able to include the libmy include files
 override CFLAGS += -Iinclude
 
-ifdef USE_LIBC_STDIO
-override CFLAGS += -DLIBMY_USE_LIBC_STDIO=1
+# Check for feature flags
+ifndef USE_LIBC_FILE
+$(error You must define USE_LIBC_FILE)
+endif
+ifndef HAS_LIBC_ALLOC
+$(error You must define HAS_LIBC_ALLOC)
+endif
+ifndef HAS_LIBC_READ
+$(error You must define HAS_LIBC_READ)
+endif
+ifndef HAS_LIBC_WRITE
+$(error You must define HAS_LIBC_WRITE)
+endif
+ifndef HAS_LIBC_EXECVE
+$(error You must define HAS_LIBC_EXECVE)
+endif
+ifndef HAS_LIBC_ISATTY
+$(error You must define HAS_LIBC_ISATTY)
+endif
+ifndef HAS_LIBC_OPEN
+$(error You must define HAS_LIBC_OPEN)
+endif
+ifndef HAS_LIBC_CLOSE
+$(error You must define HAS_LIBC_CLOSE)
+endif
+ifndef HAS_LIBC_LSEEK
+$(error You must define HAS_LIBC_LSEEK)
 endif
 
-ifdef HAS_LIBC_ALLOC
-override CFLAGS += -DLIBMY_HAS_LIBC_ALLOC=1
-endif
-
-ifdef HAS_LIBC_READ
-override CFLAGS += -DLIBMY_HAS_LIBC_READ=1
-endif
-
-ifdef HAS_LIBC_WRITE
-override CFLAGS += -DLIBMY_HAS_LIBC_WRITE=1
-endif
-
-ifdef HAS_LIBC_EXECVE
-override CFLAGS += -DLIBMY_HAS_LIBC_EXECVE=1
-endif
-
-ifdef HAS_LIBC_ISATTY
-override CFLAGS += -DLIBMY_HAS_LIBC_ISATTY=1
-endif
+# Feature flags
+override CFLAGS += -DLIBMY_USE_LIBC_FILE=$(USE_LIBC_FILE) -DLIBMY_HAS_LIBC_ALLOC=$(HAS_LIBC_ALLOC) -DLIBMY_HAS_LIBC_READ=$(HAS_LIBC_READ) -DLIBMY_HAS_LIBC_WRITE=$(HAS_LIBC_WRITE) -DLIBMY_HAS_LIBC_EXECVE=$(HAS_LIBC_EXECVE) -DLIBMY_HAS_LIBC_ISATTY=$(HAS_LIBC_ISATTY) -DLIBMY_HAS_LIBC_OPEN=$(HAS_LIBC_OPEN) -DLIBMY_HAS_LIBC_CLOSE=$(HAS_LIBC_CLOSE) -DLIBC_HAS_LIBC_LSEEK=$(HAS_LIBC_LSEEK)
 
 .PHONY: all clean fclean
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/assert my/ctype my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/unistd my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
+HEADER_FILES := my my/assert my/ctype my/fcntl my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/unistd my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -51,6 +59,9 @@ SOURCE_FILES := assert/assert_fail
 
 # Stuff related to ctype.h
 SOURCE_FILES += ctype/isprint ctype/isupper ctype/islower ctype/isdigit ctype/isxdigit ctype/isalpha ctype/isalnum ctype/isspace ctype/toupper ctype/tolower
+
+# Stuff related to fcntl.h
+SOURCE_FILES += fcntl/open fcntl/creat
 
 # Stuff related to getopt.h
 SOURCE_FILES += getopt/getopt
@@ -65,7 +76,7 @@ SOURCE_FILES += math/fabs math/fpclassify math/signbit
 SOURCE_FILES += signal/sigaddset
 
 # Stuff related to stdio.h
-SOURCE_FILES += stdio/putchar stdio/dputc stdio/dgetc stdio/dputs stdio/puts stdio/fclose
+SOURCE_FILES += stdio/putchar stdio/dputc stdio/dgetc stdio/dputs stdio/puts stdio/fclose stdio/g_my_files stdio/fflush stdio/putc stdio/fputc stdio/internal_file_flush stdio/fopen
 
 # Stuff related to printf
 SOURCE_FILES += stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
@@ -88,7 +99,7 @@ SOURCE_FILES += strings/strcasecmp strings/bcopy
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free
 
 # Stuff related to unistd.h
-SOURCE_FILES += unistd/execv unistd/execve unistd/execvp unistd/read unistd/write unistd/isatty
+SOURCE_FILES += unistd/execv unistd/execve unistd/execvp unistd/read unistd/write unistd/isatty unistd/close unistd/lseek
 
 # x86-64-specific stuff
 ifeq ($(shell uname -p), x86_64)
@@ -111,7 +122,7 @@ TESTS_SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem s
 TESTS_SOURCE_FILES += strings/bcopy
 
 # Tests related to stdio.h
-TESTS_SOURCE_FILES += stdio/printf/printf
+TESTS_SOURCE_FILES += stdio/printf/printf stdio/putc
 
 # Tests related to math.h
 TESTS_SOURCE_FILES += math/fabs math/signbit math/fpclassify
@@ -144,12 +155,11 @@ obj/%.o: %.s
 
 obj/%.o: %.c
 	@mkdir --parents obj/src/assert
-	@mkdir --parents obj/src/checked_multiply
 	@mkdir --parents obj/src/ctype
+	@mkdir --parents obj/src/fcntl
 	@mkdir --parents obj/src/getopt
 	@mkdir --parents obj/src/inttypes
 	@mkdir --parents obj/src/math
-	@mkdir --parents obj/src/misc
 	@mkdir --parents obj/src/my_string
 	@mkdir --parents obj/src/signal
 	@mkdir --parents obj/src/stdio/printf/formatter

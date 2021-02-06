@@ -13,10 +13,10 @@
 
 #if !LIBMY_USE_LIBC_STDIO
 
-static char stdout_buffer[BUFSIZ];
-
 static bool make_buffer(MY_FILE *file)
 {
+    static char stdout_buffer[BUFSIZ];
+
     if (file == my_stdout) {
         if (my_isatty(my_stdout->fd) || errno == ENOSYS) {
             file->flag |= MY_FILE_FLAG_NOT_BUFFERED;

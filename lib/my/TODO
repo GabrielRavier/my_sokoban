@@ -37,6 +37,4 @@ _filbuf
 putw
 fwrite
 ferror
-putc
-flush buffer (_flsbuf)
-FILE
+fileno

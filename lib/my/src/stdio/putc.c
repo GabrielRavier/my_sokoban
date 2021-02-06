@@ -19,8 +19,11 @@ int my_putc(int c, MY_FILE *stream)
 
 int my_putc(int c, MY_FILE *stream)
 {
-    return (--stream->buffer_count >= 0 ? *stream->buffer_ptr++ = (unsigned)c :
-        my_internal_file_flush((unsigned)c, stream));
+    if (--stream->buffer_count >= 0) {
+        *stream->buffer_ptr++ = c;
+        return ((unsigned char)c);
+    }
+    return (my_internal_file_flush(c, stream));
 }
 
 #endif

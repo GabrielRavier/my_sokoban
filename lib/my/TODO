@@ -37,4 +37,3 @@ _filbuf
 putw
 fwrite
 ferror
-fileno

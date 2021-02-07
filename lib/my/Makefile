@@ -79,7 +79,7 @@ SOURCE_FILES += math/fabs math/fpclassify math/signbit
 SOURCE_FILES += signal/sigaddset
 
 # Stuff related to stdio.h
-SOURCE_FILES += stdio/putchar stdio/dputc stdio/dgetc stdio/dputs stdio/puts stdio/fclose stdio/g_my_files stdio/fflush stdio/putc stdio/fputc stdio/internal_file_flush stdio/fopen
+SOURCE_FILES += stdio/putchar stdio/dputc stdio/dgetc stdio/dputs stdio/puts stdio/fclose stdio/g_my_files stdio/fflush stdio/putc stdio/fputc stdio/internal_file_flush stdio/fopen stdio/fileno
 
 # Stuff related to printf
 SOURCE_FILES += stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
@@ -128,7 +128,7 @@ TESTS_SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem s
 TESTS_SOURCE_FILES += strings/bcopy
 
 # Tests related to stdio.h
-TESTS_SOURCE_FILES += stdio/printf/printf stdio/putc
+TESTS_SOURCE_FILES += stdio/printf/printf stdio/putc stdio/fileno
 
 # Tests related to math.h
 TESTS_SOURCE_FILES += math/fabs math/signbit math/fpclassify

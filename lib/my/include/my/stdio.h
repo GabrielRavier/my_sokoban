@@ -14,7 +14,9 @@
 
 #if LIBMY_USE_LIBC_FILE
     #define MY_FILE FILE
+    #define my_stdin stdin
     #define my_stdout stdout
+    #define my_stderr stderr
 #else
 
 extern struct my_file_type {
@@ -99,6 +101,9 @@ int my_fclose(MY_FILE *stream);
 
 // Flush the passed stream
 int my_fflush(MY_FILE *stream);
+
+// Return the file descriptor for stream
+int my_fileno(MY_FILE *stream) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 
 static inline void my_fclose_ptr(MY_FILE **ptr)
 {

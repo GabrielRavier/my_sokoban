@@ -20,8 +20,8 @@
 #else
 
 extern struct my_file_type {
-    char *buffer_ptr;
-    char *buffer_base;
+    unsigned char *buffer_ptr;
+    unsigned char *buffer_base;
     ssize_t buffer_count;
     ssize_t buffer_size;
     int fd;
@@ -102,8 +102,11 @@ int my_fclose(MY_FILE *stream);
 // Flush the passed stream
 int my_fflush(MY_FILE *stream);
 
-// Return the file descriptor for stream
+// Return the file descriptor for the given stream
 int my_fileno(MY_FILE *stream) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
+
+// Returns the error indicator for the given stream
+int my_ferror(MY_FILE *stream) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 
 static inline void my_fclose_ptr(MY_FILE **ptr)
 {

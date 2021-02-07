@@ -23,6 +23,13 @@ int my_putc(int c, MY_FILE *stream)
         *stream->buffer_ptr++ = c;
         return ((unsigned char)c);
     }
+    if ((stream->flag & MY_FILE_FLAG_LINE_BUFFERED) && -stream->buffer_count <
+        stream->buffer_size) {
+        *stream->buffer_ptr = c;
+        if (c != '\n')
+            return *stream->buffer_ptr++;
+        return (my_internal_file_flush(*stream->buffer_ptr, stream));
+    }
     return (my_internal_file_flush(c, stream));
 }
 

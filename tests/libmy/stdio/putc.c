@@ -70,8 +70,25 @@ Test(my_fputc, midnight_bsd_err)
 
 // TODO Add first gnulib tests when we get to setvbuf
 // TODO Add second gnulib tests when we get to fdopen+setvbuf
-// TODO Add dietlibc tests when we get to ferror
-// TODO Add cloudlibc tests when we get to fdopen+ferror
+
+static void dietlibc_do_test(int (*func)(int, MY_FILE *))
+{
+    cr_assert_lt(func('x', my_stdin), 0);
+    my_fflush(NULL);
+    cr_assert_neq(my_ferror(my_stdin), 0);
+}
+
+Test(my_putc, dietlibc)
+{
+    dietlibc_do_test(my_putc);
+}
+
+Test(my_fputc, dietlibc)
+{
+    dietlibc_do_test(my_fputc);
+}
+
+// TODO Add cloudlibc tests when we get to fdopen
 
 static void glibc_do_unbputc_test(int (*func)(int, MY_FILE *))
 {

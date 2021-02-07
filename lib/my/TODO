@@ -36,4 +36,3 @@ getc
 _filbuf
 putw
 fwrite
-ferror

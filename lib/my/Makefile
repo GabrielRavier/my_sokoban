@@ -40,9 +40,12 @@ endif
 ifndef HAS_LIBC_LSEEK
 $(error You must define HAS_LIBC_LSEEK)
 endif
+ifndef HAS_LIBC_FSTAT
+$(error You must define HAS_LIBC_FSTAT)
+endif
 
 # Feature flags
-override CFLAGS += -DLIBMY_USE_LIBC_FILE=$(USE_LIBC_FILE) -DLIBMY_HAS_LIBC_ALLOC=$(HAS_LIBC_ALLOC) -DLIBMY_HAS_LIBC_READ=$(HAS_LIBC_READ) -DLIBMY_HAS_LIBC_WRITE=$(HAS_LIBC_WRITE) -DLIBMY_HAS_LIBC_EXECVE=$(HAS_LIBC_EXECVE) -DLIBMY_HAS_LIBC_ISATTY=$(HAS_LIBC_ISATTY) -DLIBMY_HAS_LIBC_OPEN=$(HAS_LIBC_OPEN) -DLIBMY_HAS_LIBC_CLOSE=$(HAS_LIBC_CLOSE) -DLIBC_HAS_LIBC_LSEEK=$(HAS_LIBC_LSEEK)
+override CFLAGS += -DLIBMY_USE_LIBC_FILE=$(USE_LIBC_FILE) -DLIBMY_HAS_LIBC_ALLOC=$(HAS_LIBC_ALLOC) -DLIBMY_HAS_LIBC_READ=$(HAS_LIBC_READ) -DLIBMY_HAS_LIBC_WRITE=$(HAS_LIBC_WRITE) -DLIBMY_HAS_LIBC_EXECVE=$(HAS_LIBC_EXECVE) -DLIBMY_HAS_LIBC_ISATTY=$(HAS_LIBC_ISATTY) -DLIBMY_HAS_LIBC_OPEN=$(HAS_LIBC_OPEN) -DLIBMY_HAS_LIBC_CLOSE=$(HAS_LIBC_CLOSE) -DLIBMY_HAS_LIBC_LSEEK=$(HAS_LIBC_LSEEK) -DLIBMY_HAS_LIBC_FSTAT=$(HAS_LIBC_FSTAT)
 
 .PHONY: all clean fclean
 
@@ -94,6 +97,9 @@ endif
 
 # Stuff related to strings.h
 SOURCE_FILES += strings/strcasecmp strings/bcopy
+
+# Stuff related to sys/stat.h
+SOURCE_FILES += sys/stat/fstat
 
 # Stuff related to my_string
 SOURCE_FILES += my_string/new_from_string my_string/new my_string/assign my_string/guarantee_can_expand my_string/append my_string/append_vprintf my_string/insert my_string/erase my_string/resize my_string/free
@@ -167,6 +173,7 @@ obj/%.o: %.c
 	@mkdir --parents obj/src/stdlib
 	@mkdir --parents obj/src/string
 	@mkdir --parents obj/src/strings
+	@mkdir --parents obj/src/sys/stat
 	@mkdir --parents obj/src/unistd
 	$(CC) -c $< -o $@ $(CFLAGS)
 

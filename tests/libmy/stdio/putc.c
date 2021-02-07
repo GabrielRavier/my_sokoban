@@ -8,6 +8,7 @@
 #include "../tests_header.h"
 #include "my/stdio.h"
 #include "my/string.h"
+#include <criterion/redirect.h>
 #include <unistd.h>
 
 static void midnight_bsd_do_test_str(int (*func)(int, MY_FILE *))
@@ -65,4 +66,27 @@ Test(my_putc, midnight_bsd_err)
 Test(my_fputc, midnight_bsd_err)
 {
     midnight_bsd_do_test_err(my_fputc);
+}
+
+// TODO Add first gnulib tests when we get to setvbuf
+// TODO Add second gnulib tests when we get to fdopen+setvbuf
+// TODO Add dietlibc tests when we get to ferror
+// TODO Add cloudlibc tests when we get to fdopen+ferror
+
+static void glibc_do_unbputc_test(int (*func)(int, MY_FILE *))
+{
+    func('1', my_stderr);
+    func('2', my_stderr);
+
+    cr_assert_stderr_eq_str("12");
+}
+
+Test(my_putc, glibc_unbputc, .init = cr_redirect_stderr)
+{
+    glibc_do_unbputc_test(my_putc);
+}
+
+Test(my_fputc, glibc_unbputc, .init = cr_redirect_stderr)
+{
+    glibc_do_unbputc_test(my_fputc);
 }

@@ -35,7 +35,9 @@ extern struct my_file_type {
     } flag;
 } g_my_files[1024];
 typedef struct my_file_type MY_FILE;
+#define my_stdin (&g_my_files[0])
 #define my_stdout (&g_my_files[1])
+#define my_stderr (&g_my_files[2])
 
 #endif
 

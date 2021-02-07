@@ -27,7 +27,8 @@ int my_fflush(MY_FILE *file)
         if (bytes_to_write <= 0)
             return (0);
         file->buffer_ptr = file->buffer_base;
-        file->buffer_count = BUFSIZ;
+        file->buffer_count = (file->flag & (MY_FILE_FLAG_LINE_BUFFERED |
+            MY_FILE_FLAG_NOT_BUFFERED)) ? 0 : file->buffer_size;
         if (my_write(file->fd, file->buffer_base, bytes_to_write) !=
             bytes_to_write) {
             file->flag |= MY_FILE_FLAG_ERROR;

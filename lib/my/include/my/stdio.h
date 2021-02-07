@@ -21,6 +21,7 @@ extern struct my_file_type {
     char *buffer_ptr;
     char *buffer_base;
     ssize_t buffer_count;
+    ssize_t buffer_size;
     int fd;
     enum {
         MY_FILE_FLAG_READ = 1,
@@ -28,8 +29,9 @@ extern struct my_file_type {
         MY_FILE_FLAG_READ_WRITE = 4,
         MY_FILE_FLAG_EOF = 8,
         MY_FILE_FLAG_NOT_BUFFERED = 16,
-        MY_FILE_FLAG_BUFFER_MALLOCED = 32,
-        MY_FILE_FLAG_ERROR = 64,
+        MY_FILE_FLAG_LINE_BUFFERED = 32,
+        MY_FILE_FLAG_BUFFER_MALLOCED = 64,
+        MY_FILE_FLAG_ERROR = 128,
     } flag;
 } g_my_files[1024];
 typedef struct my_file_type MY_FILE;

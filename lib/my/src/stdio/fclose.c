@@ -31,11 +31,13 @@ int my_fclose(MY_FILE *file)
             result = EOF;
         if (file->flag & MY_FILE_FLAG_BUFFER_MALLOCED)
             my_free(file->buffer_base);
-        if (file->flag & MY_FILE_FLAG_NOT_BUFFERED)
-            file->buffer_base = NULL;
     }
-    file->flag = 0;
     file->buffer_count = 0;
+    file->buffer_base = NULL;
+    file->buffer_ptr = NULL;
+    file->buffer_size = 0;
+    file->flag = 0;
+    file->fd = 0;
     return (result);
 }
 

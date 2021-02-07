@@ -48,9 +48,9 @@ static MY_FILE *finish_open(MY_FILE *file, int fd, bool read_write, bool read)
     return (file);
 }
 
-static MY_FILE *do_open(MY_FILE *file, const char *filename, const char *mode)
+static MY_FILE *do_open(MY_FILE *file, const char *filename, const char *mode,
+    bool read_write)
 {
-    bool read_write = mode[1] == '+';
     int fd;
 
     switch (*mode) {
@@ -61,7 +61,8 @@ static MY_FILE *do_open(MY_FILE *file, const char *filename, const char *mode)
         fd = my_open(filename, read_write ? O_RDWR : O_WRONLY);
         if (fd < 0 && errno == ENOENT)
             fd = make_file(filename, read_write);
-        my_lseek(fd, 0, SEEK_END);
+        if (fd >= 0)
+            my_lseek(fd, 0, SEEK_END);
         break;
     case 'r':
         fd = my_open(filename, read_write ? O_RDWR : O_RDONLY);
@@ -80,7 +81,7 @@ MY_FILE *my_fopen(const char *filename, const char *mode)
         MY_FILE_FLAG_WRITE | MY_FILE_FLAG_READ_WRITE); ++result)
         if (result == &g_my_files[MY_ARRAY_SIZE(g_my_files) - 1])
             return (NULL);
-    return (do_open(result, filename, mode));
+    return (do_open(result, filename, mode, mode[1] == '+'));
 }
 
 #endif

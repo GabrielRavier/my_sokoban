@@ -10,7 +10,7 @@
 #include "my/string.h"
 #include <unistd.h>
 
-static void do_test_str(int (*func)(int, MY_FILE *))
+static void midnight_bsd_do_test_str(int (*func)(int, MY_FILE *))
 {
     const char *str = "1234567890x";
     const char *path = tmpnam(NULL);
@@ -35,12 +35,34 @@ static void do_test_str(int (*func)(int, MY_FILE *))
     cr_assert_eq(unlink(path), 0);
 }
 
+static void midnight_bsd_do_test_err(int (*func)(int, MY_FILE *))
+{
+    const char *path = tmpnam(NULL);
+    MY_FILE *fp = my_fopen(path, "w+");
+
+    cr_assert_neq(fp, NULL);
+    cr_assert_eq(my_fclose(fp), 0);
+    cr_assert_eq(unlink(path), 0);
+    cr_assert_eq(func('x', fp), EOF);
+}
+
+// Note: The original for these also has tests for putc_unlocked
 Test(my_putc, midnight_bsd_str)
 {
-    do_test_str(my_putc);
+    midnight_bsd_do_test_str(my_putc);
 }
 
 Test(my_fputc, midnight_bsd_str)
 {
-    do_test_str(my_fputc);
+    midnight_bsd_do_test_str(my_fputc);
+}
+
+Test(my_putc, midnight_bsd_err)
+{
+    midnight_bsd_do_test_err(my_putc);
+}
+
+Test(my_fputc, midnight_bsd_err)
+{
+    midnight_bsd_do_test_err(my_fputc);
 }

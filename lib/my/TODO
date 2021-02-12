@@ -33,6 +33,5 @@ getuid
 chown
 chmod
 getc
-_filbuf
 putw
 fwrite

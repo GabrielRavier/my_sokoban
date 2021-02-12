@@ -79,7 +79,7 @@ SOURCE_FILES += math/fabs math/fpclassify math/signbit
 SOURCE_FILES += signal/sigaddset
 
 # Stuff related to stdio.h
-SOURCE_FILES += stdio/putchar stdio/dputc stdio/dgetc stdio/dputs stdio/puts stdio/fclose stdio/g_my_files stdio/fflush stdio/putc stdio/fputc stdio/internal_file_flush stdio/fopen stdio/fileno stdio/ferror stdio/internal_find_file_ptr
+SOURCE_FILES += stdio/putchar stdio/dputc stdio/dgetc stdio/dputs stdio/puts stdio/fclose stdio/g_my_standard_files stdio/fflush stdio/putc stdio/fputc stdio/fopen stdio/fileno stdio/ferror stdio/internal/file/normal/read stdio/internal/file/normal/write stdio/internal/file/normal/seek stdio/internal/file/normal/close stdio/internal/file/parse_mode stdio/internal/file/find_ptr stdio/internal/file/flush_skip_non_write stdio/internal/file/all_for_each stdio/internal/file/write_to_buffer stdio/internal/file/setup_write stdio/internal/file/make_buffer stdio/internal/file/determine_buffering stdio/internal/file/do_write stdio/internal/file/do_read stdio/internal/file/do_seek stdio/internal/file/cleanup
 
 # Stuff related to printf
 SOURCE_FILES += stdio/printf/printf stdio/printf/vprintf stdio/printf/dprintf stdio/printf/vdprintf stdio/printf/asprintf stdio/printf/vasprintf stdio/printf/formatter/append_number_base stdio/printf/formatter/utf32_char_to_utf8 stdio/printf/formatter/char stdio/printf/formatter/cstring stdio/printf/formatter/signed_integer stdio/printf/formatter/unsigned_integer stdio/printf/formatter/percent_sign stdio/printf/formatter/n stdio/printf/formatter/pointer stdio/printf/parse_conversion_info/parse_conversion_info stdio/printf/parse_conversion_info/parse_int stdio/printf/handle_invalid stdio/printf/padding
@@ -170,6 +170,7 @@ obj/%.o: %.c
 	@mkdir --parents obj/src/signal
 	@mkdir --parents obj/src/stdio/printf/formatter
 	@mkdir --parents obj/src/stdio/printf/parse_conversion_info
+	@mkdir --parents obj/src/stdio/internal/file/normal
 	@mkdir --parents obj/src/stdlib
 	@mkdir --parents obj/src/string
 	@mkdir --parents obj/src/strings

@@ -7,7 +7,7 @@
 
 #include "my/stdio.h"
 
-int my_fputc(int c, MY_FILE *stream)
+int my_fputc(int c, MY_FILE *fp)
 {
-    return (my_putc(c, stream));
+    return (my_putc(c, fp));
 }

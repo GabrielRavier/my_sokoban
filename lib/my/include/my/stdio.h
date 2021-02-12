@@ -13,33 +13,70 @@
 #include <stdint.h>
 
 #if LIBMY_USE_LIBC_FILE
+
+typedef fpos_t my_fpos_t;
+
     #define MY_FILE FILE
     #define my_stdin stdin
     #define my_stdout stdout
     #define my_stderr stderr
+
 #else
 
+typedef off_t my_fpos_t;
+
+// A buffer for the MY_FILE implementation
+struct my_file_buffer {
+    ssize_t size;
+    unsigned char *base;
+};
+
+// This is the structure we use to implement MY_FILE
+// fd is the file descriptor attached to the file (or -1 if we're not a file)
+// offset is the current file offset from lseek
+// internal_data is passed to read, write, seek and close 
+// line_buffer_size is either 0 or -buffer.size, this is to optimize putc
+// buffer_ptr points to the next byte in the buffer
+// one_char_read_buffer is the "buffer" we use when unbuffered or when malloc
+// fails
+// Whether flags is non-0 marks whether the file entry is used (used in
+// find_ptr to determine which files are in use) 
+// MY_FILE_FLAG_FSEEK_OPT and MY_FILE_FLAG_NO_FSEEK_OPT both exist because we
+// want to be able to distinguish the case where we haven't yet determined
+// whether the optimization is possible
 extern struct my_file_type {
-    unsigned char *buffer_ptr;
-    unsigned char *buffer_base;
-    ssize_t buffer_count;
-    ssize_t buffer_size;
     int fd;
+    off_t offset;
     enum {
-        MY_FILE_FLAG_READ = 1,
-        MY_FILE_FLAG_WRITE = 2,
-        MY_FILE_FLAG_READ_WRITE = 4,
-        MY_FILE_FLAG_EOF = 8,
-        MY_FILE_FLAG_NOT_BUFFERED = 16,
-        MY_FILE_FLAG_LINE_BUFFERED = 32,
-        MY_FILE_FLAG_BUFFER_MALLOCED = 64,
-        MY_FILE_FLAG_ERROR = 128,
-    } flag;
-} g_my_files[1024];
+        MY_FILE_FLAG_READ = 1 << 0,
+        MY_FILE_FLAG_WRITE = 1 << 1,
+        MY_FILE_FLAG_READ_WRITE = 1 << 2,
+        MY_FILE_FLAG_NOT_BUFFERED = 1 << 3,
+        MY_FILE_FLAG_LINE_BUFFERED = 1 << 4,
+        MY_FILE_FLAG_BUFFER_MALLOCED = 1 << 5,
+        MY_FILE_FLAG_ERROR = 1 << 6,
+        MY_FILE_FLAG_IS_OFFSET_CORRECT = 1 << 7,
+        MY_FILE_FLAG_FSEEK_OPT = 1 << 8,
+        MY_FILE_FLAG_NO_FSEEK_OPT = 1 << 9,
+    } flags;
+    void *internal_data;
+    ssize_t (*read)(void *internal_data, unsigned char *buffer, ssize_t count);
+    ssize_t (*write)(void *internal_data, const unsigned char *buffer,
+        ssize_t count);
+    my_fpos_t (*seek)(void *internal_data, my_fpos_t offset, int whence);
+    int (*close)(void *internal_data);
+    ssize_t write_space_left;
+    ssize_t line_buffer_size;
+    unsigned char *buffer_ptr;
+    struct my_file_buffer buffer;
+    unsigned char one_char_read_buffer[1];
+} g_my_standard_files[3];
+
 typedef struct my_file_type MY_FILE;
-#define my_stdin (&g_my_files[0])
-#define my_stdout (&g_my_files[1])
-#define my_stderr (&g_my_files[2])
+
+#define my_stdin (&g_my_standard_files[0])
+#define my_stdout (&g_my_standard_files[1])
+#define my_stderr (&g_my_standard_files[2])
 
 #endif
 
@@ -88,25 +125,25 @@ int my_vasprintf(char **MY_RESTRICT result_string_ptr,
     const char *MY_RESTRICT format, va_list arguments)
     MY_ATTR_FORMAT(printf, 2, 0) MY_ATTR_WARN_UNUSED_RESULT;
 
-// Open a file and create a new stream for it
+// Open a file and create a new MY_FILE for it
 MY_FILE *my_fopen(const char *MY_RESTRICT filename,
     const char *MY_RESTRICT mode) MY_ATTR_WARN_UNUSED_RESULT;
 
-// Write a character to stream
-int my_fputc(int c, MY_FILE *stream);
-int my_putc(int c, MY_FILE *stream);
+// Writes a character to fp
+int my_fputc(int c, MY_FILE *fp);
+int my_putc(int c, MY_FILE *fp);
 
-// Close stream
-int my_fclose(MY_FILE *stream);
+// Closes the passed file
+int my_fclose(MY_FILE *fp);
 
-// Flush the passed stream
-int my_fflush(MY_FILE *stream);
+// Flushes the passed file, or all of them if fp is NULL
+int my_fflush(MY_FILE *fp);
 
-// Return the file descriptor for the given stream
-int my_fileno(MY_FILE *stream) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
+// Returns the file descriptor for the given file
+int my_fileno(MY_FILE *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 
-// Returns the error indicator for the given stream
-int my_ferror(MY_FILE *stream) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
+// Returns the error indicator for the given file
+int my_ferror(MY_FILE *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 
 static inline void my_fclose_ptr(MY_FILE **ptr)
 {

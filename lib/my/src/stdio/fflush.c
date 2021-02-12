@@ -6,36 +6,28 @@
 */
 
 #include "my/stdio.h"
-#include "my/unistd.h"
+#include "my/internal/stdio.h"
+#include <errno.h>
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_fflush(MY_FILE *file)
+int my_fflush(MY_FILE *fp)
 {
-    return (fflush(file));
+    return (fflush(fp));
 }
 
 #else
 
-int my_fflush(MY_FILE *file)
+int my_fflush(MY_FILE *fp)
 {
-    ssize_t bytes_to_write;
-
-    if ((file->flag & (MY_FILE_FLAG_NOT_BUFFERED | MY_FILE_FLAG_WRITE)) ==
-        MY_FILE_FLAG_WRITE && file->buffer_base != NULL) {
-        bytes_to_write = file->buffer_ptr - file->buffer_base;
-        if (bytes_to_write <= 0)
-            return (0);
-        file->buffer_ptr = file->buffer_base;
-        file->buffer_count = (file->flag & (MY_FILE_FLAG_LINE_BUFFERED |
-            MY_FILE_FLAG_NOT_BUFFERED)) ? 0 : file->buffer_size;
-        if (my_write(file->fd, file->buffer_base, bytes_to_write) !=
-            bytes_to_write) {
-            file->flag |= MY_FILE_FLAG_ERROR;
-            return (EOF);
-        }
+    if (fp == NULL)
+        return (my_internal_file_all_for_each(
+            my_internal_file_flush_skip_non_write));
+    if (!(fp->flags & (MY_FILE_FLAG_WRITE | MY_FILE_FLAG_READ_WRITE))) {
+        errno = EBADF;
+        return (EOF);
     }
-    return (0);
+    return (my_internal_file_flush_skip_non_write(fp));
 }
 
 #endif

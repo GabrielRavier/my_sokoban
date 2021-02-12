@@ -6,45 +6,39 @@
 */
 
 #include "my/stdio.h"
-#include "my/cpp-like/iterator.h"
+#include "my/internal/stdio.h"
 #include "my/stdlib.h"
-#include "my/unistd.h"
 #include <errno.h>
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_fclose(MY_FILE *file)
+int my_fclose(MY_FILE *fp)
 {
-    return (fclose(file));
+    return (fclose(fp));
 }
 
 #else
 
-int my_fclose(MY_FILE *file)
+// First checks whether fp is open, then closes the file and frees it
+// We set write_space_left to make sure we error if re-accessed
+int my_fclose(MY_FILE *fp)
 {
-    int result = EOF;
+    int result;
 
-    if (file->flag & (MY_FILE_FLAG_READ | MY_FILE_FLAG_WRITE |
-        MY_FILE_FLAG_READ_WRITE)) {
-        result = my_fflush(file);
-        if (my_close(file->fd) < 0)
-            result = EOF;
-        if (file->flag & MY_FILE_FLAG_BUFFER_MALLOCED)
-            my_free(file->buffer_base);
+    if (fp->flags == 0) {
+        errno = EBADF;
+        return (EOF);
     }
-    file->buffer_count = 0;
-    file->buffer_base = NULL;
-    file->buffer_ptr = NULL;
-    file->buffer_size = 0;
-    file->flag = 0;
-    file->fd = 0;
+    result = fp->flags & MY_FILE_FLAG_WRITE ?
+        my_internal_file_flush_skip_non_write(fp) : 0;
+    if (fp->close != NULL && fp->close(fp->internal_data) < 0)
+        result = EOF;
+    if (fp->flags & MY_FILE_FLAG_BUFFER_MALLOCED)
+        my_free(fp->buffer.base);
+    fp->write_space_left = 0;
+    fp->fd = -1;
+    fp->flags = 0;
     return (result);
-}
-
-static __attribute__((destructor)) void cleanup_all_files(void)
-{
-    for (size_t i = 0; i < MY_ARRAY_SIZE(g_my_files); ++i)
-        my_fclose(&g_my_files[i]);
 }
 
 #endif

@@ -6,19 +6,20 @@
 */
 
 #include "my/stdio.h"
+#include <stdbool.h>
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_ferror(MY_FILE *stream)
+int my_ferror(MY_FILE *fp)
 {
-    return (ferror(stream));
+    return (ferror(fp));
 }
 
 #else
 
-int my_ferror(MY_FILE *stream)
+int my_ferror(MY_FILE *fp)
 {
-    return stream->flag & MY_FILE_FLAG_ERROR;
+    return ((bool)(fp->flags & MY_FILE_FLAG_ERROR));
 }
 
 #endif

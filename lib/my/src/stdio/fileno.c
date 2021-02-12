@@ -9,16 +9,16 @@
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_fileno(MY_FILE *stream)
+int my_fileno(MY_FILE *fp)
 {
-    return (fileno(stream));
+    return (fileno(fp));
 }
 
 #else
 
-int my_fileno(MY_FILE *stream)
+int my_fileno(MY_FILE *fp)
 {
-    return stream->fd;
+    return fp->fd;
 }
 
 #endif

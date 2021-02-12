@@ -126,3 +126,14 @@ Add tests from bionic for ffs, ffsl, ffsll, strcasecmp, strcasecmp_l,
 strncasecmp, strncasecmp_l
 
 Add tests from Defora for ffs
+
+unistd:
+
+Add tests from bionic for brk, sbrk, truncate, close, stat, ftruncate, pause,
+read, syscall, alarm, _exit, setenv, getenv, unsetenv, unsetenv, putenv,
+clearenv, fdatasync, fsync, syncfs, vfork, getpid, gettid, clone, abort,
+sethostname, gethostname, pathconf, sysconf, dup2, open, dup3, dup, lseek,
+lockf, getdomainname, setdomainname, execve, execl, execle, execv, execlp,
+execvp, execvpe, fexecve, getlogin, getlogin_r, swab, usleep, sleep
+
+Add tests from Defora for chroot, error, fork, getgroups, gethostname, sleep

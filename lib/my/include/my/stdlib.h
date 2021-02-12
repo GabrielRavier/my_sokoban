@@ -72,8 +72,14 @@ int my_setenv(const char *name, const char *value, int overwrite)
 // not exist in the environment
 int my_unsetenv(const char *name) MY_ATTR_NOTHROW MY_ATTR_NONNULL((1));
 
+// Tries to allocate the asked-for amount of memory
 void *my_malloc(size_t size) MY_ATTR_NOTHROW MY_ATTR_MALLOC
     MY_ATTR_ALLOC_SIZE((1)) MY_ATTR_WARN_UNUSED_RESULT;
+
+// Tries to allocate the asked-for amount of members of the specified size and
+// initialize them to 0
+void *my_calloc(size_t num_members, size_t size) MY_ATTR_NOTHROW MY_ATTR_MALLOC
+    MY_ATTR_ALLOC_SIZE((1, 2)) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Free a block allocated by my_malloc
 void my_free(void *ptr) MY_ATTR_NOTHROW;

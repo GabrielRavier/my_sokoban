@@ -8,12 +8,11 @@
 #include "../tests_header.h"
 #include "random_floats.h"
 #include "float_bit_equality.h"
+#include "data/fabs.h"
 #include "my/math.h"
-#include "my/string.h"
 #include "my/cpp-like/iterator.h"
 #include <math.h>
-#include <float.h>
-#include <stdint.h>
+#include <stddef.h>
 
 static void do_test(long double x)
 {
@@ -36,6 +35,8 @@ Test(my_fabs, random_floats)
     for (size_t i = 0; i < MY_ARRAY_SIZE(RANDOM_FLOATS); ++i) {
         do_test(RANDOM_FLOATS[i]);
         do_test(-RANDOM_FLOATS[i]);
+        do_test(RANDOM_FLOATS[i] * 10);
+        do_test(-RANDOM_FLOATS[i] * 10);
     }
     for (size_t i = 0; i < 100000; ++i) {
         union {
@@ -46,4 +47,12 @@ Test(my_fabs, random_floats)
             u.bytes[i] = rand();
         do_test(u.val);
     }
+}
+
+Test(my_fabs, bionic)
+{
+    for (size_t i = 0; i < MY_ARRAY_SIZE(G_FABS_INTEL_DATA); ++i)
+        do_test(G_FABS_INTEL_DATA[i].input);
+    for (size_t i = 0; i < MY_ARRAY_SIZE(G_FABSF_INTEL_DATA); ++i)
+        do_test(G_FABSF_INTEL_DATA[i].input);
 }

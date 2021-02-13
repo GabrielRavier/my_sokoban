@@ -12,7 +12,6 @@
 
 // Obtained from various sources, some really random floats, then some data from bionic, then floating point limits
 static const long double RANDOM_FLOATS[] = {
-    0.0,
     0.0014329879003995,
     0.0029808110086022,
     0.008845529776087l,
@@ -1217,6 +1216,7 @@ static const long double RANDOM_FLOATS[] = {
     -4.9406564584124654e-324l,
     4.9406564584124654e-324l,
     -5.l,
+    5.l,
     -.6l,
     .6l,
     -DBL_EPSILON,
@@ -1235,8 +1235,12 @@ static const long double RANDOM_FLOATS[] = {
     FLT_MIN,
     -FLT_TRUE_MIN,
     FLT_TRUE_MIN,
+    -HUGE_VALF,
+    HUGE_VALF,
     -HUGE_VAL,
     HUGE_VAL,
+    -HUGE_VALL,
+    HUGE_VALL,
     -INFINITY,
     INFINITY,
     -LDBL_EPSILON,
@@ -1258,7 +1262,12 @@ static const long double RANDOM_FLOATS[] = {
     -2.718e30l,
     -2.718e-30l,
     0.0l,
-    -0.0l,
     1.l,
-    -1.l,
+    -3.l,
+    __builtin_nanf(""),
+    __builtin_nan(""),
+    __builtin_nanl(""),
+    __FLT_DENORM_MIN__,
+    __DBL_DENORM_MIN__,
+    __LDBL_DENORM_MIN__,
 };

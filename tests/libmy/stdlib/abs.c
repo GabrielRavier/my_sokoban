@@ -6,63 +6,47 @@
 */
 
 #include "../tests_header.h"
+#include "my/cpp-like/iterator.h"
 #include "my/stdlib.h"
 #include <limits.h>
 
-static void do_test(int x)
+static void do_one_test(int x)
 {
     cr_assert_eq(my_abs(x), abs(x));
 }
 
-Test(my_abs, freebsd_basic)
-{
-    do_test(0);
-    do_test(+0);
-    do_test(-0);
-    do_test(-0x1010);
-    do_test(INT_MAX);
-    do_test(-INT_MAX);
-}
+// Stuff from freebsd, llvm, gcc, cloudlibc, qemu, z88dk, plauger
+static const int TESTS_INTS[] = {
+    0,
+    0x1010,
+    INT_MAX,
+    1,
+    2,
+    (int)0x7FFFFFFFE,
+    (int)0x7FFFFFFFF,
+    (int)0x800000001,
+    (int)0x800000002,
+    (int)0xFFFFFFFFE,
+    (int)0xFFFFFFFFF,
+    12,
+    INT_MIN + 1,
+    SCHAR_MIN + 1,
+    SCHAR_MAX,
+    SHRT_MAX,
+    SHRT_MIN + 1,
+    42,
+    0xFFFF,
+    31,
+    30000,
+    456,
+    133,
+    4,
+};
 
-Test(my_abs, llvm_basic)
+Test(my_abs, array)
 {
-    do_test(1);
-    do_test(2);
-    do_test(0x7FFFFFFE);
-    do_test(0x7FFFFFFF);
-    do_test(0x80000001);
-    do_test(0x80000002);
-    do_test(0xFFFFFFFE);
-    do_test(0xFFFFFFFF);
-}
-
-Test(my_abs, gcc_testsuite)
-{
-    do_test(12);
-    do_test(-1);
-    do_test(INT_MIN + 1);
-    do_test(SCHAR_MIN + 1);
-    do_test(SCHAR_MAX);
-    do_test(SHRT_MAX);
-    do_test(SHRT_MIN + 1);
-}
-
-Test(my_abs, cloudlibc_example)
-{
-    do_test(42);
-    do_test(-42);
-}
-
-Test(my_abs, qemu_cris)
-{
-    do_test(0xFFFF);
-    do_test(-31);
-}
-
-Test(my_abs, z88dk)
-{
-    do_test(-30000);
-    do_test(-456);
-    do_test(133);
-    do_test(30000);
+    for (size_t i = 0; i < MY_ARRAY_SIZE(TESTS_INTS); ++i) {
+        do_one_test(TESTS_INTS[i]);
+        do_one_test(-TESTS_INTS[i]);
+    }
 }

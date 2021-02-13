@@ -278,7 +278,7 @@ Test(my_strncmp, glibc)
     // Random tests
     unsigned char *p1 = (unsigned char *)(glibc_buf1 + glibc_page_size - 512);
     unsigned char *p2 = (unsigned char *)(glibc_buf1 + glibc_page_size - 512);
-    for (size_t i = 0; i < 100000; ++i) {
+    for (size_t i = 0; i < 50000; ++i) {
         size_t align1 = random() & 0x1F;
         size_t align2;
         if (random() & 1)

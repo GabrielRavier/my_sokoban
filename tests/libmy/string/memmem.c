@@ -65,7 +65,6 @@ Test(my_memmem, gnulib)
     signal(SIGALRM, SIG_DFL);
     alarm(10);
 
-
     do_one_test("foo", 3, "", 0);
     do_one_test("foo", 3, "o", 1);
     do_one_test("ABC ABCDAB ABCDABCDABDE", my_strlen("ABC ABCDAB ABCDABCDABDE"), "ABCDABD", 7);
@@ -83,6 +82,7 @@ Test(my_memmem, gnulib)
         const char *need = "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
         do_one_test(input, my_strlen(input), need, my_strlen(need));
     }
+
     /* Check that length 0 does not dereference the pointer.  */
     void *page_boundary = zero_size_ptr();
     if (page_boundary) {

@@ -14,7 +14,7 @@
 #include <math.h>
 #include <stddef.h>
 
-static void do_test(long double x)
+static void do_one_test(long double x)
 {
     double x_double = x;
     float x_float = x;
@@ -33,10 +33,10 @@ static void do_test(long double x)
 Test(my_fabs, random_floats)
 {
     for (size_t i = 0; i < MY_ARRAY_SIZE(RANDOM_FLOATS); ++i) {
-        do_test(RANDOM_FLOATS[i]);
-        do_test(-RANDOM_FLOATS[i]);
-        do_test(RANDOM_FLOATS[i] * 10);
-        do_test(-RANDOM_FLOATS[i] * 10);
+        do_one_test(RANDOM_FLOATS[i]);
+        do_one_test(-RANDOM_FLOATS[i]);
+        do_one_test(RANDOM_FLOATS[i] * 10);
+        do_one_test(-RANDOM_FLOATS[i] * 10);
     }
     for (size_t i = 0; i < 100000; ++i) {
         union {
@@ -45,14 +45,14 @@ Test(my_fabs, random_floats)
         } u;
         for (size_t i = 0; i < sizeof(u.bytes); ++i)
             u.bytes[i] = rand();
-        do_test(u.val);
+        do_one_test(u.val);
     }
 }
 
 Test(my_fabs, bionic)
 {
     for (size_t i = 0; i < MY_ARRAY_SIZE(G_FABS_INTEL_DATA); ++i)
-        do_test(G_FABS_INTEL_DATA[i].input);
+        do_one_test(G_FABS_INTEL_DATA[i].input);
     for (size_t i = 0; i < MY_ARRAY_SIZE(G_FABSF_INTEL_DATA); ++i)
-        do_test(G_FABSF_INTEL_DATA[i].input);
+        do_one_test(G_FABSF_INTEL_DATA[i].input);
 }

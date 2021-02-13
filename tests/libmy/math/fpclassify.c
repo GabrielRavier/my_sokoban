@@ -11,7 +11,7 @@
 #include "my/cpp-like/iterator.h"
 #include <float.h>
 
-static void do_test(long double x)
+static void do_one_test(long double x)
 {
     cr_assert_eq(my_fpclassify(x), fpclassify(x));
     cr_assert_eq(my_fpclassify((double)x), fpclassify((double)x));
@@ -21,7 +21,7 @@ static void do_test(long double x)
 Test(my_fpclassify, random_floats)
 {
     for (size_t i = 0; i < MY_ARRAY_SIZE(RANDOM_FLOATS); ++i) {
-        do_test(RANDOM_FLOATS[i]);
-        do_test(-RANDOM_FLOATS[i]);
+        do_one_test(RANDOM_FLOATS[i]);
+        do_one_test(-RANDOM_FLOATS[i]);
     }
 }

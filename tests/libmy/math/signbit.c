@@ -13,7 +13,7 @@
 #include <float.h>
 #include <stdbool.h>
 
-static void do_test(long double x)
+static void do_one_test(long double x)
 {
     double x_double = x;
     float x_float = x;
@@ -25,8 +25,8 @@ static void do_test(long double x)
 Test(my_signbit, random_floats)
 {
     for (size_t i = 0; i < MY_ARRAY_SIZE(RANDOM_FLOATS); ++i) {
-        do_test(RANDOM_FLOATS[i]);
-        do_test(-RANDOM_FLOATS[i]);
+        do_one_test(RANDOM_FLOATS[i]);
+        do_one_test(-RANDOM_FLOATS[i]);
     }
     for (size_t i = 0; i < 100000; ++i) {
         union {
@@ -35,6 +35,6 @@ Test(my_signbit, random_floats)
         } u;
         for (size_t i = 0; i < sizeof(u.bytes); ++i)
             u.bytes[i] = rand();
-        do_test(u.val);
+        do_one_test(u.val);
     }
 }

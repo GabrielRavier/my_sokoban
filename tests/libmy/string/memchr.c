@@ -168,7 +168,7 @@ Test(my_memchr, gnulib)
         char *page_boundary = (char *)zero_size_ptr();
         /* Too small, and we miss cache line boundary tests; too large,
            and the test takes cubically longer to complete.  */
-        size_t limit = 257;
+        size_t limit = 150;
 
         if (page_boundary != NULL) {
             for (size_t i = 1; i <= limit; i++) {

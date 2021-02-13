@@ -95,7 +95,7 @@ static void test_one_linux_kernel_selftests(char *s1, char *s2, size_t max_offse
 static void do_linux_kernel_selftests(bool is_large)
 {
     static const size_t SIZE = 256;
-    static const size_t ITERATIONS = 250;
+    static const size_t ITERATIONS = 20;
     static const size_t LARGE_SIZE = 5 * 1024;
     static const size_t LARGE_ITERATIONS = 50;
     static const size_t LARGE_MAX_OFFSET = 32;

@@ -23,7 +23,7 @@ inline static uint32_t msws(void)
 Test(my_memcpy, buffers)
 {
 #define BUFFER_SIZE 10240
-    static const size_t START_COPY = 2560, MAX_BLOCK_SIZE = 256, MAX_OFFSET = 3;
+    static const size_t START_COPY = 1250, MAX_BLOCK_SIZE = 256, MAX_OFFSET = 3;
     char source[BUFFER_SIZE];
     char destination[BUFFER_SIZE];
     char backup_source[BUFFER_SIZE];
@@ -50,8 +50,7 @@ Test(my_memcpy, buffers)
                     } else
                         cr_assert_eq(destination[j], 0x5B);
 
-                for (size_t j = 0; j < BUFFER_SIZE; ++j)
-                    cr_assert_eq(source[j], backup_source[j]);
+                cr_assert_eq(my_memcmp(source, backup_source, BUFFER_SIZE), 0);
             }
 #undef BUFFER_SIZE
 }

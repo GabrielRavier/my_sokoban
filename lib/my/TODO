@@ -11,6 +11,7 @@ make full proper printf that handles floating point stuff and uses some kind of 
 Search in historical stuff - After PDP7
 Better performance for my_getenv: Then increase NUM_VARS in setenv tests back to 8192
 Search in historical stuff - Last done: Research-PDP7
+free
 sleep
 access
 getchar (actual implementation based on stdio)

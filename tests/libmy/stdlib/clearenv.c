@@ -16,10 +16,12 @@ Test(my_cleanenv, bionic)
     cr_assert_eq(my_setenv("test-variable", "a", 1), 0);
 
     char **old_environ = NULL;
-    for (size_t i = 0; environ[i] != NULL; ++i) {
-        old_environ = realloc(old_environ, sizeof(char *) * (i + 1));
+    size_t i;
+    for (i = 0; environ[i] != NULL; ++i) {
+        old_environ = realloc(old_environ, sizeof(char *) * (i + 2));
         old_environ[i] = my_strdup(environ[i]);
     }
+    old_environ[i] = NULL;
 
     cr_assert_eq(clearenv(), 0);
     cr_assert_eq(environ, NULL);
@@ -33,4 +35,8 @@ Test(my_cleanenv, bionic)
 
     cr_assert_str_eq(my_getenv("test-variable"), "a");
     cr_assert_eq(my_unsetenv("test-variable"), 0);
+
+    for (size_t i = 0; old_environ[i] != NULL; ++i)
+        free(old_environ[i]);
+    free(old_environ);
 }

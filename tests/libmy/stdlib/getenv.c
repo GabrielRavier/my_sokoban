@@ -43,3 +43,11 @@ Test(my_getenv, dietlibc)
     cr_assert_eq(putenv("foo=bar"), 0);
     cr_assert_eq(my_getenv("foo"), getenv("foo"));
 }
+
+Test(my_getenv, bionic)
+{
+    cr_assert_eq(my_setenv("test-variable", "hello", 1), 0);
+    cr_assert_str_eq(my_getenv("test-variable"), "hello");
+    cr_assert_eq(my_unsetenv("test-variable"), 0);
+    cr_assert_eq(my_getenv("test-variable"), NULL);
+}

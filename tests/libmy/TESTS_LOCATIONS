@@ -75,9 +75,9 @@ atoi, atol, labs, llabs, getloadavg, getprogname, setprogname
 Add tests from serenity for mktemp, mkdtemp, mkstemp
 Add tests from skiboot for atoi, atol, strtol, strtoul, labs
 
-Add tests from plauger for bsearch, qsort, malloc, calloc, realloc, getenv,
-system, labs, div, ldiv, rand, atof, atol, strtod, strtol, strtoul, mbstowcs,
-wcstombs, mblen, wctomb, mbtowc, wctomb, signal, abort, atexit
+Add tests from plauger for bsearch, qsort, malloc, calloc, realloc, system,
+labs, div, ldiv, rand, atof, atol, strtod, strtol, strtoul, mbstowcs, wcstombs,
+mblen, wctomb, mbtowc, wctomb, signal, abort, atexit
 
 string
 
@@ -127,10 +127,10 @@ Add tests from Defora for ffs
 unistd:
 
 Add tests from bionic for brk, sbrk, truncate, close, stat, ftruncate, pause,
-read, syscall, alarm, _exit, setenv, getenv, unsetenv, unsetenv, putenv,
-clearenv, fdatasync, fsync, syncfs, vfork, getpid, gettid, clone, abort,
-sethostname, gethostname, pathconf, sysconf, dup2, open, dup3, dup, lseek,
-lockf, getdomainname, setdomainname, execve, execl, execle, execv, execlp,
-execvp, execvpe, fexecve, getlogin, getlogin_r, swab, usleep, sleep
+read, syscall, alarm, _exit, setenv, unsetenv, unsetenv, putenv, clearenv,
+fdatasync, fsync, syncfs, vfork, getpid, gettid, clone, abort, sethostname,
+gethostname, pathconf, sysconf, dup2, open, dup3, dup, lseek, lockf,
+getdomainname, setdomainname, execve, execl, execle, execv, execlp, execvp,
+execvpe, fexecve, getlogin, getlogin_r, swab, usleep, sleep
 
 Add tests from Defora for chroot, error, fork, getgroups, gethostname, sleep

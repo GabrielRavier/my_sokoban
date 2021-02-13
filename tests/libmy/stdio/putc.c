@@ -107,3 +107,22 @@ Test(my_fputc, glibc_unbputc, .init = cr_redirect_stderr)
 {
     glibc_do_unbputc_test(my_fputc);
 }
+
+static void bionic_do_read_test(int (*func)(int, MY_FILE *))
+{
+    MY_FILE *fp = my_fopen("/proc/version", "r");
+
+    cr_assert_neq(fp, NULL);
+    cr_assert_eq(func('x', fp), EOF);
+    cr_assert_eq(my_fclose(fp), 0);
+}
+
+Test(my_putc, bionic_read)
+{
+    bionic_do_read_test(my_putc);
+}
+
+Test(my_fputc, bionic_read)
+{
+    bionic_do_read_test(my_fputc);
+}

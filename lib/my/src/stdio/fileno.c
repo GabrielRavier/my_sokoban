@@ -6,6 +6,7 @@
 */
 
 #include "my/stdio.h"
+#include <errno.h>
 
 #if LIBMY_USE_LIBC_FILE
 
@@ -18,7 +19,11 @@ int my_fileno(MY_FILE *fp)
 
 int my_fileno(MY_FILE *fp)
 {
-    return fp->fd;
+    int result = fp->fd;
+
+    if (result == -1)
+        errno = EBADF;
+    return (result);
 }
 
 #endif

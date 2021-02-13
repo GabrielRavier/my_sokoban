@@ -6,6 +6,7 @@
 */
 
 #include "my/internal/stdio.h"
+#include <errno.h>
 
 #if !LIBMY_USE_LIBC_FILE
 
@@ -22,8 +23,10 @@ int my_internal_file_write_to_buffer(MY_FILE *fp, int c)
     ssize_t bytes_in_buffer = fp->buffer_ptr - fp->buffer.base;
 
     fp->write_space_left = fp->line_buffer_size;
-    if (!my_internal_file_can_write(fp))
+    if (!my_internal_file_can_write(fp)) {
+        errno = EBADF;
         return (EOF);
+    }
     if (bytes_in_buffer >= fp->buffer.size) {
         if (my_fflush(fp) != 0)
             return (EOF);
@@ -33,7 +36,7 @@ int my_internal_file_write_to_buffer(MY_FILE *fp, int c)
     *fp->buffer_ptr++ = c_uchar;
     return (((++bytes_in_buffer == fp->buffer.size || (fp->flags &
         MY_FILE_FLAG_LINE_BUFFERED && c_uchar == '\n')) &&
-        (my_fflush(fp) != 0)) ? EOF : c);
+        (my_fflush(fp) != 0)) ? EOF : c_uchar);
 }
 
 #endif

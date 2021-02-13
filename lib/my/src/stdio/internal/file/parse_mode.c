@@ -12,43 +12,42 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-// r means read, w means write and a means append
-static const int open_flags_no_plus_array[UCHAR_MAX] = {
-    ['r'] = O_RDONLY,
-    ['w'] = O_WRONLY,
-    ['a'] = O_WRONLY,
-};
-
-static const int open_flags_always_array[UCHAR_MAX] = {
-    ['r'] = 0,
-    ['w'] = O_CREAT | O_TRUNC,
-    ['a'] = O_CREAT | O_APPEND,
-};
-
-static const int file_flags_array[UCHAR_MAX] = {
-    ['r'] = MY_FILE_FLAG_READ,
-    ['w'] = MY_FILE_FLAG_WRITE,
-    ['a'] = MY_FILE_FLAG_WRITE,
-};
+static bool parse_first_char(char first_char, int *open_flags_read_write_type,
+    int *open_flags_always)
+{
+    switch (first_char) {
+    case 'r':
+        *open_flags_read_write_type = O_RDONLY;
+        *open_flags_always = 0;
+        break;
+    case 'w':
+    case 'a':
+        *open_flags_read_write_type = O_WRONLY;
+        *open_flags_always = O_CREAT | (first_char == 'w' ? O_TRUNC : O_APPEND);
+        break;
+    default:
+        return (false);
+    }
+    return (true);
+}
 
 // Having + meaning read and write. We ignore b
 int my_internal_file_parse_mode(const char *mode, int *open_flags)
 {
-    const unsigned char *mode_uchar = (const unsigned char *)mode;
-    int open_flags_no_plus = open_flags_no_plus_array[mode_uchar[0]];
-    int open_flags_always = open_flags_always_array[mode_uchar[0]];
-    int file_flags = file_flags_array[mode_uchar[0]];
+    int open_flags_read_write_type;
+    int open_flags_always;
 
-    if (open_flags_no_plus == 0) {
+    if (!parse_first_char(mode[0], &open_flags_read_write_type,
+        &open_flags_always)) {
         errno = EINVAL;
         return (0);
     }
-    if (mode[1] == '+' || (mode[1] == 'b' && mode[2] == '+')) {
-        file_flags = MY_FILE_FLAG_READ_WRITE;
-        open_flags_no_plus = O_RDWR;
-    }
-    *open_flags = open_flags_no_plus | open_flags_always;
-    return (file_flags);
+    if (mode[1] == '+' || (mode[1] == 'b' && mode[2] == '+'))
+        open_flags_read_write_type = O_RDWR;
+    *open_flags = open_flags_read_write_type | open_flags_always;
+    return ((open_flags_read_write_type == O_WRONLY) ? MY_FILE_FLAG_WRITE :
+        (open_flags_read_write_type == O_RDONLY) ? MY_FILE_FLAG_READ :
+        MY_FILE_FLAG_READ_WRITE);
 }
 
 #endif

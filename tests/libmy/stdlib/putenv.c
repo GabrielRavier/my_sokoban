@@ -23,3 +23,22 @@ Test(my_putenv, freebsd_putenv_basic)
     cr_assert_eq(my_unsetenv("crap"), 0);
     cr_assert_eq(my_getenv("crap"), getenv("crap"));
 }
+
+Test(my_putenv, bionic)
+{
+    cr_assert_eq(my_unsetenv("a"), 0);
+
+    char s1[] = "a=b";
+    cr_assert_eq(putenv(s1), 0);
+    cr_assert_str_eq(my_getenv("a"), "b");
+
+    s1[2] = 'c';
+    cr_assert_str_eq(my_getenv("a"), "c");
+
+    char s2[] = "a=b";
+    cr_assert_eq(putenv(s2), 0);
+    cr_assert_str_eq(my_getenv("a"), "b");
+    cr_assert_eq(s1[2], 'c');
+
+    cr_assert_eq(my_unsetenv("a"), 0);
+}

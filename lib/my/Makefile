@@ -119,7 +119,7 @@ TESTS_SOURCE_FILES := assert/assert
 TESTS_SOURCE_FILES += getopt/getopt
 
 # Tests related to stdlib.h
-TESTS_SOURCE_FILES += stdlib/strtol_base_str stdlib/strtol stdlib/strtoul stdlib/abs stdlib/getenv stdlib/setenv stdlib/clearenv stdlib/qsort stdlib/qsort_r
+TESTS_SOURCE_FILES += stdlib/strtol_base_str stdlib/strtol stdlib/strtoul stdlib/abs stdlib/getenv stdlib/setenv stdlib/clearenv stdlib/putenv stdlib/qsort stdlib/qsort_r
 
 # Tests related to string.h
 TESTS_SOURCE_FILES += string/memcpy string/memmove string/memcmp string/memmem string/memchr string/strncmp

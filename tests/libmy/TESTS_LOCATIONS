@@ -1,8 +1,8 @@
 math:
 
-Get stuff from bionic for signbit, isfinite, isnan, isinf, isnormal, finitef,
-isfinite, finite, isinf, acos, acosf, acosl, asin, asinf, asinl, atan, atanl,
-atan2, atanf, atan2f, atan2l, cos, cosf, cosl, sin, sinf, sinl, sincos, sincosf,
+Get stuff from bionic for isfinite, isnan, isinf, isnormal, finitef, isfinite,
+finite, isinf, acos, acosf, acosl, asin, asinf, asinl, atan, atanl, atan2,
+atanf, atan2f, atan2l, cos, cosf, cosl, sin, sinf, sinl, sincos, sincosf,
 sincosl, tan, tanf, tanl, acosh, acoshf, acoshl, asinh, asinhf, asinhl, atanh,
 atanhf, atanhl, cosh, coshf, coshl, sinh, sinhf, sinhl, tanh, tanhf, tanhl, log,
 logf, logl, log2, log2f, log2l, log10, log10f, log10l, cbrt, cbrtf, cbrtl, sqrt,
@@ -143,7 +143,7 @@ fegetenv, fesetenv, fegetround, fesetround, vsscanf, creal, nexttoward,
 nexttowardf, nexttowardl, wctrans, towctrans
 
 wine/msvcr90: malloc, free, srand, strtok, wcstok, strerror, tmpnam, asctime,
-ecvt, localtime, vswprintf, fopen, fclose, unlink, fileno, feof, ferror,
+ecvt, localtime, vswprintf, fopen, fclose, unlink, feof, ferror,
 mbstowcs, wcstombs, setlocale, swscanf
 
 wine/msvcrt: putenv, getenv, fopen, ftell, fgetpos, fclose, unlink, fdopen,

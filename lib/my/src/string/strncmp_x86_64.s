@@ -12,24 +12,24 @@ my_strncmp:
     xor ecx, ecx
 
     .p2align 4
-1:
+.Lstrncmp_loop:
     test edx, edx
-    je 5f
+    je .Lret
 
     movzx r8d, byte ptr [rdi + rcx]
     movzx r9d, byte ptr [rsi + rcx]
     cmp r8b, r9b
-    jne 4f
+    jne .Lreturn_diff
 
     dec rdx
     inc rcx
     test r8b, r8b
-    jne 1b
+    jne .Lstrncmp_loop
 
-5:  
+.Lret:
     ret
 
-4:
+.Lreturn_diff:
     sub r8d, r9d
     mov eax, r8d
     ret

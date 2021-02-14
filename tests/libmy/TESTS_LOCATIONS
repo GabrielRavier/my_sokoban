@@ -21,7 +21,7 @@ lgamma, lgammaf, lgammal, lgamma_r, lgammaf_r, lgammal_r, tgamma, tgammaf,
 tgammal, j0, j0f, j0l, j1, j1f, jn, jnf, y0, y0f, y1, y1f, yn, ynf, frexp,
 frexpf, frexpl, modf, modff, modfl, remquo, remquof, remquol, exp2, exp2f, exp2l
 
-Get stuff from cloudlibc for acos, asin, atan, acosh, asinh, atanh, cos, sin, 
+Get stuff from cloudlibc for acos, asin, atan, acosh, asinh, atanh, cos, sin,
 tan, cosh, sinh, tanh, exp, log, pow, sqrt, atan2, cbrt, ceil, copysign, erf,
 erfc, exp2, expm1, fdim, floor, fma, fmax, fmin, fmod, frexp, hypot, ldexp,
 lgamma, log10, log1p, log2, logb, nearbyint, nextafter, nexttoward, remainder,

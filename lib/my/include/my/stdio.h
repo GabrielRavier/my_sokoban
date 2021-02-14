@@ -34,13 +34,13 @@ struct my_file_buffer {
 // This is the structure we use to implement MY_FILE
 // fd is the file descriptor attached to the file (or -1 if we're not a file)
 // offset is the current file offset from lseek
-// internal_data is passed to read, write, seek and close 
+// internal_data is passed to read, write, seek and close
 // line_buffer_size is either 0 or -buffer.size, this is to optimize putc
 // buffer_ptr points to the next byte in the buffer
 // one_char_read_buffer is the "buffer" we use when unbuffered or when malloc
 // fails
 // Whether flags is non-0 marks whether the file entry is used (used in
-// find_ptr to determine which files are in use) 
+// find_ptr to determine which files are in use)
 // MY_FILE_FLAG_FSEEK_OPT and MY_FILE_FLAG_NO_FSEEK_OPT both exist because we
 // want to be able to distinguish the case where we haven't yet determined
 // whether the optimization is possible

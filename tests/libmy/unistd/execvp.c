@@ -75,7 +75,7 @@ Test(my_execvp, glibc_3)
 
     int file_descriptors[2];
     cr_assert_eq(pipe(file_descriptors), 0);
-    
+
     pid_t child_pid = fork();
     cr_assert_neq(child_pid, -1);
     if (child_pid == 0) {

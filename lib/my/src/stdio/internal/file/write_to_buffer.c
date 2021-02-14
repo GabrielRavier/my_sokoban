@@ -14,7 +14,7 @@
 // sufficient putc calls (if we can't write)
 // We then check whether the buffer is completely full and flush if that is the
 // case, or if the buffer is completely full after adding c, or if the file is
-// line buffered and c == '\n' 
+// line buffered and c == '\n'
 // The unbuffered case is taken care of by its one byte buffer, which will
 // always be full after putting c into it
 int my_internal_file_write_to_buffer(MY_FILE *fp, int c)

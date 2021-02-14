@@ -212,7 +212,7 @@ Test(my_strncmp, glibc)
     my_memset(glibc_buf1, 'a', glibc_page_size);
     my_memset(glibc_buf2, 'a', glibc_page_size);
     glibc_buf1[glibc_page_size - 1] = '\0';
-    
+
     /* Iterate over a size that is just below where we expect the bug to
        trigger up to the size we expect will trigger the bug e.g. [99-128].
        Likewise iterate the start of two strings between 30 and 31 bytes

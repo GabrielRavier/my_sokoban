@@ -126,3 +126,32 @@ Test(my_fputc, bionic_read)
 {
     bionic_do_read_test(my_fputc);
 }
+
+static void wine_do_test(int (*func)(int, MY_FILE *))
+{
+    char *temp_filename = tempnam(NULL, "wputc");
+    MY_FILE *fp = my_fopen(temp_filename, "wb");
+
+    cr_assert_neq(fp, NULL);
+    cr_assert_eq(func(0, fp), 0);
+    cr_assert_eq(func(0xFF, fp), 0xff);
+    cr_assert_eq(func(0xFFFFFFFF, fp), 0xFF);
+    cr_assert_eq(my_fclose(fp), 0);
+
+    fp = my_fopen(temp_filename, "rb");
+    cr_assert_eq(func(0, fp), EOF);
+    cr_assert_eq(my_fclose(fp), 0);
+
+    unlink(temp_filename);
+    free(temp_filename);
+}
+
+Test(my_putc, wine)
+{
+    wine_do_test(my_putc);
+}
+
+Test(my_fputc, wine)
+{
+    wine_do_test(my_fputc);
+}

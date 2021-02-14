@@ -7,6 +7,7 @@
 
 #include "../tests_header.h"
 #include "my/stdlib.h"
+#include "my/string.h"
 #include "my/macros.h"
 #include "my/cpp-like/iterator.h"
 #include <limits.h>
@@ -214,16 +215,27 @@ static const int init_sort_array[1024] = {
     499719603
 };
 
+// Converts -1, 0 or 1 into some random number that should be regarded as the same by qsort
+static int do_valid_random_same(int result)
+{
+    if (result < 0)
+        return -((random() % (INT_MAX - 1)) + 1);
+    if (result > 0)
+        return ((random() % (INT_MAX - 1)) + 1);
+    return 0;
+}
+
 static int do_compare_int(const void *a, const void *b)
 {
     int a_int = *(const int *)a;
     int b_int = *(const int *)b;
 
-    if (a_int < b_int)
-        return -((rand() % (INT_MAX - 1)) + 1);
-    if (a_int > b_int)
-        return ((rand() % (INT_MAX - 1)) + 1);
-    return 0;
+    return do_valid_random_same(a_int < b_int ? -1 : a_int > b_int ? 1 : 0);
+}
+
+static int do_compare_str(const void *a, const void *b)
+{
+    return do_valid_random_same(my_strcmp((const char *)a, (const char *)b));
 }
 
 #ifdef IS_QSORT_R
@@ -243,11 +255,63 @@ static int sort_helper_int(const void *a, const void *b)
 
 #endif
 
+#ifdef IS_QSORT_R
+
+static int sort_helper_c_str(const void *a, const void *b, void *data)
+{
+    cr_assert_eq(*(int *)data, 42);
+    return do_compare_str(a, b);
+}
+
+#else
+
+static int sort_helper_c_str(const void *a, const void *b)
+{
+    return do_compare_str(a, b);
+}
+
+#endif
+
+#ifdef IS_QSORT_R
+
+static int sort_helper_c_str_ptr(const void *a, const void *b, void *data)
+{
+    cr_assert_eq(*(int *)data, 42);
+    return do_compare_str(*(char **)a, *(char **)b);
+}
+
+#else
+
+static int sort_helper_c_str_ptr(const void *a, const void *b)
+{
+    return do_compare_str(*(char **)a, *(char **)b);
+}
+
+#endif
+
+#ifdef IS_QSORT_R
+
+static int sort_helper_uchar(const void *a, const void *b, void *data)
+{
+    cr_assert_eq(*(int *)data, 42);
+    return (*(unsigned char *)a - *(unsigned char *)b);
+}
+
+#else
+
+static int sort_helper_uchar(const void *a, const void *b)
+{
+    return (*(unsigned char *)a - *(unsigned char *)b);
+}
+
+#endif
+
 Test(MY_QSORT_NAME, freebsd)
 {
+    int data = 42;
+
     int test_array[MY_ARRAY_SIZE(init_sort_array)];
     int reference_array[MY_ARRAY_SIZE(init_sort_array)];
-    int data = 42;
 
     for (size_t j = 0; j < MY_ARRAY_SIZE(init_sort_array); ++j) {
         for (size_t i = 0; i < j; ++i)
@@ -260,4 +324,94 @@ Test(MY_QSORT_NAME, freebsd)
         for (size_t i = 0; i < j; ++i)
             cr_assert_eq(test_array[i], reference_array[i]);
     }
+}
+
+Test(MY_QSORT_NAME, bionic)
+{
+    int data = 42;
+
+    char entries[3][16];
+    my_strcpy(entries[0], "charlie");
+    my_strcpy(entries[1], "bravo");
+    my_strcpy(entries[2], "alpha");
+
+    MY_QSORT(entries, 3, sizeof(entries[0]), sort_helper_c_str, &data);
+    cr_assert_str_eq(entries[0], "alpha");
+    cr_assert_str_eq(entries[1], "bravo");
+    cr_assert_str_eq(entries[2], "charlie");
+
+    MY_QSORT(entries, 3, sizeof(entries[0]), sort_helper_c_str, &data);
+    cr_assert_str_eq(entries[0], "alpha");
+    cr_assert_str_eq(entries[1], "bravo");
+    cr_assert_str_eq(entries[2], "charlie");
+}
+
+Test(MY_QSORT_NAME, plauger)
+{
+    int data = 42;
+
+    char buffer[] = "mishmash";
+    MY_QSORT(buffer, sizeof(buffer), 1, sort_helper_uchar, &data);
+    cr_assert_eq(my_memcmp(buffer, "\0ahhimmss", sizeof(buffer)), 0);
+}
+
+Test(MY_QSORT_NAME, reactos)
+{
+    int data = 42;
+
+    int array[5] = {23, 42, 8, 4, 16};
+    unsigned char uchar_array[5] = {42, 23, 4, 8, 16};
+    const char *c_str_array[7] = {
+        "Hello",
+        "Wine",
+        "World",
+        "!",
+        "Hopefully",
+        "Sorted",
+        "."
+    };
+
+    MY_QSORT(array, 0, sizeof(int), sort_helper_int, &data);
+    cr_assert_eq(array[0], 23);
+    cr_assert_eq(array[1], 42);
+    cr_assert_eq(array[2], 8);
+    cr_assert_eq(array[3], 4);
+    cr_assert_eq(array[4], 16);
+
+    MY_QSORT(array, 1, sizeof(int), sort_helper_int, &data);
+    cr_assert_eq(array[0], 23);
+    cr_assert_eq(array[1], 42);
+    cr_assert_eq(array[2], 8);
+    cr_assert_eq(array[3], 4);
+    cr_assert_eq(array[4], 16);
+
+    MY_QSORT(array, 5, 0, sort_helper_int, &data);
+    cr_assert_eq(array[0], 23);
+    cr_assert_eq(array[1], 42);
+    cr_assert_eq(array[2], 8);
+    cr_assert_eq(array[3], 4);
+    cr_assert_eq(array[4], 16);
+
+    MY_QSORT(array, 5, sizeof(int), sort_helper_int, &data);
+    cr_assert_eq(array[0], 4);
+    cr_assert_eq(array[1], 8);
+    cr_assert_eq(array[2], 16);
+    cr_assert_eq(array[3], 23);
+    cr_assert_eq(array[4], 42);
+
+    MY_QSORT(uchar_array, 5, sizeof(unsigned char), sort_helper_uchar, &data);
+    cr_assert_eq(uchar_array[0], 4);
+    cr_assert_eq(uchar_array[1], 8);
+    cr_assert_eq(uchar_array[2], 16);
+    cr_assert_eq(uchar_array[3], 23);
+    cr_assert_eq(uchar_array[4], 42);
+
+    MY_QSORT(c_str_array, 7, sizeof(c_str_array[0]), sort_helper_c_str_ptr, &data);
+    cr_assert_str_eq(c_str_array[0], "!");
+    cr_assert_str_eq(c_str_array[1], ".");
+    cr_assert_str_eq(c_str_array[2], "Hello");
+    cr_assert_str_eq(c_str_array[3], "Hopefully");
+    cr_assert_str_eq(c_str_array[4], "Sorted");
+    cr_assert_str_eq(c_str_array[5], "Wine");
+    cr_assert_str_eq(c_str_array[6], "World");
 }

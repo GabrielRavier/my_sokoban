@@ -9,7 +9,7 @@
 #include "my/stdlib.h"
 #include "my/string.h"
 
-Test(my_cleanenv, bionic)
+Test(my_clearenv, bionic)
 {
     extern char **environ;
 

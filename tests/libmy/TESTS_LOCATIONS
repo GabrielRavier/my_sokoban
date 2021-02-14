@@ -66,18 +66,18 @@ remove, rename, fopen, tmpfile, perror, putchar, puts
 stdlib:
 
 Add tests from bionic for drand48, erand48, lcong48, lrand48, random, rand,
-mrand48, jrand48, mrand48, posix_memalign, aligned_alloc, realpath, qsort,
-mkostemp, mkstemp, system, atof, strtod, strtof, strtold, quick_exit, _Exit,
-getpt, grantpt, ptsname_r, posix_openpt, ttyname, ttyname_r, unlockpt,
-getsubopt, mblen, strtol, strtoll, strtoul, strtoull, strtoimax, strtoumax,
-atoi, atol, labs, llabs, getloadavg, getprogname, setprogname
+mrand48, jrand48, mrand48, posix_memalign, aligned_alloc, realpath, mkostemp,
+mkstemp, system, atof, strtod, strtof, strtold, quick_exit, _Exit, getpt,
+grantpt, ptsname_r, posix_openpt, ttyname, ttyname_r, unlockpt, getsubopt,
+mblen, strtol, strtoll, strtoul, strtoull, strtoimax, strtoumax, atoi, atol,
+labs, llabs, getloadavg, getprogname, setprogname
 
 Add tests from serenity for mktemp, mkdtemp, mkstemp
 Add tests from skiboot for atoi, atol, strtol, strtoul, labs
 
-Add tests from plauger for bsearch, qsort, malloc, calloc, realloc, system,
-labs, div, ldiv, rand, atof, atol, strtod, strtol, strtoul, mbstowcs, wcstombs,
-mblen, wctomb, mbtowc, wctomb, signal, abort, atexit
+Add tests from plauger for bsearch, malloc, calloc, realloc, system, labs, div,
+ldiv, rand, atof, atol, strtod, strtol, strtoul, mbstowcs, wcstombs, mblen,
+wctomb, mbtowc, wctomb, signal, abort, atexit
 
 string
 
@@ -127,10 +127,35 @@ Add tests from Defora for ffs
 unistd:
 
 Add tests from bionic for brk, sbrk, truncate, close, stat, ftruncate, pause,
-read, syscall, alarm, _exit, setenv, unsetenv, unsetenv, putenv, fdatasync,
-fsync, syncfs, vfork, getpid, gettid, clone, abort, sethostname, gethostname,
-pathconf, sysconf, dup2, open, dup3, dup, lseek, lockf, getdomainname,
-setdomainname, execve, execl, execle, execv, execlp, execvp, execvpe, fexecve,
-getlogin, getlogin_r, swab, usleep, sleep
+read, syscall, alarm, _exit, setenv, unsetenv, fdatasync, fsync, syncfs, vfork,
+getpid, gettid, clone, abort, sethostname, gethostname, pathconf, sysconf, dup2,
+open, dup3, dup, lseek, lockf, getdomainname, setdomainname, execve, execl,
+execle, execv, execlp, execvp, execvpe, fexecve, getlogin, getlogin_r, swab,
+usleep, sleep
 
 Add tests from Defora for chroot, error, fork, getgroups, gethostname, sleep
+
+wine/msvcr100: fopen, fclose, atoi, setlocale
+wine/msvcr110: setlocale
+
+wine/msvcr120: setlocale, localeconv, free, strtof, wcstof, remainder, wctype,
+fegetenv, fesetenv, fegetround, fesetround, vsscanf, creal, nexttoward,
+nexttowardf, nexttowardl, wctrans, towctrans
+
+wine/msvcr90: malloc, free, srand, strtok, wcstok, strerror, tmpnam, asctime,
+ecvt, localtime, vswprintf, fopen, fclose, unlink, fileno, feof, ferror,
+mbstowcs, wcstombs, setlocale, swscanf
+
+wine/msvcrt: putenv, getenv, fopen, ftell, fgetpos, fclose, unlink, fdopen,
+lseek, fread, setvbuf, fgets, feof, fgets, rewind, fsetpos, ungetc, fgetc,
+fgetws, fseek, getw, fputs, fwrite, getc, fread, tempnam, fgetc, fflush, fgetwc,
+fputwc, tmpnam, fcloseall, open, fstat, stat, dup2, pipe, mkdir, write, close,
+rmdir, dup, mktemp, calloc, malloc, realloc, setlocale, atan, exp, tanh, popen,
+pclose, srand, sprintf, vswprintf, swprintf, wcsstr, wcslen, wcscmp, snprintf,
+fprintf, ftell, fwprintf, fscanf, fcvt, ecvt, vswprintf, vsprintf, sscanf,
+swscanf, signal, raise, memcpy, memcmp, strcmp, strncmp, strcpy, strnlem,
+mbsrtowcs, wcsrtombs, wctob, btowc, wcrtomb, tolower, towlower, towupper,
+mbrlen, mbrtowc, memset, swab, strcspn, strcmp, strdup, strtok, strtol, strnlen,
+strtod, mbstowcs, wcstombs, gcvt, wctob, btowc, wctomb, tolower, wcstol, atoi,
+atol, atof, strncpy, strxfrm, strstr, iswdigit, wcscmp, gmtime, strftime,
+wcsftime, asctime, time, localtime, ctime, mktime, tzset

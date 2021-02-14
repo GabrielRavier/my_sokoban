@@ -66,16 +66,10 @@ static void cloudlibc_do_random_test(MY_FILE *fp)
 
 Test(my_stdio, cloudlibc_random)
 {
-    char template[] = "/tmp/libmy-cloudlibc-random-test.XXXXXXX";
-    mkdtemp(template);
-
-    char *filename;
-    cr_assert_geq(my_asprintf(&filename, "%s/cloudlibc-random", template), 0);
+    char *filename = tmpnam(NULL);
 
     for (size_t i = 0; i < 100; ++i) {
         MY_FILE *fp = my_fopen(filename, "w+");
         cloudlibc_do_random_test(fp);
     }
-
-    my_free(filename);
 }

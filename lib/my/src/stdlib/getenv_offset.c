@@ -17,7 +17,7 @@ char *my_getenv_offset(const char *name, size_t *offset)
     size_t name_len = my_strlen(name);
     char *const *environ_it = environ;
 
-    if (environ == NULL)
+    if (environ == NULL || name_len == 0)
         return (NULL);
     for (; *environ_it != NULL; ++environ_it) {
         if (my_strncmp(*environ_it, name, name_len) == 0 &&

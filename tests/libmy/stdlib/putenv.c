@@ -42,3 +42,18 @@ Test(my_putenv, bionic)
 
     cr_assert_eq(my_unsetenv("a"), 0);
 }
+
+Test(my_putenv, wine)
+{
+    cr_assert_eq(putenv("cat="), 0);
+    cr_assert_str_eq(my_getenv("cat"), "");
+    cr_assert_eq(putenv("cat=dog"), 0);
+    cr_assert_str_eq(my_getenv("cat"), "dog");
+    cr_assert_eq(putenv("="), 0);
+    cr_assert_eq(my_getenv(""), NULL);
+    cr_assert_eq(putenv("=dog"), 0);
+    cr_assert_eq(my_getenv(""), NULL);
+    cr_assert_eq(putenv("LIBRARY_PATH=C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/;/mingw/lib/gcc/mingw32/3.4.2/;/usr/lib/gcc/mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../../mingw32/lib/mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../../mingw32/lib/;/mingw/mingw32/lib/mingw32/3.4.2/;/mingw/mingw32/lib/;/mingw/lib/mingw32/3.4.2/;/mingw/lib/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../;/mingw/lib/mingw32/3.4.2/;/mingw/lib/;/lib/mingw32/3.4.2/;/lib/;/usr/lib/mingw32/3.4.2/;/usr/lib/"), 0);
+    cr_assert_str_eq(my_getenv("LIBRARY_PATH"), "C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/;/mingw/lib/gcc/mingw32/3.4.2/;/usr/lib/gcc/mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../../mingw32/lib/mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../../mingw32/lib/;/mingw/mingw32/lib/mingw32/3.4.2/;/mingw/mingw32/lib/;/mingw/lib/mingw32/3.4.2/;/mingw/lib/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../mingw32/3.4.2/;C:/Program Files/GLBasic/Compiler/platform/Win32/Bin/../lib/gcc/mingw32/3.4.2/../../../;/mingw/lib/mingw32/3.4.2/;/mingw/lib/;/lib/mingw32/3.4.2/;/lib/;/usr/lib/mingw32/3.4.2/;/usr/lib/");
+    cr_assert_eq(my_getenv("nonexistent"), getenv("nonexistent"));
+}

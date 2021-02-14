@@ -7,30 +7,43 @@
 
 #include "../tests_header.h"
 #include "my/stdlib.h"
+#include "my/cpp-like/iterator.h"
+#include "my/string.h"
+#include "my/inttypes.h"
+#include <stdio.h>
 #include <errno.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <limits.h>
+#include <stdbool.h>
 
 static void do_one_test_with_endptr_choice(const char *num, int base,
-    bool endptr_unchanged)
+    bool end_num_ptr_unchanged)
 {
-    char *end_num_ptr_us = (char *)0xDEADBEEF;
-    char *end_num_ptr_libc;
+    char *end_num_ptr_us = (char *)0xDEADBEEF, *end_num_ptr_libc;
+    intmax_t our_result, libc_result;
+    int our_errno, libc_errno;
 
-    errno = -213908;
-
-    long our_result = my_strtol(num, &end_num_ptr_us, base);
-    int our_errno = errno;
-
-    errno = -213908;
-
-    long libc_result = strtol(num, &end_num_ptr_libc, base);
-    int libc_errno = errno;
-
-    cr_assert_eq(our_errno, libc_errno);
-    cr_assert_eq(our_result, libc_result);
-    if (endptr_unchanged)
-        cr_assert_eq(end_num_ptr_us, (char *)0xDEADBEEF);
-    else
+#define DO_ONE_STRTOL(our_func, libc_func) \
+    errno = 0xDEADBEEF; \
+    our_result = our_func(num, &end_num_ptr_us, base); \
+    our_errno = errno; \
+    errno = 0xDEADBEEF; \
+    libc_result = libc_func(num, &end_num_ptr_libc, base); \
+    libc_errno = errno; \
+    cr_assert_eq(our_errno, libc_errno); \
+    cr_assert_eq(our_result, libc_result); \
+    if (end_num_ptr_unchanged) \
+        cr_assert_eq(end_num_ptr_us, (char *)0xDEADBEEF); \
+    else \
         cr_assert_eq(end_num_ptr_us, end_num_ptr_libc);
+
+    DO_ONE_STRTOL(my_strtol, strtol);
+    DO_ONE_STRTOL(my_strtoll, strtoll);
+    DO_ONE_STRTOL(my_strtoimax, strtoimax);
+    DO_ONE_STRTOL(my_strtoul, strtoul);
+    DO_ONE_STRTOL(my_strtoull, strtoull);
+    DO_ONE_STRTOL(my_strtoumax, strtoumax);
 }
 
 static void do_one_test(const char *num, int base)
@@ -136,4 +149,31 @@ Test(my_strtol, netbsd_sign)
     do_one_test("-  3", 0);
     do_one_test("+33.", 0);
     do_one_test("30x0", 0);
+}
+
+Test(my_strtol, bionic)
+{
+    do_one_test_with_endptr_choice("123", -1, true);
+    do_one_test_with_endptr_choice("123", 1, true);
+    do_one_test_with_endptr_choice("123", 37, true);
+    do_one_test("-123", 10);
+    do_one_test("+123", 10);
+    do_one_test("0xy", 16);
+    do_one_test("0xy", 0);
+    do_one_test("0xab", 0);
+    do_one_test("0Xab", 0);
+    do_one_test("0xAB", 0);
+    do_one_test("0XAB", 0);
+    do_one_test("0xAb", 0);
+    do_one_test("0XAb", 0);
+    do_one_test("0666", 0);
+
+    intmax_t minimums[] = {SCHAR_MIN, SHRT_MIN, INT_MIN, LONG_MIN, LLONG_MIN, INTMAX_MIN};
+    for (size_t i = 0; i < MY_ARRAY_SIZE(minimums); ++i) {
+        char buffer[300];
+        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jd", minimums[i]), 0);
+        do_one_test(buffer, 0);
+        ++buffer[my_strlen(buffer) - 1];
+        do_one_test(buffer, 0);
+    }
 }

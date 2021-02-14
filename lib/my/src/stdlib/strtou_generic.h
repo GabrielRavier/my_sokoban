@@ -18,23 +18,18 @@ static TYPE finish(const char *num_ptr, char **end_num_ptr, int base,
     bool is_negative)
 {
     bool has_overflowed = false;
-    TYPE result;
+    TYPE result = digit(*num_ptr++);
 
-    for (result = digit(*num_ptr++); my_isalnum(*num_ptr) && digit(*num_ptr) <
-        base;) {
-        if (result > (TYPE_MAX / (unsigned)base))
-            has_overflowed = true;
+    for (; my_isalnum(*num_ptr) && digit(*num_ptr) < base; ++num_ptr) {
+        has_overflowed = has_overflowed || result > (TYPE_MAX / (unsigned)base);
         result = result * base + digit(*num_ptr);
-        if (result < digit(*num_ptr++))
-            has_overflowed = true;
+        has_overflowed = has_overflowed || (result < digit(*num_ptr));
     }
     if (end_num_ptr)
         *end_num_ptr = (char *)num_ptr;
-    if (has_overflowed) {
+    if (has_overflowed)
         errno = ERANGE;
-        return (TYPE_MAX);
-    } else
-        return (is_negative ? -result : result);
+    return (has_overflowed ? TYPE_MAX : is_negative ? -result : result);
 }
 
 static TYPE INTERNAL_FUNC_NAME(const char *num_ptr, char **end_num_ptr,

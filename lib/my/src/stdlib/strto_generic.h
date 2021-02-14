@@ -9,135 +9,56 @@
 
 #include "my/ctype.h"
 #include <errno.h>
-#include <limits.h>
 #include <stdbool.h>
 
-#ifndef TYPE
-    #define TYPE long
-    #error "This is only here to make it easier to edit this!"
-#endif
-
-#ifndef TYPE_UNSIGNED
-    #define TYPE_UNSIGNED unsigned long
-    #error "This is only here to make it easier to edit this!"
-#endif
-
-#ifndef TYPE_MIN
-    #define TYPE_MIN LONG_MIN
-    #error "This is only here to make it easier to edit this!"
-#endif
-
-#ifndef TYPE_MAX
-    #define TYPE_MAX LONG_MAX
-    #error "This is only here to make it easier to edit this!"
-#endif
-
-#ifndef __clang__
-    #pragma GCC diagnostic ignored "-Warith-conversion"
-#endif
-#pragma GCC diagnostic ignored "-Wconversion"
-#pragma GCC diagnostic ignored "-Wcast-qual"
-
-enum strtol_num_type {
-    STRTOL_NUM_TYPE_NONE,
-    STRTOL_NUM_TYPE_NORMAL,
-    STRTOL_NUM_TYPE_INVALID,
-};
-
-struct strtol_parse_state {
-    enum strtol_num_type num_type;
-    const char *num_ptr;
-    char current_character;
-    int base;
-    bool is_negative;
-};
-
-static void do_preparsing(struct strtol_parse_state *state)
+static char digit(char c)
 {
-    do {
-        state->current_character = *state->num_ptr++;
-    } while (my_isspace(state->current_character));
-    if (state->current_character == '-')
-        state->is_negative = true;
-    if (state->current_character == '-' || state->current_character == '+')
-        state->current_character = *state->num_ptr++;
-    if ((state->base == 0 || state->base == 16) &&
-        state->current_character == '0' &&
-        (my_tolower(*state->num_ptr) == 'x')) {
-        ++state->num_ptr;
-        state->current_character = *state->num_ptr++;
-        state->base = 16;
+    return (c <= '9' ? c - '0' : my_tolower(c) + 10 - 'a');
+}
+
+static TYPE finish(const char *num_ptr, char **end_num_ptr, int base,
+    bool is_negative)
+{
+    bool has_overflowed = false;
+    TYPE_UNSIGNED result = digit(*num_ptr++);
+    TYPE_UNSIGNED threshold = is_negative ? -(TYPE_UNSIGNED)TYPE_MIN : TYPE_MAX;
+
+    while (my_isalnum(*num_ptr) && digit(*num_ptr) < base) {
+        has_overflowed = has_overflowed || (result > threshold / base);
+        result *= base;
+        has_overflowed = has_overflowed ||
+            (result > threshold - digit(*num_ptr));
+        result += digit(*num_ptr++);
     }
-    if (state->base == 0)
-        state->base = (state->current_character == '0') ? 8 : 10;
-}
-
-static bool do_base_char(struct strtol_parse_state *state)
-{
-    if (my_isdigit(state->current_character))
-        state->current_character -= '0';
-    else if (my_isalpha(state->current_character))
-        state->current_character -=
-            my_isupper(state->current_character) ? 'A' - 10 : 'a' - 10;
-    else
-        return (false);
-    return (state->current_character < state->base);
-}
-
-static bool would_overflow(TYPE_UNSIGNED current_result,
-    struct strtol_parse_state *state, TYPE_UNSIGNED min_val_without_last_digit,
-    int min_val_last_digit)
-{
-    return (current_result > min_val_without_last_digit ||
-        (current_result == min_val_without_last_digit &&
-            state->current_character > min_val_last_digit));
-}
-
-static TYPE_UNSIGNED do_parsing_loop(struct strtol_parse_state *state)
-{
-    TYPE_UNSIGNED result = 0;
-    TYPE_UNSIGNED min_val = state->is_negative ? -(TYPE_UNSIGNED)TYPE_MIN :
-        TYPE_MAX;
-    const int min_val_last_digit = (int)(min_val % (TYPE_UNSIGNED)state->base);
-
-    min_val /= (TYPE_UNSIGNED)state->base;
-    while (1) {
-        if (!do_base_char(state))
-            break;
-        if (state->num_type == STRTOL_NUM_TYPE_INVALID ||
-            would_overflow(result, state, min_val, min_val_last_digit))
-            state->num_type = STRTOL_NUM_TYPE_INVALID;
-        else {
-            state->num_type = STRTOL_NUM_TYPE_NORMAL;
-            result *= (TYPE_UNSIGNED)state->base;
-            result += (TYPE_UNSIGNED)state->current_character;
-        }
-        state->current_character = *state->num_ptr++;
-    }
-    return (result);
+    if (end_num_ptr)
+        *end_num_ptr = (char *)num_ptr;
+    if (has_overflowed)
+        errno = ERANGE;
+    return (has_overflowed ? (is_negative ? TYPE_MIN : TYPE_MAX) :
+        (is_negative ? -result : result));
 }
 
 static TYPE INTERNAL_FUNC_NAME(const char *num_ptr, char **end_num_ptr,
     int base)
 {
-    struct strtol_parse_state state = {STRTOL_NUM_TYPE_NONE, num_ptr, 0, base,
-        false};
-    TYPE_UNSIGNED result;
+    bool is_negative = false;
 
-    if (state.base < 0 || state.base == 1 || state.base > 36) {
+    if (base == 1 || (unsigned)base > 36) {
         errno = EINVAL;
         return (0);
     }
-    do_preparsing(&state);
-    result = do_parsing_loop(&state);
-    if (state.num_type == STRTOL_NUM_TYPE_INVALID) {
-        result = state.is_negative ? (TYPE_UNSIGNED)TYPE_MIN : TYPE_MAX;
-        errno = ERANGE;
-    } else if (state.is_negative)
-        result = -result;
     if (end_num_ptr)
-        *end_num_ptr = (state.num_type != STRTOL_NUM_TYPE_NONE) ?
-            (char *)(state.num_ptr - 1) : (char *)num_ptr;
-    return (TYPE)(result);
+        *end_num_ptr = (char *)num_ptr;
+    while (my_isspace(*num_ptr))
+        ++num_ptr;
+    if (*num_ptr == '-' || *num_ptr == '+')
+        is_negative = (*num_ptr++ == '-');
+    if (base == 0)
+        base = (*num_ptr != '0') ? 10 : my_tolower(num_ptr[1]) == 'x' ? 16 : 8;
+    if (!my_isalnum(*num_ptr) || digit(*num_ptr) >= base)
+        return (0);
+    if (base == 16 && *num_ptr == '0' && my_tolower(num_ptr[1]) == 'x' &&
+        my_isxdigit(num_ptr[2]))
+        num_ptr += 2;
+    return (finish(num_ptr, end_num_ptr, base, is_negative));
 }
-

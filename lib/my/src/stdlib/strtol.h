@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <limits.h>
+
 #define TYPE long
 #define TYPE_UNSIGNED unsigned long
 #define TYPE_MIN LONG_MIN

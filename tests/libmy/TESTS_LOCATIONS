@@ -92,9 +92,9 @@ Add tests from linux for strchr
 Add tests from littlekernel for memcpy, memset
 Add tests from osv for strxfrm, strxfrm_l, strcoll, strsignal
 
-Add tests from reactos for atoi, atol, wcschr, wcsrchr, qsort, bsearch,
-memcpy, memcmp, strcpy, strnlen, wcsrtombs, wctob, wcrtomb, tolower,
-towlower, towupper, mbrlen, mbrtowc, mbsrtowcs
+Add tests from reactos for atoi, atol, wcschr, wcsrchr, bsearch, memcpy, memcmp,
+strcpy, strnlen, wcsrtombs, wctob, wcrtomb, tolower, towlower, towupper, mbrlen,
+mbrtowc, mbsrtowcs
 
 Add tests from bionic for strerror, strerror_l, strsignal, strcat, strcpy,
 strdup, stpcpy, strncat, strchr, strchrnul, strcmp, strlcat, strlcpy,
@@ -127,11 +127,11 @@ Add tests from Defora for ffs
 unistd:
 
 Add tests from bionic for brk, sbrk, truncate, close, stat, ftruncate, pause,
-read, syscall, alarm, _exit, setenv, unsetenv, fdatasync, fsync, syncfs, vfork,
-getpid, gettid, clone, abort, sethostname, gethostname, pathconf, sysconf, dup2,
-open, dup3, dup, lseek, lockf, getdomainname, setdomainname, execve, execl,
-execle, execv, execlp, execvp, execvpe, fexecve, getlogin, getlogin_r, swab,
-usleep, sleep
+read, syscall, alarm, _exit, unsetenv, fdatasync, fsync, syncfs, vfork, getpid,
+gettid, clone, abort, sethostname, gethostname, pathconf, sysconf, dup2, open,
+dup3, dup, lseek, lockf, getdomainname, setdomainname, execve, execl, execle,
+execv, execlp, execvp, execvpe, fexecve, getlogin, getlogin_r, swab, usleep,
+sleep
 
 Add tests from Defora for chroot, error, fork, getgroups, gethostname, sleep
 

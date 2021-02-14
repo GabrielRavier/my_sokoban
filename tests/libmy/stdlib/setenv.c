@@ -108,3 +108,54 @@ Test(my_setenv, klibc)
     cr_assert_eq(my_getenv("SETENV"), NULL);
     cr_assert_eq(my_getenv("NEWENV"), NULL);
 }
+
+Test(my_setenv, bionic_einval)
+{
+    errno = 0;
+    cr_assert_eq(my_setenv(NULL, "value", 0), -1);
+    cr_assert_eq(errno, EINVAL);
+
+    errno = 0;
+    cr_assert_eq(my_setenv(NULL, "value", 1), -1);
+    cr_assert_eq(errno, EINVAL);
+
+    errno = 0;
+    cr_assert_eq(my_setenv("", "value", 0), -1);
+    cr_assert_eq(errno, EINVAL);
+
+    errno = 0;
+    cr_assert_eq(my_setenv("", "value", 1), -1);
+    cr_assert_eq(errno, EINVAL);
+
+    errno = 0;
+    cr_assert_eq(my_setenv("a=b", "value", 0), -1);
+    cr_assert_eq(errno, EINVAL);
+
+    errno = 0;
+    cr_assert_eq(my_setenv("a=b", "value", 1), -1);
+    cr_assert_eq(errno, EINVAL);
+}
+
+Test(my_setenv, bionic)
+{
+    cr_assert_eq(my_unsetenv("test-variable"), 0);
+
+    char a[] = "a";
+    char b[] = "b";
+    char c[] = "c";
+
+    cr_assert_eq(my_setenv("test-variable", a, 0), 0);
+    cr_assert_str_eq(my_getenv("test-variable"), a);
+
+    cr_assert_eq(my_setenv("test-variable", b, 0), 0);
+    cr_assert_str_eq(my_getenv("test-variable"), a);
+
+    cr_assert_eq(my_setenv("test-variable", c, 1), 0);
+    cr_assert_str_eq(my_getenv("test-variable"), c);
+
+    cr_assert_str_eq(a, "a");
+    cr_assert_str_eq(b, "b");
+    cr_assert_str_eq(c, "c");
+
+    cr_assert_eq(my_unsetenv("test-variable"), 0);
+}

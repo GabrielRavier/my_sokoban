@@ -12,7 +12,8 @@
 
 static void do_one_test(int x)
 {
-    cr_assert_eq(my_abs(x), abs(x));
+    if (x != INT_MIN)
+        cr_assert_eq(my_abs(x), abs(x));
 }
 
 // Stuff from freebsd, llvm, gcc, cloudlibc, qemu, z88dk, plauger
@@ -48,5 +49,14 @@ Test(my_abs, array)
     for (size_t i = 0; i < MY_ARRAY_SIZE(TESTS_INTS); ++i) {
         do_one_test(TESTS_INTS[i]);
         do_one_test(-TESTS_INTS[i]);
+    }
+}
+
+Test(my_abs, random)
+{
+    for (size_t i = 0; i < 1000000; ++i) {
+        int random_num = random();
+        do_one_test(random_num);
+        do_one_test(-random_num);
     }
 }

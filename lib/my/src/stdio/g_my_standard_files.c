@@ -11,7 +11,7 @@
 
 // This is to make sure cleanup is referenced whenever someone uses MY_FILE
 // interfaces
-void (*g_my_internal_file_standard_files_cleanup_reference)(void) =
+void *g_my_internal_file_standard_files_cleanup_reference =
     &my_internal_file_cleanup;
 
 // stdin, stdout and stderr have special info for them at program initialization

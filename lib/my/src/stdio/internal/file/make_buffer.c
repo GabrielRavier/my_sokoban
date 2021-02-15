@@ -26,7 +26,7 @@ static void finish(MY_FILE *fp, size_t buffer_size, bool could_be_tty,
     fp->flags |= MY_FILE_FLAG_BUFFER_MALLOCED;
     fp->buffer.size = buffer_size;
     fp->buffer_ptr = fp->buffer.base;
-    if ((could_be_tty && my_isatty(fp->fd)) || (fp == my_stdout &&
+    if ((could_be_tty && my_isatty(my_fileno(fp))) || (fp == my_stdout &&
         errno == ENOSYS))
         fp->flags |= MY_FILE_FLAG_LINE_BUFFERED;
     fp->flags |= buffer_flags;

@@ -19,7 +19,7 @@ int my_internal_file_determine_buffering(MY_FILE *fp, size_t *buffer_size,
 {
     struct stat stat_buffer;
 
-    if (fp->fd < 0 || my_fstat(fp->fd, &stat_buffer) < 0) {
+    if (my_fileno(fp) < 0 || my_fstat(my_fileno(fp), &stat_buffer) < 0) {
         *could_be_tty = (fp == my_stdout && errno == ENOSYS);
         *buffer_size = BUFSIZ;
         return (MY_FILE_FLAG_NO_FSEEK_OPT);

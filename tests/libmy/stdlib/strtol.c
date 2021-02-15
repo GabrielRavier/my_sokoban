@@ -168,12 +168,54 @@ Test(my_strtol, bionic)
     do_one_test("0XAb", 0);
     do_one_test("0666", 0);
 
-    intmax_t minimums[] = {SCHAR_MIN, SHRT_MIN, INT_MIN, LONG_MIN, LLONG_MIN, INTMAX_MIN};
+    intmax_t minimums[] = {
+        SCHAR_MIN, SHRT_MIN, INT_MIN, LONG_MIN, LLONG_MIN, INTMAX_MIN,
+        SCHAR_MAX, SHRT_MAX, INT_MAX, LONG_MAX, LLONG_MAX, INTMAX_MAX,
+        UCHAR_MAX, USHRT_MAX, UINT_MAX, ULONG_MAX, ULLONG_MAX, UINTMAX_MAX,
+        0, 1, -1, 2, -2
+     };
     for (size_t i = 0; i < MY_ARRAY_SIZE(minimums); ++i) {
         char buffer[300];
         cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jd", minimums[i]), 0);
         do_one_test(buffer, 0);
         ++buffer[my_strlen(buffer) - 1];
         do_one_test(buffer, 0);
+        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jx", minimums[i]), 0);
+        do_one_test(buffer, 0);
+        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jX", minimums[i]), 0);
+        do_one_test(buffer, 0);
+        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jo", minimums[i]), 0);
+        do_one_test(buffer, 0);
     }
+
+    do_one_test("2190839021839012389021839123309218390218390128390218390128390218390128390128309128390218390812093812093821abc", 0);
+    do_one_test("-2190839021839012389021839123309218390218390128390218390128390218390128390128309128390218390812093812093821abc", 0);
+}
+
+Test(my_strtol, skiboot)
+{
+    do_one_test("0x800", 0);
+    do_one_test("0x0x800", 0);
+    do_one_test_with_endptr_choice("z", -1, true);
+    do_one_test_with_endptr_choice("11111", 1, true);
+    do_one_test_with_endptr_choice("z", 37, true);
+    do_one_test("z", 36);
+    do_one_test("-Y", 36);
+    do_one_test("42, and stuff.", 10);
+    do_one_test("0", 10);
+    do_one_test("1", 10);
+    do_one_test(" 123456", 10);
+    do_one_test("-72", 10);
+    do_one_test("9999999999", 10);
+    do_one_test("hello!123", 10);
+    do_one_test("42isthemagicnumber", 10);
+    do_one_test(" 123456", 0);
+    do_one_test("Y", 36);
+}
+
+Test(my_strtol, plauger)
+{
+    do_one_test("-a0", 11);
+    do_one_test("54", 4);
+    do_one_test("0xFfg", 16);
 }

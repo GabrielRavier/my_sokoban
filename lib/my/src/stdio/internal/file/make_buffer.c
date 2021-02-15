@@ -14,7 +14,8 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-static void finish(MY_FILE *fp, size_t buffer_size, bool could_be_tty, int buffer_flags)
+static void finish(MY_FILE *fp, size_t buffer_size, bool could_be_tty,
+    int buffer_flags)
 {
     fp->buffer.base = my_malloc(buffer_size);
     if (fp->buffer.base == NULL) {

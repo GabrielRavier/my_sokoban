@@ -21,8 +21,8 @@ _Noreturn static void error_in_assert(void)
 void my_assert_fail(const char *expression, const char *file_name,
     int line_number, const char *function_name)
 {
-    if (my_printf("%s:%d: %s: Assertion '%s' failed.\n",
-        file_name, line_number, function_name, expression) < 0)
+    if (my_printf("%s:%d: %s: Assertion '%s' failed.\n", file_name,
+        line_number, function_name, expression) < 0)
         error_in_assert();
     my_abort();
 }

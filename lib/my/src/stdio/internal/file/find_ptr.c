@@ -15,11 +15,9 @@
 // size is FOPEN_MAX - 3 to account for the first bucket with the standard stdio
 // files)
 static MY_FILE second_bucket_files[FOPEN_MAX - 3];
-static struct my_internal_file_bucket second_bucket = {
-    .next = NULL,
+static struct my_internal_file_bucket second_bucket = { .next = NULL,
     .num_files = FOPEN_MAX - 3,
-    .files = second_bucket_files
-};
+    .files = second_bucket_files };
 
 // This points to the standard files, and the second bucket
 struct my_internal_file_bucket g_my_file_internal_first_bucket = {
@@ -33,7 +31,7 @@ static struct my_internal_file_bucket *make_more_files(void)
 {
     static size_t FILES_PER_ALLOC = 50;
     struct my_internal_file_bucket *result = my_calloc(1, sizeof(*result));
-    
+
     if (result == NULL)
         return (NULL);
     result->files = my_calloc(1, sizeof(*result->files) * FILES_PER_ALLOC);
@@ -62,8 +60,8 @@ static MY_FILE *make_found_file(MY_FILE *fp)
 
 MY_FILE *my_internal_file_find_ptr(void)
 {
-    for (struct my_internal_file_bucket *bucket_it =
-         &g_my_file_internal_first_bucket;; bucket_it = bucket_it->next) {
+    for (struct my_internal_file_bucket * bucket_it =
+        &g_my_file_internal_first_bucket;; bucket_it = bucket_it->next) {
         for (size_t files_it = 0; files_it < bucket_it->num_files; ++files_it)
             if (bucket_it->files[files_it].flags == 0)
                 return (make_found_file(&bucket_it->files[files_it]));

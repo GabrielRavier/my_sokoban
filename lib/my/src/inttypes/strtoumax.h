@@ -14,4 +14,3 @@
 #define INTERNAL_FUNC_NAME my_strtoumax_internal
 
 #include "../stdlib/strtou_generic.h"
-

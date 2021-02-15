@@ -74,9 +74,9 @@ extern struct my_file_type {
 
 typedef struct my_file_type MY_FILE;
 
-#define my_stdin (&g_my_standard_files[0])
-#define my_stdout (&g_my_standard_files[1])
-#define my_stderr (&g_my_standard_files[2])
+    #define my_stdin (&g_my_standard_files[0])
+    #define my_stdout (&g_my_standard_files[1])
+    #define my_stderr (&g_my_standard_files[2])
 
 #endif
 

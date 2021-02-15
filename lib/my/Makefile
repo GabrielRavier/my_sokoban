@@ -51,7 +51,7 @@ override CFLAGS += -DLIBMY_USE_LIBC_FILE=$(USE_LIBC_FILE) -DLIBMY_HAS_LIBC_ALLOC
 
 .PREVIOUS: obj/%.o
 
-HEADER_FILES := my my/assert my/ctype my/fcntl my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/unistd my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
+HEADER_FILES := my my/assert my/ctype my/fcntl my/features my/getopt my/macros my/math my/my_string my/signal my/stdio my/stdlib my/string my/strings my/sys/stat my/unistd my/cpp-like/algorithm my/cpp-like/iterator my/cpp-like/utility
 HEADER_FILES := $(addprefix ../../include/, $(addsuffix .h, $(HEADER_FILES)))
 
 all: ../libmy.a $(HEADER_FILES)
@@ -152,6 +152,7 @@ tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 
 ../../include/%.h: include/%.h
 	@mkdir --parents ../../include/my/cpp-like
+	@mkdir --parents ../../include/my/sys
 	cp $< $@
 
 obj/%.o: %.s

@@ -26,7 +26,7 @@ BINARY_NAME := my_sokoban
 all: $(BINARY_NAME)
 
 # Sources for this project
-SOURCE_FILES := main
+SOURCE_FILES := main sokoban_from_map_filename filename_to_string sokoban_from_map_string sokoban_from_map
 
 OBJECT_FILES := $(addprefix obj/, $(addsuffix .o, $(SOURCE_FILES)))
 

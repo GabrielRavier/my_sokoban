@@ -9,6 +9,8 @@
 #include "my/internal/stdio.h"
 #include <unistd.h>
 
+#if !LIBMY_USE_LIBC_FILE
+
 // This is to make sure cleanup is referenced whenever someone uses MY_FILE
 // interfaces
 void *g_my_internal_file_standard_files_cleanup_reference =
@@ -37,3 +39,5 @@ MY_FILE g_my_standard_files[3] = {
         .seek = &my_internal_file_normal_seek,
         .close = &my_internal_file_normal_close},
 };
+
+#endif

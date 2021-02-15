@@ -1,0 +1,8 @@
+# Files from libmy
+/include/my/
+/include/my.h
+/lib/libmy.a
+
+# Files from us
+/my_sokoban
+/obj/

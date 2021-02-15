@@ -14,7 +14,7 @@
 
 MY_FILE *my_fopen(const char *filename, const char *mode)
 {
-    return (fopen(filename, modes));
+    return (fopen(filename, mode));
 }
 
 #else

@@ -67,8 +67,12 @@ int my_internal_file_determine_buffering(MY_FILE *fp, size_t *buffer_size,
 // this
 void my_internal_file_cleanup(void);
 
+#if !LIBMY_USE_LIBC_FILE
+
 static inline bool my_internal_file_can_write(MY_FILE *fp)
 {
     return (((fp->flags & MY_FILE_FLAG_WRITE) && fp->buffer.base != NULL) ||
         my_internal_file_setup_write(fp));
 }
+
+#endif

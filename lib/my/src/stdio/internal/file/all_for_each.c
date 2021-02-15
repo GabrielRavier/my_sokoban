@@ -8,6 +8,8 @@
 #include "my/internal/stdio.h"
 #include "my/internal/stdio/bucket.h"
 
+#if !LIBMY_USE_LIBC_FILE
+
 int my_internal_file_all_for_each(int (*func)(MY_FILE *fp))
 {
     int result = 0;
@@ -20,3 +22,5 @@ int my_internal_file_all_for_each(int (*func)(MY_FILE *fp))
                 result |= func(&bucket_it->files[i]);
     return (result);
 }
+
+#endif

@@ -7,6 +7,8 @@
 
 #include "my/internal/stdio.h"
 
+#if !LIBMY_USE_LIBC_FILE
+
 int my_internal_file_flush_skip_non_write(MY_FILE *fp)
 {
     const unsigned char *base_it = fp->buffer.base;
@@ -30,3 +32,5 @@ int my_internal_file_flush_skip_non_write(MY_FILE *fp)
     }
     return (0);
 }
+
+#endif

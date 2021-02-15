@@ -26,12 +26,12 @@ BINARY_NAME := my_sokoban
 all: $(BINARY_NAME)
 
 # Sources for this project
-SOURCE_FILES := main sokoban_from_map_filename filename_to_string sokoban_from_map_string sokoban_from_map
+SOURCE_FILES := main sokoban_from_map_filename filename_to_string sokoban_from_map_string sokoban_from_map sokoban_map_get_square
 
 OBJECT_FILES := $(addprefix obj/, $(addsuffix .o, $(SOURCE_FILES)))
 
 $(BINARY_NAME): libmy $(OBJECT_FILES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJECT_FILES) -lmy
+	$(CC) $(LDFLAGS) -o $@ $(OBJECT_FILES) -lmy -lncurses
 
 obj/%.o: src/%.c libmy
 	mkdir --parents obj/shell/do_line/

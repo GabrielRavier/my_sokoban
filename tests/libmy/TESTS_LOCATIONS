@@ -75,16 +75,15 @@ Add tests from serenity for mktemp, mkdtemp, mkstemp
 Add tests from skiboot for atoi, atol, labs
 
 Add tests from plauger for bsearch, malloc, calloc, realloc, system, labs, div,
-ldiv, rand, atof, atol, strtod, strtol, strtoul, mbstowcs, wcstombs, mblen,
-wctomb, mbtowc, wctomb, signal, abort, atexit
+ldiv, rand, atof, atol, strtod, mbstowcs, wcstombs, mblen, wctomb, mbtowc,
+wctomb, signal, abort, atexit
 
 string
 
-Add tests from Escape for atoi, atoll, memset, memchr, memcpy, memcmp,
-memmove, strcpy, strncpy, strtok, strcat, strncat, strcmp, strncmp,
-strcasecmp, strncasecmp, strchr, strrchr, strstr, memmem, strcasestr, strspn,
-strcspn, strpbrk, strlen, strnlen, tolower, toupper, isalnum, strtol,
-strtold, ecvt
+Add tests from Escape for atoi, atoll, memset, memchr, memcpy, memcmp, memmove,
+strcpy, strncpy, strtok, strcat, strncat, strcmp, strncmp, strcasecmp,
+strncasecmp, strchr, strrchr, strstr, memmem, strcasestr, strspn, strcspn,
+strpbrk, strlen, strnlen, tolower, toupper, isalnum, strtold, ecvt
 
 Add tests from KOSmk1 for memcmp
 Add tests from linux for strchr
@@ -158,3 +157,5 @@ memset, swab, strcspn, strcmp, strdup, strtok, strtol, strnlen, strtod,
 mbstowcs, wcstombs, gcvt, wctob, btowc, wctomb, tolower, wcstol, atoi, atol,
 atof, strncpy, strxfrm, strstr, iswdigit, wcscmp, gmtime, strftime, wcsftime,
 asctime, time, localtime, ctime, mktime, tzset
+
+wine/ntdll: atoi, atol, wcstol, wcstoul, towlower, towupper, wcschr, wcsrchr, memchr, qsort, bsearch, tolower, toupper, sscanf, iswctype, iswalpha, iswdigit, iswlower, iswspace, iswxdigit, isalnum, isalpha, iscntrl, isdigit, isgraph, islower, isprint, ispunct, isspace, isupper, isxdigit

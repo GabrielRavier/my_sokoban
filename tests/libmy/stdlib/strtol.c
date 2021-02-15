@@ -219,3 +219,21 @@ Test(my_strtol, plauger)
     do_one_test("54", 4);
     do_one_test("0xFfg", 16);
 }
+
+Test(my_strtol, escape)
+{
+    do_one_test("1234", 10);
+    do_one_test(" \t12", 0);
+    do_one_test("+234", 10);
+    do_one_test("-1234", 10);
+    do_one_test("55", 8);
+    do_one_test("055", 0);
+    do_one_test("AbC", 16);
+    do_one_test("0xaBC", 0);
+    do_one_test("0x8000000000000000", 16);
+    do_one_test("0x80000000", 16);
+    do_one_test("aiz", 36);
+    do_one_test("01101", 2);
+    do_one_test("0", 7);
+    do_one_test("-1", 7);
+}

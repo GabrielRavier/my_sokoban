@@ -159,7 +159,7 @@ atof, strncpy, strxfrm, strstr, iswdigit, wcscmp, gmtime, strftime, wcsftime,
 asctime, time, localtime, ctime, mktime, tzset
 
 wine/ntdll: atoi, atol, wcstol, wcstoul, towlower, towupper, wcschr, wcsrchr,
-memchr, qsort, bsearch, tolower, toupper, sscanf, iswctype, iswalpha, iswdigit,
+memchr, bsearch, tolower, toupper, sscanf, iswctype, iswalpha, iswdigit,
 iswlower, iswspace, iswxdigit, isalnum, isalpha, iscntrl, isdigit, isgraph,
 islower, isprint, ispunct, isspace, isupper, isxdigit
 

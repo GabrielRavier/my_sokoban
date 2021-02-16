@@ -30,7 +30,7 @@ static bool validate_map_string(struct my_string *map_string)
         my_string_append_char(map_string, '\n');
     return (!(my_strlen(map_string->string) != map_string->length || my_strspn(
         map_string->string, " \n#XOP") != map_string->length ||
-        count_in_my_string(map_string, 'P') != 1 ||  count_in_my_string(
+        count_in_my_string(map_string, 'P') != 1 || count_in_my_string(
         map_string, 'O') != count_in_my_string(map_string, 'X') ||
         count_in_my_string(map_string, 'O') == 0) ||
         map_string->string[map_string->length - 1] != '\n');

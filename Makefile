@@ -26,7 +26,7 @@ BINARY_NAME := my_sokoban
 all: $(BINARY_NAME)
 
 # Sources for this project
-SOURCE_FILES := main sokoban_from_map_filename filename_to_string sokoban_from_map_string sokoban_from_map sokoban_map_get_square
+SOURCE_FILES := main sokoban/from_map_filename filename_to_string sokoban/from_map_string sokoban/from_map sokoban/map/get_square sokoban/map/copy sokoban/map/move_square sokoban/from_map_do_print sokoban/from_map_do_key
 
 OBJECT_FILES := $(addprefix obj/, $(addsuffix .o, $(SOURCE_FILES)))
 
@@ -34,8 +34,7 @@ $(BINARY_NAME): libmy $(OBJECT_FILES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJECT_FILES) -lmy -lncurses
 
 obj/%.o: src/%.c libmy
-	mkdir --parents obj/shell/do_line/
-	mkdir --parents obj/shell/builtins/
+	mkdir --parents obj/sokoban/map
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Just build the entire libmy when we need these headers

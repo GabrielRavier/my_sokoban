@@ -5,7 +5,7 @@
 ** Defines sokoban_map_get_square
 */
 
-#include "sokoban_map.h"
+#include "../map.h"
 
 char sokoban_map_get_square(const struct sokoban_map *map, ssize_t x, ssize_t y)
 {

@@ -5,13 +5,17 @@
 ** Defines sokoban_from_map
 */
 
-#include "sokoban_from_map.h"
-#include "sokoban_map.h"
+#include "from_map.h"
+#include "from_map_do_print.h"
+#include "from_map_do_key.h"
+#include "map.h"
+#include "my/stdlib.h"
 #include <ncurses.h>
 
-static int finish_sokoban(int result)
+static int finish_sokoban(int result, struct sokoban_map *map_backup)
 {
     endwin();
+    my_free(map_backup->squares);
     return (result);
 }
 
@@ -44,12 +48,18 @@ static bool no_boxes_can_move(struct sokoban_map *map)
 
 int sokoban_from_map(struct sokoban_map *map)
 {
+    struct sokoban_map map_backup = sokoban_map_copy(map);
+    int key;
+
     initscr();
     cbreak();
+    keypad(stdscr, TRUE);
     while (true) {
         if (all_boxes_on_storage_locations(map))
-            return (finish_sokoban(0));
+            return (finish_sokoban(0, &map_backup));
         if (no_boxes_can_move(map))
-            return (finish_sokoban(1));
+            return (finish_sokoban(1, &map_backup));
+        sokoban_from_map_do_print(map);
+        sokoban_from_map_do_key(map, &map_backup, getch());
     }
 }

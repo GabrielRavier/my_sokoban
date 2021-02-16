@@ -5,7 +5,7 @@
 ** Defines main
 */
 
-#include "sokoban_from_map_filename.h"
+#include "sokoban/from_map_filename.h"
 #include "my/getopt.h"
 #include "my/stdio.h"
 #include <unistd.h>

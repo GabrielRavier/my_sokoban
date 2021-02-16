@@ -5,9 +5,9 @@
 ** Defines sokoban_from_map_string
 */
 
-#include "sokoban_from_map_string.h"
-#include "sokoban_from_map.h"
-#include "sokoban_map.h"
+#include "from_map_string.h"
+#include "from_map.h"
+#include "map.h"
 #include "my/cpp-like/algorithm.h"
 #include "my/my_string.h"
 #include "my/stdio.h"
@@ -73,6 +73,10 @@ static void string_to_map(struct sokoban_map *map,
     map->lines = count_in_my_string(map_string, '\n');
     map->squares = my_malloc(sizeof(*map->squares) * map->lines * map->columns);
     do_fill_map(map, map_string);
+    for (size_t y = 0; y < map->lines; ++y)
+        for (size_t x = 0; x < map->columns; ++x)
+            if (map->squares[y * map->columns + x].character == 'P')
+                map->player_pos = (struct sokoban_map_position){x, y};
 }
 
 int sokoban_from_map_string(struct my_string *map_string)

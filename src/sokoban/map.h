@@ -20,10 +20,20 @@ struct sokoban_map_square {
     bool is_o_underneath;
 };
 
+struct sokoban_map_position {
+    size_t x;
+    size_t y;
+};
+
 struct sokoban_map {
     size_t columns;
     size_t lines;
     struct sokoban_map_square *squares;
+    struct sokoban_map_position player_pos;
 };
 
-char sokoban_map_get_square(const struct sokoban_map *map, ssize_t x, ssize_t y);
+char sokoban_map_get_square(const struct sokoban_map *map, ssize_t x,
+    ssize_t y);
+void sokoban_map_move_square(struct sokoban_map *map, ssize_t x, ssize_t y,
+    ssize_t x_move, ssize_t y_move);
+struct sokoban_map sokoban_map_copy(const struct sokoban_map *map);

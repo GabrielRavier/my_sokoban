@@ -5,9 +5,9 @@
 ** Defines sokoban_from_map_filename
 */
 
-#include "sokoban_from_map_filename.h"
-#include "sokoban_from_map_string.h"
-#include "filename_to_string.h"
+#include "from_map_filename.h"
+#include "from_map_string.h"
+#include "../filename_to_string.h"
 #include "my/my_string.h"
 #include "my/stdio.h"
 #include <unistd.h>

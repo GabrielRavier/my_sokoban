@@ -16,6 +16,7 @@ struct sokoban_map sokoban_map_copy(const struct sokoban_map *map)
 
     result.lines = map->lines;
     result.columns = map->columns;
+    result.player_pos = map->player_pos;
     result.squares = (struct sokoban_map_square *)my_malloc(
         sizeof(*result.squares) * result.lines * result.columns);
     MY_ASSERT(result.squares != NULL);

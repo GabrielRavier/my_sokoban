@@ -34,5 +34,4 @@ int my_internal_file_determine_buffering(MY_FILE *fp, size_t *buffer_size,
         &my_internal_file_normal_seek ? MY_FILE_FLAG_FSEEK_OPT :
         MY_FILE_FLAG_NO_FSEEK_OPT);
 }
-
 #endif

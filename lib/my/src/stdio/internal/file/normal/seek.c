@@ -18,5 +18,4 @@ my_fpos_t my_internal_file_normal_seek(void *internal_data, my_fpos_t offset,
 
     return (my_lseek(my_fileno(fp), (off_t)offset, whence));
 }
-
 #endif

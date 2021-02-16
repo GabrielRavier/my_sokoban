@@ -14,12 +14,10 @@ int my_ferror(MY_FILE *fp)
 {
     return (ferror(fp));
 }
-
 #else
 
 int my_ferror(MY_FILE *fp)
 {
     return ((bool)(fp->flags & MY_FILE_FLAG_ERROR));
 }
-
 #endif

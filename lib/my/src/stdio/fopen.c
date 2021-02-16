@@ -16,7 +16,6 @@ MY_FILE *my_fopen(const char *filename, const char *mode)
 {
     return (fopen(filename, mode));
 }
-
 #else
 
 static void setup_functions(MY_FILE *fp)
@@ -49,5 +48,4 @@ MY_FILE *my_fopen(const char *filename, const char *mode)
         fp->seek(fp->internal_data, 0, SEEK_END);
     return (fp);
 }
-
 #endif

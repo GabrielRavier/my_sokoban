@@ -15,7 +15,6 @@ int my_fflush(MY_FILE *fp)
 {
     return (fflush(fp));
 }
-
 #else
 
 int my_fflush(MY_FILE *fp)
@@ -29,5 +28,4 @@ int my_fflush(MY_FILE *fp)
     }
     return (my_internal_file_flush_skip_non_write(fp));
 }
-
 #endif

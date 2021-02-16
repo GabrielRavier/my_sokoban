@@ -52,5 +52,4 @@ void my_internal_file_make_buffer(MY_FILE *fp)
         &could_be_tty);
     finish(fp, buffer_size, could_be_tty, buffer_flags);
 }
-
 #endif

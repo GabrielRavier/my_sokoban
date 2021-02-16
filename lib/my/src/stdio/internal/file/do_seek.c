@@ -42,5 +42,4 @@ my_fpos_t my_internal_file_do_seek(MY_FILE *fp, my_fpos_t offset, int whence)
     }
     return (finish_not_failed(fp, seek_result));
 }
-
 #endif

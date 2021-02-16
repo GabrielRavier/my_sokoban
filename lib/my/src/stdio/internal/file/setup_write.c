@@ -9,8 +9,6 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-static void (*reference_cleanup)(void) = &my_internal_file_cleanup;
-
 bool my_internal_file_setup_write(MY_FILE *fp)
 {
     if (!(fp->flags & MY_FILE_FLAG_WRITE)) {
@@ -34,5 +32,4 @@ bool my_internal_file_setup_write(MY_FILE *fp)
             fp->buffer.size;
     return (true);
 }
-
 #endif

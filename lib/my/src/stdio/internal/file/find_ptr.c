@@ -60,7 +60,7 @@ static MY_FILE *make_found_file(MY_FILE *fp)
 
 MY_FILE *my_internal_file_find_ptr(void)
 {
-    for (struct my_internal_file_bucket * bucket_it =
+    for (struct my_internal_file_bucket *bucket_it =
         &g_my_file_internal_first_bucket;; bucket_it = bucket_it->next) {
         for (size_t files_it = 0; files_it < bucket_it->num_files; ++files_it)
             if (bucket_it->files[files_it].flags == 0)
@@ -72,5 +72,4 @@ MY_FILE *my_internal_file_find_ptr(void)
         }
     }
 }
-
 #endif

@@ -148,7 +148,7 @@ TESTS_OBJECT_FILES := $(addprefix obj/tests/, $(addsuffix .o, $(TESTS_SOURCE_FIL
 tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 	rm -rf obj/src
 	$(MAKE) ../libmy.a CFLAGS="$(CFLAGS) --coverage -DLIBMY_COVERAGE"
-	$(CC) -o $@ $(CFLAGS) -L.. $(TESTS_OBJECT_FILES) -lcriterion -lmy --coverage -DLIBMY_COVERAGE
+	$(CC) -o $@ $(CFLAGS) -L.. $(TESTS_OBJECT_FILES) -lcriterion -lm -lmy --coverage -DLIBMY_COVERAGE
 
 ../../include/%.h: include/%.h
 	@mkdir --parents ../../include/my/cpp-like

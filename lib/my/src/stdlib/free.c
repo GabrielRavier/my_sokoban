@@ -15,7 +15,6 @@ void my_free(void *ptr)
 {
     free(ptr);
 }
-
 #else
 
 void my_free(void *ptr)
@@ -23,5 +22,4 @@ void my_free(void *ptr)
     if (ptr != NULL)
         MY_ASSERT(false && "my_free not implemented");
 }
-
 #endif

@@ -14,7 +14,6 @@ int my_putc(int c, MY_FILE *fp)
 {
     return (putc(c, fp));
 }
-
 #else
 
 int my_putc(int c, MY_FILE *fp)
@@ -28,5 +27,4 @@ int my_putc(int c, MY_FILE *fp)
     } else
         return (my_internal_file_write_to_buffer(fp, c));
 }
-
 #endif

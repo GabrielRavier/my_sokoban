@@ -15,7 +15,6 @@ ssize_t my_read(int fd, void *buffer, size_t num_bytes)
 {
     return (read(fd, buffer, num_bytes));
 }
-
 #else
 
 ssize_t my_read(int fd, void *buffer, size_t num_bytes)
@@ -23,5 +22,4 @@ ssize_t my_read(int fd, void *buffer, size_t num_bytes)
     errno = ENOSYS;
     return (-1);
 }
-
 #endif

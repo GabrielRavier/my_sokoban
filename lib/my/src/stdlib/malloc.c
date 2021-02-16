@@ -15,7 +15,6 @@ void *my_malloc(size_t size)
 {
     return (malloc(size));
 }
-
 #else
 
 void *my_malloc(size_t size)
@@ -23,5 +22,4 @@ void *my_malloc(size_t size)
     errno = ENOSYS;
     return (NULL);
 }
-
 #endif

@@ -15,7 +15,6 @@ int my_close(int fd)
 {
     return (close(fd));
 }
-
 #else
 
 int my_close(int fd)
@@ -23,5 +22,4 @@ int my_close(int fd)
     errno = ENOSYS;
     return (-1);
 }
-
 #endif

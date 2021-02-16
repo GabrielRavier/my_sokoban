@@ -14,7 +14,6 @@ int my_fstat(int fd, struct stat *buf)
 {
     return (fstat(fd, buf));
 }
-
 #else
 
 int my_fstat(int fd, struct stat *buf)
@@ -22,5 +21,4 @@ int my_fstat(int fd, struct stat *buf)
     errno = ENOSYS;
     return (-1);
 }
-
 #endif

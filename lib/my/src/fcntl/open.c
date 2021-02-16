@@ -24,7 +24,6 @@ int my_open(const char *pathname, int flags, ...)
     }
     return (open(pathname, flags, mode));
 }
-
 #else
 
 int my_open(const char *pathname, int flags, ...)
@@ -32,5 +31,4 @@ int my_open(const char *pathname, int flags, ...)
     errno = ENOSYS;
     return (-1);
 }
-
 #endif

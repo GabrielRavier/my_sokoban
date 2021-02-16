@@ -49,5 +49,4 @@ int my_internal_file_parse_mode(const char *mode, int *open_flags)
         (open_flags_read_write_type == O_RDONLY) ? MY_FILE_FLAG_READ :
         MY_FILE_FLAG_READ_WRITE);
 }
-
 #endif

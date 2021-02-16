@@ -38,5 +38,4 @@ int my_internal_file_write_to_buffer(MY_FILE *fp, int c)
         MY_FILE_FLAG_LINE_BUFFERED && c_uchar == '\n')) &&
         (my_fflush(fp) != 0)) ? EOF : c_uchar);
 }
-
 #endif

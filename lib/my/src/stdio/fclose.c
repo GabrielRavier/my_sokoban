@@ -16,7 +16,6 @@ int my_fclose(MY_FILE *fp)
 {
     return (fclose(fp));
 }
-
 #else
 
 // First checks whether fp is open, then closes the file and frees it
@@ -40,5 +39,4 @@ int my_fclose(MY_FILE *fp)
     fp->flags = 0;
     return (result);
 }
-
 #endif

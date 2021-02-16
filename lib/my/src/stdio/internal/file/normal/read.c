@@ -18,5 +18,4 @@ ssize_t my_internal_file_normal_read(void *internal_data, unsigned char *buffer,
 
     return (my_read(my_fileno(fp), buffer, count));
 }
-
 #endif

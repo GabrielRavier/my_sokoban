@@ -18,5 +18,4 @@ ssize_t my_internal_file_do_write(MY_FILE *fp, const unsigned char *buffer,
     fp->flags &= ~MY_FILE_FLAG_IS_OFFSET_CORRECT;
     return (write_result);
 }
-
 #endif

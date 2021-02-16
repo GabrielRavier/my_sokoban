@@ -80,10 +80,10 @@ wctomb, signal, abort, atexit
 
 string
 
-Add tests from Escape for atoi, atoll, memset, memchr, memcpy, memcmp, memmove,
-strcpy, strncpy, strtok, strcat, strncat, strcmp, strncmp, strcasecmp,
-strncasecmp, strchr, strrchr, strstr, memmem, strcasestr, strspn, strcspn,
-strpbrk, strlen, strnlen, tolower, toupper, isalnum, strtold, ecvt
+Add tests from Escape for atoi, atoll, memset, memcpy, memcmp, memmove, strcpy,
+strncpy, strtok, strcat, strncat, strcmp, strncmp, strcasecmp, strncasecmp,
+strchr, strrchr, strstr, memmem, strcasestr, strspn, strcspn, strpbrk, strlen,
+strnlen, tolower, toupper, isalnum, strtold, ecvt
 
 Add tests from KOSmk1 for memcmp
 Add tests from linux for strchr

@@ -7,6 +7,7 @@
 
 #include "../tests_header.h"
 #include "zero_size_ptr.h"
+#include "bionic_test_state.h"
 #include "my/string.h"
 #include <string.h>
 #include <unistd.h>
@@ -247,4 +248,43 @@ Test(my_memchr, dietlibc)
     do_one_test(test, 'b', 7);
     do_one_test(test + 6, 'r', 1);
     do_one_test(test + 7, 0, 100);
+}
+
+Test(my_memchr, escape)
+{
+    do_one_test("abc", 'a', 3);
+    do_one_test("abc", 'b', 3);
+    do_one_test("abc", 'c', 3);
+    do_one_test("abc", 'd', 3);
+    do_one_test("def123456", 'd', 1);
+    do_one_test("def123456", 'e', 1);
+}
+
+Test(my_memchr, bionic)
+{
+    int seek_char = 'N';
+    __auto_type state = bionic_test_state_new(1024);
+
+    for (size_t i = 0; i < state.n; ++i) {
+        for (bionic_test_state_begin_iters(&state) ;
+             bionic_test_state_has_next_iter(&state);
+             bionic_test_state_next_iter(&state)) {
+            my_memset(state.ptr1, ~seek_char, state.lengths[i]);
+            size_t position = random() % state.max_length;
+            if (position < state.lengths[i])
+                state.ptr1[position] = seek_char;
+            do_one_test(state.ptr1, seek_char, state.lengths[i]);
+        }
+    }
+    bionic_test_state_destroy(&state);
+}
+
+Test(my_memchr, bionic_zero)
+{
+    void *buffer;
+    cr_assert_eq(posix_memalign(&buffer, 64, 64), 0);
+    my_memset(buffer, 10, 64);
+    do_one_test(buffer, 5, 0);
+    do_one_test(buffer, 10, 0);
+    free(buffer);
 }

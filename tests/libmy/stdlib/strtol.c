@@ -237,3 +237,18 @@ Test(my_strtol, escape)
     do_one_test("0", 7);
     do_one_test("-1", 7);
 }
+
+Test(my_strtol, wine_msvcrt)
+{
+    do_one_test("-1234", 0);
+    do_one_test("1234", 0);
+    do_one_test("2147483647L", 0);
+    do_one_test("-2147483648L", 0);
+    do_one_test("4294967295UL", 0);
+    do_one_test("9223372036854775807L", 0);
+    do_one_test("-2", 0);
+    do_one_test("-4294967294", 0);
+    do_one_test("-4294967295", 0);
+    do_one_test("-4294967296", 0);
+    do_one_test("-0x", 0);
+}

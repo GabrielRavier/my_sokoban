@@ -320,3 +320,49 @@ Test(my_memchr, bionic_overread)
 {
     bionic_run_single_buffer_overread_test(bionic_do_buffer_test);
 }
+
+Test(my_memchr, defora)
+{
+    const char *search = "sear\xff\xfe\x7f\x7e\x00\x01ch";
+
+    for (size_t i = 0; i < sizeof(search); ++i)
+        cr_assert_eq(my_memchr(search, search[i], sizeof(search)), &search[i]);
+    cr_assert_eq(my_memchr(search, 'z', sizeof(search)), NULL);
+}
+
+Test(my_memchr, plauger)
+{
+    const char *abcde = "abcde";
+
+    cr_assert_eq(my_memchr(abcde, 'c', 5), &abcde[2]);
+    cr_assert_eq(my_memchr(abcde, 'e', 4), NULL);
+}
+
+Test(my_memchr, newlib)
+{
+    cr_assert_eq(my_memchr("A", 'A', 0), NULL);
+
+    const char *target = "X";
+    cr_assert_eq(my_memchr(target, 'X', 2), target);
+    cr_assert_eq(my_memchr(target, 'Y', 2), NULL);
+
+    target = "YY";
+    cr_assert_eq(my_memchr(target, 'Y', 2), target);
+
+    target = "WW";
+    cr_assert_eq(my_memchr(target, 'W', 2), target);
+
+    target = "ZZK";
+    cr_assert_eq(my_memchr(target, 'K', 3), target + 2);
+    cr_assert_eq(my_memchr(target, 'K', 4), target + 2);
+}
+
+Test(my_memchr, wine_ntdll)
+{
+    const char *string = "ab";
+
+    cr_assert_eq(my_memchr(string, 'z', 2), NULL);
+    cr_assert_eq(my_memchr(string, 'a', 2), string);
+    cr_assert_eq(my_memchr(string, 0x100 + 'a', 2), string);
+    cr_assert_eq(my_memchr(string, -0x100 + 'a', 2), string);
+}

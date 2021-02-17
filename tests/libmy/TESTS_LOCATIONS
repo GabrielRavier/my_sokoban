@@ -101,16 +101,15 @@ memset, memmove, bcopy, bzero, strlen, strcpy, stlcpy, stpcpy, strcat, strlcat,
 strcmp, strchr, strrchr, strnlen, mempcpy, memmem, strstr, strcasestr, strcoll,
 strcoll_l, strxfrm, strxfrm_l, memccpy
 
-Add tests from Defora for memchr, strerror, strstr
+Add tests from Defora for strerror, strstr
 
-Add tests from plauger for memchr, memcmp, memcpy, memmove, memset, strcat,
-strchr, strcmp, strcoll, strcpy, strcspn, strerror, strlen, strncat, strncmp,
-strncpy, strpbrk, strrchr, strspn, strstr, strtok, strxfrm
+Add tests from plauger for memcmp, memcpy, memmove, memset, strcat, strchr,
+strcmp, strcoll, strcpy, strcspn, strerror, strlen, strncat, strncmp, strncpy,
+strpbrk, strrchr, strspn, strstr, strtok, strxfrm
 
-Add tests from newlib for strcmp, strcpy, strcat, strncat,
-strncmp, strncpy, strlen, strchr, index, strrchr, rindex, strpbrk, strstr,
-strspn, strcspn, strtok, memcmp, memchr, memcpy, memmove, memccpy, memset,
-bcopy, bzero, bcmp, strerror
+Add tests from newlib for strcmp, strcpy, strcat, strncat, strncmp, strncpy,
+strlen, strchr, index, strrchr, rindex, strpbrk, strstr, strspn, strcspn,
+strtok, memcmp, memcpy, memmove, memccpy, memset, bcopy, bzero, bcmp, strerror
 
 Add tests from libc-test for strcpy, memset, strncpy, memcmp, strncmp,
 strncat, strchr, strrchr, strspn, strcspn, strpbrk, strtok, strlcpy, strlcat
@@ -159,9 +158,9 @@ atof, strncpy, strxfrm, strstr, iswdigit, wcscmp, gmtime, strftime, wcsftime,
 asctime, time, localtime, ctime, mktime, tzset
 
 wine/ntdll: atoi, atol, wcstol, wcstoul, towlower, towupper, wcschr, wcsrchr,
-memchr, bsearch, tolower, toupper, sscanf, iswctype, iswalpha, iswdigit,
-iswlower, iswspace, iswxdigit, isalnum, isalpha, iscntrl, isdigit, isgraph,
-islower, isprint, ispunct, isspace, isupper, isxdigit
+bsearch, tolower, toupper, sscanf, iswctype, iswalpha, iswdigit, iswlower,
+iswspace, iswxdigit, isalnum, isalpha, iscntrl, isdigit, isgraph, islower,
+isprint, ispunct, isspace, isupper, isxdigit
 
 wine/ucrtbase: strtod, wcstok, snprintf, swprintf, fprintf, fwprintf, vsprintf,
 vsscanf

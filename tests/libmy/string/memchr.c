@@ -8,10 +8,12 @@
 #include "../tests_header.h"
 #include "zero_size_ptr.h"
 #include "bionic_test_state.h"
+#include "../bionic_buffer.h"
 #include "my/string.h"
 #include <string.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <stdint.h>
 
 static void do_one_test(const void *s, int c, size_t n)
 {
@@ -287,4 +289,34 @@ Test(my_memchr, bionic_zero)
     do_one_test(buffer, 5, 0);
     do_one_test(buffer, 10, 0);
     free(buffer);
+}
+
+static void bionic_do_buffer_test(uint8_t *buffer, size_t length)
+{
+    if (length >= 1) {
+        int value = length % 128;
+        int search_value = value + 1;
+        
+        my_memset(buffer, value, length);
+        do_one_test(buffer, search_value, length);
+
+        if (length >= 2) {
+            buffer[0] = search_value;
+            do_one_test(buffer, search_value, length);
+
+            buffer[0] = value;
+            buffer[length - 1] = search_value;
+            do_one_test(buffer, search_value, length);
+        }
+    }
+}
+
+Test(my_memchr, bionic_align)
+{
+    bionic_run_single_buffer_align_test(4096, bionic_do_buffer_test);
+}
+
+Test(my_memchr, bionic_overread)
+{
+    bionic_run_single_buffer_overread_test(bionic_do_buffer_test);
 }

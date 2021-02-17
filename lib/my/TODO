@@ -36,3 +36,5 @@ chmod
 getc
 putw
 fwrite
+
+Assembly version of memset

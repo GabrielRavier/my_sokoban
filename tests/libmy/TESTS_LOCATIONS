@@ -96,10 +96,10 @@ mbrtowc, mbsrtowcs
 
 Add tests from bionic for strerror, strerror_l, strsignal, strcat, strcpy,
 strdup, stpcpy, strncat, strchr, strchrnul, strcmp, strlcat, strlcpy,
-strncat, strncmp, stpncpy, strncpy, strrchr, memchr, memrchr, memcmp,
-wmemcmp, memcpy, memset, memmove, bcopy, bzero, strlen, strcpy, stlcpy,
-stpcpy, strcat, strlcat, strcmp, strchr, strrchr, strnlen, mempcpy, memmem,
-strstr, strcasestr, strcoll, strcoll_l, strxfrm, strxfrm_l, memccpy
+strncat, strncmp, stpncpy, strncpy, strrchr, memrchr, memcmp, wmemcmp, memcpy,
+memset, memmove, bcopy, bzero, strlen, strcpy, stlcpy, stpcpy, strcat, strlcat,
+strcmp, strchr, strrchr, strnlen, mempcpy, memmem, strstr, strcasestr, strcoll,
+strcoll_l, strxfrm, strxfrm_l, memccpy
 
 Add tests from Defora for memchr, strerror, strstr
 

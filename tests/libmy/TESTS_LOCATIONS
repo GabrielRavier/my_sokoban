@@ -80,39 +80,38 @@ wctomb, signal, abort, atexit
 
 string
 
-Add tests from Escape for atoi, atoll, memset, memcpy, memcmp, memmove, strcpy,
-strncpy, strtok, strcat, strncat, strcmp, strncmp, strcasecmp, strncasecmp,
-strchr, strrchr, strstr, memmem, strcasestr, strspn, strcspn, strpbrk, strlen,
-strnlen, tolower, toupper, isalnum, strtold, ecvt
+Add tests from Escape for atoi, atoll, memset, memcpy, memmove, strcpy, strncpy,
+strtok, strcat, strncat, strcmp, strncmp, strcasecmp, strncasecmp, strchr,
+strrchr, strstr, memmem, strcasestr, strspn, strcspn, strpbrk, strlen, strnlen,
+tolower, toupper, isalnum, strtold, ecvt
 
-Add tests from KOSmk1 for memcmp
 Add tests from linux for strchr
 Add tests from littlekernel for memcpy, memset
 Add tests from osv for strxfrm, strxfrm_l, strcoll, strsignal
 
-Add tests from reactos for atoi, atol, wcschr, wcsrchr, bsearch, memcpy, memcmp,
-strcpy, strnlen, wcsrtombs, wctob, wcrtomb, tolower, towlower, towupper, mbrlen,
+Add tests from reactos for atoi, atol, wcschr, wcsrchr, bsearch, memcpy, strcpy,
+strnlen, wcsrtombs, wctob, wcrtomb, tolower, towlower, towupper, mbrlen,
 mbrtowc, mbsrtowcs
 
 Add tests from bionic for strerror, strerror_l, strsignal, strcat, strcpy,
-strdup, stpcpy, strncat, strchr, strchrnul, strcmp, strlcat, strlcpy,
-strncat, strncmp, stpncpy, strncpy, strrchr, memrchr, memcmp, wmemcmp, memcpy,
-memset, memmove, bcopy, bzero, strlen, strcpy, stlcpy, stpcpy, strcat, strlcat,
-strcmp, strchr, strrchr, strnlen, mempcpy, memmem, strstr, strcasestr, strcoll,
-strcoll_l, strxfrm, strxfrm_l, memccpy
+strdup, stpcpy, strncat, strchr, strchrnul, strcmp, strlcat, strlcpy, strncat,
+strncmp, stpncpy, strncpy, strrchr, memrchr, wmemcmp, memcpy, memset, memmove,
+bcopy, bzero, strlen, strcpy, stlcpy, stpcpy, strcat, strlcat, strcmp, strchr,
+strrchr, strnlen, mempcpy, memmem, strstr, strcasestr, strcoll, strcoll_l,
+strxfrm, strxfrm_l, memccpy
 
 Add tests from Defora for strerror, strstr
 
-Add tests from plauger for memcmp, memcpy, memmove, memset, strcat, strchr,
-strcmp, strcoll, strcpy, strcspn, strerror, strlen, strncat, strncmp, strncpy,
-strpbrk, strrchr, strspn, strstr, strtok, strxfrm
+Add tests from plauger for memcpy, memmove, memset, strcat, strchr, strcmp,
+strcoll, strcpy, strcspn, strerror, strlen, strncat, strncmp, strncpy, strpbrk,
+strrchr, strspn, strstr, strtok, strxfrm
 
 Add tests from newlib for strcmp, strcpy, strcat, strncat, strncmp, strncpy,
 strlen, strchr, index, strrchr, rindex, strpbrk, strstr, strspn, strcspn,
-strtok, memcmp, memcpy, memmove, memccpy, memset, bcopy, bzero, bcmp, strerror
+strtok, memcpy, memmove, memccpy, memset, bcopy, bzero, bcmp, strerror
 
-Add tests from libc-test for strcpy, memset, strncpy, memcmp, strncmp,
-strncat, strchr, strrchr, strspn, strcspn, strpbrk, strtok, strlcpy, strlcat
+Add tests from libc-test for strcpy, memset, strncpy, strncmp, strncat, strchr,
+strrchr, strspn, strcspn, strpbrk, strtok, strlcpy, strlcat
 
 strings:
 
@@ -150,12 +149,12 @@ tmpnam, fcloseall, open, fstat, stat, dup2, pipe, mkdir, write, close, rmdir,
 dup, mktemp, calloc, malloc, realloc, setlocale, atan, exp, tanh, popen, pclose,
 srand, sprintf, vswprintf, swprintf, wcsstr, wcslen, wcscmp, snprintf, fprintf,
 ftell, fwprintf, fscanf, fcvt, ecvt, vswprintf, vsprintf, sscanf, swscanf,
-signal, raise, memcpy, memcmp, strcmp, strncmp, strcpy, strnlem, mbsrtowcs,
-wcsrtombs, wctob, btowc, wcrtomb, tolower, towlower, towupper, mbrlen, mbrtowc,
-memset, swab, strcspn, strcmp, strdup, strtok, strtol, strnlen, strtod,
-mbstowcs, wcstombs, gcvt, wctob, btowc, wctomb, tolower, wcstol, atoi, atol,
-atof, strncpy, strxfrm, strstr, iswdigit, wcscmp, gmtime, strftime, wcsftime,
-asctime, time, localtime, ctime, mktime, tzset
+signal, raise, memcpy, strcmp, strncmp, strcpy, strnlem, mbsrtowcs, wcsrtombs,
+wctob, btowc, wcrtomb, tolower, towlower, towupper, mbrlen, mbrtowc, memset,
+swab, strcspn, strcmp, strdup, strtok, strtol, strnlen, strtod, mbstowcs,
+wcstombs, gcvt, wctob, btowc, wctomb, tolower, wcstol, atoi, atol, atof,
+strncpy, strxfrm, strstr, iswdigit, wcscmp, gmtime, strftime, wcsftime, asctime,
+time, localtime, ctime, mktime, tzset
 
 wine/ntdll: atoi, atol, wcstol, wcstoul, towlower, towupper, wcschr, wcsrchr,
 bsearch, tolower, toupper, sscanf, iswctype, iswalpha, iswdigit, iswlower,

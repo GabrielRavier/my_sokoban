@@ -26,10 +26,9 @@ enum {
 // State for bionic tests for string.h functions
 struct bionic_test_state {
     size_t n;
-    char *ptr1;
-    size_t align1_index;
-    size_t align2_index;
-    char *glob_ptr1;
+    char *ptr1, *ptr2;
+    size_t align1_index, align2_index;
+    char *glob_ptr1, *glob_ptr2;
     size_t max_length;
     size_t lengths[BIONIC_TEST_STATE_ITER + 1];
 };
@@ -57,6 +56,8 @@ static inline struct bionic_test_state bionic_test_state_new(size_t max_length)
 
     MY_ASSERT(posix_memalign((void **)&result.glob_ptr1, sysconf(_SC_PAGESIZE),
         2 * result.max_length + MAX_ALIGNMENT) == 0);
+    MY_ASSERT(posix_memalign((void **)&result.glob_ptr2, sysconf(_SC_PAGESIZE),
+        2 * result.max_length + MAX_ALIGNMENT) == 0);
     bionic_test_state_init_len_array(&result);
 
     return (result);
@@ -65,10 +66,14 @@ static inline struct bionic_test_state bionic_test_state_new(size_t max_length)
 static inline void bionic_test_state_reset_pointers(struct bionic_test_state *self)
 {
     if (self->align1_index == MY_ARRAY_SIZE(BIONIC_TEST_STATE_ALIGNMENTS) ||
-        self->align2_index == MY_ARRAY_SIZE(BIONIC_TEST_STATE_ALIGNMENTS))
+        self->align2_index == MY_ARRAY_SIZE(BIONIC_TEST_STATE_ALIGNMENTS)) {
         self->ptr1 = NULL;
-    else
+        self->ptr2 = NULL;
+    }
+    else {
         self->ptr1 = self->glob_ptr1 + BIONIC_TEST_STATE_ALIGNMENTS[self->align1_index];
+        self->ptr2 = self->glob_ptr2 + BIONIC_TEST_STATE_ALIGNMENTS[self->align2_index];
+    }
 }
 
 static inline void bionic_test_state_begin_iters(struct bionic_test_state *self)
@@ -100,4 +105,5 @@ static inline void bionic_test_state_next_iter(struct bionic_test_state *self)
 static inline void bionic_test_state_destroy(struct bionic_test_state *self)
 {
     free(self->glob_ptr1);
+    free(self->glob_ptr2);
 }

@@ -37,7 +37,7 @@ static inline void bionic_test_state_init_len_array(struct bionic_test_state *se
 {
     self->n = 0;
     self->lengths[self->n++] = 0;
-    for (size_t i = 0; i < BIONIC_TEST_STATE_ITER; ++i) {
+    for (size_t i = 1; i < BIONIC_TEST_STATE_ITER; ++i) {
         size_t l = exp(log(self->max_length) * i / BIONIC_TEST_STATE_ITER);
         if (l != self->lengths[self->n - 1])
             self->lengths[self->n++] = l;

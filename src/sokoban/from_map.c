@@ -22,7 +22,7 @@ static int finish_sokoban(int result, struct sokoban_map *map_backup)
 static bool all_boxes_on_storage_locations(const struct sokoban_map *map)
 {
     for (size_t i = 0; i < map->lines * map->columns; ++i)
-        if (map->squares[i].character == 'O')
+        if (map->squares[i].is_o_underneath && map->squares[i].character != 'X')
             return (false);
     return (true);
 }

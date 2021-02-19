@@ -13,9 +13,9 @@
 
 static void usage(const char *argv0)
 {
-    my_dprintf(STDERR_FILENO, "USAGE\n\t%s map\nDESCRIPTION\n\tmap  file "
-        "representing the warehouse map, containing '#' for walls,\n\t     'P' "
-        "for the player, 'X' for boxes and 'O' for storage locations.\n",
+    my_dprintf(STDERR_FILENO, "USAGE\n     %s map\nDESCRIPTION\n     map  file "
+        "representing the warehouse map, containing '#' for walls,\n          "
+        "'P' for the player, 'X' for boxes and 'O' for storage locations.\n",
         argv0);
 }
 

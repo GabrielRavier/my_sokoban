@@ -49,7 +49,6 @@ static bool no_boxes_can_move(struct sokoban_map *map)
 int sokoban_from_map(struct sokoban_map *map)
 {
     struct sokoban_map map_backup = sokoban_map_copy(map);
-    int key;
 
     initscr();
     cbreak();

@@ -17,7 +17,6 @@ my_file_t *my_fopen(const char *filename, const char *mode)
     return (fopen(filename, mode));
 }
 #else
-
 static void setup_functions(my_file_t *fp)
 {
     fp->internal_data = fp;

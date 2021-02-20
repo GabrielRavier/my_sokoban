@@ -15,13 +15,10 @@ ssize_t my_write(int fd, const void *buffer, size_t num_bytes)
 {
     return (write(fd, buffer, num_bytes));
 }
-
 #else
-
 ssize_t my_write(int fd, const void *buffer, size_t num_bytes)
 {
     errno = ENOSYS;
     return (-1);
 }
-
 #endif

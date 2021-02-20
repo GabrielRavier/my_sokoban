@@ -16,7 +16,6 @@ void my_free(void *ptr)
     free(ptr);
 }
 #else
-
 void my_free(void *ptr)
 {
     if (ptr != NULL)

@@ -32,5 +32,4 @@ int my_internal_file_flush_skip_non_write(my_file_t *fp)
     }
     return (0);
 }
-
 #endif

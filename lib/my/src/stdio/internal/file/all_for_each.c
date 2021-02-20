@@ -22,5 +22,4 @@ int my_internal_file_all_for_each(int (*func)(my_file_t *fp))
                 result |= func(&bucket_it->files[i]);
     return (result);
 }
-
 #endif

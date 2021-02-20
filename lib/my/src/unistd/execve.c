@@ -16,7 +16,6 @@ int my_execve(const char *pathname, char *const argv[], char *const envp[])
     return (execve(pathname, argv, envp));
 }
 #else
-
 int my_execve(const char *pathname, char *const argv[], char *const envp[])
 {
     errno = ENOSYS;

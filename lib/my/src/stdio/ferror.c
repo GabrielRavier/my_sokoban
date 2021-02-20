@@ -14,7 +14,6 @@ int my_ferror(my_file_t *fp)
 {
     return (ferror(fp));
 }
-
 #else
 int my_ferror(my_file_t *fp)
 {

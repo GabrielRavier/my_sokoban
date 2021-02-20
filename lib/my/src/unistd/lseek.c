@@ -16,7 +16,6 @@ off_t my_lseek(int fd, off_t offset, int whence)
     return (lseek(fd, offset, whence));
 }
 #else
-
 off_t my_lseek(int fd, off_t offset, int whence)
 {
     errno = ENOSYS;

@@ -6,6 +6,7 @@
 */
 
 #include "my/string.h"
+#include "glibc.h"
 #include "../tests_header.h"
 #include "my/cpp-like/algorithm.h"
 #include <string.h>
@@ -88,9 +89,6 @@ Test(my_strncmp, gnulib_u8)
     do_one_test(input1, input2, 6);
 }
 
-static char *glibc_buf1, *glibc_buf2;
-static size_t glibc_page_size;
-
 static void do_glibc_test(size_t align1, size_t align2, size_t len, size_t n, int max_char, int exp_result)
 {
     if (n == 0)
@@ -168,14 +166,7 @@ static void do_glibc_test_limit(size_t align1, size_t align2, size_t len, size_t
 
 Test(my_strncmp, glibc)
 {
-    // Preperation
-    glibc_page_size = 2 * getpagesize();
-    glibc_buf1 = mmap(0, 2 * glibc_page_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-    cr_assert_neq(glibc_buf1, MAP_FAILED);
-    cr_assert_eq(mprotect(glibc_buf1 + glibc_page_size, glibc_page_size, PROT_NONE), 0);
-    glibc_buf2 = mmap(0, 2 * glibc_page_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-    cr_assert_neq(glibc_buf2, MAP_FAILED);
-    cr_assert_eq(mprotect(glibc_buf2 + glibc_page_size, glibc_page_size, PROT_NONE), 0);
+    glibc_test_string_init();
 
     // Specific bugs from glibc testcases
     char *s1 = glibc_buf1 + 0xB2C;

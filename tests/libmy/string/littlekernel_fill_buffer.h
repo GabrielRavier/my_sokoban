@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include <stdint.h>
+#include <stddef.h>
+
 static void littlekernel_fill_buffer(void *ptr, size_t len, uint32_t seed)
 {
     for (size_t i = 0; i < len; ++i) {

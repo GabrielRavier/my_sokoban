@@ -17,11 +17,28 @@ void my_qsort(void *base, size_t num_elements, size_t element_size,
     int (*comparison_function)(const void *, const void *))
     MY_ATTR_NONNULL((1, 4));
 
+struct my_qsort_r_internal_comparison_function_and_argument {
+    int (*func)(const void *, const void *, void *);
+    void *argument;
+};
+
+/// This implements the internal version of my_qsort_r, to avoid restrictions on
+/// having more than 5 arguments to a function
+void my_internal_qsort_r(void *base, size_t num_elements, size_t element_size,
+    const struct my_qsort_r_internal_comparison_function_and_argument *cmp)
+    MY_ATTR_NONNULL((1, 4));
+
 /// Same as my_qsort, except comparison_function takes a third argument, which
 /// will always be the fourth argument passed to my_qsort_r
-void my_qsort_r(void *base, size_t num_elements, size_t element_size,
+MY_ATTR_NONNULL((1, 4)) static inline void my_qsort_r(void *base,
+    size_t num_elements, size_t element_size,
     int (*comparison_function)(const void *, const void *, void *),
-    void *argument) MY_ATTR_NONNULL((1, 4));
+    void *argument)
+{
+    my_internal_qsort_r(base, num_elements, element_size,
+        (&((struct my_qsort_r_internal_comparison_function_and_argument){
+        comparison_function, argument})));
+}
 
 /// Changes the size of the memory block pointed to by ptr of original_length
 /// bytes to new_length bytes.

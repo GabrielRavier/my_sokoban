@@ -14,8 +14,8 @@ int my_ferror(my_file_t *fp)
 {
     return (ferror(fp));
 }
-#else
 
+#else
 int my_ferror(my_file_t *fp)
 {
     return ((bool)(fp->flags & MY_FILE_FLAG_ERROR));

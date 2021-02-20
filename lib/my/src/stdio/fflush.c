@@ -16,7 +16,6 @@ int my_fflush(my_file_t *fp)
     return (fflush(fp));
 }
 #else
-
 int my_fflush(my_file_t *fp)
 {
     if (fp == NULL)

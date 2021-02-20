@@ -14,6 +14,7 @@ int my_fileno(my_file_t *fp)
 {
     return (fileno(fp));
 }
+
 #else
 
 int my_fileno(my_file_t *fp)

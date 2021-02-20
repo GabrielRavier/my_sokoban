@@ -33,8 +33,8 @@ my_fpos_t my_internal_file_do_seek(my_file_t *fp, my_fpos_t offset, int whence);
 // in *open_flags. Returns 0 if mode is invalid
 int my_internal_file_parse_mode(const char *mode, int *open_flags);
 
-// Finds (or creates, if possible) a `my_file_t *` pointer for usage by the fopen
-// family
+// Finds (or creates, if possible) a `my_file_t *` pointer for usage by the
+// fopen family
 my_file_t *my_internal_file_find_ptr(void);
 
 // Writes c into fp's buffer (usually called when the buffer is full). The

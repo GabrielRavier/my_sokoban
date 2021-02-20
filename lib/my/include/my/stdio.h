@@ -15,8 +15,8 @@
 #if LIBMY_USE_LIBC_FILE
 
 typedef fpos_t my_fpos_t;
+typedef FILE my_file_t;
 
-    #define MY_FILE FILE
     #define my_stdin stdin
     #define my_stdout stdout
     #define my_stderr stderr
@@ -25,13 +25,13 @@ typedef fpos_t my_fpos_t;
 
 typedef off_t my_fpos_t;
 
-// A buffer for the MY_FILE implementation
+// A buffer for the my_file_t implementation
 struct my_file_buffer {
     ssize_t size;
     unsigned char *base;
 };
 
-// This is the structure we use to implement MY_FILE
+// This is the structure we use to implement my_file_t
 // fd is the file descriptor attached to the file (or -1 if we're not a file)
 // offset is the current file offset from lseek
 // internal_data is passed to read, write, seek and close
@@ -72,7 +72,7 @@ extern struct my_file_type {
     unsigned char one_char_read_buffer[1];
 } g_my_standard_files[3];
 
-typedef struct my_file_type MY_FILE;
+typedef struct my_file_type my_file_t;
 
     #define my_stdin (&g_my_standard_files[0])
     #define my_stdout (&g_my_standard_files[1])
@@ -125,27 +125,27 @@ int my_vasprintf(char **MY_RESTRICT result_string_ptr,
     const char *MY_RESTRICT format, va_list arguments)
     MY_ATTR_FORMAT(printf, 2, 0) MY_ATTR_WARN_UNUSED_RESULT;
 
-// Open a file and create a new MY_FILE for it
-MY_FILE *my_fopen(const char *MY_RESTRICT filename,
+// Open a file and create a new my_file_t for it
+my_file_t *my_fopen(const char *MY_RESTRICT filename,
     const char *MY_RESTRICT mode) MY_ATTR_WARN_UNUSED_RESULT;
 
 // Writes a character to fp
-int my_fputc(int c, MY_FILE *fp);
-int my_putc(int c, MY_FILE *fp);
+int my_fputc(int c, my_file_t *fp);
+int my_putc(int c, my_file_t *fp);
 
 // Closes the passed file
-int my_fclose(MY_FILE *fp);
+int my_fclose(my_file_t *fp);
 
 // Flushes the passed file, or all of them if fp is NULL
-int my_fflush(MY_FILE *fp);
+int my_fflush(my_file_t *fp);
 
 // Returns the file descriptor for the given file
-int my_fileno(MY_FILE *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
+int my_fileno(my_file_t *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 
 // Returns the error indicator for the given file
-int my_ferror(MY_FILE *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
+int my_ferror(my_file_t *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 
-static inline void my_fclose_ptr(MY_FILE **ptr)
+static inline void my_fclose_ptr(my_file_t **ptr)
 {
     if (*ptr)
         my_fclose(*ptr);

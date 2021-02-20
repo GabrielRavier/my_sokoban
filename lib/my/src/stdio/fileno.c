@@ -10,13 +10,13 @@
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_fileno(MY_FILE *fp)
+int my_fileno(my_file_t *fp)
 {
     return (fileno(fp));
 }
 #else
 
-int my_fileno(MY_FILE *fp)
+int my_fileno(my_file_t *fp)
 {
     int result = fp->fd;
 

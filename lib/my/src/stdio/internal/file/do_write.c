@@ -10,7 +10,7 @@
 #if !LIBMY_USE_LIBC_FILE
 
 // We unset the offset correct flag because of O_APPEND
-ssize_t my_internal_file_do_write(MY_FILE *fp, const unsigned char *buffer,
+ssize_t my_internal_file_do_write(my_file_t *fp, const unsigned char *buffer,
     ssize_t count)
 {
     ssize_t write_result = fp->write(fp->internal_data, buffer, count);

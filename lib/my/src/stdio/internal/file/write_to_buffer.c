@@ -17,7 +17,7 @@
 // line buffered and c == '\n'
 // The unbuffered case is taken care of by its one byte buffer, which will
 // always be full after putting c into it
-int my_internal_file_write_to_buffer(MY_FILE *fp, int c)
+int my_internal_file_write_to_buffer(my_file_t *fp, int c)
 {
     unsigned char c_uchar = c;
     ssize_t bytes_in_buffer = fp->buffer_ptr - fp->buffer.base;

@@ -12,13 +12,13 @@
 
 #if LIBMY_USE_LIBC_FILE
 
-MY_FILE *my_fopen(const char *filename, const char *mode)
+my_file_t *my_fopen(const char *filename, const char *mode)
 {
     return (fopen(filename, mode));
 }
 #else
 
-static void setup_functions(MY_FILE *fp)
+static void setup_functions(my_file_t *fp)
 {
     fp->internal_data = fp;
     fp->read = &my_internal_file_normal_read;
@@ -28,11 +28,11 @@ static void setup_functions(MY_FILE *fp)
 }
 
 // We seek to the end on O_APPEND so that ftell gets the right result.
-MY_FILE *my_fopen(const char *filename, const char *mode)
+my_file_t *my_fopen(const char *filename, const char *mode)
 {
     int open_flags;
     int file_flags = my_internal_file_parse_mode(mode, &open_flags);
-    MY_FILE *fp;
+    my_file_t *fp;
 
     if (file_flags == 0)
         return (NULL);

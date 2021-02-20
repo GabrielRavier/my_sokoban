@@ -14,7 +14,7 @@
 // This is a static bucket of files for usage when we don't have malloc (the
 // size is FOPEN_MAX - 3 to account for the first bucket with the standard stdio
 // files)
-static MY_FILE second_bucket_files[FOPEN_MAX - 3];
+static my_file_t second_bucket_files[FOPEN_MAX - 3];
 static struct my_internal_file_bucket second_bucket = { .next = NULL,
     .num_files = FOPEN_MAX - 3,
     .files = second_bucket_files };
@@ -46,7 +46,7 @@ static struct my_internal_file_bucket *make_more_files(void)
 // This marks a file as used and initializes it to default values, i.e. we have
 // nothing to write, we don't have a pointer nor a buffer, we're not (yet) line
 // buffered and we have no file
-static MY_FILE *make_found_file(MY_FILE *fp)
+static my_file_t *make_found_file(my_file_t *fp)
 {
     fp->flags = !0;
     fp->write_space_left = 0;
@@ -58,7 +58,7 @@ static MY_FILE *make_found_file(MY_FILE *fp)
     return (fp);
 }
 
-MY_FILE *my_internal_file_find_ptr(void)
+my_file_t *my_internal_file_find_ptr(void)
 {
     for (struct my_internal_file_bucket *bucket_it =
         &g_my_file_internal_first_bucket;; bucket_it = bucket_it->next) {

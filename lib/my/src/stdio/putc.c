@@ -10,13 +10,13 @@
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_putc(int c, MY_FILE *fp)
+int my_putc(int c, my_file_t *fp)
 {
     return (putc(c, fp));
 }
 #else
 
-int my_putc(int c, MY_FILE *fp)
+int my_putc(int c, my_file_t *fp)
 {
     unsigned char c_uchar = c;
 

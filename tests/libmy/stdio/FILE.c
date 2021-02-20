@@ -13,7 +13,7 @@
 // Add the rest of this once we have fprintf, fwprintf, fwrite, fputs or fputwc
 Test(my_stdio, bionic_cantwrite)
 {
-    MY_FILE *fp = my_fopen("/proc/version", "r");
+    my_file_t *fp = my_fopen("/proc/version", "r");
 
     errno = 0;
     cr_assert_eq(my_putc('x', fp), EOF);
@@ -24,7 +24,7 @@ Test(my_stdio, bionic_cantwrite)
     cr_assert_eq(errno, EBADF);
 }
 
-static void cloudlibc_do_random_test(MY_FILE *fp)
+static void cloudlibc_do_random_test(my_file_t *fp)
 {
     char contents[1024] = {0};
     bool has_error = false;
@@ -69,7 +69,7 @@ Test(my_stdio, cloudlibc_random)
     char *filename = tmpnam(NULL);
 
     for (size_t i = 0; i < 100; ++i) {
-        MY_FILE *fp = my_fopen(filename, "w+");
+        my_file_t *fp = my_fopen(filename, "w+");
         cloudlibc_do_random_test(fp);
     }
 }

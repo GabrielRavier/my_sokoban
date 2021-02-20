@@ -14,7 +14,7 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-static void finish(MY_FILE *fp, size_t buffer_size, bool could_be_tty,
+static void finish(my_file_t *fp, size_t buffer_size, bool could_be_tty,
     int buffer_flags)
 {
     fp->buffer.base = my_malloc(buffer_size);
@@ -36,7 +36,7 @@ static void finish(MY_FILE *fp, size_t buffer_size, bool could_be_tty,
 // buffering, try to create a buffer (fallback to unbuffered if that's
 // impossible) and handle ttys (if we don't have isatty and the call to it
 // failed because we can't have it)
-void my_internal_file_make_buffer(MY_FILE *fp)
+void my_internal_file_make_buffer(my_file_t *fp)
 {
     size_t buffer_size;
     int buffer_flags;

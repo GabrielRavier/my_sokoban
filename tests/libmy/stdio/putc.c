@@ -11,7 +11,7 @@
 #include <criterion/redirect.h>
 #include <unistd.h>
 
-static void midnight_bsd_do_test_str(int (*func)(int, MY_FILE *))
+static void midnight_bsd_do_test_str(int (*func)(int, my_file_t *))
 {
     const char *str = "1234567890x";
     const char *path = tmpnam(NULL);
@@ -19,7 +19,7 @@ static void midnight_bsd_do_test_str(int (*func)(int, MY_FILE *))
     char buf[10];
     my_memset(buf, 'x', sizeof(buf));
 
-    MY_FILE *fp = my_fopen(path, "w+");
+    my_file_t *fp = my_fopen(path, "w+");
     cr_assert_neq(fp, NULL);
 
     for (size_t i = 0; str[i] != 'x'; ++i)
@@ -36,10 +36,10 @@ static void midnight_bsd_do_test_str(int (*func)(int, MY_FILE *))
     cr_assert_eq(unlink(path), 0);
 }
 
-static void midnight_bsd_do_test_err(int (*func)(int, MY_FILE *))
+static void midnight_bsd_do_test_err(int (*func)(int, my_file_t *))
 {
     const char *path = tmpnam(NULL);
-    MY_FILE *fp = my_fopen(path, "w+");
+    my_file_t *fp = my_fopen(path, "w+");
 
     cr_assert_neq(fp, NULL);
     cr_assert_eq(my_fclose(fp), 0);
@@ -71,7 +71,7 @@ Test(my_fputc, midnight_bsd_err)
 // TODO Add first gnulib tests when we get to setvbuf
 // TODO Add second gnulib tests when we get to fdopen+setvbuf
 
-static void dietlibc_do_test(int (*func)(int, MY_FILE *))
+static void dietlibc_do_test(int (*func)(int, my_file_t *))
 {
     cr_assert_lt(func('x', my_stdin), 0);
     my_fflush(NULL);
@@ -90,7 +90,7 @@ Test(my_fputc, dietlibc)
 
 // TODO Add cloudlibc tests when we get to fdopen
 
-static void glibc_do_unbputc_test(int (*func)(int, MY_FILE *))
+static void glibc_do_unbputc_test(int (*func)(int, my_file_t *))
 {
     func('1', my_stderr);
     func('2', my_stderr);
@@ -108,9 +108,9 @@ Test(my_fputc, glibc_unbputc, .init = cr_redirect_stderr)
     glibc_do_unbputc_test(my_fputc);
 }
 
-static void bionic_do_read_test(int (*func)(int, MY_FILE *))
+static void bionic_do_read_test(int (*func)(int, my_file_t *))
 {
-    MY_FILE *fp = my_fopen("/proc/version", "r");
+    my_file_t *fp = my_fopen("/proc/version", "r");
 
     cr_assert_neq(fp, NULL);
     cr_assert_eq(func('x', fp), EOF);
@@ -127,10 +127,10 @@ Test(my_fputc, bionic_read)
     bionic_do_read_test(my_fputc);
 }
 
-static void wine_do_test(int (*func)(int, MY_FILE *))
+static void wine_do_test(int (*func)(int, my_file_t *))
 {
     char *temp_filename = tempnam(NULL, "wputc");
-    MY_FILE *fp = my_fopen(temp_filename, "wb");
+    my_file_t *fp = my_fopen(temp_filename, "wb");
 
     cr_assert_neq(fp, NULL);
     cr_assert_eq(func(0, fp), 0);

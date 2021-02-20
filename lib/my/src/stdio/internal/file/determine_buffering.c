@@ -14,7 +14,7 @@
 // The file could be a tty if the file is a character device. Also, we only
 // optimize fseek if it is a regular file and the seek function points to the
 // "normal" seek function
-int my_internal_file_determine_buffering(MY_FILE *fp, size_t *buffer_size,
+int my_internal_file_determine_buffering(my_file_t *fp, size_t *buffer_size,
     bool *could_be_tty)
 {
     struct stat stat_buffer;

@@ -9,7 +9,7 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-bool my_internal_file_setup_write(MY_FILE *fp)
+bool my_internal_file_setup_write(my_file_t *fp)
 {
     if (!(fp->flags & MY_FILE_FLAG_WRITE)) {
         if (!(fp->flags & MY_FILE_FLAG_READ_WRITE)) {

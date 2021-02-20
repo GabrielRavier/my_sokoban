@@ -13,5 +13,5 @@
 extern struct my_internal_file_bucket {
     struct my_internal_file_bucket *next;
     size_t num_files;
-    MY_FILE *files;
+    my_file_t *files;
 } g_my_file_internal_first_bucket;

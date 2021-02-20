@@ -12,7 +12,7 @@
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_fclose(MY_FILE *fp)
+int my_fclose(my_file_t *fp)
 {
     return (fclose(fp));
 }
@@ -20,7 +20,7 @@ int my_fclose(MY_FILE *fp)
 
 // First checks whether fp is open, then closes the file and frees it
 // We set write_space_left to make sure we error if re-accessed
-int my_fclose(MY_FILE *fp)
+int my_fclose(my_file_t *fp)
 {
     int result;
 

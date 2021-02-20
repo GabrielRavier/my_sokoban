@@ -10,13 +10,13 @@
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_ferror(MY_FILE *fp)
+int my_ferror(my_file_t *fp)
 {
     return (ferror(fp));
 }
 #else
 
-int my_ferror(MY_FILE *fp)
+int my_ferror(my_file_t *fp)
 {
     return ((bool)(fp->flags & MY_FILE_FLAG_ERROR));
 }

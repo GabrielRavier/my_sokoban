@@ -10,7 +10,7 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-static my_fpos_t finish_not_failed(MY_FILE *fp, my_fpos_t seek_result)
+static my_fpos_t finish_not_failed(my_file_t *fp, my_fpos_t seek_result)
 {
     if (fp->flags & MY_FILE_FLAG_FSEEK_OPT) {
         fp->flags |= MY_FILE_FLAG_IS_OFFSET_CORRECT;
@@ -19,7 +19,7 @@ static my_fpos_t finish_not_failed(MY_FILE *fp, my_fpos_t seek_result)
     return (seek_result);
 }
 
-my_fpos_t my_internal_file_do_seek(MY_FILE *fp, my_fpos_t offset, int whence)
+my_fpos_t my_internal_file_do_seek(my_file_t *fp, my_fpos_t offset, int whence)
 {
     int saved_errno = saved_errno;
     int errno_from_seek;

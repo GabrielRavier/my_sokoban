@@ -10,7 +10,7 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-int my_internal_file_all_for_each(int (*func)(MY_FILE *fp))
+int my_internal_file_all_for_each(int (*func)(my_file_t *fp))
 {
     int result = 0;
 

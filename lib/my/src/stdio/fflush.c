@@ -11,13 +11,13 @@
 
 #if LIBMY_USE_LIBC_FILE
 
-int my_fflush(MY_FILE *fp)
+int my_fflush(my_file_t *fp)
 {
     return (fflush(fp));
 }
 #else
 
-int my_fflush(MY_FILE *fp)
+int my_fflush(my_file_t *fp)
 {
     if (fp == NULL)
         return (my_internal_file_all_for_each(

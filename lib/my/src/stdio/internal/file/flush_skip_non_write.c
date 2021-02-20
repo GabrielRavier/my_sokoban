@@ -9,7 +9,7 @@
 
 #if !LIBMY_USE_LIBC_FILE
 
-int my_internal_file_flush_skip_non_write(MY_FILE *fp)
+int my_internal_file_flush_skip_non_write(my_file_t *fp)
 {
     const unsigned char *base_it = fp->buffer.base;
     ssize_t bytes_written;

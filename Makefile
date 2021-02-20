@@ -62,5 +62,5 @@ re: clean all
 tests_run:
 	$(MAKE) fclean
 	$(MAKE) CFLAGS="$(CFLAGS) --coverage"
-	$(MAKE) --directory=lib/my tests_binary $(LIBMY_CONFIGURATION)
+	$(MAKE) --directory=lib/my tests_binary USE_LIBC_FILE=1 HAS_LIBC_ALLOC=1 HAS_LIBC_READ=1 HAS_LIBC_WRITE=1 HAS_LIBC_EXECVE=1 HAS_LIBC_OPEN=1 HAS_LIBC_CLOSE=1 HAS_LIBC_ISATTY=1 HAS_LIBC_LSEEK=1 HAS_LIBC_FSTAT=1
 	./tests/libmy/test.sh & wait

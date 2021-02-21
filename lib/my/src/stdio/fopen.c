@@ -36,6 +36,8 @@ my_file_t *my_fopen(const char *filename, const char *mode)
     if (file_flags == 0)
         return (NULL);
     fp = my_internal_file_find_ptr();
+    if (fp == NULL)
+        return (NULL);
     fp->fd = my_open(filename, open_flags, 0666);
     if (my_fileno(fp) < 0) {
         fp->flags = 0;

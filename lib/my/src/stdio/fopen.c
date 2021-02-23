@@ -46,7 +46,7 @@ my_file_t *my_fopen(const char *filename, const char *mode)
     fp->flags = file_flags;
     setup_functions(fp);
     if (open_flags & O_APPEND)
-        fp->seek(fp->internal_data, 0, SEEK_END);
+        my_internal_file_do_seek(fp->internal_data, 0, SEEK_END);
     return (fp);
 }
 #endif

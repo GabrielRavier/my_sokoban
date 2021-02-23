@@ -21,8 +21,8 @@ struct sokoban_map_square {
 };
 
 struct sokoban_map_position {
-    size_t x;
-    size_t y;
+    ssize_t x;
+    ssize_t y;
 };
 
 struct sokoban_map {
@@ -32,8 +32,9 @@ struct sokoban_map {
     struct sokoban_map_position player_pos;
 };
 
-char sokoban_map_get_square(const struct sokoban_map *map, ssize_t x,
-    ssize_t y);
-void sokoban_map_move_square(struct sokoban_map *map, ssize_t x, ssize_t y,
-    ssize_t x_move, ssize_t y_move);
+char sokoban_map_get_square(const struct sokoban_map *map,
+    const struct sokoban_map_position *pos);
+void sokoban_map_move_square(struct sokoban_map *map,
+    const struct sokoban_map_position *src_pos,
+    const struct sokoban_map_position *dest_pos_diff);
 struct sokoban_map sokoban_map_copy(const struct sokoban_map *map);

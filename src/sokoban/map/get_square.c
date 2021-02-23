@@ -7,8 +7,10 @@
 
 #include "../map.h"
 
-char sokoban_map_get_square(const struct sokoban_map *map, ssize_t x, ssize_t y)
+char sokoban_map_get_square(const struct sokoban_map *map,
+    const struct sokoban_map_position *pos)
 {
-    return ((x < 0 || y < 0 || x >= map->columns || y >= map->lines) ? 0 :
-        map->squares[y * map->columns + x].character);
+    return ((pos->x < 0 || pos->y < 0 || pos->x >= map->columns || pos->y >=
+        map->lines) ? 0 : map->squares[pos->y * map->columns +
+        pos->x].character);
 }

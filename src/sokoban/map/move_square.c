@@ -8,14 +8,19 @@
 #include "../map.h"
 #include "my/assert.h"
 
-void sokoban_map_move_square(struct sokoban_map *map, ssize_t x, ssize_t y,
-    ssize_t x_move, ssize_t y_move)
+void sokoban_map_move_square(struct sokoban_map *map,
+    const struct sokoban_map_position *src_pos,
+    const struct sokoban_map_position *dest_pos_diff)
 {
-    char move_to_square = sokoban_map_get_square(map, x + x_move, y + y_move);
+    char move_to_square = sokoban_map_get_square(map,
+        &((struct sokoban_map_position){src_pos->x + dest_pos_diff->x,
+        src_pos->y + dest_pos_diff->y}));
 
     MY_ASSERT(move_to_square == ' ' || move_to_square == 'O');
-    map->squares[(y + y_move) * map->columns + (x + x_move)].character =
-        map->squares[y * map->columns + x].character;
-    map->squares[y * map->columns + x].character =
-        map->squares[y * map->columns + x].is_o_underneath ? 'O' : ' ';
+    map->squares[(src_pos->y + dest_pos_diff->y) * map->columns + (src_pos->x +
+        dest_pos_diff->x)].character = map->squares[src_pos->y * map->columns +
+        src_pos->x].character;
+    map->squares[src_pos->y * map->columns + src_pos->x].character =
+        map->squares[src_pos->y * map->columns + src_pos->x].is_o_underneath ?
+        'O' : ' ';
 }

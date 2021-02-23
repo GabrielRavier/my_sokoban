@@ -12,14 +12,16 @@
 #include <stdbool.h>
 
 static bool do_box_and_check_player_move(struct sokoban_map *map,
-    char player_move_square, char two_ahead_square, int x_move, int y_move)
+    char player_move_square, char two_ahead_square,
+    const struct sokoban_map_position *dest_pos_diff)
 {
     if (player_move_square == ' ' || player_move_square == 'O')
         return (true);
     if (player_move_square == 'X' && (two_ahead_square == ' ' ||
         two_ahead_square == 'O')) {
-        sokoban_map_move_square(map, map->player_pos.x + x_move,
-            map->player_pos.y + y_move, x_move, y_move);
+        sokoban_map_move_square(map, &((struct sokoban_map_position){
+            map->player_pos.x + dest_pos_diff->x, map->player_pos.y +
+            dest_pos_diff->y}), dest_pos_diff);
         return (true);
     }
     return (false);
@@ -27,20 +29,22 @@ static bool do_box_and_check_player_move(struct sokoban_map *map,
 
 static void try_move(struct sokoban_map *map, int key)
 {
-    int x_move = (key == KEY_RIGHT) - (key == KEY_LEFT);
-    int y_move = (key == KEY_DOWN) - (key == KEY_UP);
-    char player_move_square = sokoban_map_get_square(map, map->player_pos.x +
-        x_move, map->player_pos.y + y_move);
-    char two_ahead_square = sokoban_map_get_square(map, map->player_pos.x +
-        x_move * 2, map->player_pos.y + y_move * 2);
+    struct sokoban_map_position dest_pos_diff = {.x = (key == KEY_RIGHT) -
+        (key == KEY_LEFT), .y = (key == KEY_DOWN) - (key == KEY_UP)};
+    char player_move_square = sokoban_map_get_square(map,
+        &((struct sokoban_map_position){map->player_pos.x + dest_pos_diff.x,
+        map->player_pos.y + dest_pos_diff.y}));
+    char two_ahead_square = sokoban_map_get_square(map,
+        &((struct sokoban_map_position){map->player_pos.x + dest_pos_diff.x * 2,
+        map->player_pos.y + dest_pos_diff.y * 2}));
     bool should_move_player = do_box_and_check_player_move(map,
-        player_move_square, two_ahead_square, x_move, y_move);
+        player_move_square, two_ahead_square, &dest_pos_diff);
 
     if (should_move_player) {
-        sokoban_map_move_square(map, map->player_pos.x, map->player_pos.y,
-            x_move, y_move);
-        map->player_pos.x += x_move;
-        map->player_pos.y += y_move;
+        sokoban_map_move_square(map, &((struct sokoban_map_position){
+            map->player_pos.x, map->player_pos.y}), &dest_pos_diff);
+        map->player_pos.x += dest_pos_diff.x;
+        map->player_pos.y += dest_pos_diff.y;
     }
 }
 

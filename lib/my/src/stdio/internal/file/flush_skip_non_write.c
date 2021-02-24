@@ -18,8 +18,8 @@ int my_internal_file_flush_skip_non_write(my_file_t *fp)
     if (!(fp->flags & MY_FILE_FLAG_WRITE) || fp->buffer.base == NULL)
         return (0);
     fp->buffer_ptr = fp->buffer.base;
-    fp->write_space_left = fp->flags & (MY_FILE_FLAG_NOT_BUFFERED |
-        MY_FILE_FLAG_LINE_BUFFERED) ? 0 : fp->buffer.size;
+    fp->write_space_left = (fp->flags & (MY_FILE_FLAG_NOT_BUFFERED |
+        MY_FILE_FLAG_LINE_BUFFERED)) ? 0 : fp->buffer.size;
     while (bytes_to_write > 0) {
         bytes_written = my_internal_file_do_write(fp->internal_data, base_it,
             bytes_to_write);

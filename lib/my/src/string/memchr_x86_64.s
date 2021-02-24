@@ -83,7 +83,7 @@ my_memchr_satisfy_valgrind:
     .p2align 4
 my_memchr:
     .cfi_startproc
-    jmp [qword ptr my_memchr_ptr[rip]]
+    jmp qword ptr [rip + my_memchr_ptr]
 
     .cfi_endproc
     .size my_memchr, . - my_memchr

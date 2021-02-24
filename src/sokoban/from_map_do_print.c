@@ -20,7 +20,7 @@ static bool terminal_too_small(struct sokoban_map *map)
     return (maxx < map->columns || maxy < map->lines);
 }
 
-static void print_please_enlarge_terminal(struct sokoban_map *map)
+static void print_please_enlarge_terminal(void)
 {
     int maxx;
     int maxy;
@@ -47,7 +47,7 @@ static void print_map(struct sokoban_map *map)
 void sokoban_from_map_do_print(struct sokoban_map *map)
 {
     if (terminal_too_small(map))
-        print_please_enlarge_terminal(map);
+        print_please_enlarge_terminal();
     else
         print_map(map);
 }

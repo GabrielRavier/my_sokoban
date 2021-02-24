@@ -158,7 +158,7 @@ tests_binary: $(TESTS_OBJECT_FILES) ../libmy.a
 obj/%.o: %.s
 	@mkdir --parents obj/src/string
 	@mkdir --parents obj/src/sysdeps
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS) -Wno-unused-command-line-argument
 
 obj/%.o: %.c
 	@mkdir --parents obj/src/assert

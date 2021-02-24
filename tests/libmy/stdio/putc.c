@@ -58,6 +58,8 @@ Test(my_fputc, midnight_bsd_str)
     midnight_bsd_do_test_str(my_fputc);
 }
 
+#if LIBMY_USE_LIBC_STDIO
+
 Test(my_putc, midnight_bsd_err)
 {
     midnight_bsd_do_test_err(my_putc);
@@ -67,6 +69,8 @@ Test(my_fputc, midnight_bsd_err)
 {
     midnight_bsd_do_test_err(my_fputc);
 }
+
+#endif
 
 // TODO Add first gnulib tests when we get to setvbuf
 // TODO Add second gnulib tests when we get to fdopen+setvbuf

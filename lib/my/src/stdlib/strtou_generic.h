@@ -9,7 +9,9 @@
 #include <errno.h>
 #include <stdbool.h>
 
-static char digit(char c)
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
+static unsigned char digit(char c)
 {
     return (c <= '9' ? c - '0' : my_tolower(c) + 10 - 'a');
 }

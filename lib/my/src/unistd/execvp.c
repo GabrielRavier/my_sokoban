@@ -12,6 +12,8 @@
 #include <errno.h>
 #include <stdbool.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 static const char *make_exec_pathname(const char *path_string, const char *file,
     char **exec_pathname)
 {
@@ -25,10 +27,10 @@ static const char *make_exec_pathname(const char *path_string, const char *file,
 
 static bool handle_enoexec(const char *file, char *const argv[])
 {
-    char *new_arguments[2560];
+    const char *new_arguments[2560];
 
     new_arguments[0] = "sh";
-    new_arguments[1] = (char *)file;
+    new_arguments[1] = file;
     for (size_t i = 1; argv[i] != NULL; ++i) {
         new_arguments[i + 1] = argv[i];
         if (i >= 2558) {
@@ -36,7 +38,7 @@ static bool handle_enoexec(const char *file, char *const argv[])
             return (false);
         }
     }
-    my_execv("/bin/sh", new_arguments);
+    my_execv("/bin/sh", (char *const *)new_arguments);
     return (true);
 }
 

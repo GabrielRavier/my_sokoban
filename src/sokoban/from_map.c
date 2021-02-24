@@ -37,17 +37,16 @@ MY_ATTR_PURE static bool no_boxes_can_move(struct sokoban_map *map)
 {
     for (size_t y = 0; y < map->lines; ++y)
         for (size_t x = 0; x < map->columns; ++x)
-            if (map->squares[y * map->columns + x].character == 'X') {
-                if ((is_good_square(sokoban_map_get_square(map,
-                    &((struct sokoban_map_position){x, y - 1}))) &&
-                    is_good_square(sokoban_map_get_square(map,
-                    &((struct sokoban_map_position){x, y + 1})))) ||
-                    (is_good_square(sokoban_map_get_square(map,
-                    &((struct sokoban_map_position){x - 1, y}))) &&
-                    is_good_square(sokoban_map_get_square(map,
-                    &((struct sokoban_map_position){x + 1, y})))))
-                    return (false);
-            }
+            if ((map->squares[y * map->columns + x].character == 'X') &&
+                ((is_good_square(sokoban_map_get_square(map,
+                &((struct sokoban_map_position){x, y - 1}))) &&
+                is_good_square(sokoban_map_get_square(map,
+                &((struct sokoban_map_position){x, y + 1})))) ||
+                (is_good_square(sokoban_map_get_square(map,
+                &((struct sokoban_map_position){x - 1, y}))) &&
+                is_good_square(sokoban_map_get_square(map,
+                &((struct sokoban_map_position){x + 1, y}))))))
+                return (false);
     return (true);
 }
 

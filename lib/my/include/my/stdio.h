@@ -145,6 +145,10 @@ int my_fileno(my_file_t *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 // Returns the error indicator for the given file
 int my_ferror(my_file_t *fp) MY_ATTR_NOTHROW MY_ATTR_WARN_UNUSED_RESULT;
 
+// Writes size * n bytes from the given buffer to the given file
+size_t my_fwrite(const void *MY_RESTRICT buffer, size_t size, size_t count,
+    my_file_t *fp);
+
 static inline void my_fclose_ptr(my_file_t **ptr)
 {
     if (*ptr)

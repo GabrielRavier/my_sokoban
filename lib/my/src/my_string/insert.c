@@ -18,12 +18,12 @@ struct my_string *my_string_insert(struct my_string *self, const char *string,
 {
     if (self == NULL || string == NULL || length == 0 ||
         (position > self->length))
-        return self;
+        return (self);
     my_string_guarantee_can_expand(self, length);
     my_memmove(self->string + position + length, self->string + position,
         self->length - position);
     my_memcpy(self->string + position, string, length);
     self->length += length;
     self->string[self->length] = '\0';
-    return self;
+    return (self);
 }

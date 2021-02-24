@@ -18,11 +18,11 @@ struct my_string *my_string_append_vprintf(struct my_string *self,
     char *asprintf_result;
 
     if (self == NULL || format == NULL)
-        return NULL;
+        return (NULL);
     asprintf_length = my_vasprintf(&asprintf_result, format, arguments);
     if (asprintf_length >= 0) {
         my_string_append(self, asprintf_result, (unsigned)asprintf_length);
         my_free(asprintf_result);
     }
-    return self;
+    return (self);
 }

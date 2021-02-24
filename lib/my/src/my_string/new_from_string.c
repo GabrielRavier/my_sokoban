@@ -14,5 +14,5 @@ struct my_string *my_string_new_from_string(const char *string, size_t length)
     struct my_string *self = my_string_new();
     if (string)
         my_string_append(self, string, length);
-    return self;
+    return (self);
 }

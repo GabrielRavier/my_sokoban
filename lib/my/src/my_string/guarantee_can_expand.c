@@ -27,5 +27,5 @@ struct my_string *my_string_guarantee_can_expand(struct my_string *self,
             self->string, self->allocated_size, current_allocated_size);
         MY_ASSERT(self->string != NULL);
     }
-    return self;
+    return (self);
 }

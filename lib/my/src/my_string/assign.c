@@ -12,8 +12,8 @@ struct my_string *my_string_assign(struct my_string *self,
     const struct my_string *source)
 {
     if (!self)
-        return NULL;
+        return (NULL);
     my_string_resize(self, source->length);
     my_memcpy(self->string, source->string, self->length);
-    return self;
+    return (self);
 }

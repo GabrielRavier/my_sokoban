@@ -21,5 +21,5 @@ struct my_string *my_string_new(void)
     self->string = NULL;
     my_string_guarantee_can_expand(self, 1);
     self->string[0] = '\0';
-    return self;
+    return (self);
 }

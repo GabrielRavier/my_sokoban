@@ -10,5 +10,5 @@
 struct my_string *my_string_append(struct my_string *self, const char *string,
     size_t length)
 {
-    return my_string_insert(self, string, length, self->length);
+    return (my_string_insert(self, string, length, self->length));
 }

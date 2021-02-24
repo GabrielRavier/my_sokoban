@@ -17,9 +17,9 @@ extern char **environ;
 static bool grow_environ(size_t environ_entry_count)
 {
     static bool has_alloced_environ_before = false;
-    char **new_environ = my_realloc_size(has_alloced_environ_before ? environ :
-        NULL, sizeof(char *) * (environ_entry_count + 2), sizeof(char *) *
-        (environ_entry_count + 1));
+    char **new_environ = (char **)my_realloc_size(has_alloced_environ_before ?
+        environ : NULL, sizeof(char *) * (environ_entry_count + 2),
+        sizeof(char *) * (environ_entry_count + 1));
 
     if (new_environ == NULL) {
         errno = ENOMEM;
@@ -51,7 +51,7 @@ static int set_new_value(const char *name, const char *value, size_t len_value,
 {
     size_t len_name = my_strlen(name);
 
-    environ[value_offset] = my_malloc(len_name + len_value + 2);
+    environ[value_offset] = (char *)my_malloc(len_name + len_value + 2);
     if (environ[value_offset] == NULL) {
         errno = ENOMEM;
         return (-1);

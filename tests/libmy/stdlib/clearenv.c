@@ -9,19 +9,21 @@
 #include "my/stdlib.h"
 #include "my/string.h"
 
+extern char **environ;
+
 Test(my_clearenv, bionic)
 {
-    extern char **environ;
-
     cr_assert_eq(my_setenv("test-variable", "a", 1), 0);
 
     char **old_environ = NULL;
-    size_t i;
-    for (i = 0; environ[i] != NULL; ++i) {
-        old_environ = realloc(old_environ, sizeof(char *) * (i + 2));
-        old_environ[i] = my_strdup(environ[i]);
+    {
+        size_t i;
+        for (i = 0; environ[i] != NULL; ++i) {
+            old_environ = (char **)realloc(old_environ, sizeof(char *) * (i + 2));
+            old_environ[i] = my_strdup(environ[i]);
+        }
+        old_environ[i] = NULL;
     }
-    old_environ[i] = NULL;
 
     cr_assert_eq(clearenv(), 0);
     cr_assert_eq(environ, NULL);

@@ -10,7 +10,6 @@
 #include "my/string.h"
 #include "my/macros.h"
 
-#define QSORT_NAME qsort_r
 #define MY_QSORT_NAME my_qsort_r
 #define IS_QSORT_R
 

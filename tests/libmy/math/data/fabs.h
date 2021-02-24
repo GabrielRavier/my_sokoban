@@ -7,6 +7,9 @@
 
 #include <math.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-conversion"
+
 /*
  * Copyright (C) 2014 The Android Open Source Project
  *
@@ -23,7 +26,7 @@
  * limitations under the License.
  */
 
-const static struct {
+static const struct {
     double output;
     double input;
 } G_FABS_INTEL_DATA[] = {
@@ -955,3 +958,4 @@ static struct {
   }
 };
 
+#pragma GCC diagnostic pop

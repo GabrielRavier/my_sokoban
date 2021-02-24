@@ -10,6 +10,8 @@
 #include "my/cpp-like/iterator.h"
 #include <criterion/redirect.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 static void do_one_test(int argc, char **argv, const char *optstring, int expected_result, int expected_optind, const char *expected_optarg)
 {
     int result = my_getopt(argc, argv, optstring);

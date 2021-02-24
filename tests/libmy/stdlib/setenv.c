@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <errno.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 Test(my_setenv, midnightbsd_gnulib)
 {
     cr_assert_eq(my_setenv("a", "==", -1), 0);
@@ -89,12 +91,12 @@ Test(my_setenv, freebsd_setenv_mixed)
 Test(my_setenv, klibc)
 {
     cr_assert_eq(my_setenv("SETENV", "setenv", 1), 0);
-    cr_assert_eq(putenv("PUTENV=putenv"), 0);
+    cr_assert_eq(putenv((char *)"PUTENV=putenv"), 0);
     cr_assert_str_eq(my_getenv("SETENV"), "setenv");
     cr_assert_str_eq(my_getenv("PUTENV"), "putenv");
 
     cr_assert_eq(my_setenv("SETENV", "setenv_good", 1), 0);
-    cr_assert_eq(putenv("PUTENV=putenv_good"), 0);
+    cr_assert_eq(putenv((char *)"PUTENV=putenv_good"), 0);
     cr_assert_str_eq(my_getenv("SETENV"), "setenv_good");
     cr_assert_str_eq(my_getenv("PUTENV"), "putenv_good");
 

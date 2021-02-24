@@ -180,11 +180,11 @@ Test(my_strtol, bionic)
         do_one_test(buffer, 0);
         ++buffer[my_strlen(buffer) - 1];
         do_one_test(buffer, 0);
-        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jx", minimums[i]), 0);
+        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jx", (uintptr_t)minimums[i]), 0);
         do_one_test(buffer, 0);
-        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jX", minimums[i]), 0);
+        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jX", (uintptr_t)minimums[i]), 0);
         do_one_test(buffer, 0);
-        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jo", minimums[i]), 0);
+        cr_assert_geq(snprintf(buffer, sizeof(buffer), "%jo", (uintptr_t)minimums[i]), 0);
         do_one_test(buffer, 0);
     }
 

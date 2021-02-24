@@ -16,8 +16,8 @@
 
 static void do_one_test(long double x)
 {
-    double x_double = x;
-    float x_float = x;
+    double x_double = (double)x;
+    float x_float = (float)x;
     long double result_us = my_fabsl(x);
     long double result_them = fabsl(x);
     double result_us_double = my_fabs(x_double);
@@ -43,8 +43,8 @@ Test(my_fabs, random_floats)
             long double val;
             unsigned char bytes[sizeof(long double)];
         } u;
-        for (size_t i = 0; i < sizeof(u.bytes); ++i)
-            u.bytes[i] = rand();
+        for (size_t j = 0; j < sizeof(u.bytes); ++j)
+            u.bytes[j] = rand();
         do_one_test(u.val);
     }
 }

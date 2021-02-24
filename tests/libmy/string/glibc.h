@@ -23,10 +23,10 @@ static void glibc_test_string_init(void)
 #ifdef GLIBC_MIN_PAGE_SIZE
     glibc_page_size = MY_MAX(glibc_page_size, (GLIBC_MIN_PAGE_SIZE));
 #endif
-    glibc_buf1 = mmap(0, 2 * glibc_page_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+    glibc_buf1 = (char *)mmap(0, 2 * glibc_page_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
     cr_assert_neq(glibc_buf1, MAP_FAILED);
     cr_assert_eq(mprotect(glibc_buf1 + glibc_page_size, glibc_page_size, PROT_NONE), 0);
-    glibc_buf2 = mmap(0, 2 * glibc_page_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+    glibc_buf2 = (char *)mmap(0, 2 * glibc_page_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
     cr_assert_neq(glibc_buf2, MAP_FAILED);
     cr_assert_eq(mprotect(glibc_buf2 + glibc_page_size, glibc_page_size, PROT_NONE), 0);
 

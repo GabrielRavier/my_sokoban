@@ -183,36 +183,40 @@ Test(my_strncmp, glibc)
         for (size_t i = 0; i < 80; ++i)
             do_one_test(s1 + offset, s2 + offset, i);
 
-    s1 = glibc_buf1;
-    size_t i = 0;
-    while (i < glibc_page_size - 1)
-        s1[i++] = 23;
-    s1[i] = 0;
+    {
+        s1 = glibc_buf1;
+        size_t i = 0;
+        while (i < glibc_page_size - 1)
+            s1[i++] = 23;
+        s1[i] = 0;
+    }
 
     s2 = my_strdup(s1);
     for (size_t i = 0; i < 64; ++i)
         do_glibc_page_test(3988 + i, 2636, s2);
     free(s2);
 
-    /* To trigger glibc bug 25933, we need a size that is equal to the vector
-       length times 4. In the case of AVX2 for Intel, we need 32 * 4.  We
-       make this test generic and run it for all architectures as additional
-       boundary testing for such related algorithms.  */
-    static const size_t size = 32 * 4;
+    {
+        /* To trigger glibc bug 25933, we need a size that is equal to the vector
+           length times 4. In the case of AVX2 for Intel, we need 32 * 4.  We
+           make this test generic and run it for all architectures as additional
+           boundary testing for such related algorithms.  */
+        static const size_t SIZE = 32 * 4;
 
-    my_memset(glibc_buf1, 'a', glibc_page_size);
-    my_memset(glibc_buf2, 'a', glibc_page_size);
-    glibc_buf1[glibc_page_size - 1] = '\0';
+        my_memset(glibc_buf1, 'a', glibc_page_size);
+        my_memset(glibc_buf2, 'a', glibc_page_size);
+        glibc_buf1[glibc_page_size - 1] = '\0';
 
-    /* Iterate over a size that is just below where we expect the bug to
-       trigger up to the size we expect will trigger the bug e.g. [99-128].
-       Likewise iterate the start of two strings between 30 and 31 bytes
-       away from the boundary to simulate alignment changes.  */
-    for (size_t s = 99; s < size; ++s)
-        for (size_t s1a = 30; s1a < 32; ++s1a)
-            for (size_t s2a = 30; s2a < 32; ++s2a)
-                do_one_test(glibc_buf1 + glibc_page_size - s - s1a,
-                            glibc_buf2 + glibc_page_size - s - s2a, s);
+        /* Iterate over a size that is just below where we expect the bug to
+           trigger up to the size we expect will trigger the bug e.g. [99-128].
+           Likewise iterate the start of two strings between 30 and 31 bytes
+           away from the boundary to simulate alignment changes.  */
+        for (size_t s = 99; s < SIZE; ++s)
+            for (size_t s1a = 30; s1a < 32; ++s1a)
+                for (size_t s2a = 30; s2a < 32; ++s2a)
+                    do_one_test(glibc_buf1 + glibc_page_size - s - s1a,
+                                glibc_buf2 + glibc_page_size - s - s2a, s);
+    }
 
     // Non-specific testcases
     for (size_t i = 0; i < 16; ++i) {
@@ -288,15 +292,15 @@ Test(my_strncmp, glibc)
             len1 = 0x1FF - j - (random() & 7);
         size_t len2 = (pos >= len1) ? len1 : (len1 + (len1 == 511 - j ? 0 : random() % (511 - j - len1)));
         j = MY_MIN(MY_MAX(pos, len2) + align1 + 0x40, 0x200);
-        for (size_t i = 0; i < j; ++i) {
-            p1[i] = random() & 0xFF;
-            if (i < len1 + align1 && p1[i] == '\0')
-                p1[i] = 1 + random() % 0xFE;
+        for (size_t k = 0; k < j; ++k) {
+            p1[k] = random() & 0xFF;
+            if (k < len1 + align1 && p1[k] == '\0')
+                p1[k] = 1 + random() % 0xFE;
         }
-        for (size_t i = 0; i < j; ++i) {
-            p2[i] = random() & 0xFF;
-            if (i < len2 + align2 && p2[i] == '\0')
-                p2[i] = 1 + random() % 0xFE;
+        for (size_t k = 0; k < j; ++k) {
+            p2[k] = random() & 0xFF;
+            if (k < len2 + align2 && p2[k] == '\0')
+                p2[k] = 1 + random() % 0xFE;
         }
         my_memcpy(p2 + align2, p1 + align1, pos);
         if (pos < len1) {

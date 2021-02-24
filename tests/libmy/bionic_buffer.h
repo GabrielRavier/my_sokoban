@@ -171,12 +171,12 @@ static int BIONIC_BUFFER_DOUBLE_ALIGNS[][4] = {
     { 128, 16, 128, 1 },
 };
 
-static size_t bionic_buffer_set_increase(size_t length)
+static inline size_t bionic_buffer_set_increase(size_t length)
 {
     return length >= 4096 ? 1024 : length >= 1024 ? 256 : 1;
 }
 
-static void *bionic_buffer_get_aligned_ptr(void *original_ptr, int alignment, int or_mask)
+static inline void *bionic_buffer_get_aligned_ptr(void *original_ptr, int alignment, int or_mask)
 {
     uintptr_t ptr_as_int = (uintptr_t)original_ptr;
 
@@ -187,7 +187,7 @@ static void *bionic_buffer_get_aligned_ptr(void *original_ptr, int alignment, in
     return (void *)ptr_as_int;
 }
 
-static void bionic_buffer_set_fencepost(uint8_t *buffer)
+static inline void bionic_buffer_set_fencepost(uint8_t *buffer)
 {
     for (size_t i = 0; i < BIONIC_BUFFER_FENCEPOST_LENGTH; i += 2) {
         buffer[i] = 0xDE;
@@ -195,7 +195,7 @@ static void bionic_buffer_set_fencepost(uint8_t *buffer)
     }
 }
 
-static void bionic_buffer_verify_fencepost(uint8_t *buffer)
+static inline void bionic_buffer_verify_fencepost(uint8_t *buffer)
 {
     for (size_t i = 0; i < BIONIC_BUFFER_FENCEPOST_LENGTH; i += 2) {
         if (buffer[i] != 0xDE || buffer[i + 1] != 0xAD) {
@@ -210,7 +210,7 @@ static void bionic_buffer_verify_fencepost(uint8_t *buffer)
     }
 }
 
-static void bionic_run_single_buffer_align_test(size_t max_test_size, void (*test_func)(uint8_t *, size_t))
+static inline void bionic_run_single_buffer_align_test(size_t max_test_size, void (*test_func)(uint8_t *, size_t))
 {
     uint8_t *buffer = malloc(max_test_size * 3);
 
@@ -234,7 +234,7 @@ static void bionic_run_single_buffer_align_test(size_t max_test_size, void (*tes
     free(buffer);
 }
 
-static void bionic_run_single_buffer_overread_test(void (*test_func)(uint8_t *, size_t))
+static inline void bionic_run_single_buffer_overread_test(void (*test_func)(uint8_t *, size_t))
 {
     const size_t page_size = sysconf(_SC_PAGE_SIZE);
 
@@ -252,7 +252,7 @@ static void bionic_run_single_buffer_overread_test(void (*test_func)(uint8_t *, 
     free(memory);
 }
     
-static void bionic_run_cmp_buffer_align_test(size_t max_test_size, void (*test_cmp_func)(uint8_t *, uint8_t *, size_t), void (*test_miscmp_func)(uint8_t *, uint8_t *, size_t, size_t), size_t (*set_incr)(size_t))
+static inline void bionic_run_cmp_buffer_align_test(size_t max_test_size, void (*test_cmp_func)(uint8_t *, uint8_t *, size_t), void (*test_miscmp_func)(uint8_t *, uint8_t *, size_t, size_t), size_t (*set_incr)(size_t))
 {
     if (set_incr == NULL)
         set_incr = bionic_buffer_set_increase;
@@ -289,7 +289,7 @@ static void bionic_run_cmp_buffer_align_test(size_t max_test_size, void (*test_c
     free(buffer2);
 }
 
-static void bionic_run_cmp_buffer_overread_test(void (*test_cmp_func)(uint8_t *, uint8_t *, size_t), void (*test_miscmp_func)(uint8_t *, uint8_t *, size_t, size_t))
+static inline void bionic_run_cmp_buffer_overread_test(void (*test_cmp_func)(uint8_t *, uint8_t *, size_t), void (*test_miscmp_func)(uint8_t *, uint8_t *, size_t, size_t))
 {
     size_t page_size = sysconf(_SC_PAGE_SIZE);
 
@@ -321,7 +321,7 @@ static void bionic_run_cmp_buffer_overread_test(void (*test_cmp_func)(uint8_t *,
     free(memory2);
 }
 
-static void bionic_run_source_destination_buffer_align_test(size_t max_test_size, void (*test_func)(uint8_t *, uint8_t *, size_t))
+static inline void bionic_run_source_destination_buffer_align_test(size_t max_test_size, void (*test_func)(uint8_t *, uint8_t *, size_t))
 {
     uint8_t *source = malloc(max_test_size * 3), *destination = malloc(max_test_size * 3);
 
@@ -345,7 +345,7 @@ static void bionic_run_source_destination_buffer_align_test(size_t max_test_size
     free(source);
 }
 
-static void bionic_run_source_destination_buffer_overread_test(void (*test_func)(uint8_t *, uint8_t *, size_t))
+static inline void bionic_run_source_destination_buffer_overread_test(void (*test_func)(uint8_t *, uint8_t *, size_t))
 {
     size_t page_size = sysconf(_SC_PAGE_SIZE);
 

@@ -36,17 +36,6 @@ static void midnight_bsd_do_test_str(int (*func)(int, my_file_t *))
     cr_assert_eq(unlink(path), 0);
 }
 
-static void midnight_bsd_do_test_err(int (*func)(int, my_file_t *))
-{
-    const char *path = tmpnam(NULL);
-    my_file_t *fp = my_fopen(path, "w+");
-
-    cr_assert_neq(fp, NULL);
-    cr_assert_eq(my_fclose(fp), 0);
-    cr_assert_eq(unlink(path), 0);
-    cr_assert_eq(func('x', fp), EOF);
-}
-
 // Note: The original for these also has tests for putc_unlocked
 Test(my_putc, midnight_bsd_str)
 {
@@ -58,7 +47,18 @@ Test(my_fputc, midnight_bsd_str)
     midnight_bsd_do_test_str(my_fputc);
 }
 
-#if LIBMY_USE_LIBC_STDIO
+#if !LIBMY_USE_LIBC_FILE
+
+static void midnight_bsd_do_test_err(int (*func)(int, my_file_t *))
+{
+    const char *path = tmpnam(NULL);
+    my_file_t *fp = my_fopen(path, "w+");
+
+    cr_assert_neq(fp, NULL);
+    cr_assert_eq(my_fclose(fp), 0);
+    cr_assert_eq(unlink(path), 0);
+    cr_assert_eq(func('x', fp), EOF);
+}
 
 Test(my_putc, midnight_bsd_err)
 {

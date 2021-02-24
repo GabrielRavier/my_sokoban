@@ -15,8 +15,8 @@
 
 static void do_one_test(long double x)
 {
-    double x_double = x;
-    float x_float = x;
+    double x_double = (double)x;
+    float x_float = (float)x;
     cr_assert_eq((bool)my_signbit(x), (bool)signbit(x));
     cr_assert_eq((bool)my_signbit(x_double), (bool)signbit(x_double));
     cr_assert_eq((bool)my_signbit(x_float), (bool)signbit(x_float));
@@ -33,8 +33,8 @@ Test(my_signbit, random_floats)
             long double val;
             unsigned char bytes[sizeof(long double)];
         } u;
-        for (size_t i = 0; i < sizeof(u.bytes); ++i)
-            u.bytes[i] = rand();
+        for (size_t j = 0; j < sizeof(u.bytes); ++j)
+            u.bytes[j] = rand();
         do_one_test(u.val);
     }
 }

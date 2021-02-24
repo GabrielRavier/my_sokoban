@@ -277,14 +277,14 @@ static int sort_helper_c_str(const void *a, const void *b)
 static int sort_helper_c_str_ptr(const void *a, const void *b, void *data)
 {
     cr_assert_eq(*(int *)data, 42);
-    return do_compare_str(*(char **)a, *(char **)b);
+    return do_compare_str(*(const char *const *)a, *(const char *const *)b);
 }
 
 #else
 
 static int sort_helper_c_str_ptr(const void *a, const void *b)
 {
-    return do_compare_str(*(char **)a, *(char **)b);
+    return do_compare_str(*(const char *const *)a, *(const char *const *)b);
 }
 
 #endif
@@ -294,14 +294,14 @@ static int sort_helper_c_str_ptr(const void *a, const void *b)
 static int sort_helper_uchar(const void *a, const void *b, void *data)
 {
     cr_assert_eq(*(int *)data, 42);
-    return (*(unsigned char *)a - *(unsigned char *)b);
+    return (*(const unsigned char *)a - *(const unsigned char *)b);
 }
 
 #else
 
 static int sort_helper_uchar(const void *a, const void *b)
 {
-    return (*(unsigned char *)a - *(unsigned char *)b);
+    return (*(const unsigned char *)a - *(const unsigned char *)b);
 }
 
 #endif

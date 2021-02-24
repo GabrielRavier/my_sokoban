@@ -71,7 +71,8 @@ static void string_to_map(struct sokoban_map *map,
         current_strchr = strchr_result + 1;
     }
     map->lines = count_in_my_string(map_string, '\n');
-    map->squares = my_malloc(sizeof(*map->squares) * map->lines * map->columns);
+    map->squares = (struct sokoban_map_square *)my_malloc(
+        sizeof(*map->squares) * map->lines * map->columns);
     do_fill_map(map, map_string);
     for (size_t y = 0; y < map->lines; ++y)
         for (size_t x = 0; x < map->columns; ++x)

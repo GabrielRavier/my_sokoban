@@ -18,6 +18,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 Test(my_execvp, glibc_1)
 {
     // Try execvp on a non-existing file
@@ -26,9 +28,9 @@ Test(my_execvp, glibc_1)
 
     cr_assert_eq(my_setenv("PATH", current_working_directory, 1), 0);
 
-    char *argv[] = { "does-not-exist-dwpoqjfqw9jf980231jf1", NULL };
+    const char *argv[] = { "does-not-exist-dwpoqjfqw9jf980231jf1", NULL };
     errno = 0;
-    cr_assert_eq(my_execvp(argv[0], argv), -1);
+    cr_assert_eq(my_execvp(argv[0], (char *const *)argv), -1);
     free(current_working_directory);
     cr_assert_eq(errno, ENOENT);
 }
@@ -118,8 +120,8 @@ Test(my_execvp, glibc_4)
     cr_assert_eq(stat("/usr/bin/does-not-exist", &stat_buffer), -1);
     my_unsetenv("PATH");
 
-    char *argv[] = { "does-not-exist", NULL };
-    cr_assert_eq(my_execvp(argv[0], argv), -1);
+    const char *argv[] = { "does-not-exist", NULL };
+    cr_assert_eq(my_execvp(argv[0], (char *const *)argv), -1);
     cr_assert_eq(errno, ENOENT);
 }
 

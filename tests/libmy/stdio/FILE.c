@@ -77,8 +77,8 @@ static void cloudlibc_do_random_test(my_file_t *fp)
 
             char write_buffer[sizeof(contents)];
             size_t write_length = size * count;
-            for (size_t i = 0; i < write_length; ++i)
-                write_buffer[i] = random();
+            for (size_t j = 0; j < write_length; ++j)
+                write_buffer[j] = random();
 
             size_t result = write_length == 0 ? 0 : count;
             cr_assert_eq(my_fwrite(write_buffer, size, count, fp), result);
@@ -90,6 +90,8 @@ static void cloudlibc_do_random_test(my_file_t *fp)
             }
             break;
         }
+        default:
+            cr_assert(false && "Should NEVER be reached");
         }
         cr_assert_geq(offset, 0);
         cr_assert_leq(offset, sizeof(contents));

@@ -9,6 +9,8 @@
 #include "my/stdlib.h"
 #include <stdio.h>
 
+#pragma GCC diagnostic ignored "-Wcast-qual"
+
 Test(my_getenv, freebsd_clearenv_basic)
 {
     char name[1024], value[1024];
@@ -40,7 +42,7 @@ Test(my_getenv, freebsd_basic)
 
 Test(my_getenv, dietlibc)
 {
-    cr_assert_eq(putenv("foo=bar"), 0);
+    cr_assert_eq(putenv((char *)"foo=bar"), 0);
     cr_assert_eq(my_getenv("foo"), getenv("foo"));
 }
 

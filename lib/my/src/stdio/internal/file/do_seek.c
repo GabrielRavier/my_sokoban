@@ -21,7 +21,7 @@ static my_fpos_t finish_not_failed(my_file_t *fp, my_fpos_t seek_result)
 
 my_fpos_t my_internal_file_do_seek(my_file_t *fp, my_fpos_t offset, int whence)
 {
-    int saved_errno = saved_errno;
+    int saved_errno = errno;
     int errno_from_seek;
     my_fpos_t seek_result;
 

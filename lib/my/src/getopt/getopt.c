@@ -84,7 +84,7 @@ int my_getopt(int argc, char **argv, const char *optstring)
         if (optind >= state.argc || state.argv[optind][0] != '-' ||
             state.argv[optind][1] == '\0')
             return (-1);
-        else if (my_strcmp(state.argv[optind], "--") == 0) {
+        if (my_strcmp(state.argv[optind], "--") == 0) {
             ++optind;
             return (-1);
         }

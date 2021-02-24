@@ -20,6 +20,7 @@ Test(my_clearenv, bionic)
         size_t i;
         for (i = 0; environ[i] != NULL; ++i) {
             old_environ = (char **)realloc(old_environ, sizeof(char *) * (i + 2));
+            cr_assert_neq(old_environ, NULL);
             old_environ[i] = my_strdup(environ[i]);
         }
         old_environ[i] = NULL;

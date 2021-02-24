@@ -198,7 +198,7 @@ static void glibc_do_random_tests(void)
                 p1[i + alignment] = character2;
         }
         checked_my_memset(p1 + alignment, character, length);
-        size_t i = k;
+        size_t i;
         for (i = k; i < alignment; ++i)
             cr_assert_eq(p1[i], character2);
         for (; i < alignment + length; ++i)

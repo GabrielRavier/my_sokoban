@@ -27,7 +27,7 @@ int my_fclose(my_file_t *fp)
         errno = EBADF;
         return (EOF);
     }
-    result = fp->flags & MY_FILE_FLAG_WRITE ?
+    result = (fp->flags & MY_FILE_FLAG_WRITE) ?
         my_internal_file_flush_skip_non_write(fp) : 0;
     if (fp->close != NULL && fp->close(fp->internal_data) < 0)
         result = EOF;

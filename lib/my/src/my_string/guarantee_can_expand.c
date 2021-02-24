@@ -22,7 +22,7 @@ struct my_string *my_string_guarantee_can_expand(struct my_string *self,
     if (self->length + length >= current_allocated_size) {
         self->allocated_size =
             MY_MAX(self->length + length + 1 + EXTRA_ALLOCATED_SPACE,
-                self->length * 2);
+                self->length * 3 / 2);
         self->string = (char *)my_realloc_size(
             self->string, self->allocated_size, current_allocated_size);
         MY_ASSERT(self->string != NULL);

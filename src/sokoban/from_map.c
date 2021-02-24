@@ -19,7 +19,8 @@ static int finish_sokoban(int result, struct sokoban_map *map_backup)
     return (result);
 }
 
-static bool all_boxes_on_storage_locations(const struct sokoban_map *map)
+MY_ATTR_PURE static bool all_boxes_on_storage_locations(
+    const struct sokoban_map *map)
 {
     for (size_t i = 0; i < map->lines * map->columns; ++i)
         if (map->squares[i].is_o_underneath && map->squares[i].character != 'X')
@@ -32,7 +33,7 @@ static bool is_good_square(char character)
     return (character == ' ' || character == 'P' || character == 'O');
 }
 
-static bool no_boxes_can_move(struct sokoban_map *map)
+MY_ATTR_PURE static bool no_boxes_can_move(struct sokoban_map *map)
 {
     for (size_t y = 0; y < map->lines; ++y)
         for (size_t x = 0; x < map->columns; ++x)

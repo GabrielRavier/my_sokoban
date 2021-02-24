@@ -17,7 +17,8 @@
 #include <stdbool.h>
 
 // The cast is there because __auto_type badly screws with constness
-static size_t count_in_my_string(const struct my_string *str, char c)
+MY_ATTR_PURE static size_t count_in_my_string(const struct my_string *str,
+    char c)
 {
     return (MY_COUNT((char *)str->string, str->string + str->length, c));
 }

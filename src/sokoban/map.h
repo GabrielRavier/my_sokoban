@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "my/features.h"
 #include <sys/types.h>
 #include <stddef.h>
 #include <stdbool.h>
@@ -33,7 +34,7 @@ struct sokoban_map {
 };
 
 char sokoban_map_get_square(const struct sokoban_map *map,
-    const struct sokoban_map_position *pos);
+    const struct sokoban_map_position *pos) MY_ATTR_PURE;
 void sokoban_map_move_square(struct sokoban_map *map,
     const struct sokoban_map_position *src_pos,
     const struct sokoban_map_position *dest_pos_diff);

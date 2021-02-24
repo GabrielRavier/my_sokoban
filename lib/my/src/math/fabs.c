@@ -14,7 +14,7 @@ double my_fabs(double x)
     union my_ieee754_double_parts u = {.as_double = x};
 
     u.sign = false;
-    return u.as_double;
+    return (u.as_double);
 }
 
 float my_fabsf(float x)
@@ -22,7 +22,7 @@ float my_fabsf(float x)
     union my_ieee754_float_parts u = {.as_float = x};
 
     u.sign = false;
-    return u.as_float;
+    return (u.as_float);
 }
 
 long double my_fabsl(long double x)
@@ -30,5 +30,5 @@ long double my_fabsl(long double x)
     union my_ieee754_long_double_parts u = {.as_long_double = x};
 
     u.sign = false;
-    return u.as_long_double;
+    return (u.as_long_double);
 }

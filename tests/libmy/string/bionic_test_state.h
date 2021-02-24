@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
 
@@ -37,8 +38,8 @@ static inline void bionic_test_state_init_len_array(struct bionic_test_state *se
 {
     self->n = 0;
     self->lengths[self->n++] = 0;
-    for (size_t i = 1; i < BIONIC_TEST_STATE_ITER; ++i) {
-        size_t l = (size_t)exp(log(self->max_length) * i / BIONIC_TEST_STATE_ITER);
+    for (uint32_t i = 1; i < BIONIC_TEST_STATE_ITER; ++i) {
+        size_t l = (size_t)exp(log((double)self->max_length) * i / BIONIC_TEST_STATE_ITER);
         if (l != self->lengths[self->n - 1])
             self->lengths[self->n++] = l;
     }

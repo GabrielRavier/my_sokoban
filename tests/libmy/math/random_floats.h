@@ -10,6 +10,9 @@
 #include <math.h>
 #include <float.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdouble-promotion"
+
 // Obtained from various sources, some really random floats, then some data from bionic, then floating point limits
 static const long double RANDOM_FLOATS[] = {
     0.0014329879003995,
@@ -1275,3 +1278,5 @@ static const long double RANDOM_FLOATS[] = {
     __DBL_DENORM_MIN__,
     __LDBL_DENORM_MIN__,
 };
+
+#pragma GCC diagnostic pop

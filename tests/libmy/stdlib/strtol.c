@@ -24,7 +24,7 @@ static void do_one_test_with_endptr_choice(const char *num, int base,
     intmax_t our_result, libc_result;
     int our_errno, libc_errno;
 
-#define DO_ONE_STRTOL(our_func, libc_func) \
+#define DO_ONE_STRTOL(our_func, libc_func) do { \
     errno = 0xDEADBEEF; \
     our_result = our_func(num, &end_num_ptr_us, base); \
     our_errno = errno; \
@@ -36,7 +36,7 @@ static void do_one_test_with_endptr_choice(const char *num, int base,
     if (end_num_ptr_unchanged) \
         cr_assert_eq(end_num_ptr_us, (char *)0xDEADBEEF); \
     else \
-        cr_assert_eq(end_num_ptr_us, end_num_ptr_libc);
+        cr_assert_eq(end_num_ptr_us, end_num_ptr_libc); } while (0)
 
     DO_ONE_STRTOL(my_strtol, strtol);
     DO_ONE_STRTOL(my_strtoll, strtoll);

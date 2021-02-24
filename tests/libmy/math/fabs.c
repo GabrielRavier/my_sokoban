@@ -52,7 +52,7 @@ Test(my_fabs, random_floats)
 Test(my_fabs, bionic)
 {
     for (size_t i = 0; i < MY_ARRAY_SIZE(G_FABS_INTEL_DATA); ++i)
-        do_one_test(G_FABS_INTEL_DATA[i].input);
+        do_one_test((long double)G_FABS_INTEL_DATA[i].input);
     for (size_t i = 0; i < MY_ARRAY_SIZE(G_FABSF_INTEL_DATA); ++i)
-        do_one_test(G_FABSF_INTEL_DATA[i].input);
+        do_one_test((long double)G_FABSF_INTEL_DATA[i].input);
 }

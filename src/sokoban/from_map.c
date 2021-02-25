@@ -59,11 +59,11 @@ int sokoban_from_map(struct sokoban_map *map)
     cbreak();
     keypad(stdscr, TRUE);
     while (true) {
+        sokoban_from_map_do_print(map);
         if (all_boxes_on_storage_locations(map))
             return (finish_sokoban(0, &map_backup));
         if (no_boxes_can_move(map))
             return (finish_sokoban(1, &map_backup));
-        sokoban_from_map_do_print(map);
         sokoban_from_map_do_key(map, &map_backup, getch());
     }
 }

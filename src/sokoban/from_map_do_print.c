@@ -44,10 +44,14 @@ static void print_map(struct sokoban_map *map)
         }
 }
 
+// We do a refresh here to avoid relying on the implicit one from getch, this
+// avoids problems where we don't reprint the map before checking whether the
+// player has won or lost
 void sokoban_from_map_do_print(struct sokoban_map *map)
 {
     if (terminal_too_small(map))
         print_please_enlarge_terminal();
     else
         print_map(map);
+    refresh();
 }

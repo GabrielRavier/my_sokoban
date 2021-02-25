@@ -5,6 +5,8 @@
 ** Tests qsort stuff
 */
 
+#pragma once
+
 #include "../tests_header.h"
 #include "my/stdlib.h"
 #include "my/string.h"

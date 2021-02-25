@@ -5,6 +5,8 @@
 ** Declares utility-related entities
 */
 
+#pragma once
+
 #include "../macros.h"
 
 /// Exchanges the given values

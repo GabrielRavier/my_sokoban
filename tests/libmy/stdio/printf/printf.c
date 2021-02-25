@@ -13,7 +13,8 @@
 #include <criterion/criterion.h>
 #include <criterion/assert.h>
 #include <criterion/redirect.h>
-#include "my/stdio.h" // Modify this is this isn't the header that declares my_printf and others
+#include "my/stdio.h" // Modify this if this isn't the header that declares my_printf and others
+#include "my/string.h"
 #ifndef STANDALONE
     #include "my/cpp-like/iterator.h"
 #else
@@ -1208,30 +1209,30 @@ Test(my_printf, through_format, .init = do_init, .fini = compare_all_libc_to_std
         for (int j = 0; j < 2; j++)
             for (int k = 0; k < 2; k++)
                 for (int l = 0; l < 2; l++) {
-                    strcpy(prefix, "%");
+                    my_strcpy(prefix, "%");
                     if (i == 0)
-                        strcat(prefix, "-");
+                        my_strcat(prefix, "-");
                     if (j == 0)
-                        strcat(prefix, "+");
+                        my_strcat(prefix, "+");
                     if (k == 0)
-                        strcat(prefix, "#");
+                        my_strcat(prefix, "#");
                     if (l == 0)
-                        strcat(prefix, "0");
+                        my_strcat(prefix, "0");
                     compare_printfs("%5s |", prefix);
-                    strcpy(format, prefix);
-                    strcat(format, "6d |");
+                    my_strcpy(format, prefix);
+                    my_strcat(format, "6d |");
                     compare_printfs(format, -123);
-                    strcpy(format, prefix);
-                    strcat(format, "6o |");
+                    my_strcpy(format, prefix);
+                    my_strcat(format, "6o |");
                     compare_printfs(format, 255);
-                    strcpy(format, prefix);
-                    strcat(format, "6x |");
+                    my_strcpy(format, prefix);
+                    my_strcat(format, "6x |");
                     compare_printfs(format, 255);
-                    strcpy(format, prefix);
-                    strcat(format, "6X |");
+                    my_strcpy(format, prefix);
+                    my_strcat(format, "6X |");
                     compare_printfs(format, 255);
-                    strcpy(format, prefix);
-                    strcat(format, "6u |");
+                    my_strcpy(format, prefix);
+                    my_strcat(format, "6u |");
                     compare_printfs(format, ~0);
                 }
     compare_printfs("%-10s\n", (char *)NULL);

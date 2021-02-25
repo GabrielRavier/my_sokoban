@@ -5,6 +5,8 @@
 ** Tests my_memmove
 */
 
+#pragma once
+
 #include "../tests_header.h"
 #include "my/string.h"
 #include "my/cpp-like/algorithm.h"

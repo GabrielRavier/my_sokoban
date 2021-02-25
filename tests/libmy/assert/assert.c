@@ -32,7 +32,7 @@ Test(MY_ASSERT, freebsd_false)
 
         sigemptyset(&action.sa_mask);
         sigaction(SIGILL, &action, NULL);
-        MY_ASSERT(1 == 1);
+        MY_ASSERT(true);
 
         _exit(EXIT_SUCCESS);
     }
@@ -49,7 +49,7 @@ Test(MY_ASSERT, freebsd_true)
     cr_assert(pid >= 0);
 
     if (pid == 0) {
-        MY_ASSERT(1 == 2);
+        MY_ASSERT(false);
         _exit(EXIT_SUCCESS);
     }
 

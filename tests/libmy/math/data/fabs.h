@@ -5,6 +5,8 @@
 ** Data for fabs from bionic
 */
 
+#pragma once
+
 #include <math.h>
 
 #pragma GCC diagnostic push

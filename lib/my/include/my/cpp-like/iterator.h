@@ -5,6 +5,8 @@
 ** Declares iterator-related utilities
 */
 
+#pragma once
+
 #include "../macros.h"
 
 /// Determines the amount of elements in an array. Will fail to compile on

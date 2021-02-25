@@ -5,6 +5,8 @@
 ** Defines strtoul
 */
 
+#pragma once
+
 #include "my/ctype.h"
 #include <errno.h>
 #include <stdbool.h>

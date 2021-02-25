@@ -5,6 +5,8 @@
 ** Declares internal bigint entities
 */
 
+#pragma once
+
 #include "../bigint.h"
 
 // Makes sure that num has at least the required amount of digits in it

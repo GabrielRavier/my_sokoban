@@ -51,6 +51,7 @@ static FILE *libc_string_file = NULL;
 // Compares the content of the combined libc output to stdout
 static void compare_all_libc_to_stdout(void)
 {
+    cr_assert_neq(libc_string_file, NULL);
     cr_assert_stdout_eq(libc_string_file);
     fclose(libc_string_file);
 }

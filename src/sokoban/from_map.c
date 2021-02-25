@@ -23,7 +23,8 @@ MY_ATTR_PURE static bool all_boxes_on_storage_locations(
     const struct sokoban_map *map)
 {
     for (size_t i = 0; i < map->lines * map->columns; ++i)
-        if (map->squares[i].is_o_underneath && map->squares[i].character != 'X')
+        if (!map->squares[i].is_o_underneath &&
+            map->squares[i].character == 'X')
             return (false);
     return (true);
 }

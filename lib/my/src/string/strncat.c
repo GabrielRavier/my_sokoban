@@ -20,7 +20,7 @@ char *my_strncat(char *destination, const char *source, size_t n)
         if (current_character == '\0')
             break;
         if (n-- == 0) {
-            *--destination = '\0';
+            destination[-1] = '\0';
             break;
         }
     }

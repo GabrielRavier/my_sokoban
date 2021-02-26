@@ -25,14 +25,12 @@ static void print_please_enlarge_terminal(void)
     int maxx;
     int maxy;
 
-    clear();
     getmaxyx(stdscr, maxy, maxx);
     mvaddstr(maxy / 2, MY_MAX(0, maxx / 2 - (20 / 2)), "Enlarge the terminal");
 }
 
 static void print_map(struct sokoban_map *map)
 {
-    clear();
     for (size_t y = 0; y < map->lines; ++y)
         for (size_t x = 0; x < map->columns; ++x) {
             if (map->squares[y * map->columns + x].character == '\n')
@@ -49,6 +47,7 @@ static void print_map(struct sokoban_map *map)
 // player has won or lost
 void sokoban_from_map_do_print(struct sokoban_map *map)
 {
+    clear();
     if (terminal_too_small(map))
         print_please_enlarge_terminal();
     else

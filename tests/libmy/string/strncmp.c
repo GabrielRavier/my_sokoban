@@ -303,12 +303,10 @@ Test(my_strncmp, glibc)
                 p2[k] = 1 + random() % 0xFE;
         }
         my_memcpy(p2 + align2, p1 + align1, pos);
-        if (pos < len1) {
-            if (p2[align2 + pos] == p1[align1 + pos]) {
-                p2[align2 + pos] = random() & 0xFF;
-                if (p2[align2 + pos] == p1[align1 + pos])
-                    p2[align2 + pos] = p1[align1 + pos] + 3 + (random() & 0x7F);
-            }
+        if (pos < len1 && p2[align2 + pos] == p1[align1 + pos]) {
+            p2[align2 + pos] = random() & 0xFF;
+            if (p2[align2 + pos] == p1[align1 + pos])
+                p2[align2 + pos] = p1[align1 + pos] + 3 + (random() & 0x7F);
         }
         p1[len1 + align1] = '\0';
         p2[len2 + align2] = '\0';

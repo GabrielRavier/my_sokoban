@@ -25,8 +25,10 @@ static bool grow_environ(size_t environ_entry_count)
         errno = ENOMEM;
         return (false);
     }
-    if (!has_alloced_environ_before++)
+    if (!has_alloced_environ_before) {
+        has_alloced_environ_before = true;
         my_memcpy(new_environ, environ, sizeof(char *) * environ_entry_count);
+    }
     environ = new_environ;
     return (true);
 }

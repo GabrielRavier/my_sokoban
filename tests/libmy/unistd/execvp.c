@@ -124,4 +124,3 @@ Test(my_execvp, glibc_4)
     cr_assert_eq(my_execvp(argv[0], (char *const *)argv), -1);
     cr_assert_eq(errno, ENOENT);
 }
-

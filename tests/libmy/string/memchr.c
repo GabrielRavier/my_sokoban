@@ -110,9 +110,7 @@ Test(my_memchr, gnulib)
 {
     size_t n = 0x100000;
     char *input = (char *)malloc(n);
-    cr_assert(input);
-    if (!input)
-        abort();
+    cr_assert(input != NULL);
 
     input[0] = 'a';
     input[1] = 'b';
